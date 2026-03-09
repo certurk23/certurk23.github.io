@@ -3,12 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QUANT_MEDIA — US Financial Intelligence | certurk23</title>
 <meta name="description" content="Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.">
-<title>QuantMedia — US Financial Intelligence | certurk23</title>
+<link rel="canonical" href="https://certurk23.github.io/">
+<meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
+<meta name="author" content="certurk23">
+<meta name="keywords" content="quantitative finance, market microstructure, VPIN, order flow, financial intelligence, algorithmic trading, market data">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="QUANT_MEDIA — US Financial Intelligence">
+<meta property="og:description" content="Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.">
+<meta property="og:url" content="https://certurk23.github.io/">
+<meta property="og:site_name" content="QUANT_MEDIA">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QUANT_MEDIA — US Financial Intelligence">
+<meta name="twitter:description" content="Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.">
+<!-- Favicon -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(navigator.webdriver||/bot|crawl|spider|headless|phantom/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"QUANT_MEDIA","url":"https://certurk23.github.io/","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","author":{"@type":"Person","name":"certurk23","url":"https://certurk23.github.io/about.html"},"potentialAction":{"@type":"SearchAction","target":"https://certurk23.github.io/?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
@@ -1025,8 +1044,15 @@ button{cursor:pointer;font-family:inherit}
         <div class="nl-pad">
           <div class="nl-title">Start each day with signal, not noise.</div>
           <div class="nl-desc">Daily pre-open briefing — key data, institutional-grade commentary, and market structure analysis.</div>
-          <input type="email" class="nl-input" placeholder="your@email.com">
-          <button class="nl-btn">Subscribe Free</button>
+          <form action="https://formsubmit.co/certurk23@gmail.com" method="POST" id="nlForm" onsubmit="nlSubmit(event)">
+            <input type="hidden" name="_subject" value="🔔 New QUANT_MEDIA Subscriber!">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://certurk23.github.io/?subscribed=1">
+            <input type="email" name="email" class="nl-input" placeholder="your@email.com" required>
+            <button type="submit" class="nl-btn" id="nlBtn">Subscribe Free</button>
+          </form>
+          <div id="nlSuccess" style="display:none;padding:10px 0;font-size:12px;color:var(--green);font-weight:600;">✓ Subscribed! Check your inbox.</div>
         </div>
       </div>
 
@@ -1081,6 +1107,9 @@ button{cursor:pointer;font-family:inherit}
 const saved = localStorage.getItem('qm-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', saved);
 
+function nlSubmit(e){e.preventDefault();var f=document.getElementById('nlForm'),b=document.getElementById('nlBtn');b.textContent='Sending…';b.disabled=true;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){f.style.display='none';document.getElementById('nlSuccess').style.display='block';}else{b.textContent='Try again';b.disabled=false;}}).catch(function(){b.textContent='Try again';b.disabled=false;});}
+// Auto-show success if redirected back
+if(new URLSearchParams(location.search).get('subscribed')==='1'){var nf=document.getElementById('nlForm');if(nf){nf.style.display='none';document.getElementById('nlSuccess').style.display='block';}}
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme() {

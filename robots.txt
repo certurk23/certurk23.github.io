@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /.claude/
+
+Sitemap: https://certurk23.github.io/sitemap.xml

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy /Y \"index.html\" \"research.html\")",
+      "Bash(copy /Y \"news.html\" \"index.html\")",
+      "Bash(git --version)",
+      "Bash(git config --global user.name)",
+      "Bash(git config --global user.email)",
+      "Bash(gh --version)"
+    ]
+  }
+}

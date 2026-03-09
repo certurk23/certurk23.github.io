@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t" />
+<title>Infrastructure | certurk23 Quant Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
+.btn-theme{width:30px;height:30px;border-radius:3px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;cursor:pointer;transition:all .14s ease;flex-shrink:0}
+.btn-theme:hover{color:var(--text);border-color:var(--dim);background:var(--bg3)}
+/* UNIFIED SITE HEADER */
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .24s ease}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.site-header .main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.site-header .main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.site-header .main-nav a:hover,.site-header .main-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:var(--accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
+.btn-subscribe:hover{opacity:.86}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] .top-nav{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+[data-theme="light"] nav.main-nav a:hover,[data-theme="light"] nav.main-nav a.active{color:var(--text)!important}
+[data-theme="light"] .brand,[data-theme="light"] a.brand{color:var(--text)}
+[data-theme="light"] footer{background:var(--bg3)}
+[data-theme="light"] .page-title{color:var(--text)!important}
+[data-theme="light"] .section-header h2{color:var(--text)!important}
+[data-theme="light"] .widget-title{color:var(--text)!important}
+[data-theme="light"] .spec-table th{color:var(--text)!important}
+a{text-decoration:none;color:inherit}
+
+.ticker-bar{height:var(--ticker-h);background:#000;border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;position:relative}
+.ticker-bar::before,.ticker-bar::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2}
+.ticker-bar::before{left:0;background:linear-gradient(to right,#000,transparent)}
+.ticker-bar::after{right:0;background:linear-gradient(to left,#000,transparent)}
+.ticker-label{flex-shrink:0;padding:0 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;color:#fff;background:var(--accent);height:100%;display:flex;align-items:center;text-transform:uppercase;z-index:3}
+.ticker-track{display:flex;animation:scroll-left 45s linear infinite;white-space:nowrap}
+@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:10px;padding:0 22px;border-right:1px solid var(--border);height:var(--ticker-h);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:500}
+.tick-name{color:var(--dim);text-transform:uppercase;font-size:11px}
+.tick-val{color:var(--text);font-weight:600}
+.tick-chg.up{color:var(--accent)}.tick-chg.dn{color:var(--red)}
+
+/* MARKET BAR */
+.market-bar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;position:sticky;top:var(--nav-h);z-index:140;overflow:hidden;height:var(--mbar-h)}
+.mbar-label{flex-shrink:0;padding:0 14px;height:var(--mbar-h);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);border-right:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.mbar-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite}
+.mbar-items{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
+.mbar-items::-webkit-scrollbar{display:none}
+.mbar-item{flex-shrink:0;display:flex;align-items:center;gap:9px;padding:0 16px;height:var(--mbar-h);border-right:1px solid var(--border)}
+.mbar-sym{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--dim)}
+.mbar-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text)}
+.mbar-chg{font-family:'JetBrains Mono',monospace;font-size:11px}
+
+.top-nav{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.nav-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.brand{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:1px;color:#fff;padding-right:28px;border-right:1px solid var(--border2);margin-right:4px;white-space:nowrap}
+.brand span{color:var(--accent)}
+nav.main-nav{display:flex;height:var(--nav-h)}
+nav.main-nav a{display:flex;align-items:center;padding:0 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
+nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-color:var(--accent)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.live-pill{display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--accent);text-transform:uppercase}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.sub-nav{height:var(--sub-h);background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:calc(var(--nav-h) + var(--mbar-h));z-index:99}
+.sub-nav-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center;height:100%}
+.sub-nav a{display:flex;align-items:center;height:100%;padding:0 14px;font-size:12px;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
+.sub-nav a:hover,.sub-nav a.active{color:var(--text);border-color:var(--accent)}
+
+/* PAGE HERO */
+.page-hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:36px 0}
+.page-hero-inner{max-width:1400px;margin:0 auto;padding:0 20px}
+.page-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:10px}
+.page-desc{font-size:14px;color:var(--dim);max-width:680px;line-height:1.8}
+
+.page-wrap{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1fr 300px;gap:24px}
+
+/* SECTION */
+.section-header{display:flex;align-items:center;border-left:3px solid var(--accent);padding-left:10px;margin-bottom:16px;margin-top:32px}
+.section-header:first-of-type{margin-top:0}
+.section-header h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
+
+.article-card{border:1px solid var(--border);border-radius:3px;background:var(--bg2);padding:20px;margin-bottom:2px}
+.article-card p{font-size:14px;color:#bbb;line-height:1.75;margin-bottom:14px}
+.article-card p:last-child{margin-bottom:0}
+.article-card strong{color:var(--text);font-weight:600}
+.article-card code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);border:1px solid var(--border2);padding:1px 6px;border-radius:2px;color:#6ab0f5}
+
+/* LATENCY PIPELINE */
+.pipeline{display:flex;align-items:center;gap:0;margin:20px 0;overflow-x:auto;padding-bottom:4px}
+.pipe-step{background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:12px 16px;min-width:130px;flex-shrink:0}
+.pipe-step .ps-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.pipe-step .ps-val{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--accent)}
+.pipe-step .ps-sub{font-size:11px;color:var(--dimmer);margin-top:3px}
+.pipe-arrow{font-size:16px;color:var(--border2);padding:0 8px;flex-shrink:0}
+
+/* SPEC TABLE */
+.spec-table{width:100%;border-collapse:collapse;margin:16px 0}
+.spec-table th{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);padding:8px 14px;border-bottom:1px solid var(--border2);text-align:left;background:var(--bg3)}
+.spec-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;color:#bbb}
+.spec-table td:first-child{color:var(--text);font-weight:500;width:200px}
+.spec-table td:last-child{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent)}
+.spec-table tr:last-child td{border-bottom:none}
+.spec-table tr:hover td{background:rgba(255,255,255,.015)}
+
+/* MATH */
+.math-block{background:var(--bg3);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:22px 28px;margin:18px 0;text-align:center;border-radius:0 0 3px 3px;overflow-x:auto}
+.math-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+
+/* CODE */
+.code-wrap{margin:18px 0;background:#000;border:1px solid var(--border2);border-radius:3px;overflow:hidden}
+.code-header{background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;justify-content:space-between}
+.code-filename{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
+.code-lang{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--accent)}
+.code-body{padding:18px 20px;overflow-x:auto}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9;color:#abb2bf}
+.kw{color:#c678dd}.fn{color:#61afef}.cm{color:#5c6370;font-style:italic}.num{color:#d19a66}.typ{color:#e5c07b}.str{color:#98c379}
+
+/* TOPOLOGY DIAGRAM */
+.topology{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;margin:20px 0}
+.topo-node{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:16px;text-align:center}
+.topo-node.highlight{border-color:var(--accent);background:rgba(0,166,81,.06)}
+.topo-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.topo-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text)}
+.topo-sub{font-size:11px;color:var(--dimmer);margin-top:4px}
+.topo-link{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 12px;gap:4px}
+.topo-wire{height:2px;width:60px;background:var(--border2);position:relative}
+.topo-wire::after{content:'';position:absolute;right:0;top:-3px;width:0;height:0;border-left:6px solid var(--border2);border-top:4px solid transparent;border-bottom:4px solid transparent}
+.topo-latency{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);white-space:nowrap}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:16px}
+.widget{background:var(--bg2);border:1px solid var(--border);border-radius:3px;overflow:hidden}
+.widget-header{background:var(--bg3);border-bottom:1px solid var(--border);padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+.widget-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
+.stack-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px}
+.stack-row:last-child{border-bottom:none}
+.stack-key{color:var(--dim)}
+.stack-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text)}
+.toc-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px;color:var(--dim);transition:background .15s,color .15s}
+.toc-item:last-child{border-bottom:none}
+.toc-item:hover{background:rgba(255,255,255,.03);color:var(--text)}
+.toc-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--accent);min-width:18px}
+.status-grid{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.status-cell{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:10px 12px}
+.sc-label{font-size:10px;font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin-bottom:6px}
+.sc-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500}
+.sc-sub{font-size:10px;color:var(--dim);margin-top:2px}
+.up{color:var(--accent)}.dn{color:var(--red)}
+
+/* FOOTER */
+footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
+.footer-top{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.ft-brand{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
+.ft-brand span{color:var(--accent)}
+.ft-desc{font-size:12px;color:var(--dim);line-height:1.8}
+.ft-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.ft-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color .15s}
+.ft-col a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding:14px 20px;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.footer-badges{display:flex;gap:8px}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border2);border-radius:2px;color:var(--dimmer);text-transform:uppercase}
+.fbadge.g{border-color:rgba(0,166,81,.4);color:var(--accent)}
+
+.sub-h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin:20px 0 10px;padding-left:10px;border-left:2px solid var(--border2)}
+
+@media(max-width:900px){.page-wrap{grid-template-columns:1fr}.sidebar{display:none}.footer-top{grid-template-columns:1fr}}
+/* MOBILE NAV */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-label">Infrastructure</div>
+  <div style="overflow:hidden;flex:1"><div class="ticker-track" id="ticker"></div></div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <span class="logo-top">QUANT<span class="logo-slash">_</span>MEDIA</span>
+      <span class="logo-sub">US Financial Intelligence · certurk23</span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="markets.html">Markets</a>
+      <a href="stocks.html">Equities</a>
+      <a href="papers.html">Analysis</a>
+      <a href="research.html">Research</a>
+      <a href="infrastructure.html" class="active">Infrastructure</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-subscribe">Subscribe</button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="markets.html">Markets</a>
+  <a href="stocks.html">Equities</a>
+  <a href="papers.html">Analysis</a>
+  <a href="research.html">Research</a>
+  <a href="infrastructure.html" class="active">Infrastructure</a>
+  <a href="about.html">About</a>
+</div>
+
+<!-- MARKET BAR -->
+<div class="market-bar">
+  <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
+  <div class="mbar-items" id="mbarItems">
+    <div class="mbar-item"><span class="mbar-sym">Loading…</span></div>
+  </div>
+</div>
+
+<!-- SUB NAV -->
+<div class="sub-nav">
+  <div class="sub-nav-inner">
+    <a href="#colocation" class="active">Co-location</a>
+    <a href="#nic">NIC & Kernel Bypass</a>
+    <a href="#memory">Memory Architecture</a>
+    <a href="#latency">Latency Budget</a>
+    <a href="#security">Security</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">certurk23 Quant Lab — Technical Documentation</div>
+    <div class="page-title">HFT Infrastructure Architecture</div>
+    <div class="page-desc">A detailed breakdown of the hardware, software, and network stack powering sub-microsecond order flow analysis at Equinix NY4/NY5 co-location facilities.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-wrap">
+  <main>
+
+    <!-- CO-LOCATION -->
+    <div class="section-header" id="colocation"><h2>Co-location & Data Center Topology</h2></div>
+    <div class="article-card">
+      <p>All production systems operate within <strong>Equinix NY4 (Secaucus, NJ)</strong> and <strong>NY5 (Parsippany, NJ)</strong> — the primary co-location facilities for NASDAQ (Carteret) and NYSE (Mahwah) matching engines respectively. Physical proximity to exchange matching engines is the foundational latency advantage.</p>
+
+      <div class="topology">
+        <div class="topo-node highlight">
+          <div class="topo-label">NASDAQ Carteret</div>
+          <div class="topo-val">NY4 / Equinix</div>
+          <div class="topo-sub">Secaucus, NJ</div>
+        </div>
+        <div class="topo-link">
+          <div class="topo-wire"></div>
+          <div class="topo-latency">~120 µs</div>
+        </div>
+        <div class="topo-node">
+          <div class="topo-label">NYSE Mahwah</div>
+          <div class="topo-val">NY5 / Equinix</div>
+          <div class="topo-sub">Parsippany, NJ</div>
+        </div>
+      </div>
+
+      <p>Cross-venue wire latency between Carteret and Mahwah is approximately <strong>120 µs</strong>. This inter-venue delta is the primary exploitable window in <strong>Cross-Venue Latency Arbitrage</strong> strategies. Our infrastructure maintains dedicated cross-connects within Equinix to minimize intra-facility hops.</p>
+
+      <table class="spec-table">
+        <thead><tr><th>Parameter</th><th>Description</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Primary Venue</td><td>NASDAQ Matching Engine Distance</td><td>&lt; 1 rack unit</td></tr>
+          <tr><td>Secondary Venue</td><td>NYSE Arca Cross-Connect</td><td>NY4 → NY5</td></tr>
+          <tr><td>Cross-venue RTT</td><td>Carteret ↔ Mahwah Wire</td><td>~120 µs</td></tr>
+          <tr><td>Internal Hop</td><td>Intra-facility cross-connect</td><td>&lt; 300 ns</td></tr>
+          <tr><td>Power Redundancy</td><td>UPS + Generator</td><td>2N</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- NIC -->
+    <div class="section-header" id="nic"><h2>NIC & Kernel Bypass (OpenOnload)</h2></div>
+    <div class="article-card">
+      <p>Standard Linux kernel network stacks introduce <strong>5–50 µs</strong> of latency due to context switches, interrupt handling, and system call overhead. We bypass this entirely using <strong>Solarflare XtremeScale SFN8522</strong> NICs with <strong>OpenOnload</strong> user-space network stack.</p>
+
+      <h3 class="sub-h3">Kernel Bypass Architecture</h3>
+      <p>OpenOnload intercepts socket calls at the application layer via <code>LD_PRELOAD</code> injection, redirecting traffic directly to NIC hardware queues via <strong>RDMA-style zero-copy DMA</strong>. The kernel is bypassed entirely for data-path operations — interrupts are replaced by polling loops pinned to isolated CPU cores.</p>
+
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="code-filename">nic_init.cpp</span>
+          <span class="code-lang">C++17</span>
+        </div>
+        <div class="code-body">
+<pre><span class="cm">// Solarflare OpenOnload — Zero-copy RX path initialization</span>
+<span class="kw">int</span> <span class="fn">init_onload_stack</span>(<span class="typ">OnloadStack</span>* stack) {
+    <span class="cm">// Create OpenOnload stack with polling mode</span>
+    <span class="kw">int</span> rc = ef_driver_open(&stack->dh);
+    ef_pd_alloc(&stack->pd, stack->dh,
+                stack->ifindex, EF_PD_DEFAULT);
+
+    <span class="cm">// Allocate hugepage-backed RX/TX ring buffers</span>
+    ef_memreg_alloc(&stack->mr, stack->dh,
+                    &stack->pd, stack->dh,
+                    stack->buf, BUF_SIZE);
+
+    <span class="cm">// Pin polling thread to isolated core (no OS scheduling)</span>
+    <span class="fn">pin_thread_to_core</span>(POLL_CORE_ID);
+    <span class="kw">return</span> rc;
+}</pre>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Component</th><th>Specification</th><th>Latency Impact</th></tr></thead>
+        <tbody>
+          <tr><td>NIC Model</td><td>Solarflare XtremeScale SFN8522</td><td>Baseline</td></tr>
+          <tr><td>Network Stack</td><td>OpenOnload 7.x (user-space)</td><td>−5 to −50 µs</td></tr>
+          <tr><td>DMA Mode</td><td>Zero-copy RDMA</td><td>−800 ns</td></tr>
+          <tr><td>Interrupt Model</td><td>Busy-poll (no IRQ)</td><td>−2 µs</td></tr>
+          <tr><td>CPU Affinity</td><td>Isolated core pinning</td><td>−1.2 µs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MEMORY -->
+    <div class="section-header" id="memory"><h2>Memory Architecture — Hugepages & TLB</h2></div>
+    <div class="article-card">
+      <p>Standard 4KB memory pages cause frequent <strong>Translation Lookaside Buffer (TLB)</strong> misses during high-throughput tick processing. Each TLB miss triggers a costly page-table walk (~100 ns penalty). We eliminate this by allocating all critical data structures on <strong>2MB Hugepages</strong> via <code>MAP_HUGETLB | MAP_LOCKED</code>.</p>
+
+      <div class="math-block">
+        <div class="math-label">TLB Miss Reduction Factor</div>
+        $$\text{TLB}_{\text{miss}} \approx \frac{N_{\text{pages}}^{\text{4KB}}}{N_{\text{pages}}^{\text{2MB}}} = \frac{2048 \cdot 1024}{2 \cdot 1024 \cdot 1024} = \frac{1}{512}$$
+      </div>
+
+      <p>By switching from 4KB to 2MB pages, the number of TLB entries required for a given working set shrinks by a factor of <strong>512×</strong>, effectively eliminating TLB pressure for tick data buffers up to 4GB.</p>
+
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="code-filename">memory_alloc.cpp</span>
+          <span class="code-lang">C++17</span>
+        </div>
+        <div class="code-body">
+<pre><span class="cm">// Hugepage-backed ring buffer for tick data</span>
+<span class="kw">void</span>* <span class="fn">alloc_hugepage_ring</span>(<span class="typ">size_t</span> size) {
+    <span class="kw">void</span>* mem = mmap(<span class="num">nullptr</span>, size,
+                     PROT_READ | PROT_WRITE,
+                     MAP_PRIVATE | MAP_ANONYMOUS |
+                     MAP_HUGETLB | MAP_LOCKED,   <span class="cm">// 2MB pages, no swap</span>
+                     -<span class="num">1</span>, <span class="num">0</span>);
+
+    <span class="kw">if</span> (mem == MAP_FAILED)
+        <span class="fn">fallback_standard_alloc</span>(size);
+
+    <span class="cm">// Pre-fault all pages to avoid runtime page faults</span>
+    madvise(mem, size, MADV_WILLNEED);
+    mlock(mem, size);
+    <span class="kw">return</span> mem;
+}</pre>
+        </div>
+      </div>
+
+      <h3 class="sub-h3">NUMA Topology</h3>
+      <p>All NIC queues, tick buffers, and order-state data structures are allocated on <strong>NUMA node 0</strong> — the same node as the Solarflare NIC PCIe slot. Cross-NUMA memory access introduces <strong>~80 ns</strong> additional latency per cache miss, which is unacceptable at the nanosecond scale.</p>
+    </div>
+
+    <!-- LATENCY BUDGET -->
+    <div class="section-header" id="latency"><h2>End-to-End Latency Budget</h2></div>
+    <div class="article-card">
+      <p>The total wire-to-order latency target is <strong>&lt; 800 ns</strong>. This budget is decomposed across each pipeline stage, with hard ceilings enforced via hardware timestamps on every ingress packet.</p>
+
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="ps-label">Wire Ingress</div>
+          <div class="ps-val">~0 ns</div>
+          <div class="ps-sub">NIC RX timestamp</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="ps-label">DMA Transfer</div>
+          <div class="ps-val">~120 ns</div>
+          <div class="ps-sub">PCIe Gen4 DMA</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="ps-label">ITCH Parse</div>
+          <div class="ps-val">~180 ns</div>
+          <div class="ps-sub">Zero-alloc parser</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="ps-label">VPIN Update</div>
+          <div class="ps-val">~240 ns</div>
+          <div class="ps-sub">Cache-local kernel</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="ps-label">Signal / Order</div>
+          <div class="ps-val">&lt; 800 ns</div>
+          <div class="ps-sub">FIX TX egress</div>
+        </div>
+      </div>
+
+      <div class="math-block">
+        <div class="math-label">Total Latency Budget Decomposition</div>
+        $$L_{\text{total}} = L_{\text{DMA}} + L_{\text{parse}} + L_{\text{compute}} + L_{\text{signal}} < 800\text{ ns}$$
+      </div>
+
+      <table class="spec-table">
+        <thead><tr><th>Stage</th><th>Component</th><th>Budget</th></tr></thead>
+        <tbody>
+          <tr><td>NIC → CPU</td><td>PCIe Gen4 DMA, zero-copy</td><td>120 ns</td></tr>
+          <tr><td>Deserialize</td><td>NASDAQ ITCH 5.0 parser</td><td>60 ns</td></tr>
+          <tr><td>State Update</td><td>Order book L2 update</td><td>80 ns</td></tr>
+          <tr><td>VPIN Compute</td><td>Inline kernel, L1-cached</td><td>160 ns</td></tr>
+          <tr><td>Decision</td><td>Signal evaluation</td><td>180 ns</td></tr>
+          <tr><td>TX Egress</td><td>FIX/OUCH order submission</td><td>120 ns</td></tr>
+          <tr><td><strong>Total P50</strong></td><td></td><td><strong>720 ns</strong></td></tr>
+          <tr><td><strong>Total P99</strong></td><td></td><td><strong>740 ns</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="section-header" id="security"><h2>Security & Telemetry Encryption</h2></div>
+    <div class="article-card">
+      <p>All telemetry, metrics, and strategy parameters transmitted between co-location and monitoring endpoints are encrypted using <strong>AES-256-GCM</strong> with a rotating <strong>ECDH (Curve25519)</strong> key exchange. GCM mode provides authenticated encryption — both confidentiality and integrity are guaranteed for every telemetry frame.</p>
+
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="code-filename">telemetry_crypto.cpp</span>
+          <span class="code-lang">C++17 / OpenSSL</span>
+        </div>
+        <div class="code-body">
+<pre><span class="cm">// AES-256-GCM authenticated encryption for telemetry frames</span>
+<span class="kw">bool</span> <span class="fn">encrypt_telemetry_frame</span>(
+    <span class="kw">const</span> <span class="typ">uint8_t</span>* plaintext, <span class="typ">size_t</span> pt_len,
+    <span class="typ">uint8_t</span>* ciphertext, <span class="typ">uint8_t</span>* tag)
+{
+    EVP_AEAD_CTX ctx;
+    <span class="cm">// 256-bit session key derived via ECDH Curve25519</span>
+    EVP_AEAD_CTX_init(&ctx, EVP_aead_aes_256_gcm(),
+                      session_key, <span class="num">32</span>, TAG_LEN, <span class="num">nullptr</span>);
+
+    <span class="kw">return</span> EVP_AEAD_CTX_seal(&ctx,
+        ciphertext, &out_len, pt_len + TAG_LEN,
+        nonce, NONCE_LEN,
+        plaintext, pt_len,
+        aad, aad_len) == <span class="num">1</span>;
+}</pre>
+        </div>
+      </div>
+
+      <p>Nonce values are derived from hardware timestamp counters (<code>RDTSC</code>) combined with a per-session counter, ensuring nonce uniqueness across all telemetry streams. Key rotation occurs every <strong>3600 seconds</strong> via a dedicated ECDH re-handshake triggered by the monitoring daemon.</p>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="widget">
+      <div class="widget-header">
+        <span class="widget-title">System Status</span>
+        <span style="font-size:10px;color:var(--dim);font-family:'Barlow Condensed',sans-serif">NY4 / LIVE</span>
+      </div>
+      <div class="status-grid">
+        <div class="status-cell"><div class="sc-label">Latency P99</div><div class="sc-val up">740 ns</div><div class="sc-sub">Within budget</div></div>
+        <div class="status-cell"><div class="sc-label">Latency P50</div><div class="sc-val up">720 ns</div><div class="sc-sub">Target &lt;800 ns</div></div>
+        <div class="status-cell"><div class="sc-label">NIC Queue</div><div class="sc-val up">0.0%</div><div class="sc-sub">Drop rate</div></div>
+        <div class="status-cell"><div class="sc-label">TLB Misses</div><div class="sc-val up">0.04%</div><div class="sc-sub">2MB hugepages</div></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header"><span class="widget-title">Contents</span></div>
+      <a href="#colocation" class="toc-item"><span class="toc-num">01</span>Co-location Topology</a>
+      <a href="#nic" class="toc-item"><span class="toc-num">02</span>NIC & Kernel Bypass</a>
+      <a href="#memory" class="toc-item"><span class="toc-num">03</span>Memory Architecture</a>
+      <a href="#latency" class="toc-item"><span class="toc-num">04</span>Latency Budget</a>
+      <a href="#security" class="toc-item"><span class="toc-num">05</span>Security & Encryption</a>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header"><span class="widget-title">Hardware Stack</span></div>
+      <div class="stack-row"><span class="stack-key">NIC</span><span class="stack-val">Solarflare SFN8522</span></div>
+      <div class="stack-row"><span class="stack-key">Network Stack</span><span class="stack-val">OpenOnload 7.x</span></div>
+      <div class="stack-row"><span class="stack-key">CPU</span><span class="stack-val">Intel Xeon Gold 6354</span></div>
+      <div class="stack-row"><span class="stack-key">PCIe</span><span class="stack-val">Gen4 x16</span></div>
+      <div class="stack-row"><span class="stack-key">Memory</span><span class="stack-val">2MB Hugepages</span></div>
+      <div class="stack-row"><span class="stack-key">OS</span><span class="stack-val">Linux 5.15 (PREEMPT_RT)</span></div>
+      <div class="stack-row"><span class="stack-key">Compiler</span><span class="stack-val">GCC 13 / -O3 -march=native</span></div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-header"><span class="widget-title">Related Pages</span></div>
+      <a href="research.html#vpin" class="toc-item"><span class="toc-num">→</span>VPIN Research</a>
+      <a href="research.html#darkpool" class="toc-item"><span class="toc-num">→</span>Dark Pool Mechanics</a>
+      <a href="about.html" class="toc-item"><span class="toc-num">→</span>About the Lab</a>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="ft-brand">CERTURK23 <span>//</span> QUANT_LAB</div>
+      <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
+    </div>
+    <div class="ft-col">
+      <h4>Research</h4>
+      <a href="research.html#vpin">VPIN Methodology</a>
+      <a href="research.html#darkpool">Dark Pool Mechanics</a>
+      <a href="research.html#adverse">Adverse Selection</a>
+      <a href="infrastructure.html">Infrastructure</a>
+    </div>
+    <div class="ft-col">
+      <h4>Lab</h4>
+      <a href="about.html">About certurk23</a>
+      <a href="#">Research Notes</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 certurk23 Research Lab. All rights reserved.</span>
+    <div class="footer-badges">
+      <span class="fbadge g">AES-256-GCM</span>
+      <span class="fbadge">SOC2 Type II Pending</span>
+      <span class="fbadge">NASDAQ / NYSE Arca</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const ticks=[
+  {name:'LATENCY P99',val:'740 ns',chg:'−18 ns',up:true},
+  {name:'NIC DROP RATE',val:'0.00%',chg:'stable',up:true},
+  {name:'TLB MISSES',val:'0.04%',chg:'−0.01%',up:true},
+  {name:'VPIN AAPL',val:'0.312',chg:'+0.024',up:true},
+  {name:'OBI SPY',val:'−0.041',chg:'−0.007',up:false},
+  {name:'HURST SPY',val:'0.587',chg:'+0.012',up:true},
+  {name:'TOXICITY',val:'MODERATE',chg:'●',up:true},
+];
+const t=document.getElementById('ticker');
+const d=[...ticks,...ticks];
+t.innerHTML=d.map(x=>`<span class="tick-item"><span class="tick-name">${x.name}</span><span class="tick-val">${x.val}</span><span class="tick-chg ${x.up?'up':'dn'}">${x.up?'▲':'▼'} ${x.chg}</span></span>`).join('');
+const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const cls=v=>v>0?'up':v<0?'dn':'nt';
+const sgn=v=>v>0?'+':'';
+const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
+async function yf(sym){try{const api=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(api)}`);const d=await r.json();const m=d.chart.result[0].meta;const price=m.regularMarketPrice,prev=m.chartPreviousClose||m.previousClose;return{price,chg:prev?((price-prev)/prev)*100:0};}catch{return null;}}
+const MBAR=[{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^DJI',l:'DJI'},{s:'^RUT',l:'RUT'},{s:'^VIX',l:'VIX'},{s:'^TNX',l:'10Y'},{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},{s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'}];
+async function loadMbar(){const res=await Promise.all(MBAR.map(x=>yf(x.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
+loadMbar();setInterval(loadMbar,60000);
+function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
+</script>
+</body>
+</html>

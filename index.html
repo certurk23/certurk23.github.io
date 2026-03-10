@@ -1246,9 +1246,26 @@ const MBAR = [
   {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
-  const res = await batch(MBAR.map(x => x.s));
-  document.getElementById('marketBar').innerHTML = MBAR.map((m, i) => {
-    const r = res[i]; const c = cls(r?.chg);
+  const syms = MBAR.map(x => x.s).join(',');
+  const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(syms)}&fields=regularMarketPrice,regularMarketChangePercent,regularMarketChange`;
+  const proxies = [
+    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+  ];
+  let map = {};
+  for (const p of proxies) {
+    try {
+      const r = await fetch(p(url), {signal: AbortSignal.timeout(8000)});
+      if (!r.ok) continue;
+      const raw = await r.json();
+      const d = raw.contents ? JSON.parse(raw.contents) : raw;
+      const quotes = d.quoteResponse?.result || [];
+      quotes.forEach(q => { map[q.symbol] = {price: q.regularMarketPrice, chg: q.regularMarketChangePercent||0}; });
+      if (Object.keys(map).length > 0) break;
+    } catch { continue; }
+  }
+  document.getElementById('marketBar').innerHTML = MBAR.map(m => {
+    const r = map[m.s]; const c = cls(r?.chg);
     return `<div class="mbar-item">
       <span class="mbar-sym">${m.l}</span>
       <span class="mbar-val">${r ? fmt(r.price, r.price > 100 ? 2 : 4) : '--'}</span>

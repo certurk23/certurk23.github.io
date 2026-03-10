@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 
 Disallow: /.claude/
+Disallow: /_fix_all_pages.py
+Disallow: /privacy.html
 
 Sitemap: https://certurk23.github.io/sitemap.xml

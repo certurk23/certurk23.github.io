@@ -595,13 +595,23 @@ const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
 const SYM_MAP={'GC=F':'GLD','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC'};
-let _fx=null,_fxT=0;
-async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch(`https://finnhub.io/api/v1/forex/rates?base=USD&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(5000)});const d=await r.json();_fx=d.quote;_fxT=Date.now();return _fx;}catch{return null;}}
+let _fx=null,_fxT=0,_yfc={},_yfp={};
+async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
 async function yf(sym){
-  const mapped=SYM_MAP[sym];
-  if(mapped==='__EUR'){const fx=await loadFx();return fx?.EUR?{price:+(1/fx.EUR).toFixed(5),chg:0,pts:0}:null;}
-  if(mapped==='__GBP'){const fx=await loadFx();return fx?.GBP?{price:+(1/fx.GBP).toFixed(5),chg:0,pts:0}:null;}
-  if(mapped==='__BTC'){try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(5000)});const d=await r.json();if(!d.bitcoin)return null;const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;return{price:p,chg:c,pts:p*c/100};}catch{return null;}}
+  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<55000)return _yfc[sym].v;
+  if(_yfp[sym])return _yfp[sym];
+  const p=(async()=>{
+    const m=SYM_MAP[sym];let v=null;
+    try{
+      if(m==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
+      else if(m==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
+      else if(m==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
+      else{const fhSym=m||sym;const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});if(r.ok){const d=await r.json();if(d.c&&d.c!==0)v={price:d.c,chg:d.dp||0,pts:d.d||0,cap:null,vol:null};}}
+    }catch{}
+    _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];return v;
+  })();
+  return(_yfp[sym]=p);
+}}
   try{const fhSym=mapped||sym;const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(5000)});if(!r.ok)return null;const d=await r.json();if(!d.c||d.c===0)return null;return{price:d.c,chg:d.dp||0,pts:d.d||0,cap:null,vol:null};}catch{return null;}
 }
 const MBAR=[{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^DJI',l:'DJI'},{s:'^RUT',l:'RUT'},{s:'^VIX',l:'VIX'},{s:'^TNX',l:'10Y'},{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},{s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'}];

@@ -1353,31 +1353,69 @@ function toggleTheme() {
 }
 
 /* ============================================================
-   MARKET DATA
+   MARKET DATA — Finnhub (CORS-native) + CoinGecko (BTC)
    ============================================================ */
+const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
+
 const fmt  = (n, d=2) => n == null || isNaN(n) ? '--' : n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
 const pct  = v => v == null ? '--' : (v > 0 ? '+' : '') + fmt(v) + '%';
 const cls  = v => v > 0 ? 'up' : v < 0 ? 'dn' : 'nt';
 const sgn  = v => v > 0 ? '+' : '';
 const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2-digit', minute:'2-digit'});
 
+/* Symbol map: Yahoo Finance format → Finnhub compatible */
+const SYM_MAP = {
+  'GC=F':      'GLD',    /* Gold → SPDR Gold ETF (mirrors % change) */
+  'CL=F':      'USO',    /* WTI  → US Oil Fund ETF (mirrors % change) */
+  'DX-Y.NYB':  'UUP',   /* DXY  → Invesco USD ETF proxy */
+  'EURUSD=X':  '__EUR',  /* via Finnhub forex/rates endpoint */
+  'GBPUSD=X':  '__GBP',  /* via Finnhub forex/rates endpoint */
+  'BTC-USD':   '__BTC',  /* via CoinGecko simple/price endpoint */
+};
+
+/* Finnhub forex rates — cached 1 min */
+let _fx = null, _fxT = 0;
+async function loadFx() {
+  if (_fx && Date.now() - _fxT < 60000) return _fx;
+  try {
+    const r = await fetch(`https://finnhub.io/api/v1/forex/rates?base=USD&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(5000)});
+    const d = await r.json(); _fx = d.quote; _fxT = Date.now(); return _fx;
+  } catch { return null; }
+}
+
+/* Unified quote: Finnhub for stocks/indices/ETFs, CoinGecko for BTC, Finnhub forex for FX */
 async function yf(sym) {
-  const api = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;
-  const proxies = [
-    a => `https://corsproxy.io/?${encodeURIComponent(a)}`,
-    a => `https://api.allorigins.win/get?url=${encodeURIComponent(a)}`,
-  ];
-  for (const p of proxies) {
-    try {
-      const r = await fetch(p(api), {signal: AbortSignal.timeout(6000)});
-      const raw = await r.json();
-      const d = raw.contents ? JSON.parse(raw.contents) : raw;
-      const m = d.chart.result[0].meta;
-      const price = m.regularMarketPrice, prev = m.chartPreviousClose || m.previousClose;
-      return { price, chg: prev ? ((price-prev)/prev)*100 : 0, pts: price-prev, cap: m.marketCap||null, vol: m.regularMarketVolume||null };
-    } catch { continue; }
+  const mapped = SYM_MAP[sym];
+
+  /* EUR/USD — invert USD/EUR rate from Finnhub */
+  if (mapped === '__EUR') {
+    const fx = await loadFx();
+    return fx?.EUR ? {price: +(1/fx.EUR).toFixed(5), chg: 0, pts: 0} : null;
   }
-  return null;
+  /* GBP/USD — invert USD/GBP rate */
+  if (mapped === '__GBP') {
+    const fx = await loadFx();
+    return fx?.GBP ? {price: +(1/fx.GBP).toFixed(5), chg: 0, pts: 0} : null;
+  }
+  /* BTC — CoinGecko (no API key, CORS-enabled) */
+  if (mapped === '__BTC') {
+    try {
+      const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal: AbortSignal.timeout(5000)});
+      const d = await r.json(); if (!d.bitcoin) return null;
+      const p = d.bitcoin.usd, c = d.bitcoin.usd_24h_change || 0;
+      return {price: p, chg: c, pts: p * c / 100};
+    } catch { return null; }
+  }
+
+  /* All other symbols — Finnhub quote endpoint */
+  try {
+    const fhSym = mapped || sym;
+    const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(5000)});
+    if (!r.ok) return null;
+    const d = await r.json();
+    if (!d.c || d.c === 0) return null;
+    return {price: d.c, chg: d.dp || 0, pts: d.d || 0};
+  } catch { return null; }
 }
 const batch = syms => Promise.all(syms.map(yf));
 
@@ -1389,26 +1427,9 @@ const MBAR = [
   {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
-  const syms = MBAR.map(x => x.s).join(',');
-  const url = `https://query2.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(syms)}&fields=regularMarketPrice,regularMarketChangePercent,regularMarketChange`;
-  const proxies = [
-    u => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-    u => `https://corsproxy.io/?${encodeURIComponent(u)}`,
-  ];
-  let map = {};
-  for (const p of proxies) {
-    try {
-      const r = await fetch(p(url), {signal: AbortSignal.timeout(8000)});
-      if (!r.ok) continue;
-      const raw = await r.json();
-      const d = raw.contents ? JSON.parse(raw.contents) : raw;
-      const quotes = d.quoteResponse?.result || [];
-      quotes.forEach(q => { map[q.symbol] = {price: q.regularMarketPrice, chg: q.regularMarketChangePercent||0}; });
-      if (Object.keys(map).length > 0) break;
-    } catch { continue; }
-  }
-  document.getElementById('marketBar').innerHTML = MBAR.map(m => {
-    const r = map[m.s]; const c = cls(r?.chg);
+  const res = await batch(MBAR.map(x => x.s));
+  document.getElementById('marketBar').innerHTML = MBAR.map((m, i) => {
+    const r = res[i]; const c = cls(r?.chg);
     return `<div class="mbar-item">
       <span class="mbar-sym">${m.l}</span>
       <span class="mbar-val">${r ? fmt(r.price, r.price > 100 ? 2 : 4) : '--'}</span>
@@ -1527,10 +1548,7 @@ setInterval(init, 60000);
 
 /* ============================================================
    FINNHUB NEWS FEED
-   Get your free key at: https://finnhub.io/register
-   Replace the empty string below with your key.
    ============================================================ */
-const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
 
 function nAgo(ts) {
   const m = Math.floor((Date.now()/1000 - ts) / 60);

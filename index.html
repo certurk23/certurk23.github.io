@@ -834,6 +834,7 @@ button{cursor:pointer;font-family:inherit}
     <a href="markets.html" class="sec-link">Markets →</a>
   </div>
 
+  <div id="newsGrid">
   <!-- Top row: featured + right column -->
   <div class="news-grid">
 
@@ -924,6 +925,7 @@ button{cursor:pointer;font-family:inherit}
       <div class="nc-meta"><span class="nc-src">Institutional Investor</span><span class="nc-time">8h ago</span></div>
     </a>
   </div>
+  </div><!-- /newsGrid -->
 </div>
 
 <!-- MAIN CONTENT -->
@@ -1522,6 +1524,104 @@ async function init() {
 }
 init();
 setInterval(init, 60000);
+
+/* ============================================================
+   FINNHUB NEWS FEED
+   Get your free key at: https://finnhub.io/register
+   Replace the empty string below with your key.
+   ============================================================ */
+const FINNHUB_KEY = '';
+
+function nAgo(ts) {
+  const m = Math.floor((Date.now()/1000 - ts) / 60);
+  return m < 1 ? 'just now' : m < 60 ? m+'m ago' : m < 1440 ? Math.floor(m/60)+'h ago' : Math.floor(m/1440)+'d ago';
+}
+function nCat(n) {
+  const h = (n.headline+' '+(n.category||'')).toLowerCase();
+  if (/fed|fomc|rate|yield|treasury|powell/.test(h)) return 'Fed · Rates';
+  if (/nvidia|nvda|ai |artificial|chip|semi/.test(h)) return 'Tech · AI';
+  if (/vix|volatil|option|hedge/.test(h)) return 'Volatility';
+  if (/oil|energy|crude|opec/.test(h)) return 'Energy';
+  if (/bitcoin|crypto|btc|eth/.test(h)) return 'Crypto';
+  if (/earning|profit|revenue|eps/.test(h)) return 'Earnings';
+  if (/dark.pool|ats|microstruc|vpin/.test(h)) return 'Microstructure';
+  return 'Markets';
+}
+function nImg(n, fallback) {
+  return n.image ? `style="background-image:url('${n.image}');background-size:cover;background-position:center"` : fallback;
+}
+const GRADIENTS = [
+  'style="background:linear-gradient(160deg,#0d1a2e,#1a2e4a)"',
+  'style="background:linear-gradient(160deg,#051a14,#0d3326)"',
+  'style="background:linear-gradient(160deg,#200d0d,#3d1515)"',
+  'style="background:linear-gradient(160deg,#1a1a0d,#332d0d)"',
+  'style="background:linear-gradient(160deg,#0d0d2e,#1a1a4a)"',
+  'style="background:linear-gradient(160deg,#1a0d2e,#2d1545)"',
+];
+
+async function loadNews() {
+  if (!FINNHUB_KEY) return;
+  try {
+    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(8000)});
+    if (!r.ok) return;
+    const raw = await r.json();
+    const items = (raw||[]).filter(n => n.headline && n.url).slice(0, 7);
+    if (items.length < 3) return;
+
+    const [f, a, b, c, d, e, g] = items;
+    const svgChart = `<svg class="nc-chart-svg" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38" fill="none" stroke="#00a651" stroke-width="2.5"/><polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38 600,190 0,190" fill="#00a651" fill-opacity="0.06"/></svg>`;
+
+    document.getElementById('newsGrid').innerHTML = `
+    <div class="news-grid">
+      <a href="${f.url}" target="_blank" rel="noopener" class="nc-featured">
+        <div class="nc-featured-img nc-fi-macro" ${nImg(f,'')}>
+          ${!f.image ? svgChart : ''}
+        </div>
+        <div class="nc-featured-body">
+          <div>
+            <div class="nc-cat">${nCat(f)}</div>
+            <div class="nc-featured-title">${f.headline}</div>
+            <div class="nc-featured-exrp">${(f.summary||'').slice(0,240)}</div>
+          </div>
+          <div class="nc-meta"><span class="nc-src">${f.source}</span><span class="nc-time">${nAgo(f.datetime)}</span></div>
+        </div>
+      </a>
+      <div class="nc-col">
+        ${[a,b,c].map((n,i) => !n ? '' : `
+        <a href="${n.url}" target="_blank" rel="noopener" class="nc-item">
+          <div class="nc-item-img" ${nImg(n, GRADIENTS[i])}></div>
+          <div class="nc-item-body">
+            <div>
+              <div class="nc-cat">${nCat(n)}</div>
+              <div class="nc-item-title">${n.headline}</div>
+            </div>
+            <div class="nc-meta"><span class="nc-src">${n.source}</span><span class="nc-time">${nAgo(n.datetime)}</span></div>
+          </div>
+        </a>`).join('')}
+      </div>
+    </div>
+    <div class="news-row2">
+      ${[d,e,g].map((n,i) => !n ? '' : `
+      <a href="${n.url}" target="_blank" rel="noopener" class="nc-card">
+        <div class="nc-cat">${nCat(n)}</div>
+        <div class="nc-card-title">${n.headline}</div>
+        <div class="nc-card-exrp">${(n.summary||'').slice(0,170)}</div>
+        <div class="nc-meta"><span class="nc-src">${n.source}</span><span class="nc-time">${nAgo(n.datetime)}</span></div>
+      </a>`).join('')}
+    </div>`;
+
+    // Update date label
+    const ts = items[0]?.datetime;
+    if (ts) {
+      const d2 = new Date(ts*1000);
+      const label = d2.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+      const sub = document.querySelector('.news-wrap .sec-sub');
+      if (sub) sub.textContent = label;
+    }
+  } catch(e) { /* keep static fallback */ }
+}
+loadNews();
+setInterval(loadNews, 300000);
 </script>
 </body>
 </html>

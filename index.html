@@ -704,7 +704,7 @@ button{cursor:pointer;font-family:inherit}
   <div class="tradingview-widget-container">
     <div class="tradingview-widget-container__widget"></div>
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
+    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"AVGO","proName":"NASDAQ:AVGO"},{"description":"NFLX","proName":"NASDAQ:NFLX"},{"description":"AMD","proName":"NASDAQ:AMD"},{"description":"QCOM","proName":"NASDAQ:QCOM"},{"description":"COST","proName":"NASDAQ:COST"},{"description":"ADBE","proName":"NASDAQ:ADBE"},{"description":"INTC","proName":"NASDAQ:INTC"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"MA","proName":"NYSE:MA"},{"description":"LLY","proName":"NYSE:LLY"},{"description":"UNH","proName":"NYSE:UNH"},{"description":"XOM","proName":"NYSE:XOM"},{"description":"HD","proName":"NYSE:HD"},{"description":"PG","proName":"NYSE:PG"},{"description":"JNJ","proName":"NYSE:JNJ"},{"description":"ORCL","proName":"NYSE:ORCL"},{"description":"MRK","proName":"NYSE:MRK"},{"description":"ABBV","proName":"NYSE:ABBV"},{"description":"CVX","proName":"NYSE:CVX"},{"description":"WMT","proName":"NYSE:WMT"},{"description":"BAC","proName":"NYSE:BAC"},{"description":"GS","proName":"NYSE:GS"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
     </script>
   </div>
 </div>
@@ -1415,6 +1415,8 @@ const MBAR = [
   {s:'^RUT',l:'RUT'},{s:'^VIX',l:'VIX'},{s:'^TNX',l:'10Y'},
   {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},
   {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
+  {s:'AAPL',l:'AAPL'},{s:'MSFT',l:'MSFT'},{s:'NVDA',l:'NVDA'},
+  {s:'AMZN',l:'AMZN'},{s:'META',l:'META'},{s:'TSLA',l:'TSLA'},{s:'GOOGL',l:'GOOGL'},
 ];
 async function loadMarketBar() {
   const res = await batch(MBAR.map(x => x.s));

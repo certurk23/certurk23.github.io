@@ -378,14 +378,19 @@ function showTab(id,btn){
 }
 
 async function yf(sym){
-  try{
-    const api=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;
-    const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(api)}`);
-    const d=await r.json();
-    const m=d.chart.result[0].meta;
-    const price=m.regularMarketPrice,prev=m.chartPreviousClose||m.previousClose;
-    return{price,chg:prev?((price-prev)/prev)*100:0,pts:price-prev,cap:m.marketCap||null,vol:m.regularMarketVolume||null};
-  }catch{return null;}
+  const api=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;
+  const proxies=[a=>`https://corsproxy.io/?${encodeURIComponent(a)}`,a=>`https://api.allorigins.win/get?url=${encodeURIComponent(a)}`];
+  for(const p of proxies){
+    try{
+      const r=await fetch(p(api),{signal:AbortSignal.timeout(6000)});
+      const raw=await r.json();
+      const d=raw.contents?JSON.parse(raw.contents):raw;
+      const m=d.chart.result[0].meta;
+      const price=m.regularMarketPrice,prev=m.chartPreviousClose||m.previousClose;
+      return{price,chg:prev?((price-prev)/prev)*100:0,pts:price-prev,cap:m.marketCap||null,vol:m.regularMarketVolume||null};
+    }catch{continue;}
+  }
+  return null;
 }
 const batchYF=syms=>Promise.all(syms.map(yf));
 

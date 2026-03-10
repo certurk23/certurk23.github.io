@@ -210,9 +210,13 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <body>
 
 <!-- TICKER -->
-<div class="ticker-bar">
-  <div class="ticker-label">Infrastructure</div>
-  <div style="overflow:hidden;flex:1"><div class="ticker-track" id="ticker"></div></div>
+<div style="background:#000;border-bottom:1px solid var(--border)">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
+    </script>
+  </div>
 </div>
 
 <!-- HEADER -->
@@ -592,10 +596,7 @@ const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 async function yf(sym){const api=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;const proxies=[a=>`https://corsproxy.io/?${encodeURIComponent(a)}`,a=>`https://api.allorigins.win/get?url=${encodeURIComponent(a)}`];for(const p of proxies){try{const r=await fetch(p(api),{signal:AbortSignal.timeout(6000)});const raw=await r.json();const d=raw.contents?JSON.parse(raw.contents):raw;const m=d.chart.result[0].meta;const price=m.regularMarketPrice,prev=m.chartPreviousClose||m.previousClose;return{price,chg:prev?((price-prev)/prev)*100:0};}catch{continue;}}return null;}
 const MBAR=[{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^DJI',l:'DJI'},{s:'^RUT',l:'RUT'},{s:'^VIX',l:'VIX'},{s:'^TNX',l:'10Y'},{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},{s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'}];
 async function loadMbar(){const res=await Promise.all(MBAR.map(x=>yf(x.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
-const TSYMS=[{s:'AAPL',l:'AAPL'},{s:'MSFT',l:'MSFT'},{s:'NVDA',l:'NVDA'},{s:'AMZN',l:'AMZN'},{s:'META',l:'META'},{s:'TSLA',l:'TSLA'},{s:'GOOGL',l:'GOOGL'},{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^VIX',l:'VIX'},{s:'GC=F',l:'GOLD'},{s:'CL=F',l:'WTI'},{s:'^TNX',l:'10Y'},{s:'BTC-USD',l:'BTC'}];
-async function loadTicker(){const res=await Promise.all(TSYMS.map(x=>yf(x.s)));const html=TSYMS.map((t,i)=>{const r=res[i];const c=cls(r?.chg);const dp=r?(r.price>100?2:4):2;return`<div class="tick-item"><span class="tick-sym">${t.l}</span><span class="tick-val">${r?fmt(r.price,dp):'--'}</span><span class="tick-chg ${c}">${r?pct(r.chg):''}</span></div>`;}).join('');document.getElementById('ticker').innerHTML=html+html;}
 loadMbar();setInterval(loadMbar,60000);
-loadTicker();setInterval(loadTicker,60000);
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}

@@ -193,10 +193,12 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <body>
 
 <!-- TICKER -->
-<div class="ticker-bar">
-  <div class="ticker-label">Markets</div>
-  <div style="overflow:hidden;flex:1">
-    <div class="ticker-track" id="ticker"></div>
+<div style="background:#000;border-bottom:1px solid var(--border)">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
+    </script>
   </div>
 </div>
 
@@ -461,21 +463,11 @@ function loadMovers(){
     <div class="movers-panel"><div class="movers-head"><span class="movers-lbl r">▼ Top Losers</span></div>${rows(LOSE)}</div>`;
 }
 
-// TICKER
-const TSYMS=[{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^DJI',l:'DJI'},{s:'^VIX',l:'VIX'},{s:'AAPL',l:'AAPL'},{s:'NVDA',l:'NVDA'},{s:'TSLA',l:'TSLA'},{s:'META',l:'META'},{s:'GC=F',l:'GOLD'},{s:'CL=F',l:'OIL'},{s:'DX-Y.NYB',l:'DXY'},{s:'^TNX',l:'10Y'}];
-async function loadTicker(){
-  const res=await batchYF(TSYMS.map(x=>x.s));
-  const html=TSYMS.map((t,i)=>{const r=res[i];const c=cls(r?.chg);
-    return`<div class="tick-item"><span class="tick-name">${t.l}</span><span class="tick-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="tick-chg ${c}">${r?pct(r.chg):''}</span></div>`;
-  }).join('');
-  document.getElementById('ticker').innerHTML=html+html;
-}
-
 const MBAR=[{s:'^GSPC',l:'SPX'},{s:'^IXIC',l:'NDX'},{s:'^DJI',l:'DJI'},{s:'^RUT',l:'RUT'},{s:'^VIX',l:'VIX'},{s:'^TNX',l:'10Y'},{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},{s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'}];
 async function loadMbar(){const res=await Promise.all(MBAR.map(x=>yf(x.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
 
 async function loadAll(){
-  await Promise.all([loadIdx(),loadFX(),loadComm(),loadCrypto(),loadTicker(),loadMbar()]);
+  await Promise.all([loadIdx(),loadFX(),loadComm(),loadCrypto(),loadMbar()]);
   loadMovers();
   document.getElementById('lastUp').textContent='Live data feed — last update: '+now()+' · refreshes every 60s';
 }

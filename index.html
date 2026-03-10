@@ -649,6 +649,45 @@ button{cursor:pointer;font-family:inherit}
 .mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);border-left:3px solid transparent;transition:color .14s,border-color .14s}
 .mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--green);background:var(--bg3)}
 @media(max-width:900px){.main-nav{display:none!important}.btn-subscribe{display:none}.hamburger{display:flex}}
+/* ============================================================
+   MARKET NEWS
+   ============================================================ */
+.news-wrap{max-width:var(--max-w);margin:0 auto;padding:0 24px 32px}
+.news-grid{display:grid;grid-template-columns:1fr 340px;gap:2px;margin-bottom:2px}
+.news-row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px}
+/* Featured card */
+.nc-featured{display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--bd);text-decoration:none;transition:background var(--t1);overflow:hidden}
+.nc-featured:hover{background:var(--bg3)}
+.nc-featured-img{height:190px;position:relative;overflow:hidden;flex-shrink:0}
+.nc-fi-macro{background:linear-gradient(135deg,#0a1628 0%,#0f2540 60%,#0a1628 100%)}
+.nc-featured-body{padding:18px 20px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.nc-featured-title{font-size:17px;font-weight:700;line-height:1.35;color:var(--text);margin-bottom:10px}
+.nc-featured-exrp{font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:14px;flex:1}
+/* Right column items */
+.nc-col{display:flex;flex-direction:column;gap:2px}
+.nc-item{display:flex;background:var(--bg2);border:1px solid var(--bd);text-decoration:none;flex:1;transition:background var(--t1);overflow:hidden}
+.nc-item:hover{background:var(--bg3)}
+.nc-item-img{width:96px;flex-shrink:0}
+.nc-ii-fed{background:linear-gradient(160deg,#0d1a2e 0%,#1a2e4a 100%)}
+.nc-ii-tech{background:linear-gradient(160deg,#051a14 0%,#0d3326 100%)}
+.nc-ii-vix{background:linear-gradient(160deg,#200d0d 0%,#3d1515 100%)}
+.nc-item-body{padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;flex:1}
+.nc-item-title{font-size:12.5px;font-weight:600;line-height:1.4;color:var(--text);margin-bottom:6px}
+/* Bottom row cards */
+.nc-card{background:var(--bg2);border:1px solid var(--bd);padding:16px 18px;text-decoration:none;transition:background var(--t1)}
+.nc-card:hover{background:var(--bg3)}
+.nc-card-title{font-size:13.5px;font-weight:600;line-height:1.4;color:var(--text);margin-bottom:8px}
+.nc-card-exrp{font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:10px}
+/* Shared */
+.nc-cat{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:7px}
+.nc-meta{display:flex;align-items:center;gap:8px}
+.nc-src{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--dim)}
+.nc-src::after{content:'·';margin-left:8px;color:var(--dimmer)}
+.nc-time{font-size:11px;color:var(--dimmer)}
+/* SVG chart overlays on news images */
+.nc-chart-svg{position:absolute;bottom:0;left:0;right:0;opacity:.25}
+@media(max-width:1100px){.news-grid{grid-template-columns:1fr 280px}}
+@media(max-width:760px){.news-grid{grid-template-columns:1fr}.nc-col{display:none}.news-row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -782,6 +821,108 @@ button{cursor:pointer;font-family:inherit}
 <div class="index-cards">
   <div class="index-cards-inner" id="indexCards">
     <!-- JS populated -->
+  </div>
+</div>
+
+<!-- MARKET NEWS -->
+<div class="news-wrap">
+  <div class="sec-hdr" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center">
+      <span class="sec-label">Market News</span>
+      <span class="sec-sub">March 10, 2026</span>
+    </div>
+    <a href="markets.html" class="sec-link">Markets →</a>
+  </div>
+
+  <!-- Top row: featured + right column -->
+  <div class="news-grid">
+
+    <!-- Featured -->
+    <a href="markets.html" class="nc-featured">
+      <div class="nc-featured-img nc-fi-macro">
+        <svg class="nc-chart-svg" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38" fill="none" stroke="#00a651" stroke-width="2.5"/>
+          <polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38 600,190 0,190" fill="#00a651" fill-opacity="0.06"/>
+          <polyline points="0,160 60,155 120,162 180,150 240,148 300,155 360,145 420,140 480,142 540,138 600,130" fill="none" stroke="#1e88e5" stroke-width="1.5" stroke-dasharray="4,3"/>
+        </svg>
+      </div>
+      <div class="nc-featured-body">
+        <div>
+          <div class="nc-cat">Macro · Equities</div>
+          <div class="nc-featured-title">S&P 500 Climbs to 6,827 as Oil Plunges 14% — Macro Rotation Accelerates Into Quality Factors</div>
+          <div class="nc-featured-exrp">Energy sector selloff triggers cross-asset reallocation. Capital rotating into utilities, healthcare, and quality defensive names. Fed rate hold amplifies growth equity bid. Quant momentum signals flipping positive on large-cap blend.</div>
+        </div>
+        <div class="nc-meta"><span class="nc-src">Reuters</span><span class="nc-time">2h ago</span></div>
+      </div>
+    </a>
+
+    <!-- Right column -->
+    <div class="nc-col">
+      <a href="markets.html" class="nc-item">
+        <div class="nc-item-img nc-ii-fed">
+          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
+            <text x="50%" y="58%" text-anchor="middle" font-size="36" fill="#1e88e5" font-family="monospace">%</text>
+          </svg>
+        </div>
+        <div class="nc-item-body">
+          <div>
+            <div class="nc-cat">Fed · Rates</div>
+            <div class="nc-item-title">FOMC Holds at 4.25–4.50% — Powell: "No Rush to Cut"; 10Y Yield Climbs to 4.31%</div>
+          </div>
+          <div class="nc-meta"><span class="nc-src">Bloomberg</span><span class="nc-time">3h ago</span></div>
+        </div>
+      </a>
+      <a href="markets.html" class="nc-item">
+        <div class="nc-item-img nc-ii-tech">
+          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
+            <text x="50%" y="58%" text-anchor="middle" font-size="28" fill="#00a651" font-family="monospace">AI</text>
+          </svg>
+        </div>
+        <div class="nc-item-body">
+          <div>
+            <div class="nc-cat">Tech · AI</div>
+            <div class="nc-item-title">NVDA +1.63% — Blackwell GPU Demand Exceeds Supply Through Q3; Data Center Capex Cycle Intact</div>
+          </div>
+          <div class="nc-meta"><span class="nc-src">CNBC</span><span class="nc-time">4h ago</span></div>
+        </div>
+      </a>
+      <a href="markets.html" class="nc-item">
+        <div class="nc-item-img nc-ii-vix">
+          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
+            <text x="50%" y="58%" text-anchor="middle" font-size="22" fill="#e5322d" font-family="monospace">VIX</text>
+          </svg>
+        </div>
+        <div class="nc-item-body">
+          <div>
+            <div class="nc-cat">Volatility · Risk</div>
+            <div class="nc-item-title">VIX Spikes to 22.80 — Vol Term Structure Inverts; Options Market Pricing 3-Week Expansion Window</div>
+          </div>
+          <div class="nc-meta"><span class="nc-src">Financial Times</span><span class="nc-time">5h ago</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom row: 3 equal cards -->
+  <div class="news-row2">
+    <a href="research.html" class="nc-card">
+      <div class="nc-cat">Microstructure</div>
+      <div class="nc-card-title">Dark Pool Volume Hits 47% of Total US Equity Flow — ATS Activity at 4-Year High, Accumulation Pattern Detected</div>
+      <div class="nc-card-exrp">Off-exchange institutional activity at historic levels. VPIN toxicity signal elevated across AAPL, NVDA, and SPY. Directional move expected within 3-week window.</div>
+      <div class="nc-meta"><span class="nc-src">Microstructure Research</span><span class="nc-time">6h ago</span></div>
+    </a>
+    <a href="markets.html" class="nc-card">
+      <div class="nc-cat">Fixed Income</div>
+      <div class="nc-card-title">10Y–2Y Yield Curve Re-Inverts After Brief Normalization — Duration Risk Returns to Center Stage</div>
+      <div class="nc-card-exrp">Stronger-than-expected CPI pushes real yields to 2.1% on the 10Y. Markets repricing Fed path — first cut now priced for September 2026 at latest.</div>
+      <div class="nc-meta"><span class="nc-src">Wall Street Journal</span><span class="nc-time">7h ago</span></div>
+    </a>
+    <a href="papers.html" class="nc-card">
+      <div class="nc-cat">Quant · Systematic</div>
+      <div class="nc-card-title">Systematic Funds Unwind Momentum Positions — Factor Crowding Risk Elevated Across Mag-7 Complex</div>
+      <div class="nc-card-exrp">Quant deleveraging event detected via order flow analysis. Sector rotation into value and quality factors. HRP-based portfolios outperforming by 180bps YTD.</div>
+      <div class="nc-meta"><span class="nc-src">Institutional Investor</span><span class="nc-time">8h ago</span></div>
+    </a>
   </div>
 </div>
 

@@ -1325,7 +1325,7 @@ button{cursor:pointer;font-family:inherit}
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 certurk23 Research Lab. For informational and academic purposes only. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <span>© 2026 Certurk Quant Research Lab. All rights reserved. Registered Research Entity. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
     <div style="display:flex;gap:8px">
       <span class="fbadge g">Open Research</span>
       <span class="fbadge">Non-Commercial</span>
@@ -1366,7 +1366,7 @@ const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2
 
 /* Symbol map: Yahoo Finance format → Finnhub compatible */
 const SYM_MAP = {
-  'GC=F':      'GLD',    /* Gold → SPDR Gold ETF (mirrors % change) */
+  'GC=F':      '__XAU',  /* Gold → via open.er-api.com (XAU spot rate) */
   'CL=F':      'USO',    /* WTI  → US Oil Fund ETF (mirrors % change) */
   'DX-Y.NYB':  'UUP',   /* DXY  → Invesco USD ETF proxy */
   'EURUSD=X':  '__EUR',  /* via open.er-api.com */
@@ -1396,7 +1396,8 @@ async function yf(sym) {
       else if (m === '__BTC') {
         const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
         const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else {
+      } else if (m === '__XAU') { const f = await loadFx(); v = f?.XAU ? {price:+(1/f.XAU).toFixed(2),chg:0,pts:0} : null; }
+      else {
         const fhSym = m || sym;
         const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`, {signal:AbortSignal.timeout(8000)});
         if (r.status === 429) { delete _yfp[sym]; return _yfc[sym]?.v ?? null; } /* rate-limit: return stale */
@@ -1411,10 +1412,7 @@ const batch = syms => Promise.all(syms.map(yf));
 
 /* --- Market Bar --- */
 const MBAR = [
-  {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'DX-Y.NYB',l:'DXY'},
-  {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
-  {s:'AAPL',l:'AAPL'},{s:'MSFT',l:'MSFT'},{s:'NVDA',l:'NVDA'},
-  {s:'AMZN',l:'AMZN'},{s:'META',l:'META'},{s:'TSLA',l:'TSLA'},{s:'GOOGL',l:'GOOGL'},
+  {s:'GC=F',l:'Gold'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
   const res = await batch(MBAR.map(x => x.s));

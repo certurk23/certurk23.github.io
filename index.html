@@ -689,7 +689,8 @@ button{cursor:pointer;font-family:inherit}
 @media(max-width:1100px){.news-grid{grid-template-columns:1fr 280px}}
 @media(max-width:760px){.news-grid{grid-template-columns:1fr}.nc-col{display:none}.news-row2{grid-template-columns:1fr}}
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -1372,7 +1373,9 @@ const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2
 
 /* Symbol map: Yahoo Finance format → Finnhub compatible */
 const SYM_MAP = {
-  'GC=F':      '__XAU',  /* Gold → via open.er-api.com XAU rate */
+  'GC=F':      'GLD',    /* Gold → SPDR Gold ETF (mirrors % change) */
+  'CL=F':      'USO',    /* WTI  → US Oil Fund ETF (mirrors % change) */
+  'DX-Y.NYB':  'UUP',   /* DXY  → Invesco USD ETF proxy */
   'EURUSD=X':  '__EUR',  /* via open.er-api.com */
   'GBPUSD=X':  '__GBP',  /* via open.er-api.com */
   'BTC-USD':   '__BTC',  /* via CoinGecko */
@@ -1400,8 +1403,7 @@ async function yf(sym) {
       else if (m === '__BTC') {
         const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
         const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else if (m === '__XAU') { const f = await loadFx(); v = f?.XAU ? {price:+(1/f.XAU).toFixed(2),chg:0,pts:0} : null; }
-      else {
+      } else {
         const fhSym = m || sym;
         const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`, {signal:AbortSignal.timeout(8000)});
         if (r.status === 429) { delete _yfp[sym]; return _yfc[sym]?.v ?? null; } /* rate-limit: return stale */

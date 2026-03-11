@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QUANT_MEDIA — US Financial Intelligence | certurk23</title>
@@ -28,8 +27,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://certurk23.github.io/","name":"QUANT_MEDIA","url":"https://certurk23.github.io/","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","author":{"@type":"Person","name":"certurk23","url":"https://certurk23.github.io/about.html"},"potentialAction":{"@type":"SearchAction","target":"https://certurk23.github.io/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"https://certurk23.github.io/#webpage","url":"https://certurk23.github.io/","name":"QUANT_MEDIA — US Financial Intelligence | certurk23","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","isPartOf":{"@id":"https://certurk23.github.io/"},"dateModified":"2026-03-11"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <style>
 /* ============================================================
    QUANTMEDIA — DESIGN SYSTEM
@@ -689,6 +688,8 @@ button{cursor:pointer;font-family:inherit}
 .nc-chart-svg{position:absolute;bottom:0;left:0;right:0;opacity:.25}
 @media(max-width:1100px){.news-grid{grid-template-columns:1fr 280px}}
 @media(max-width:760px){.news-grid{grid-template-columns:1fr}.nc-col{display:none}.news-row2{grid-template-columns:1fr}}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -1371,9 +1372,7 @@ const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2
 
 /* Symbol map: Yahoo Finance format → Finnhub compatible */
 const SYM_MAP = {
-  'GC=F':      'GLD',    /* Gold → SPDR Gold ETF (mirrors % change) */
-  'CL=F':      'USO',    /* WTI  → US Oil Fund ETF (mirrors % change) */
-  'DX-Y.NYB':  'UUP',   /* DXY  → Invesco USD ETF proxy */
+  'GC=F':      '__XAU',  /* Gold → via open.er-api.com XAU rate */
   'EURUSD=X':  '__EUR',  /* via open.er-api.com */
   'GBPUSD=X':  '__GBP',  /* via open.er-api.com */
   'BTC-USD':   '__BTC',  /* via CoinGecko */
@@ -1401,7 +1400,8 @@ async function yf(sym) {
       else if (m === '__BTC') {
         const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
         const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else {
+      } else if (m === '__XAU') { const f = await loadFx(); v = f?.XAU ? {price:+(1/f.XAU).toFixed(2),chg:0,pts:0} : null; }
+      else {
         const fhSym = m || sym;
         const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`, {signal:AbortSignal.timeout(8000)});
         if (r.status === 429) { delete _yfp[sym]; return _yfc[sym]?.v ?? null; } /* rate-limit: return stale */

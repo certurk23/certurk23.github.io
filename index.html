@@ -1419,7 +1419,8 @@ const batch = syms => Promise.all(syms.map(yf));
 
 /* --- Market Bar --- */
 const MBAR = [
-  {s:'GC=F',l:'Gold'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
+  {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},
+  {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
   const res = await batch(MBAR.map(x => x.s));

@@ -5,4 +5,4 @@ Disallow: /.claude/
 Disallow: /_fix_all_pages.py
 Disallow: /privacy.html
 
-Sitemap: https://certurk23.github.io/sitemap.xml
+Sitemap: https://quantmedia.io/sitemap.xml

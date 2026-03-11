@@ -1243,7 +1243,7 @@ const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
-const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC'};
+const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','^GSPC':'SPY','^IXIC':'QQQ','^DJI':'DIA','^RUT':'IWM','^VIX':'VIXY'};
 let _fx=null,_fxT=0,_yfc={},_yfp={};
 async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
 async function yf(sym){

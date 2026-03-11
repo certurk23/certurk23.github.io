@@ -1403,7 +1403,7 @@ async function yf(sym) {
       else if (m === '__BTC') {
         const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
         const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else if (m === '__XAU') { const f = await loadFx(); v = f?.XAU ? {price:+(1/f.XAU).toFixed(2),chg:0,pts:0} : null; }
+      } else if (m === '__XAU') { const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};} }
       else {
         const fhSym = m || sym;
         const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`, {signal:AbortSignal.timeout(8000)});

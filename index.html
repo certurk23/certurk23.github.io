@@ -729,10 +729,10 @@ button{cursor:pointer;font-family:inherit}
     <nav class="main-nav">
       <a href="index.html" class="active">Home</a>
       <a href="markets.html">Markets</a>
+      <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
       <a href="papers.html">Analysis</a>
       <a href="research.html">Research</a>
-      <a href="infrastructure.html">Infrastructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -760,10 +760,10 @@ button{cursor:pointer;font-family:inherit}
 <div class="mobile-nav" id="mobileNav">
   <a href="index.html" class="active">Home</a>
   <a href="markets.html">Markets</a>
+  <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
   <a href="papers.html">Analysis</a>
   <a href="research.html">Research</a>
-  <a href="infrastructure.html">Infrastructure</a>
   <a href="about.html">About</a>
 </div>
 
@@ -1348,36 +1348,28 @@ async function loadSnapshot() {
   }).join('');
 }
 
-/* --- Movers (Dynamic) --- */
+/* --- Movers (Dynamic — 15 stocks, parallel fetch) --- */
 const WATCHLIST = [
-  {s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},{s:'NVDA',n:'NVIDIA Corp.'},
-  {s:'AMZN',n:'Amazon.com'},{s:'META',n:'Meta Platforms'},{s:'TSLA',n:'Tesla Inc.'},
-  {s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},{s:'JPM',n:'JPMorgan Chase'},
-  {s:'V',n:'Visa Inc.'},{s:'MA',n:'Mastercard'},{s:'LLY',n:'Eli Lilly'},
-  {s:'UNH',n:'UnitedHealth'},{s:'XOM',n:'Exxon Mobil'},{s:'HD',n:'Home Depot'},
-  {s:'PG',n:'Procter & Gamble'},{s:'JNJ',n:'Johnson & Johnson'},{s:'ORCL',n:'Oracle Corp.'},
-  {s:'MRK',n:'Merck & Co.'},{s:'ABBV',n:'AbbVie Inc.'},{s:'CVX',n:'Chevron Corp.'},
-  {s:'WMT',n:'Walmart Inc.'},{s:'BAC',n:'Bank of America'},{s:'GS',n:'Goldman Sachs'},
-  {s:'AMD',n:'Advanced Micro'},{s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},
-  {s:'BA',n:'Boeing Co.'},{s:'DIS',n:'Walt Disney'},{s:'NFLX',n:'Netflix Inc.'},
+  {s:'NVDA',n:'NVIDIA Corp.'},{s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},
+  {s:'TSLA',n:'Tesla Inc.'},{s:'AMD',n:'Advanced Micro'},{s:'META',n:'Meta Platforms'},
+  {s:'AMZN',n:'Amazon.com'},{s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},
+  {s:'JPM',n:'JPMorgan Chase'},{s:'NFLX',n:'Netflix Inc.'},{s:'BA',n:'Boeing Co.'},
+  {s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},{s:'DIS',n:'Walt Disney'},
 ];
 let GAINERS_LIVE = [], LOSERS_LIVE = [];
 let moversMode = 'gain';
 
 async function loadMovers() {
-  const results = [];
-  for (let i = 0; i < WATCHLIST.length; i += 10) {
-    const chunk = WATCHLIST.slice(i, i + 10);
-    const r = await Promise.all(chunk.map(w => yf(w.s)));
-    results.push(...r);
-    if (i + 10 < WATCHLIST.length) await new Promise(r => setTimeout(r, 1500));
-  }
-  const pairs = WATCHLIST.map((w, i) => ({s:w.s, n:w.n, p:results[i]?.chg || 0}))
-    .filter(x => x.p !== 0);
-  pairs.sort((a, b) => b.p - a.p);
-  GAINERS_LIVE = pairs.filter(x => x.p > 0).slice(0, 6);
-  LOSERS_LIVE = pairs.filter(x => x.p < 0).slice(-6).reverse();
-  showMovers(moversMode);
+  try {
+    const results = await Promise.all(WATCHLIST.map(w => yf(w.s)));
+    const pairs = WATCHLIST.map((w, i) => ({s:w.s, n:w.n, p:results[i]?.chg || 0}))
+      .filter(x => x.p !== 0);
+    if (pairs.length === 0) return;
+    pairs.sort((a, b) => b.p - a.p);
+    GAINERS_LIVE = pairs.filter(x => x.p > 0).slice(0, 6);
+    LOSERS_LIVE = pairs.filter(x => x.p < 0).reverse().slice(0, 6);
+    showMovers(moversMode);
+  } catch {}
 }
 
 function showMovers(mode) {
@@ -1386,7 +1378,7 @@ function showMovers(mode) {
   document.getElementById('tabLose').className = 'mover-tab ' + (mode==='lose' ? 'lose-active' : 'inactive');
   const data = mode === 'gain' ? GAINERS_LIVE : LOSERS_LIVE;
   if (data.length === 0) {
-    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Loading live data...</div>';
+    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Loading...</div>';
     return;
   }
   document.getElementById('moversPanel').innerHTML = data.map((m, i) => {

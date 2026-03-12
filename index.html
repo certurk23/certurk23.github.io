@@ -1299,8 +1299,9 @@ function toggleTheme() {
 }
 
 /* ============================================================
-   MARKET DATA — Finnhub (CORS-native) + CoinGecko (BTC)
+   MARKET DATA — FMP Batch (primary) + CoinGecko + open.er-api
    ============================================================ */
+const FMP_KEY = 'k3CDDPQlbJ0E5f82DLAoDJGtV3BQd1CV';
 const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
 
 const fmt  = (n, d=2) => n == null || isNaN(n) ? '--' : n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
@@ -1309,48 +1310,29 @@ const cls  = v => v > 0 ? 'up' : v < 0 ? 'dn' : 'nt';
 const sgn  = v => v > 0 ? '+' : '';
 const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2-digit', minute:'2-digit'});
 
-/* Symbol map: Yahoo Finance format → Finnhub compatible */
-const SYM_MAP = {
-  'GC=F':      '__XAU',  /* Gold → via open.er-api.com XAU rate */
-  'CL=F':      'USO',    /* WTI  → US Oil Fund ETF (mirrors % change) */
-  'DX-Y.NYB':  'UUP',   /* DXY  → Invesco USD ETF proxy */
-  'EURUSD=X':  '__EUR',  /* via open.er-api.com */
-  'GBPUSD=X':  '__GBP',  /* via open.er-api.com */
-  'BTC-USD':   '__BTC',  /* via CoinGecko */
-  '^GSPC':     'SPY',    /* S&P 500 → SPDR S&P 500 ETF */
-  '^IXIC':     'QQQ',    /* NASDAQ  → Invesco QQQ ETF */
-  '^DJI':      'DIA',    /* Dow Jones → SPDR Dow Jones ETF */
-  '^RUT':      'IWM',    /* Russell 2000 → iShares Russell 2000 ETF */
-  '^VIX':      'VIXY',   /* VIX → ProShares VIX Short-Term ETF */
+/* Special symbols routed to non-FMP sources */
+const SPECIAL = {
+  'GC=F':     '__XAU',
+  'CL=F':     '__WTI',
+  'EURUSD=X': '__EUR',
+  'GBPUSD=X': '__GBP',
+  'BTC-USD':  '__BTC',
+};
+
+/* FMP symbol map: friendly names → FMP symbols for indices */
+const FMP_MAP = {
+  '^GSPC': '^GSPC',
+  '^IXIC': '^IXIC',
+  '^DJI':  '^DJI',
+  '^RUT':  '^RUT',
+  '^VIX':  '^VIX',
 };
 
 /* Forex via open.er-api.com — free, no key, CORS-enabled */
 let _fx = null, _fxT = 0, _yfc = {}, _yfp = {};
-/* Restore cache from sessionStorage — persists across page navigations, 2min TTL */
 const CACHE_TTL = 120000;
 try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<CACHE_TTL)_yfc[k]=parsed[k];}}}catch{}
 function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
-
-/* Finnhub queue: sequential 1-per-second with retry on 429 */
-let _fhQueue=[], _fhRunning=false;
-function _enqueueFH(fhSym){return new Promise(resolve=>{_fhQueue.push({sym:fhSym,resolve});if(!_fhRunning)_drainFH();});}
-async function _drainFH(){
-  _fhRunning=true;
-  while(_fhQueue.length){
-    const {sym,resolve}=_fhQueue.shift();
-    let retries=2;
-    while(retries>=0){
-      try{
-        const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
-        if(r.status===429){retries--;if(retries>=0){await new Promise(w=>setTimeout(w,3000));continue;}resolve(_yfc[sym]?.v||null);break;}
-        if(r.ok){const d=await r.json();resolve(d.c&&d.c!==0?{price:d.c,chg:d.dp||0,pts:d.d||0}:null);break;}
-        resolve(null);break;
-      }catch{resolve(null);break;}
-    }
-    if(_fhQueue.length)await new Promise(w=>setTimeout(w,1050));
-  }
-  _fhRunning=false;
-}
 
 async function loadFx() {
   if (_fx && Date.now() - _fxT < 60000) return _fx;
@@ -1360,26 +1342,92 @@ async function loadFx() {
   } catch { return null; }
 }
 
-/* Unified quote: 2min cache + dedup + stale fallback on 429 */
+/* FMP batch fetch — ONE call gets ALL stock/index quotes */
+let _fmpCache = {}, _fmpT = 0, _fmpPromise = null;
+async function _fmpBatch(symbols) {
+  /* Return from cache if fresh */
+  if (Date.now() - _fmpT < CACHE_TTL && symbols.every(s => _fmpCache[s])) {
+    return symbols.map(s => _fmpCache[s]);
+  }
+  /* Deduplicate concurrent calls */
+  if (!_fmpPromise) {
+    _fmpPromise = (async () => {
+      try {
+        /* Collect ALL FMP-routed symbols from current page for ONE mega-batch */
+        const allFmp = [...new Set(symbols)];
+        const url = `https://financialmodelingprep.com/api/v3/quote/${allFmp.map(encodeURIComponent).join(',')}?apikey=${FMP_KEY}`;
+        const r = await fetch(url, {signal: AbortSignal.timeout(10000)});
+        if (!r.ok) throw new Error(r.status);
+        const data = await r.json();
+        if (Array.isArray(data)) {
+          data.forEach(q => {
+            _fmpCache[q.symbol] = {
+              price: q.price,
+              chg: q.changesPercentage || 0,
+              pts: q.change || 0
+            };
+          });
+        }
+        _fmpT = Date.now();
+      } catch(e) { console.warn('FMP batch error:', e); }
+      _fmpPromise = null;
+    })();
+  }
+  await _fmpPromise;
+  return symbols.map(s => _fmpCache[s] || null);
+}
+
+/* Unified quote: routes to FMP (stocks/indices), CoinGecko (crypto/gold), open.er-api (forex) */
 async function yf(sym) {
   if (_yfc[sym] && Date.now() - _yfc[sym].ts < CACHE_TTL) return _yfc[sym].v;
   if (_yfp[sym]) return _yfp[sym];
   const p = (async () => {
-    const m = SYM_MAP[sym]; let v = null;
+    const sp = SPECIAL[sym]; let v = null;
     try {
-      if (m === '__EUR') { const f = await loadFx(); v = f?.EUR ? {price:+(1/f.EUR).toFixed(5),chg:0,pts:0} : null; }
-      else if (m === '__GBP') { const f = await loadFx(); v = f?.GBP ? {price:+(1/f.GBP).toFixed(5),chg:0,pts:0} : null; }
-      else if (m === '__BTC') {
+      if (sp === '__EUR') { const f = await loadFx(); v = f?.EUR ? {price:+(1/f.EUR).toFixed(5),chg:0,pts:0} : null; }
+      else if (sp === '__GBP') { const f = await loadFx(); v = f?.GBP ? {price:+(1/f.GBP).toFixed(5),chg:0,pts:0} : null; }
+      else if (sp === '__BTC') {
         const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
         const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else if (m === '__XAU') { const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};} }
-      else { const fhSym = m || sym; v = await _enqueueFH(fhSym); }
+      } else if (sp === '__XAU') {
+        const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});
+        const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}
+      } else if (sp === '__WTI') {
+        const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=crude-oil&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)}).catch(()=>null);
+        if(r&&r.ok){const d=await r.json();if(d['crude-oil']){const p=d['crude-oil'].usd,c=d['crude-oil'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
+        /* Fallback: FMP for WTI */
+        if(!v){const res=await _fmpBatch(['USOIL']);v=res[0]||null;}
+      } else {
+        /* FMP route: indices use FMP_MAP, stocks use symbol directly */
+        const fmpSym = FMP_MAP[sym] || sym;
+        const res = await _fmpBatch([fmpSym]);
+        v = res[0] || null;
+      }
     } catch {}
     _yfc[sym] = {v, ts: Date.now()}; delete _yfp[sym]; _saveCache(); return v;
   })();
   return (_yfp[sym] = p);
 }
-const batch = syms => Promise.all(syms.map(yf));
+
+/* Smart batch: groups FMP symbols into one call, fires special sources in parallel */
+async function batch(syms) {
+  const fmpSyms = [], fmpIdx = [], others = [];
+  syms.forEach((sym, i) => {
+    if (SPECIAL[sym]) { others.push({i, sym}); }
+    else { const fs = FMP_MAP[sym] || sym; fmpSyms.push(fs); fmpIdx.push({i, fs}); }
+  });
+  const results = new Array(syms.length).fill(null);
+  /* Fire FMP batch + special sources in parallel */
+  const [fmpData] = await Promise.all([
+    fmpSyms.length ? _fmpBatch(fmpSyms) : Promise.resolve([]),
+    ...others.map(async ({i, sym}) => { results[i] = await yf(sym); })
+  ]);
+  fmpIdx.forEach(({i, fs}, j) => {
+    const d = fmpData[j]; if(d) { results[i] = d; _yfc[syms[i]]={v:d,ts:Date.now()}; }
+  });
+  _saveCache();
+  return results;
+}
 
 /* --- Market Bar --- */
 const MBAR = [

@@ -697,6 +697,26 @@ button{cursor:pointer;font-family:inherit}
 .nc-chart-svg{position:absolute;bottom:0;left:0;right:0;opacity:.25}
 @media(max-width:1100px){.news-grid{grid-template-columns:1fr 280px}}
 @media(max-width:760px){.news-grid{grid-template-columns:1fr}.nc-col{display:none}.news-row2{grid-template-columns:1fr}}
+
+/* SEARCH OVERLAY */
+.search-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;align-items:flex-start;justify-content:center;padding-top:min(18vh,140px)}
+.search-overlay.open{display:flex}
+.search-box{width:min(600px,92vw);background:var(--bg2);border:1px solid var(--bd2);border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden}
+.search-input-wrap{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--bd)}
+.search-input-wrap svg{flex-shrink:0;color:var(--dim)}
+.search-input{flex:1;background:none;border:none;outline:none;color:var(--text);font-family:'Barlow',sans-serif;font-size:16px}
+.search-input::placeholder{color:var(--dimmer)}
+.search-kbd{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dimmer);border:1px solid var(--bd2);border-radius:3px;padding:2px 6px;flex-shrink:0}
+.search-results{max-height:360px;overflow-y:auto;padding:6px 0}
+.search-results:empty::after{content:'Type to search pages, papers, and topics...';display:block;padding:20px 18px;font-size:13px;color:var(--dimmer);text-align:center}
+.search-results.has-query:empty::after{content:'No results found'}
+.sr-item{display:flex;align-items:center;gap:12px;padding:10px 18px;cursor:pointer;transition:background .1s}
+.sr-item:hover,.sr-item.active{background:var(--bg3)}
+.sr-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--green);background:rgba(0,166,81,.1);padding:2px 8px;border-radius:2px;flex-shrink:0;min-width:50px;text-align:center}
+.sr-tag.page{color:var(--blue);background:rgba(30,136,229,.1)}
+.sr-tag.paper{color:var(--gold);background:rgba(245,166,35,.1)}
+.sr-title{font-size:13px;color:var(--text)}
+.sr-sub{font-size:11px;color:var(--dim)}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251"
      crossorigin="anonymous"></script>
@@ -747,7 +767,7 @@ button{cursor:pointer;font-family:inherit}
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
       </button>
-      <button class="btn-icon" title="Search">
+      <button class="btn-icon" title="Search" onclick="openSearch()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
@@ -756,6 +776,18 @@ button{cursor:pointer;font-family:inherit}
     </div>
   </div>
 </header>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input" id="searchInput" type="text" placeholder="Search pages, papers, topics..." autocomplete="off">
+      <span class="search-kbd">ESC</span>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
@@ -1594,6 +1626,80 @@ loadNews();
 loadHero();
 setInterval(loadNews, 300000);
 setInterval(loadHero, 300000);
+
+/* ============================================================
+   SITE SEARCH
+   ============================================================ */
+const SEARCH_INDEX = [
+  {t:'page', title:'Home', sub:'Homepage — market data, news, analysis', url:'index.html', kw:'home homepage ana sayfa'},
+  {t:'page', title:'Live Data', sub:'Real-time US market data dashboard', url:'markets.html', kw:'markets live data piyasa veri indices forex commodities crypto'},
+  {t:'page', title:'News', sub:'Financial news feed with category filters', url:'news.html', kw:'news haber haberler fed tech energy crypto earnings'},
+  {t:'page', title:'Equities', sub:'US stocks, sectors, gainers & losers', url:'stocks.html', kw:'stocks equities hisse senet sectors gainers losers'},
+  {t:'page', title:'Analysis', sub:'Research papers & quantitative studies', url:'papers.html', kw:'analysis papers makaleler research araştırma'},
+  {t:'page', title:'Research', sub:'Research overview & deep analysis', url:'research.html', kw:'research araştırma quant quantitative'},
+  {t:'page', title:'About', sub:'About QUANT_MEDIA & Certurk Research', url:'about.html', kw:'about hakkında certurk team'},
+  {t:'page', title:'Methodology', sub:'Data sources, editorial standards', url:'methodology.html', kw:'methodology metodoloji data sources kaynaklar'},
+  {t:'page', title:'Infrastructure', sub:'Trading stack & GPU infrastructure', url:'infrastructure.html', kw:'infrastructure altyapı gpu rtx cpu server'},
+  {t:'paper', title:'VPIN & Order Flow Toxicity', sub:'Paper 01 — Microstructure', url:'papers.html#vpin', kw:'vpin order flow toxicity microstructure dark pool'},
+  {t:'paper', title:'Low-Latency Stack: RTX 5090 & CPU', sub:'Paper 02 — Infrastructure', url:'papers.html#gpu-cpu', kw:'gpu cpu rtx 5090 latency trading stack'},
+  {t:'paper', title:'Hierarchical Risk Parity (HRP)', sub:'Paper 03 — Portfolio', url:'papers.html#hrp', kw:'hrp risk parity portfolio clustering'},
+  {t:'paper', title:'Probabilistic Sharpe Ratio', sub:'Paper 04 — Statistics', url:'papers.html#psr', kw:'psr sharpe ratio backtest overfitting'},
+  {t:'paper', title:'Bid-Ask Spread Dynamics', sub:'Paper 05 — Microstructure', url:'papers.html#spreads', kw:'spread bid ask microstructure execution'},
+  {t:'paper', title:'BIST Sentiment Analysis', sub:'Paper 06 — NLP / Turkish Market', url:'papers.html#bist-sentiment', kw:'bist sentiment nlp turkish borsa istanbul qwen llama'},
+  {t:'paper', title:'Sovereign AI: Local LLMs', sub:'Paper 07 — AI', url:'papers.html#sovereign-ai', kw:'sovereign ai llm local privacy bastion'},
+  {t:'paper', title:'Genetic Algorithm Alpha Discovery', sub:'Paper 08 — Optimization', url:'papers.html#genetic', kw:'genetic algorithm alpha optimization evolution'},
+  {t:'paper', title:'Slippage & Latency Modeling', sub:'Paper 09 — Execution', url:'papers.html#slippage', kw:'slippage latency backtest execution market impact'},
+  {t:'paper', title:'Alternate Data in Quant Finance', sub:'Paper 10 — Alt Data', url:'papers.html#alt-data', kw:'alternate data satellite nowcasting'},
+  {t:'paper', title:'HF Analytical Operations', sub:'Paper 11 — Analytics', url:'papers.html#vectorization', kw:'vectorization gpu analytics rolling window feature engineering'},
+  {t:'topic', title:'S&P 500', sub:'US Large Cap Index', url:'markets.html', kw:'spy spx sp500 s&p'},
+  {t:'topic', title:'NASDAQ', sub:'Tech-Heavy Composite', url:'markets.html', kw:'nasdaq qqq tech'},
+  {t:'topic', title:'Bitcoin & Crypto', sub:'Digital asset prices', url:'markets.html', kw:'bitcoin btc ethereum crypto kripto'},
+  {t:'topic', title:'Gold & Commodities', sub:'Precious metals, oil, gas', url:'markets.html', kw:'gold altın oil petrol commodity emtia wti'},
+  {t:'topic', title:'Forex', sub:'Currency exchange rates', url:'markets.html', kw:'forex döviz eur usd gbp currency'},
+  {t:'topic', title:'VIX & Volatility', sub:'Fear index & volatility', url:'markets.html', kw:'vix volatility volatilite korku'},
+];
+
+let _searchActive = -1;
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('open');
+  const inp = document.getElementById('searchInput');
+  inp.value = '';
+  inp.focus();
+  document.getElementById('searchResults').innerHTML = '';
+  document.getElementById('searchResults').className = 'search-results';
+  _searchActive = -1;
+}
+function closeSearch(){
+  document.getElementById('searchOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))){
+    e.preventDefault(); openSearch();
+  }
+  if(e.key === 'Escape') closeSearch();
+  if(!document.getElementById('searchOverlay').classList.contains('open')) return;
+  const items = document.querySelectorAll('.sr-item');
+  if(e.key === 'ArrowDown'){e.preventDefault();_searchActive=Math.min(_searchActive+1,items.length-1);items.forEach((el,i)=>el.classList.toggle('active',i===_searchActive));}
+  if(e.key === 'ArrowUp'){e.preventDefault();_searchActive=Math.max(_searchActive-1,0);items.forEach((el,i)=>el.classList.toggle('active',i===_searchActive));}
+  if(e.key === 'Enter' && _searchActive >= 0 && items[_searchActive]){items[_searchActive].click();}
+});
+document.getElementById('searchInput').addEventListener('input', function(){
+  const q = this.value.trim().toLowerCase();
+  const box = document.getElementById('searchResults');
+  box.className = 'search-results' + (q ? ' has-query' : '');
+  if(!q){box.innerHTML='';_searchActive=-1;return;}
+  const matches = SEARCH_INDEX.filter(item => {
+    const hay = (item.title + ' ' + item.sub + ' ' + item.kw).toLowerCase();
+    return q.split(/\s+/).every(word => hay.includes(word));
+  }).slice(0, 8);
+  _searchActive = -1;
+  box.innerHTML = matches.map(m =>
+    `<a href="${m.url}" class="sr-item">
+      <span class="sr-tag ${m.t}">${m.t}</span>
+      <div><div class="sr-title">${m.title}</div><div class="sr-sub">${m.sub}</div></div>
+    </a>`
+  ).join('');
+});
 </script>
 </body>
 </html>

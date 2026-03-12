@@ -18,6 +18,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Analysis — Quantitative Research &amp; Market Studies | QUANT_MEDIA">
 <meta name="twitter:description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
+<meta name="twitter:site" content="@quantmedia_io">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>
@@ -32,8 +33,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <style>
-:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
-[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--bd:#242424;--muted:#606060;--green:#00a651;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;--bd:#dcdcda;--muted:#999999;--green:#007a3d}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
@@ -308,6 +309,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
     <!-- ARTICLE INDEX -->
     <div class="section-header" id="index"><h2>Article Index</h2></div>
+    <div style="margin:0 0 12px;padding:8px 0 8px 10px;border-left:3px solid var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)">Core US Research</div>
     <div class="article-index">
       <a href="#vpin" class="art-card">
         <div class="art-num">01</div>
@@ -339,12 +341,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="art-card-abstract">Quoted, effective, and realized spreads as microstructure state variables. Decomposing the cost of immediacy for execution models.</div>
         <div class="art-tags"><span class="art-tag green">Microstructure</span><span class="art-tag">Spreads</span><span class="art-tag">Execution</span></div>
       </a>
-      <a href="#bist-sentiment" class="art-card">
-        <div class="art-num">06</div>
-        <div class="art-card-title">Sentiment Analysis in the Turkish Market (BIST)</div>
-        <div class="art-card-abstract">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.</div>
-        <div class="art-tags"><span class="art-tag blue">NLP</span><span class="art-tag">LLM</span><span class="art-tag green">BIST</span></div>
-      </a>
       <a href="#sovereign-ai" class="art-card">
         <div class="art-num">07</div>
         <div class="art-card-title">Sovereign AI: Local LLMs for Quant Research</div>
@@ -369,6 +365,25 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="art-card-abstract">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance and timestamp integrity.</div>
         <div class="art-tags"><span class="art-tag blue">Alt Data</span><span class="art-tag">ML</span><span class="art-tag">Nowcasting</span></div>
       </a>
+    </div>
+
+    <!-- Frontier / International index -->
+    <div style="margin:0 0 12px;padding:8px 0 8px 10px;border-left:3px solid var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)">Frontier / International</div>
+    <div class="article-index" style="margin-bottom:40px">
+      <a href="#bist-sentiment" class="art-card">
+        <div class="art-num">06</div>
+        <div class="art-card-title">Sentiment Analysis in the Turkish Market (BIST)</div>
+        <div class="art-card-abstract">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.</div>
+        <div class="art-tags"><span class="art-tag blue">NLP</span><span class="art-tag">LLM</span><span class="art-tag green">BIST</span></div>
+      </a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- CORE US RESEARCH                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div style="margin:0 0 24px;padding:16px 0;border-bottom:1px solid var(--bd)">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text);padding-left:10px;border-left:3px solid var(--green)">Core US Research</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;padding-left:13px">Market microstructure, portfolio theory, execution, and infrastructure</div>
     </div>
 
     <!-- ═══════════════════════════════════════════ -->
@@ -807,78 +822,9 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
     </article>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 06: BIST Sentiment -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>ML &amp; AI</h2></div>
-    <article class="paper-article" id="bist-sentiment">
-      <div class="paper-number">Paper 06</div>
-      <h1 class="paper-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h1>
-      <div class="paper-meta">
-        <span class="paper-tag blue">NLP</span>
-        <span class="paper-tag">LLM</span>
-        <span class="paper-tag green">BIST</span>
-        <span class="paper-tag">Qwen</span>
-        <span class="paper-tag">Llama</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Sentiment analysis in equities is easy to oversell and hard to do well. The useful version treats sentiment as a conditional forecast variable: a noisy signal that may explain cross-sectional returns, volatility, or volume once aligned to the correct event timestamp and trading horizon.</p>
-        <p>In the Turkish market, open-weight LLM ecosystems have matured significantly. Qwen has publicly released Qwen3-family weights, and Meta promotes Llama 4-family models and Llama Stack distributions for self-hosted workflows. That makes a local, Turkish-language financial NLP stack increasingly practical.</p>
-
-        <p>The central problem is label design. For a news item arriving at time \(t\), a common target is the forward return over horizon \(h\):</p>
-
-        <div class="math-block">
-          <div class="math-label">Forward Return Target</div>
-          $$r_{t,h} = \ln\left(\frac{P_{t+h}}{P_t}\right)$$
-        </div>
-
-        <p>A practical sentiment score can be defined as:</p>
-
-        <div class="math-block">
-          <div class="math-label">Sentiment Score</div>
-          $$s_t = p(\text{bullish} \mid x_t) - p(\text{bearish} \mid x_t)$$
-        </div>
-
-        <h3>Local Inference Prototype</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">bist_sentiment.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForSequenceClassification
-<span class="kw">import</span> torch
-
-model_name = <span class="str">"Qwen/Qwen3-8B"</span>  <span class="cm"># replace with local checkpoint</span>
-tokenizer  = <span class="fn">AutoTokenizer</span>.from_pretrained(model_name)
-model      = <span class="fn">AutoModelForSequenceClassification</span>.from_pretrained(model_name, num_labels=<span class="num">3</span>)
-
-texts = [
-    <span class="str">"Şirket, beklentilerin üzerinde net kar açıkladı ve yeni yatırım planı duyurdu."</span>,
-    <span class="str">"Faiz kararı sonrası banka hisselerinde satış baskısı artıyor."</span>
-]
-
-inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True</span>, truncation=<span class="kw">True</span>, return_tensors=<span class="str">"pt"</span>)
-<span class="kw">with</span> torch.no_grad():
-    logits = model(**inputs).logits
-    probs  = torch.softmax(logits, dim=-<span class="num">1</span>)
-
-<span class="fn">print</span>(probs)  <span class="cm"># [bearish, neutral, bullish]</span></pre></div>
-        </div>
-
-        <h3>Critical Pitfalls</h3>
-        <ul>
-          <li><strong>Leakage:</strong> if you label a news article with end-of-day return even though it arrived after the close, your backtest is contaminated</li>
-          <li><strong>Non-stationarity:</strong> macro regime changes, regulation, inflation cycles, and sector narratives can all alter the meaning of the same words over time</li>
-          <li><strong>Turkish morphology:</strong> off-the-shelf English finance sentiment models often misread Turkish context, especially in KAP-style disclosures</li>
-        </ul>
-
-        <p>The edge comes not from "using an LLM," but from building a time-aware, Turkish-native, market-aligned inference pipeline. The alpha comes from labeling discipline, entity resolution, and proper out-of-sample testing.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
     <!-- PAPER 07: Sovereign AI -->
     <!-- ═══════════════════════════════════════════ -->
+    <div class="section-header"><h2>ML &amp; AI</h2></div>
     <article class="paper-article" id="sovereign-ai">
       <div class="paper-number">Paper 07</div>
       <h1 class="paper-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</h1>
@@ -1147,6 +1093,83 @@ scores = []
       </div>
     </article>
 
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FRONTIER / INTERNATIONAL RESEARCH          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div style="margin:40px 0 24px;padding:16px 0;border-top:2px solid var(--bd);border-bottom:1px solid var(--bd)">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text);padding-left:10px;border-left:3px solid var(--gold)">Frontier / International Research</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;padding-left:13px">Experimental and non-US market research</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PAPER 06: BIST Sentiment -->
+    <!-- ═══════════════════════════════════════════ -->
+    <article class="paper-article" id="bist-sentiment">
+      <div class="paper-number">Paper 06</div>
+      <h1 class="paper-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h1>
+      <div class="paper-meta">
+        <span class="paper-tag blue">NLP</span>
+        <span class="paper-tag">LLM</span>
+        <span class="paper-tag green">BIST</span>
+        <span class="paper-tag">Qwen</span>
+        <span class="paper-tag">Llama</span>
+        <span class="paper-date">QUANT_MEDIA · 2026</span>
+      </div>
+      <div class="paper-body">
+        <p>Sentiment analysis in equities is easy to oversell and hard to do well. The useful version treats sentiment as a conditional forecast variable: a noisy signal that may explain cross-sectional returns, volatility, or volume once aligned to the correct event timestamp and trading horizon.</p>
+        <p>In the Turkish market, open-weight LLM ecosystems have matured significantly. Qwen has publicly released Qwen3-family weights, and Meta promotes Llama 4-family models and Llama Stack distributions for self-hosted workflows. That makes a local, Turkish-language financial NLP stack increasingly practical.</p>
+
+        <p>The central problem is label design. For a news item arriving at time \(t\), a common target is the forward return over horizon \(h\):</p>
+
+        <div class="math-block">
+          <div class="math-label">Forward Return Target</div>
+          $$r_{t,h} = \ln\left(\frac{P_{t+h}}{P_t}\right)$$
+        </div>
+
+        <p>A practical sentiment score can be defined as:</p>
+
+        <div class="math-block">
+          <div class="math-label">Sentiment Score</div>
+          $$s_t = p(\text{bullish} \mid x_t) - p(\text{bearish} \mid x_t)$$
+        </div>
+
+        <h3>Local Inference Prototype</h3>
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-filename">bist_sentiment.py</span>
+            <span class="code-lang">Python</span>
+          </div>
+          <div class="code-body"><pre><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForSequenceClassification
+<span class="kw">import</span> torch
+
+model_name = <span class="str">"Qwen/Qwen3-8B"</span>  <span class="cm"># replace with local checkpoint</span>
+tokenizer  = <span class="fn">AutoTokenizer</span>.from_pretrained(model_name)
+model      = <span class="fn">AutoModelForSequenceClassification</span>.from_pretrained(model_name, num_labels=<span class="num">3</span>)
+
+texts = [
+    <span class="str">"Şirket, beklentilerin üzerinde net kar açıkladı ve yeni yatırım planı duyurdu."</span>,
+    <span class="str">"Faiz kararı sonrası banka hisselerinde satış baskısı artıyor."</span>
+]
+
+inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True</span>, truncation=<span class="kw">True</span>, return_tensors=<span class="str">"pt"</span>)
+<span class="kw">with</span> torch.no_grad():
+    logits = model(**inputs).logits
+    probs  = torch.softmax(logits, dim=-<span class="num">1</span>)
+
+<span class="fn">print</span>(probs)  <span class="cm"># [bearish, neutral, bullish]</span></pre></div>
+        </div>
+
+        <h3>Critical Pitfalls</h3>
+        <ul>
+          <li><strong>Leakage:</strong> if you label a news article with end-of-day return even though it arrived after the close, your backtest is contaminated</li>
+          <li><strong>Non-stationarity:</strong> macro regime changes, regulation, inflation cycles, and sector narratives can all alter the meaning of the same words over time</li>
+          <li><strong>Turkish morphology:</strong> off-the-shelf English finance sentiment models often misread Turkish context, especially in KAP-style disclosures</li>
+        </ul>
+
+        <p>The edge comes not from "using an LLM," but from building a time-aware, Turkish-native, market-aligned inference pipeline. The alpha comes from labeling discipline, entity resolution, and proper out-of-sample testing.</p>
+      </div>
+    </article>
+
   </main>
 
   <!-- SIDEBAR -->
@@ -1158,11 +1181,11 @@ scores = []
       <a href="#hrp" class="toc-item"><span class="toc-num">03</span>Hierarchical Risk Parity</a>
       <a href="#psr" class="toc-item"><span class="toc-num">04</span>Probabilistic Sharpe Ratio</a>
       <a href="#spreads" class="toc-item"><span class="toc-num">05</span>Bid-Ask Spread Dynamics</a>
-      <a href="#bist-sentiment" class="toc-item"><span class="toc-num">06</span>BIST Sentiment (Qwen / Llama)</a>
       <a href="#sovereign-ai" class="toc-item"><span class="toc-num">07</span>Sovereign AI &amp; Local LLMs</a>
       <a href="#genetic" class="toc-item"><span class="toc-num">08</span>Genetic Algorithm Alpha Discovery</a>
       <a href="#slippage" class="toc-item"><span class="toc-num">09</span>Slippage &amp; Latency Modeling</a>
       <a href="#alt-data" class="toc-item"><span class="toc-num">10</span>Alternate Data in Quant Finance</a>
+      <a href="#bist-sentiment" class="toc-item" style="border-top:1px solid var(--gold)"><span class="toc-num" style="color:var(--gold)">06</span>BIST Sentiment (Qwen / Llama)</a>
     </div>
 
     <div class="widget">
@@ -1210,6 +1233,7 @@ scores = []
     <div class="ft-col">
       <h4>Lab</h4>
       <a href="about.html">About QUANT_MEDIA</a>
+      <a href="methodology.html">Methodology</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="markets.html">Markets</a>
       <a href="infrastructure.html">Infrastructure</a>

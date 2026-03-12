@@ -229,7 +229,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
-      <a href="markets.html">Markets</a>
+      <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html" class="active">Equities</a>
       <a href="papers.html">Analysis</a>
@@ -248,7 +248,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="index.html">Home</a>
-  <a href="markets.html">Markets</a>
+  <a href="markets.html">Live Data</a>
   <a href="news.html">News</a>
   <a href="stocks.html" class="active">Equities</a>
   <a href="papers.html">Analysis</a>
@@ -379,11 +379,24 @@ const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 const now=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
 
+let _tabLoaded={};
 function showTab(id,btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
+  loadTabData(id);
+}
+async function loadTabData(id){
+  if(_tabLoaded[id])return;
+  _tabLoaded[id]=true;
+  try{
+    if(id==='equities')await loadEquities();
+    else if(id==='gainers')loadMovers();
+    else if(id==='sectors')await loadSectors();
+    else if(id==='world')loadWorld();
+    else if(id==='indices')await loadIndices();
+  }catch(e){_tabLoaded[id]=false;}
 }
 
 const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
@@ -405,7 +418,6 @@ async function yf(sym){
     _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];return v;
   })();
   return(_yfp[sym]=p);
-}
 }
 const batchYF=syms=>Promise.all(syms.map(yf));
 
@@ -486,33 +498,33 @@ async function loadSectors(){
   }).join('');
 }
 
-// WORLD MARKETS
-const WMARKETS={
-  americas:[{n:'S&P 500',c:'USA',s:'^GSPC'},{n:'NASDAQ',c:'USA',s:'^IXIC'},{n:'Dow Jones',c:'USA',s:'^DJI'},{n:'TSX Composite',c:'Canada',s:'^GSPTSE'},{n:'Bovespa',c:'Brazil',s:'^BVSP'},{n:'IPC Mexico',c:'Mexico',s:'^MXX'}],
-  europe:[{n:'FTSE 100',c:'UK',s:'^FTSE'},{n:'DAX',c:'Germany',s:'^GDAXI'},{n:'CAC 40',c:'France',s:'^FCHI'},{n:'IBEX 35',c:'Spain',s:'^IBEX'},{n:'AEX',c:'Netherlands',s:'^AEX'},{n:'SMI',c:'Switzerland',s:'^SSMI'}],
-  asia:[{n:'Nikkei 225',c:'Japan',s:'^N225'},{n:'Hang Seng',c:'Hong Kong',s:'^HSI'},{n:'Shanghai',c:'China',s:'000001.SS'},{n:'ASX 200',c:'Australia',s:'^AXJO'},{n:'KOSPI',c:'South Korea',s:'^KS11'},{n:'Sensex',c:'India',s:'^BSESN'}],
-};
-async function loadWorld(){
-  const allSyms=[...WMARKETS.americas,...WMARKETS.europe,...WMARKETS.asia].map(x=>x.s);
-  const res=await batchYF(allSyms);
-  let idx=0;
-  for(const[region,id] of [['americas','wAmericas'],['europe','wEurope'],['asia','wAsia']]){
-    document.getElementById(id).innerHTML=WMARKETS[region].map(m=>{
-      const r=res[idx++];const c=cls(r?.chg);
-      return`<div class="wcell">
-        <div class="wcell-left"><div class="wname">${m.n}</div><div class="wcountry">${m.c}</div></div>
-        <div class="wcell-right">
-          <div class="wprice">${r?fmt(r.price,r.price>1000?0:2):'--'}</div>
-          <div class="wchg ${c}">${r?pct(r.chg):'--'}</div>
-        </div>
-      </div>`;}).join('');
-  }
+// WORLD MARKETS — TradingView widget (Finnhub doesn't support intl indices)
+function loadWorld(){
+  document.getElementById('wAmericas').innerHTML='';
+  document.getElementById('wEurope').innerHTML='';
+  document.getElementById('wAsia').innerHTML='';
+  const container=document.getElementById('tab-world');
+  const existing=container.querySelector('.tradingview-widget-container');
+  if(existing)return;
+  const wrap=document.createElement('div');
+  wrap.className='tradingview-widget-container';
+  wrap.style.marginTop='16px';
+  wrap.innerHTML='<div class="tradingview-widget-container__widget"></div>';
+  const sc=document.createElement('script');
+  sc.type='text/javascript';
+  sc.src='https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+  sc.async=true;
+  sc.textContent=JSON.stringify({"colorTheme":document.documentElement.getAttribute('data-theme')==='light'?'light':'dark',"dateRange":"1D","showChart":false,"locale":"en","largeChartUrl":"","isTransparent":true,"showSymbolLogo":true,"showFloatingTooltip":false,"width":"100%","height":"600","tabs":[{"title":"Americas","symbols":[{"s":"FOREXCOM:SPXUSD","d":"S&P 500"},{"s":"FOREXCOM:NSXUSD","d":"Nasdaq 100"},{"s":"DJ:DJI","d":"Dow Jones"},{"s":"INDEX:NQ100","d":"Nasdaq 100"},{"s":"CAPITALCOM:RTY","d":"Russell 2000"}]},{"title":"Europe","symbols":[{"s":"CAPITALCOM:UK100","d":"FTSE 100"},{"s":"CAPITALCOM:DE40","d":"DAX"},{"s":"INDEX:CAC40","d":"CAC 40"},{"s":"CAPITALCOM:EU50","d":"Euro Stoxx 50"}]},{"title":"Asia","symbols":[{"s":"INDEX:NKY","d":"Nikkei 225"},{"s":"INDEX:HSI","d":"Hang Seng"},{"s":"SSE:000001","d":"Shanghai Composite"},{"s":"CAPITALCOM:AU200","d":"ASX 200"}]}]});
+  wrap.appendChild(sc);
+  const sections=container.querySelectorAll('.world-section');
+  sections.forEach(s=>s.style.display='none');
+  container.appendChild(wrap);
 }
 
 // INDICES TAB
 const IDX2=[
-  [{sym:'^GSPC',l:'S&P 500',f:'US Large Cap'},{sym:'^IXIC',l:'NASDAQ',f:'Composite'},{sym:'^DJI',l:'Dow Jones',f:'Industrial Avg'},{sym:'^RUT',l:'Russell 2000',f:'Small Cap'},{sym:'^VIX',l:'VIX',f:'Volatility Index'},{sym:'^SOX',l:'SOX',f:'Semiconductor'}],
-  [{sym:'GC=F',l:'Gold',f:'$/oz'},{sym:'CL=F',l:'WTI Oil',f:'$/bbl'},{sym:'^TNX',l:'10Y Yield',f:'US Treasury'},{sym:'DX-Y.NYB',l:'DXY',f:'Dollar Index'},{sym:'SI=F',l:'Silver',f:'$/oz'},{sym:'BZ=F',l:'Brent',f:'$/bbl'}],
+  [{sym:'^GSPC',l:'S&P 500',f:'US Large Cap'},{sym:'^IXIC',l:'NASDAQ',f:'Composite'},{sym:'^DJI',l:'Dow Jones',f:'Industrial Avg'},{sym:'^RUT',l:'Russell 2000',f:'Small Cap'},{sym:'^VIX',l:'VIX',f:'Volatility Index'},{sym:'SMH',l:'SMH',f:'Semiconductor ETF'}],
+  [{sym:'GC=F',l:'Gold',f:'$/oz'},{sym:'CL=F',l:'WTI Oil',f:'$/bbl'},{sym:'TLT',l:'TLT',f:'20+ Year Treasury'},{sym:'DX-Y.NYB',l:'DXY',f:'Dollar Index'},{sym:'SI=F',l:'Silver',f:'$/oz'},{sym:'BZ=F',l:'Brent',f:'$/bbl'}],
 ];
 async function loadIndices(){
   const res=await Promise.all(IDX2.map(grp=>batchYF(grp.map(x=>x.sym))));
@@ -532,8 +544,13 @@ const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD
 async function loadMbar(){const res=await Promise.all(MBAR.map(m=>yf(m.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
 
 async function loadAll(){
-  await Promise.all([loadIdxStrip(),loadEquities(),loadSectors(),loadWorld(),loadIndices(),loadMbar()]);
-  loadMovers();
+  _tabLoaded={};
+  await Promise.all([loadIdxStrip(),loadMbar()]);
+  // Load only the active tab
+  const activeTab=document.querySelector('.tab-btn.active');
+  const tabId=activeTab?activeTab.textContent.trim().toLowerCase().replace(/ .*/,''):'equities';
+  const tabMap={'equities':'equities','gainers':'gainers','sectors':'sectors','world':'world','indices':'indices'};
+  await loadTabData(tabMap[tabId]||'equities');
   document.getElementById('lastUp').textContent='Live data feed — last update: '+now()+' · refreshes every 60s';
 }
 loadAll();setInterval(loadAll,60000);

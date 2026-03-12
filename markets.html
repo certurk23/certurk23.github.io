@@ -214,7 +214,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
-      <a href="markets.html" class="active">Markets</a>
+      <a href="markets.html" class="active">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
       <a href="papers.html">Analysis</a>
@@ -233,7 +233,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="index.html">Home</a>
-  <a href="markets.html" class="active">Markets</a>
+  <a href="markets.html" class="active">Live Data</a>
   <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
   <a href="papers.html">Analysis</a>
@@ -363,7 +363,6 @@ async function yf(sym){
   })();
   return(_yfp[sym]=p);
 }
-}
 const batchYF=syms=>Promise.all(syms.map(yf));
 
 // INDICES
@@ -420,7 +419,7 @@ async function loadFX(){
 // COMMODITIES
 const COMM=[
   [{sym:'GC=F',l:'GOLD',f:'Gold $/oz'},{sym:'SI=F',l:'SILVER',f:'Silver $/oz'},{sym:'CL=F',l:'WTI OIL',f:'Crude $/bbl'},{sym:'BZ=F',l:'BRENT',f:'Brent $/bbl'},{sym:'NG=F',l:'NAT GAS',f:'Gas $/MMBtu'},{sym:'HG=F',l:'COPPER',f:'Copper $/lb'}],
-  [{sym:'^TNX',l:'10Y YIELD',f:'US Treasury 10Y'},{sym:'^TYX',l:'30Y YIELD',f:'US Treasury 30Y'},{sym:'^FVX',l:'5Y YIELD',f:'US Treasury 5Y'},{sym:'DX-Y.NYB',l:'DXY',f:'US Dollar Index'}],
+  [{sym:'TLT',l:'TLT',f:'20+ Year Treasury ETF'},{sym:'IEF',l:'IEF',f:'7-10 Year Treasury ETF'},{sym:'SHY',l:'SHY',f:'1-3 Year Treasury ETF'},{sym:'DX-Y.NYB',l:'DXY',f:'US Dollar Index'}],
 ];
 async function loadComm(){
   const res=await Promise.all(COMM.map(grp=>batchYF(grp.map(x=>x.sym))));
@@ -480,7 +479,10 @@ const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD
 async function loadMbar(){const res=await Promise.all(MBAR.map(m=>yf(m.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
 
 async function loadAll(){
-  await Promise.all([loadIdx(),loadFX(),loadComm(),loadCrypto(),loadMbar()]);
+  // Phase 1: indices + market bar + forex (most visible)
+  await Promise.all([loadIdx(),loadMbar(),loadFX()]);
+  // Phase 2: commodities + crypto (below fold)
+  await Promise.all([loadComm(),loadCrypto()]);
   loadMovers();
   document.getElementById('lastUp').textContent='Live data feed — last update: '+now()+' · refreshes every 60s';
 }

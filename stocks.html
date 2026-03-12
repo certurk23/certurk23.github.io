@@ -402,29 +402,31 @@ async function loadTabData(id){
 const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
 const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','^GSPC':'SPY','^IXIC':'QQQ','^DJI':'DIA','^RUT':'IWM','^VIX':'VIXY'};
 let _fx=null,_fxT=0,_yfc={},_yfp={};
-try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<55000)_yfc[k]=parsed[k];}}}catch{}
+const CACHE_TTL=120000;
+try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<CACHE_TTL)_yfc[k]=parsed[k];}}}catch{}
 function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
 let _fhQueue=[],_fhRunning=false;
-function _enqueueFH(fhSym){return new Promise((resolve)=>{_fhQueue.push({sym:fhSym,resolve});if(!_fhRunning)_drainFH();});}
+function _enqueueFH(fhSym){return new Promise(resolve=>{_fhQueue.push({sym:fhSym,resolve});if(!_fhRunning)_drainFH();});}
 async function _drainFH(){
   _fhRunning=true;
   while(_fhQueue.length){
-    const batch=_fhQueue.splice(0,8);
-    await Promise.all(batch.map(async({sym,resolve})=>{
+    const{sym,resolve}=_fhQueue.shift();
+    let retries=2;
+    while(retries>=0){
       try{
         const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
-        if(r.status===429){resolve(null);return;}
-        if(r.ok){const d=await r.json();resolve(d.c&&d.c!==0?{price:d.c,chg:d.dp||0,pts:d.d||0}:null);}
-        else resolve(null);
-      }catch{resolve(null);}
-    }));
-    if(_fhQueue.length)await new Promise(r=>setTimeout(r,250));
+        if(r.status===429){retries--;if(retries>=0){await new Promise(w=>setTimeout(w,3000));continue;}resolve(_yfc[sym]?.v||null);break;}
+        if(r.ok){const d=await r.json();resolve(d.c&&d.c!==0?{price:d.c,chg:d.dp||0,pts:d.d||0}:null);break;}
+        resolve(null);break;
+      }catch{resolve(null);break;}
+    }
+    if(_fhQueue.length)await new Promise(w=>setTimeout(w,1050));
   }
   _fhRunning=false;
 }
 async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
 async function yf(sym){
-  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<55000)return _yfc[sym].v;
+  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<CACHE_TTL)return _yfc[sym].v;
   if(_yfp[sym])return _yfp[sym];
   const p=(async()=>{
     const m=SYM_MAP[sym];let v=null;

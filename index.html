@@ -1383,12 +1383,11 @@ async function yf(sym) {
 /* Parallel fetch: all symbols fire concurrently via yf() */
 const batch = syms => Promise.all(syms.map(yf));
 
-/* --- Market Bar --- */
+/* --- Market Bar (only reliable sources: CoinGecko + Forex) --- */
 const MBAR = [
-  {s:'^GSPC',l:'S&P 500'},{s:'^IXIC',l:'Nasdaq'},{s:'^DJI',l:'Dow'},
-  {s:'^RUT',l:'Russell'},{s:'^VIX',l:'VIX'},
-  {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},
-  {s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'},
+  {s:'GC=F',l:'Gold'},
+  {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},
+  {s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
   const res = await batch(MBAR.map(x => x.s));
@@ -1629,10 +1628,10 @@ async function loadHero() {
   document.getElementById('heroBullets').innerHTML = '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
     bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.55);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
 
-  // Market impact: S&P 500, Nasdaq, VIX
-  const [spy, qqq, vix] = await Promise.all([yf('^GSPC'), yf('^IXIC'), yf('^VIX')]);
+  // Market impact: Gold, BTC, EUR/USD (reliable sources only)
+  const [gold, btc, eur] = await Promise.all([yf('GC=F'), yf('BTC-USD'), yf('EURUSD=X')]);
   const impactData = [
-    {l:'S&P 500', d:spy}, {l:'Nasdaq', d:qqq}, {l:'VIX', d:vix}
+    {l:'Gold', d:gold}, {l:'Bitcoin', d:btc}, {l:'EUR/USD', d:eur}
   ];
   document.getElementById('heroImpact').innerHTML = impactData.map(x => {
     const r = x.d; const c = cls(r?.chg);

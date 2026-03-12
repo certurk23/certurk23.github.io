@@ -296,9 +296,9 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="hero-title">Research Papers &amp; Notes</div>
     <div class="hero-desc">Quantitative research covering market microstructure, portfolio theory, execution analytics, machine learning infrastructure, and alternative data. All papers are independent, non-commercial research.</div>
     <div class="hero-stats">
-      <div><div class="hero-stat-val">10</div><div class="hero-stat-label">Papers</div></div>
+      <div><div class="hero-stat-val">11</div><div class="hero-stat-label">Papers</div></div>
       <div><div class="hero-stat-val">2026</div><div class="hero-stat-label">Latest</div></div>
-      <div><div class="hero-stat-val">5</div><div class="hero-stat-label">Topics</div></div>
+      <div><div class="hero-stat-val">6</div><div class="hero-stat-label">Topics</div></div>
       <div><div class="hero-stat-val">Open</div><div class="hero-stat-label">Access</div></div>
     </div>
   </div>
@@ -364,6 +364,12 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="art-card-title">The Role of Alternate Data in Quant Finance</div>
         <div class="art-card-abstract">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance and timestamp integrity.</div>
         <div class="art-tags"><span class="art-tag blue">Alt Data</span><span class="art-tag">ML</span><span class="art-tag">Nowcasting</span></div>
+      </a>
+      <a href="#vectorization" class="art-card">
+        <div class="art-num">11</div>
+        <div class="art-card-title">Optimization of HF Analytical Operations</div>
+        <div class="art-card-abstract">From vectorization to predictive modeling. Rolling-window mathematics, GPU-accelerated analytics, and feature engineering for quant systems.</div>
+        <div class="art-tags"><span class="art-tag green">Analytics</span><span class="art-tag">GPU</span><span class="art-tag">Vectorization</span></div>
       </a>
     </div>
 
@@ -1094,6 +1100,160 @@ scores = []
     </article>
 
     <!-- ═══════════════════════════════════════════ -->
+    <!-- PAPER 11: Vectorization & Predictive Modeling -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-header"><h2>Analytical Engineering</h2></div>
+    <article class="paper-article" id="vectorization">
+      <div class="paper-number">Paper 11</div>
+      <h1 class="paper-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</h1>
+      <div class="paper-meta">
+        <span class="paper-tag green">Analytics</span>
+        <span class="paper-tag">GPU</span>
+        <span class="paper-tag">Vectorization</span>
+        <span class="paper-tag">Feature Engineering</span>
+        <span class="paper-date">QUANT_MEDIA · 2026</span>
+      </div>
+      <div class="paper-body">
+        <p>In modern electronic markets, raw market data has no value by itself. Its value emerges only after it is transformed into a structured analytical representation that can support inference, forecasting, and execution. This transformation pipeline is the real engineering core of quantitative research. Ticks, trades, quotes, order-book updates, and venue messages arrive as noisy, asynchronous events. To become decision-useful, they must be normalized, aligned, filtered, aggregated, and converted into mathematical features.</p>
+
+        <p>The first stage in this process is the conversion of raw market data into a machine-readable state space. At the lowest level, the data stream typically contains timestamps, prices, sizes, side indicators, venue identifiers, and possibly order-level events. The researcher's task is to convert this event stream into a set of synchronized analytical objects: rolling returns, signed volume, spread dynamics, volatility estimates, imbalance measures, and latent state proxies. A market feed is not yet a feature matrix. It becomes one only after deterministic transformation.</p>
+
+        <h3>The Vectorization Principle</h3>
+        <p>The single most important optimization principle in this transformation is vectorization. In Python-based quantitative systems, loops are usually the wrong abstraction for numerical analytics. They are expressive, but computationally expensive. The preferred approach is to formulate the problem as array algebra and let optimized native kernels execute the computation.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-filename">vectorized_features.py</span>
+            <span class="code-lang">Python</span>
+          </div>
+          <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+df = pd.DataFrame({
+    <span class="str">"price"</span>: prices,
+    <span class="str">"volume"</span>: volumes
+})
+
+df[<span class="str">"log_return"</span>] = np.log(df[<span class="str">"price"</span>] / df[<span class="str">"price"</span>].shift(<span class="num">1</span>))
+df[<span class="str">"ma_50"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">50</span>).mean()
+df[<span class="str">"std_50"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">50</span>).std()
+df[<span class="str">"zscore_50"</span>] = (df[<span class="str">"price"</span>] - df[<span class="str">"ma_50"</span>]) / df[<span class="str">"std_50"</span>]
+df[<span class="str">"vwap_proxy"</span>] = (df[<span class="str">"price"</span>] * df[<span class="str">"volume"</span>]).cumsum() / df[<span class="str">"volume"</span>].cumsum()</pre></div>
+        </div>
+
+        <p>From a software engineering perspective, this is not just cleaner code. It is a different computational model. Instead of repeatedly invoking Python-level instructions, the pipeline delegates bulk arithmetic to optimized low-level implementations. In practice, this often reduces operation times from seconds to milliseconds.</p>
+
+        <h3>Rolling Window Mathematics</h3>
+        <p>The mathematical core of high-frequency analytics is built around the rolling window. Market state is local rather than global. We rarely care about the unconditional mean of a price series across an entire year; we care about what the last \(n\) observations imply now.</p>
+
+        <div class="math-block">
+          <div class="math-label">Rolling Moving Average</div>
+          $$\mu_t^{(n)} = \frac{1}{n} \sum_{i=t-n+1}^{t} x_i$$
+        </div>
+
+        <div class="math-block">
+          <div class="math-label">Rolling Standard Deviation</div>
+          $$\sigma_t^{(n)} = \sqrt{\frac{1}{n-1} \sum_{i=t-n+1}^{t} \left(x_i - \mu_t^{(n)}\right)^2}$$
+        </div>
+
+        <div class="math-block">
+          <div class="math-label">Rolling Z-Score</div>
+          $$Z_t^{(n)} = \frac{x_t - \mu_t^{(n)}}{\sigma_t^{(n)}}$$
+        </div>
+
+        <p>These three quantities form the basis of a large fraction of short-horizon analytics. Moving averages estimate local trend or equilibrium. Rolling standard deviation estimates local uncertainty. The Z-score standardizes deviations so that signals become comparable across assets and regimes. In mean-reversion systems, \(Z_t\) is a normalized distance-from-fair-value proxy. In breakout systems, it can be used as a momentum-strength filter.</p>
+
+        <h3>Multi-Feature Pipeline</h3>
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-filename">feature_pipeline.py</span>
+            <span class="code-lang">Python</span>
+          </div>
+          <div class="code-body"><pre>window = <span class="num">100</span>
+
+df[<span class="str">"mid_return"</span>] = np.log(df[<span class="str">"mid"</span>] / df[<span class="str">"mid"</span>].shift(<span class="num">1</span>))
+df[<span class="str">"rolling_mean"</span>] = df[<span class="str">"mid_return"</span>].rolling(window).mean()
+df[<span class="str">"rolling_std"</span>] = df[<span class="str">"mid_return"</span>].rolling(window).std()
+df[<span class="str">"return_z"</span>] = (df[<span class="str">"mid_return"</span>] - df[<span class="str">"rolling_mean"</span>]) / df[<span class="str">"rolling_std"</span>]
+
+df[<span class="str">"volume_mean"</span>] = df[<span class="str">"volume"</span>].rolling(window).mean()
+df[<span class="str">"volume_std"</span>] = df[<span class="str">"volume"</span>].rolling(window).std()
+df[<span class="str">"volume_z"</span>] = (df[<span class="str">"volume"</span>] - df[<span class="str">"volume_mean"</span>]) / df[<span class="str">"volume_std"</span>]
+
+df[<span class="str">"spread"</span>] = df[<span class="str">"ask"</span>] - df[<span class="str">"bid"</span>]
+df[<span class="str">"spread_ma"</span>] = df[<span class="str">"spread"</span>].rolling(window).mean()
+df[<span class="str">"spread_z"</span>] = (df[<span class="str">"spread"</span>] - df[<span class="str">"spread_ma"</span>]) / df[<span class="str">"spread"</span>].rolling(window).std()</pre></div>
+        </div>
+
+        <h3>From Features to Prediction</h3>
+        <p>At this stage, the analytical outputs are no longer merely descriptive statistics. They become features — the bridge from analytical engineering to predictive modeling. Once transformed into a feature matrix \(\mathbf{X}_t\), the market state can be passed into machine learning models for classification, regression, ranking, or policy learning.</p>
+
+        <div class="math-block">
+          <div class="math-label">Predictive Layer</div>
+          $$\hat{y}_{t+h} = f(\mathbf{X}_t)$$
+        </div>
+
+        <p>where \(f\) may be a linear model, gradient-boosted trees, a temporal neural network, or a transformer-style sequence model, and \(\hat{y}_{t+h}\) is a forecast of a future quantity such as return, volatility, spread widening, or fill probability. The predictive model is only as good as its input representation.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-filename">predictive_model.py</span>
+            <span class="code-lang">Python</span>
+          </div>
+          <div class="code-body"><pre><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+
+features = [<span class="str">"return_z"</span>, <span class="str">"volume_z"</span>, <span class="str">"spread_z"</span>]
+
+dataset = df.dropna().copy()
+X = dataset[features]
+y = (dataset[<span class="str">"mid"</span>].shift(-<span class="num">10</span>) > dataset[<span class="str">"mid"</span>]).astype(int).loc[X.index]
+
+model = RandomForestClassifier(
+    n_estimators=<span class="num">200</span>,
+    max_depth=<span class="num">6</span>,
+    random_state=<span class="num">42</span>
+)
+model.fit(X, y)</pre></div>
+        </div>
+
+        <h3>GPU-Accelerated Analytics</h3>
+        <p>The next engineering question is whether these analytical operations should remain on the CPU or be moved to the GPU. CPUs remain strong for control flow, event handling, and latency-sensitive branching logic. GPUs dominate when the task is large-scale, homogeneous, and arithmetic-heavy. Rolling statistics, cross-sectional transformations, large matrix operations, and batched feature generation fit the GPU model well.</p>
+
+        <p>RAPIDS cudf.pandas can accelerate Pandas workflows on the GPU while automatically falling back to standard Pandas for unsupported operations. The implication for quant research is direct: once data has been vectorized, a meaningful portion of the analytics stack can be migrated from CPU to GPU execution with limited code disruption.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-filename">gpu_analytics.py</span>
+            <span class="code-lang">Python</span>
+          </div>
+          <div class="code-body"><pre><span class="cm"># %load_ext cudf.pandas</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+df = pd.DataFrame({
+    <span class="str">"price"</span>: prices,
+    <span class="str">"volume"</span>: volumes
+})
+
+df[<span class="str">"ret"</span>] = np.log(df[<span class="str">"price"</span>] / df[<span class="str">"price"</span>].shift(<span class="num">1</span>))
+df[<span class="str">"ma_128"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">128</span>).mean()
+df[<span class="str">"std_128"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">128</span>).std()
+df[<span class="str">"z_128"</span>] = (df[<span class="str">"price"</span>] - df[<span class="str">"ma_128"</span>]) / df[<span class="str">"std_128"</span>]</pre></div>
+        </div>
+
+        <h3>The Optimization Sequence</h3>
+        <p>GPU acceleration is not a substitute for good systems design. If the pipeline is dominated by Python object overhead, poor memory layout, unnecessary copying, or serial preprocessing, the GPU will not save it. The real optimization sequence is:</p>
+
+        <div class="math-block">
+          <div class="math-label">Engineering Priority Chain</div>
+          $$\text{Correctness} \rightarrow \text{Vectorization} \rightarrow \text{Memory Efficiency} \rightarrow \text{Parallel Execution} \rightarrow \text{Predictive Utility}$$
+        </div>
+
+        <p>The strategic lesson is straightforward. In high-frequency analytical operations, speed is not achieved by isolated tricks. It is achieved by a disciplined architecture: vectorized numerical logic, rolling-window mathematics, feature-oriented transformation, and hardware-aware execution. CPU pipelines remain essential for orchestration and event control. GPU pipelines become decisive once the analytical workload is sufficiently parallel. The institutions that outperform are usually not the ones with the most complex models. They are the ones that transform raw market data into stable predictive features faster, more consistently, and with greater engineering discipline than everyone else.</p>
+      </div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════ -->
     <!-- FRONTIER / INTERNATIONAL RESEARCH          -->
     <!-- ═══════════════════════════════════════════ -->
     <div style="margin:40px 0 24px;padding:16px 0;border-top:2px solid var(--bd);border-bottom:1px solid var(--bd)">
@@ -1185,6 +1345,7 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
       <a href="#genetic" class="toc-item"><span class="toc-num">08</span>Genetic Algorithm Alpha Discovery</a>
       <a href="#slippage" class="toc-item"><span class="toc-num">09</span>Slippage &amp; Latency Modeling</a>
       <a href="#alt-data" class="toc-item"><span class="toc-num">10</span>Alternate Data in Quant Finance</a>
+      <a href="#vectorization" class="toc-item"><span class="toc-num">11</span>HF Analytical Optimization</a>
       <a href="#bist-sentiment" class="toc-item" style="border-top:1px solid var(--gold)"><span class="toc-num" style="color:var(--gold)">06</span>BIST Sentiment (Qwen / Llama)</a>
     </div>
 
@@ -1195,6 +1356,7 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
       <div class="stack-row"><span class="stack-key">ML &amp; AI</span><span class="stack-val">2 papers</span></div>
       <div class="stack-row"><span class="stack-key">Execution</span><span class="stack-val">2 papers</span></div>
       <div class="stack-row"><span class="stack-key">Alt Data</span><span class="stack-val">1 paper</span></div>
+      <div class="stack-row"><span class="stack-key">Analytics</span><span class="stack-val">1 paper</span></div>
     </div>
 
     <div class="widget">
@@ -1211,7 +1373,7 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
       <div class="stack-row"><span class="stack-key">Access</span><span class="stack-val">Open</span></div>
       <div class="stack-row"><span class="stack-key">License</span><span class="stack-val">Academic</span></div>
       <div class="stack-row"><span class="stack-key">Updated</span><span class="stack-val">2026</span></div>
-      <div class="stack-row"><span class="stack-key">Papers</span><span class="stack-val">10</span></div>
+      <div class="stack-row"><span class="stack-key">Papers</span><span class="stack-val">11</span></div>
     </div>
   </aside>
 </div>

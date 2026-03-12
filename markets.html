@@ -343,49 +343,68 @@ const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 const now=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
 
-const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
-const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','^GSPC':'SPY','^IXIC':'QQQ','^DJI':'DIA','^RUT':'IWM','^VIX':'VIXY'};
+const FMP_KEY='k3CDDPQlbJ0E5f82DLAoDJGtV3BQd1CV';
+const SPECIAL={'GC=F':'__XAU','CL=F':'__WTI','SI=F':'__SLV','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','DX-Y.NYB':'__DXY'};
 let _fx=null,_fxT=0,_yfc={},_yfp={};
 const CACHE_TTL=120000;
 try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<CACHE_TTL)_yfc[k]=parsed[k];}}}catch{}
 function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
-let _fhQueue=[],_fhRunning=false;
-function _enqueueFH(fhSym){return new Promise(resolve=>{_fhQueue.push({sym:fhSym,resolve});if(!_fhRunning)_drainFH();});}
-async function _drainFH(){
-  _fhRunning=true;
-  while(_fhQueue.length){
-    const{sym,resolve}=_fhQueue.shift();
-    let retries=2;
-    while(retries>=0){
-      try{
-        const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
-        if(r.status===429){retries--;if(retries>=0){await new Promise(w=>setTimeout(w,3000));continue;}resolve(_yfc[sym]?.v||null);break;}
-        if(r.ok){const d=await r.json();resolve(d.c&&d.c!==0?{price:d.c,chg:d.dp||0,pts:d.d||0}:null);break;}
-        resolve(null);break;
-      }catch{resolve(null);break;}
-    }
-    if(_fhQueue.length)await new Promise(w=>setTimeout(w,1050));
-  }
-  _fhRunning=false;
-}
 async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
+
+/* FMP batch — ONE call for all stock/index/ETF/commodity symbols */
+let _fmpCache={},_fmpT=0,_fmpP=null;
+async function fmpBatch(symbols){
+  if(Date.now()-_fmpT<CACHE_TTL&&symbols.every(s=>_fmpCache[s]))return symbols.map(s=>_fmpCache[s]);
+  if(!_fmpP){_fmpP=(async()=>{
+    try{
+      const url=`https://financialmodelingprep.com/api/v3/quote/${symbols.map(encodeURIComponent).join(',')}?apikey=${FMP_KEY}`;
+      const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
+      if(!r.ok)throw new Error(r.status);
+      const data=await r.json();
+      if(Array.isArray(data))data.forEach(q=>{_fmpCache[q.symbol]={price:q.price,chg:q.changesPercentage||0,pts:q.change||0};});
+      _fmpT=Date.now();
+    }catch(e){console.warn('FMP error:',e);}
+    _fmpP=null;
+  })();}
+  await _fmpP;
+  return symbols.map(s=>_fmpCache[s]||null);
+}
+
+/* Unified quote router */
 async function yf(sym){
   if(_yfc[sym]&&Date.now()-_yfc[sym].ts<CACHE_TTL)return _yfc[sym].v;
   if(_yfp[sym])return _yfp[sym];
   const p=(async()=>{
-    const m=SYM_MAP[sym];let v=null;
+    const sp=SPECIAL[sym];let v=null;
     try{
-      if(m==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
-      else if(m==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-      else{const fhSym=m||sym;v=await _enqueueFH(fhSym);}
+      if(sp==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
+      else if(sp==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
+      else if(sp==='__DXY'){const f=await loadFx();/* DXY proxy from major currencies */const res=await fmpBatch(['UUP']);v=res[0]||null;}
+      else if(sp==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
+      else if(sp==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
+      else if(sp==='__WTI'){const res=await fmpBatch(['USOIL']);v=res[0]||null;if(!v){const res2=await fmpBatch(['USO']);v=res2[0]||null;}}
+      else if(sp==='__SLV'){const res=await fmpBatch(['SLV']);v=res[0]||null;}
+      else{/* FMP: indices (^GSPC etc.), ETFs, stocks — all in one batch */
+        const fmpSym=sym;const res=await fmpBatch([fmpSym]);v=res[0]||null;}
     }catch{}
     _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];_saveCache();return v;
   })();
   return(_yfp[sym]=p);
 }
-const batchYF=syms=>Promise.all(syms.map(yf));
+
+/* Smart batch: groups all FMP symbols into one call */
+async function batchYF(syms){
+  const fmpSyms=[],fmpIdx=[],others=[];
+  syms.forEach((sym,i)=>{if(SPECIAL[sym]){others.push({i,sym});}else{fmpSyms.push(sym);fmpIdx.push({i,sym});}});
+  const results=new Array(syms.length).fill(null);
+  const [fmpData]=await Promise.all([
+    fmpSyms.length?fmpBatch(fmpSyms):Promise.resolve([]),
+    ...others.map(async({i,sym})=>{results[i]=await yf(sym);})
+  ]);
+  fmpIdx.forEach(({i,sym},j)=>{const d=fmpData[j];if(d){results[i]=d;_yfc[sym]={v:d,ts:Date.now()};}});
+  _saveCache();
+  return results;
+}
 
 // INDICES
 const IDX=[
@@ -438,14 +457,14 @@ async function loadFX(){
     </div>`).join('');
 }
 
-// COMMODITIES
+// COMMODITIES — using FMP-compatible symbols
 const COMM=[
-  [{sym:'GC=F',l:'GOLD',f:'Gold $/oz'},{sym:'SI=F',l:'SILVER',f:'Silver $/oz'},{sym:'CL=F',l:'WTI OIL',f:'Crude $/bbl'},{sym:'BZ=F',l:'BRENT',f:'Brent $/bbl'},{sym:'NG=F',l:'NAT GAS',f:'Gas $/MMBtu'},{sym:'HG=F',l:'COPPER',f:'Copper $/lb'}],
-  [{sym:'TLT',l:'TLT',f:'20+ Year Treasury ETF'},{sym:'IEF',l:'IEF',f:'7-10 Year Treasury ETF'},{sym:'SHY',l:'SHY',f:'1-3 Year Treasury ETF'},{sym:'DX-Y.NYB',l:'DXY',f:'US Dollar Index'}],
+  [{sym:'GC=F',l:'GOLD',f:'Gold $/oz'},{sym:'SLV',l:'SILVER',f:'iShares Silver ETF'},{sym:'CL=F',l:'WTI OIL',f:'Crude $/bbl'},{sym:'BNO',l:'BRENT',f:'US Brent Oil ETN'},{sym:'UNG',l:'NAT GAS',f:'US Natural Gas Fund'},{sym:'CPER',l:'COPPER',f:'US Copper Index Fund'}],
+  [{sym:'TLT',l:'TLT',f:'20+ Year Treasury ETF'},{sym:'IEF',l:'IEF',f:'7-10 Year Treasury ETF'},{sym:'SHY',l:'SHY',f:'1-3 Year Treasury ETF'},{sym:'UUP',l:'DXY',f:'Invesco DB US Dollar'}],
 ];
 async function loadComm(){
   const res=await Promise.all(COMM.map(grp=>batchYF(grp.map(x=>x.sym))));
-  document.getElementById('commMeta').textContent=now()+' — Yahoo Finance';
+  document.getElementById('commMeta').textContent=now()+' — FMP / CoinGecko';
   const titles=['Commodities','Fixed Income & FX'];
   document.getElementById('commGrid').innerHTML=COMM.map((grp,gi)=>`
     <div class="panel"><div class="panel-head">${titles[gi]}</div>
@@ -484,17 +503,28 @@ async function loadCrypto(){
     <div class="panel"><div class="panel-head">Digital Assets II</div>${panel(COINS.slice(half))}</div>`;
 }
 
-// MOVERS (static)
-const GAIN=[{s:'NVDA',n:'NVIDIA Corp.',p:8.42},{s:'SMCI',n:'Super Micro Computer',p:7.33},{s:'PLTR',n:'Palantir Technologies',p:6.91},{s:'MSTR',n:'MicroStrategy',p:5.88},{s:'COIN',n:'Coinbase Global',p:5.21},{s:'ARM',n:'ARM Holdings',p:4.77}];
-const LOSE=[{s:'INTC',n:'Intel Corp.',p:-6.33},{s:'PFE',n:'Pfizer Inc.',p:-5.77},{s:'BA',n:'Boeing Co.',p:-5.12},{s:'CVS',n:'CVS Health',p:-4.88},{s:'WBA',n:'Walgreens Boots',p:-4.21},{s:'DIS',n:'Walt Disney Co.',p:-3.88}];
-function loadMovers(){
+// MOVERS (live via FMP)
+const MOVERS_LIST=[
+  {s:'NVDA',n:'NVIDIA Corp.'},{s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},
+  {s:'TSLA',n:'Tesla Inc.'},{s:'AMD',n:'Advanced Micro'},{s:'META',n:'Meta Platforms'},
+  {s:'AMZN',n:'Amazon.com'},{s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},
+  {s:'JPM',n:'JPMorgan Chase'},{s:'NFLX',n:'Netflix Inc.'},{s:'BA',n:'Boeing Co.'},
+  {s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},{s:'DIS',n:'Walt Disney'},
+  {s:'SMCI',n:'Super Micro'},{s:'PLTR',n:'Palantir Tech.'},{s:'COIN',n:'Coinbase'},
+];
+async function loadMovers(){
+  const res=await batchYF(MOVERS_LIST.map(m=>m.s));
+  const pairs=MOVERS_LIST.map((m,i)=>({s:m.s,n:m.n,p:res[i]?.chg||0})).filter(x=>x.p!==0);
+  pairs.sort((a,b)=>b.p-a.p);
+  const gainers=pairs.filter(x=>x.p>0).slice(0,6);
+  const losers=pairs.filter(x=>x.p<0).reverse().slice(0,6);
   const rows=arr=>arr.map(s=>`<div class="mrow">
     <div><div class="dsym">${s.s}</div><div class="dfull">${s.n}</div></div>
     <span class="badge ${cls(s.p)}">${sgn(s.p)+fmt(s.p)}%</span>
   </div>`).join('');
   document.getElementById('moversGrid').innerHTML=`
-    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl g">▲ Top Gainers</span></div>${rows(GAIN)}</div>
-    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl r">▼ Top Losers</span></div>${rows(LOSE)}</div>`;
+    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl g">▲ Top Gainers</span></div>${gainers.length?rows(gainers):'<div style="padding:12px;color:var(--muted);font-size:12px">Market closed</div>'}</div>
+    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl r">▼ Top Losers</span></div>${losers.length?rows(losers):'<div style="padding:12px;color:var(--muted);font-size:12px">Market closed</div>'}</div>`;
 }
 
 const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'}];

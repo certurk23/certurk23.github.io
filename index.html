@@ -1348,23 +1348,47 @@ async function loadSnapshot() {
   }).join('');
 }
 
-/* --- Movers --- */
-const GAINERS = [
-  {s:'NVDA',n:'NVIDIA Corp.',p:5.84},{s:'PLTR',n:'Palantir Technologies',p:4.91},
-  {s:'SMCI',n:'Super Micro Computer',p:4.23},{s:'COIN',n:'Coinbase Global',p:3.77},
-  {s:'MSTR',n:'MicroStrategy',p:3.55},{s:'AMD',n:'Advanced Micro Devices',p:2.98},
+/* --- Movers (Dynamic) --- */
+const WATCHLIST = [
+  {s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},{s:'NVDA',n:'NVIDIA Corp.'},
+  {s:'AMZN',n:'Amazon.com'},{s:'META',n:'Meta Platforms'},{s:'TSLA',n:'Tesla Inc.'},
+  {s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},{s:'JPM',n:'JPMorgan Chase'},
+  {s:'V',n:'Visa Inc.'},{s:'MA',n:'Mastercard'},{s:'LLY',n:'Eli Lilly'},
+  {s:'UNH',n:'UnitedHealth'},{s:'XOM',n:'Exxon Mobil'},{s:'HD',n:'Home Depot'},
+  {s:'PG',n:'Procter & Gamble'},{s:'JNJ',n:'Johnson & Johnson'},{s:'ORCL',n:'Oracle Corp.'},
+  {s:'MRK',n:'Merck & Co.'},{s:'ABBV',n:'AbbVie Inc.'},{s:'CVX',n:'Chevron Corp.'},
+  {s:'WMT',n:'Walmart Inc.'},{s:'BAC',n:'Bank of America'},{s:'GS',n:'Goldman Sachs'},
+  {s:'AMD',n:'Advanced Micro'},{s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},
+  {s:'BA',n:'Boeing Co.'},{s:'DIS',n:'Walt Disney'},{s:'NFLX',n:'Netflix Inc.'},
 ];
-const LOSERS = [
-  {s:'INTC',n:'Intel Corp.',p:-5.23},{s:'PFE',n:'Pfizer Inc.',p:-4.66},
-  {s:'BA',n:'Boeing Co.',p:-4.11},{s:'CVS',n:'CVS Health',p:-3.88},
-  {s:'DIS',n:'Walt Disney Co.',p:-3.44},{s:'WBA',n:'Walgreens Boots',p:-3.12},
-];
+let GAINERS_LIVE = [], LOSERS_LIVE = [];
 let moversMode = 'gain';
+
+async function loadMovers() {
+  const results = [];
+  for (let i = 0; i < WATCHLIST.length; i += 10) {
+    const chunk = WATCHLIST.slice(i, i + 10);
+    const r = await Promise.all(chunk.map(w => yf(w.s)));
+    results.push(...r);
+    if (i + 10 < WATCHLIST.length) await new Promise(r => setTimeout(r, 1500));
+  }
+  const pairs = WATCHLIST.map((w, i) => ({s:w.s, n:w.n, p:results[i]?.chg || 0}))
+    .filter(x => x.p !== 0);
+  pairs.sort((a, b) => b.p - a.p);
+  GAINERS_LIVE = pairs.filter(x => x.p > 0).slice(0, 6);
+  LOSERS_LIVE = pairs.filter(x => x.p < 0).slice(-6).reverse();
+  showMovers(moversMode);
+}
+
 function showMovers(mode) {
   moversMode = mode;
   document.getElementById('tabGain').className = 'mover-tab ' + (mode==='gain' ? 'gain-active' : 'inactive');
   document.getElementById('tabLose').className = 'mover-tab ' + (mode==='lose' ? 'lose-active' : 'inactive');
-  const data = mode === 'gain' ? GAINERS : LOSERS;
+  const data = mode === 'gain' ? GAINERS_LIVE : LOSERS_LIVE;
+  if (data.length === 0) {
+    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Loading live data...</div>';
+    return;
+  }
   document.getElementById('moversPanel').innerHTML = data.map((m, i) => {
     const c = cls(m.p);
     return `<div class="mover-row">
@@ -1400,8 +1424,9 @@ async function loadSectors() {
 
 /* --- Init --- */
 async function init() {
-  showMovers('gain');
+  showMovers(moversMode);
   await Promise.all([loadMarketBar(), loadSnapshot(), loadSectors()]);
+  loadMovers(); /* runs staggered, don't await */
 }
 init();
 setInterval(init, 60000);

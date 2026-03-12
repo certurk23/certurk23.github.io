@@ -24,7 +24,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QUANT_MEDIA","url":"https://quantmedia.io/","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","author":{"@type":"Person","name":"Cemil Ertürk","url":"https://quantmedia.io/about.html"},"potentialAction":{"@type":"SearchAction","target":"https://quantmedia.io/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QUANT_MEDIA — US Financial Intelligence | quantmedia.io","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-03-11"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QUANT_MEDIA","url":"https://quantmedia.io/","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","author":{"@type":"Person","name":"Cemil Ertürk","url":"https://quantmedia.io/about.html"},"potentialAction":{"@type":"SearchAction","target":"https://quantmedia.io/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QUANT_MEDIA — US Financial Intelligence | quantmedia.io","description":"Premium US financial intelligence. Quantitative research, market microstructure, and institutional-grade market analysis.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-03-12"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -616,6 +616,14 @@ button{cursor:pointer;font-family:inherit}
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* DATA PANELS responsive */
+@media(max-width:1100px){
+  #dataPanels{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:900px){
+  #dataPanels{grid-template-columns:1fr!important}
+}
+
 @media(max-width:1100px){
   .hero-inner{grid-template-columns:1fr 290px}
   .content-layout{grid-template-columns:1fr 280px}
@@ -698,7 +706,7 @@ button{cursor:pointer;font-family:inherit}
 <div class="breaking-bar" id="breakingBar" onclick="this.style.display='none'">
   <span class="breaking-pill">Breaking</span>
   <span class="breaking-text">VPIN on NASDAQ Composite crosses 0.31 threshold — elevated toxicity regime detected in AAPL, NVDA order flow</span>
-  <span class="breaking-close">×</span>
+  <span class="breaking-close">&times;</span>
 </div>
 
 <!-- TICKER -->
@@ -767,78 +775,42 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO: Market Pulse -->
 <section class="hero-section">
-  <div class="hero-inner">
-    <!-- Lead story -->
-    <a href="papers.html#vpin" class="hero-main">
+  <div class="hero-inner" style="grid-template-columns:1fr" id="heroSection">
+    <div class="hero-main" style="border-right:none">
       <div class="hero-bg"></div>
-      <div class="hero-content">
+      <div class="hero-content" id="heroContent">
         <div class="hero-eyebrow">
-          <span class="badge badge-green">Microstructure</span>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35)">BREAKING ANALYSIS · 12 min read</span>
+          <span class="badge badge-green">Market Pulse</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35)" id="heroTime">LIVE</span>
         </div>
-        <h1 class="hero-h1">VPIN and Order Flow Toxicity: A Practical Microstructure Signal for Quantitative Traders</h1>
-        <p class="hero-excerpt">Volume-synchronized probability of informed trading identifies when order flow becomes dangerous for liquidity providers. A rising VPIN signals elevated adverse selection, wider spreads, and fragile market impact dynamics across fragmented venues.</p>
+        <h1 class="hero-h1" id="heroH1">US Markets Update — Loading Latest Intelligence...</h1>
+        <div id="heroBullets" style="margin-bottom:16px">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
+            <li style="font-size:13px;color:rgba(255,255,255,.55);padding-left:14px;border-left:2px solid var(--green)">Loading market data...</li>
+          </ul>
+        </div>
+        <div id="heroImpact" style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+          <!-- Filled by JS: SPY, QQQ, VIX mini cards -->
+        </div>
         <div class="hero-meta">
-          <span class="hero-meta-item"><strong>QUANT_MEDIA</strong> Research</span>
-          <span class="hero-meta-item">March 2026</span>
-          <span class="hero-meta-item">AAPL · NVDA · SPY</span>
-        </div>
-        <div class="hero-tags">
-          <span class="tag">VPIN</span>
-          <span class="tag">Adverse Selection</span>
-          <span class="tag">Order Flow</span>
-          <span class="tag">Microstructure</span>
-          <span class="tag">NASDAQ</span>
+          <span class="hero-meta-item"><strong>QUANT_MEDIA</strong> Intelligence</span>
+          <span class="hero-meta-item" id="heroDate">March 2026</span>
         </div>
       </div>
-    </a>
-
-    <!-- Sidebar stories -->
-    <div class="hero-sidebar">
-      <a href="papers.html#hrp" class="hsi">
-        <div class="hsi-badge"><span class="badge badge-gold">Portfolio Theory</span></div>
-        <div class="hsi-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</div>
-        <div class="hsi-excerpt">Cluster-based allocation that avoids covariance inversion for more stable out-of-sample diversification.</div>
-        <div class="hsi-meta">QUANT_MEDIA · 9 min read</div>
-      </a>
-      <a href="papers.html#psr" class="hsi">
-        <div class="hsi-badge"><span class="badge badge-gold">Quantitative</span></div>
-        <div class="hsi-title">Probabilistic Sharpe Ratio &amp; Backtest Overfitting</div>
-        <div class="hsi-excerpt">A statistically rigorous alternative to raw Sharpe adjusting for non-normality, sample length, and multiple testing bias.</div>
-        <div class="hsi-meta">QUANT_MEDIA · 8 min read</div>
-      </a>
-      <a href="papers.html#sovereign-ai" class="hsi">
-        <div class="hsi-badge"><span class="badge badge-purple">AI &amp; Infrastructure</span></div>
-        <div class="hsi-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</div>
-        <div class="hsi-excerpt">Self-hosted language models are structurally superior for investment research. The Bastion philosophy and local deployment case.</div>
-        <div class="hsi-meta">QUANT_MEDIA · 10 min read</div>
-      </a>
     </div>
   </div>
 </section>
-
-<!-- INDEX CARDS -->
-<div class="index-cards">
-  <div class="index-cards-inner" id="indexCards">
-    <div class="tradingview-widget-container" style="width:100%">
-      <div class="tradingview-widget-container__widget"></div>
-      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-      {"colorTheme":"dark","dateRange":"1D","showChart":false,"locale":"en","isTransparent":true,"showSymbolLogo":false,"showFloatingTooltip":false,"width":"100%","height":"180","tabs":[{"title":"US Indices","symbols":[{"s":"FOREXCOM:SPXUSD","d":"S&P 500"},{"s":"NASDAQ:NDX","d":"NASDAQ 100"},{"s":"FOREXCOM:DJI","d":"Dow Jones"},{"s":"TVC:RUT","d":"Russell 2000"},{"s":"TVC:VIX","d":"VIX"}],"originalTitle":"Indices"}]}
-      </script>
-    </div>
-  </div>
-</div>
 
 <!-- MARKET NEWS -->
 <div class="news-wrap">
   <div class="sec-hdr" style="margin-bottom:14px">
     <div style="display:flex;align-items:center">
       <span class="sec-label">Market News</span>
-      <span class="sec-sub">March 10, 2026</span>
+      <span class="sec-sub">March 12, 2026</span>
     </div>
-    <a href="markets.html" class="sec-link">Markets →</a>
+    <a href="news.html" class="sec-link">All News &rarr;</a>
   </div>
 
   <div id="newsGrid">
@@ -937,21 +909,72 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- MAIN CONTENT -->
 <div class="page-wrap">
-  <div class="content-layout">
 
-    <!-- PRIMARY -->
+  <!-- DATA PANELS -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px" id="dataPanels">
+
+    <!-- Top Movers -->
+    <div class="widget">
+      <div class="widget-hdr">
+        <span class="widget-title">Top Movers</span>
+        <span class="widget-ts">S&amp;P 500</span>
+      </div>
+      <div class="mover-tabs">
+        <button class="mover-tab gain-active" id="tabGain" onclick="showMovers('gain')">&#9650; Gainers</button>
+        <button class="mover-tab inactive" id="tabLose" onclick="showMovers('lose')">&#9660; Losers</button>
+      </div>
+      <div id="moversPanel"></div>
+    </div>
+
+    <!-- Sectors -->
+    <div class="widget">
+      <div class="widget-hdr">
+        <span class="widget-title">Sectors</span>
+        <span class="widget-ts" id="sectorTs">&mdash;</span>
+      </div>
+      <div id="sectorRows"></div>
+    </div>
+
+    <!-- Macro Calendar -->
+    <div class="widget">
+      <div class="widget-hdr">
+        <span class="widget-title">Macro Calendar</span>
+        <span class="widget-ts">This Week</span>
+      </div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Mon 8:30</div><div class="cal-event">Core CPI YoY — Feb 2026</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Wed 14:00</div><div class="cal-event">FOMC Rate Decision</div></div>
+      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">Initial Jobless Claims</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">PPI MoM — Feb 2026</div></div>
+      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Fri 10:00</div><div class="cal-event">UMich Consumer Sentiment</div></div>
+    </div>
+  </div>
+
+  <!-- CONTENT LAYOUT: Research + Sidebar -->
+  <div class="content-layout">
     <div>
 
-      <!-- Analysis grid -->
+      <!-- Research & Analysis (COMPACT) -->
       <div style="margin-bottom:28px">
         <div class="sec-hdr">
           <div style="display:flex;align-items:center">
-            <span class="sec-label">Analysis</span>
-            <span class="sec-sub">Premium Research</span>
+            <span class="sec-label">Research &amp; Analysis</span>
+            <span class="sec-sub">Quant Research Lab</span>
           </div>
-          <a href="papers.html" class="sec-link">View all →</a>
+          <a href="papers.html" class="sec-link">Full library &rarr;</a>
         </div>
+        <!-- 3x2 story grid with the 6 best papers -->
         <div class="story-grid">
+
+          <a href="papers.html#vpin" class="sc">
+            <div class="thumb thumb-micro"></div>
+            <div style="margin-bottom:10px"><span class="badge badge-green">Microstructure</span></div>
+            <div class="sc-title">VPIN and Order Flow Toxicity: A Practical Microstructure Signal</div>
+            <div class="sc-excerpt">Volume-synchronized probability of informed trading identifies when order flow becomes dangerous for liquidity providers.</div>
+            <div class="sc-footer">
+              <span class="sc-meta">QUANT_MEDIA · 12 min</span>
+              <span class="sc-read">Read &rarr;</span>
+            </div>
+          </a>
 
           <a href="papers.html#gpu-cpu" class="sc">
             <div class="thumb thumb-infra"></div>
@@ -960,47 +983,29 @@ button{cursor:pointer;font-family:inherit}
             <div class="sc-excerpt">Why GPU-accelerated financial modeling still requires CPU-class hardware. A split-path architecture analysis for real trading systems.</div>
             <div class="sc-footer">
               <span class="sc-meta">QUANT_MEDIA · 11 min</span>
-              <span class="sc-read">Read →</span>
+              <span class="sc-read">Read &rarr;</span>
             </div>
           </a>
 
-          <a href="papers.html#bist-sentiment" class="sc">
-            <div class="thumb thumb-ai"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-purple">AI / NLP</span></div>
-            <div class="sc-title">Sentiment Analysis in Financial Markets with Qwen &amp; Llama</div>
-            <div class="sc-excerpt">Building a time-aware, language-native NLP pipeline for financial news signal extraction using open-weight LLMs.</div>
+          <a href="papers.html#hrp" class="sc">
+            <div class="thumb thumb-portfolio"></div>
+            <div style="margin-bottom:10px"><span class="badge badge-gold">Portfolio Theory</span></div>
+            <div class="sc-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</div>
+            <div class="sc-excerpt">Cluster-based allocation that avoids covariance inversion for more stable out-of-sample diversification.</div>
             <div class="sc-footer">
               <span class="sc-meta">QUANT_MEDIA · 9 min</span>
-              <span class="sc-read">Read →</span>
+              <span class="sc-read">Read &rarr;</span>
             </div>
           </a>
 
-          <a href="papers.html#genetic" class="sc">
+          <a href="papers.html#psr" class="sc">
             <div class="thumb thumb-portfolio"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-gold">Alpha Research</span></div>
-            <div class="sc-title">Automating Alpha Discovery with Genetic Algorithms</div>
-            <div class="sc-excerpt">Evolutionary search as an automated hypothesis generator. Fitness design, selection pressure, and rigorous out-of-sample validation.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QUANT_MEDIA · 10 min</span>
-              <span class="sc-read">Read →</span>
-            </div>
-          </a>
-
-        </div>
-      </div>
-
-      <!-- Second row -->
-      <div style="margin-bottom:28px">
-        <div class="story-grid">
-
-          <a href="papers.html#spreads" class="sc">
-            <div class="thumb thumb-micro"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-green">Microstructure</span></div>
-            <div class="sc-title">Bid-Ask Spread Dynamics &amp; Market Making Economics</div>
-            <div class="sc-excerpt">Quoted, effective, and realized spreads as microstructure state variables. Decomposing the cost of immediacy for execution models.</div>
+            <div style="margin-bottom:10px"><span class="badge badge-gold">Quantitative</span></div>
+            <div class="sc-title">Probabilistic Sharpe Ratio &amp; Backtest Overfitting</div>
+            <div class="sc-excerpt">A statistically rigorous alternative to raw Sharpe adjusting for non-normality, sample length, and multiple testing bias.</div>
             <div class="sc-footer">
               <span class="sc-meta">QUANT_MEDIA · 8 min</span>
-              <span class="sc-read">Read →</span>
+              <span class="sc-read">Read &rarr;</span>
             </div>
           </a>
 
@@ -1011,7 +1016,7 @@ button{cursor:pointer;font-family:inherit}
             <div class="sc-excerpt">Why PnL arises from signal after implementation. Fill models, latency decomposition, and market impact as strategy-defining parameters.</div>
             <div class="sc-footer">
               <span class="sc-meta">QUANT_MEDIA · 9 min</span>
-              <span class="sc-read">Read →</span>
+              <span class="sc-read">Read &rarr;</span>
             </div>
           </a>
 
@@ -1022,78 +1027,21 @@ button{cursor:pointer;font-family:inherit}
             <div class="sc-excerpt">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance and timestamp integrity.</div>
             <div class="sc-footer">
               <span class="sc-meta">QUANT_MEDIA · 9 min</span>
-              <span class="sc-read">Read →</span>
+              <span class="sc-read">Read &rarr;</span>
             </div>
           </a>
 
         </div>
       </div>
 
-      <!-- Third row: Market Analysis — March 2026 -->
-      <div style="margin-bottom:28px">
-        <div class="sec-hdr">
-          <div style="display:flex;align-items:center">
-            <span class="sec-label">Market Analysis</span>
-            <span class="sec-sub">March 2026</span>
-          </div>
-        </div>
-        <div class="story-grid">
-
-          <a href="research.html#darkpool" class="sc">
-            <div class="thumb thumb-micro"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-green">Microstructure</span></div>
-            <div class="sc-title">Dark Pool Activity Surge: Institutional Accumulation Signals</div>
-            <div class="sc-excerpt">ATS off-exchange volume hit 47% of total US equity flow in Q1 2026. Identifying institutional accumulation through cross-venue toxicity differentials.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QUANT_MEDIA · Mar 2026 · 7 min</span>
-              <span class="sc-read">Read →</span>
-            </div>
-          </a>
-
-          <a href="markets.html" class="sc">
-            <div class="thumb thumb-portfolio"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-gold">Macro</span></div>
-            <div class="sc-title">Fed Watch: Rate Hold &amp; Yield Curve Signals</div>
-            <div class="sc-excerpt">FOMC held at 4.25–4.50% in March 2026. 2s10s inversion persists at −18bps while real yields price in a delayed easing cycle.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QUANT_MEDIA · Mar 2026 · 6 min</span>
-              <span class="sc-read">Read →</span>
-            </div>
-          </a>
-
-          <a href="markets.html" class="sc">
-            <div class="thumb thumb-exec"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-red">Risk</span></div>
-            <div class="sc-title">VIX Regime Shift: Low-to-High Volatility Transition</div>
-            <div class="sc-excerpt">VIX crossing the 20 threshold signals a structural regime break. Conditional correlation model for cross-asset hedging in expanding volatility environments.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QUANT_MEDIA · Mar 2026 · 7 min</span>
-              <span class="sc-read">Read →</span>
-            </div>
-          </a>
-
-          <a href="infrastructure.html" class="sc">
-            <div class="thumb thumb-infra"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-purple">AI/ML</span></div>
-            <div class="sc-title">AI Quantization in Portfolio Construction</div>
-            <div class="sc-excerpt">Neural network weight quantization applied to factor models reduces compute cost 4× while preserving alpha. INT8 inference for real-time portfolio rebalancing signals.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QUANT_MEDIA · Mar 2026 · 8 min</span>
-              <span class="sc-read">Read →</span>
-            </div>
-          </a>
-
-        </div>
-      </div>
-
-      <!-- Deep Analysis: all 14 -->
+      <!-- Deep Analysis: 10 Papers -->
       <div>
         <div class="sec-hdr">
           <div style="display:flex;align-items:center">
             <span class="sec-label">Deep Analysis</span>
-            <span class="sec-sub">Editor's Picks — 14 Papers</span>
+            <span class="sec-sub">10 Papers</span>
           </div>
-          <a href="papers.html" class="sec-link">Full library →</a>
+          <a href="papers.html" class="sec-link">Full library &rarr;</a>
         </div>
         <div class="deep-grid">
 
@@ -1197,96 +1145,21 @@ button{cursor:pointer;font-family:inherit}
             <span class="badge badge-cyan" style="flex-shrink:0;height:fit-content;white-space:nowrap">Data</span>
           </a>
 
-          <a href="research.html" class="dc">
-            <div class="dc-num">11</div>
-            <div class="dc-body">
-              <div class="dc-title">Order Book Imbalance (OBI) as Real-Time Toxicity Proxy</div>
-              <div class="dc-excerpt">Level-2 quote imbalance as a forward-looking adverse selection indicator. OBI divergence from VPIN predicts short-term price impact with 340ms lead time.</div>
-              <div class="dc-tags"><span class="dc-tag">OBI</span><span class="dc-tag">Microstructure</span><span class="dc-tag">Real-Time</span></div>
-            </div>
-            <span class="badge badge-green" style="flex-shrink:0;height:fit-content;white-space:nowrap">Micro</span>
-          </a>
-
-          <a href="research.html" class="dc">
-            <div class="dc-num">12</div>
-            <div class="dc-body">
-              <div class="dc-title">Hurst Exponent for Trend Persistence Detection</div>
-              <div class="dc-excerpt">Rescaled range analysis for detecting long-memory in price series. H &gt; 0.5 regimes exhibit momentum persistence exploitable at 15-minute bars.</div>
-              <div class="dc-tags"><span class="dc-tag">Hurst</span><span class="dc-tag">Time Series</span><span class="dc-tag">Momentum</span></div>
-            </div>
-            <span class="badge badge-gold" style="flex-shrink:0;height:fit-content;white-space:nowrap">Quant</span>
-          </a>
-
-          <a href="papers.html" class="dc">
-            <div class="dc-num">13</div>
-            <div class="dc-body">
-              <div class="dc-title">AI Quantization in Portfolio Construction</div>
-              <div class="dc-excerpt">INT4-quantized LLM inference for real-time factor signal generation. 4× throughput gain with sub-2% alpha decay on benchmark portfolios.</div>
-              <div class="dc-tags"><span class="dc-tag">AI</span><span class="dc-tag">Quantization</span><span class="dc-tag">Portfolio</span></div>
-            </div>
-            <span class="badge badge-purple" style="flex-shrink:0;height:fit-content;white-space:nowrap">AI</span>
-          </a>
-
-          <a href="infrastructure.html" class="dc">
-            <div class="dc-num">14</div>
-            <div class="dc-body">
-              <div class="dc-title">Tick Data Normalization for Exchange-Specific Microstructure</div>
-              <div class="dc-excerpt">Handling lot size differences, price increments, and auction mechanics across NYSE, NASDAQ, and BATS. Unified tick schema for cross-venue analysis.</div>
-              <div class="dc-tags"><span class="dc-tag">Tick Data</span><span class="dc-tag">Normalization</span><span class="dc-tag">Cross-Venue</span></div>
-            </div>
-            <span class="badge badge-blue" style="flex-shrink:0;height:fit-content;white-space:nowrap">Infra</span>
-          </a>
-
         </div>
       </div>
 
     </div><!-- /primary -->
 
-    <!-- SIDEBAR -->
+    <!-- SLIM SIDEBAR -->
     <aside class="market-sidebar">
 
       <!-- Market Snapshot -->
       <div class="widget">
         <div class="widget-hdr">
           <span class="widget-title">Market Snapshot</span>
-          <span class="widget-ts" id="snapTs">—</span>
+          <span class="widget-ts" id="snapTs">&mdash;</span>
         </div>
         <div id="snapRows"></div>
-      </div>
-
-      <!-- Top Movers -->
-      <div class="widget">
-        <div class="widget-hdr">
-          <span class="widget-title">Top Movers</span>
-          <span class="widget-ts">S&amp;P 500</span>
-        </div>
-        <div class="mover-tabs">
-          <button class="mover-tab gain-active" id="tabGain" onclick="showMovers('gain')">▲ Gainers</button>
-          <button class="mover-tab inactive" id="tabLose" onclick="showMovers('lose')">▼ Losers</button>
-        </div>
-        <div id="moversPanel"></div>
-      </div>
-
-      <!-- Sectors -->
-      <div class="widget">
-        <div class="widget-hdr">
-          <span class="widget-title">Sectors</span>
-          <span class="widget-ts" id="sectorTs">—</span>
-        </div>
-        <div id="sectorRows"></div>
-      </div>
-
-      <!-- Macro Calendar -->
-      <div class="widget">
-        <div class="widget-hdr">
-          <span class="widget-title">Macro Calendar</span>
-          <span class="widget-ts">This Week</span>
-        </div>
-        <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Mon 8:30</div><div class="cal-event">Core CPI YoY — Feb 2026</div></div>
-        <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Wed 14:00</div><div class="cal-event">FOMC Rate Decision</div></div>
-        <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">Initial Jobless Claims</div></div>
-        <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">PPI MoM — Feb 2026</div></div>
-        <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Fri 10:00</div><div class="cal-event">UMich Consumer Sentiment</div></div>
       </div>
 
       <!-- Newsletter -->
@@ -1296,14 +1169,14 @@ button{cursor:pointer;font-family:inherit}
           <div class="nl-title">Start each day with signal, not noise.</div>
           <div class="nl-desc">Daily pre-open briefing — key data, institutional-grade commentary, and market structure analysis.</div>
           <form action="https://formsubmit.co/contact@quantmedia.io" method="POST" id="nlForm" onsubmit="nlSubmit(event)">
-            <input type="hidden" name="_subject" value="🔔 New QUANT_MEDIA Subscriber!">
+            <input type="hidden" name="_subject" value="New QUANT_MEDIA Subscriber!">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_next" value="https://quantmedia.io/?subscribed=1">
             <input type="email" name="email" class="nl-input" placeholder="your@email.com" required>
             <button type="submit" class="nl-btn" id="nlBtn">Subscribe Free</button>
           </form>
-          <div id="nlSuccess" style="display:none;padding:10px 0;font-size:12px;color:var(--green);font-weight:600;">✓ Subscribed! Check your inbox.</div>
+          <div id="nlSuccess" style="display:none;padding:10px 0;font-size:12px;color:var(--green);font-weight:600;">Subscribed! Check your inbox.</div>
         </div>
       </div>
 
@@ -1343,7 +1216,7 @@ button{cursor:pointer;font-family:inherit}
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 QUANT_MEDIA · Certurk Research. All rights reserved. Registered Research Entity. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <span>&copy; 2026 QUANT_MEDIA · Certurk Research. All rights reserved. Registered Research Entity. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
     <div style="display:flex;gap:8px">
       <span class="fbadge g">Open Research</span>
       <span class="fbadge">Non-Commercial</span>
@@ -1435,8 +1308,10 @@ const batch = syms => Promise.all(syms.map(yf));
 
 /* --- Market Bar --- */
 const MBAR = [
-  {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},
-  {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'},
+  {s:'^GSPC',l:'S&P 500'},{s:'^IXIC',l:'Nasdaq'},{s:'^DJI',l:'Dow'},
+  {s:'^RUT',l:'Russell'},{s:'^VIX',l:'VIX'},
+  {s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},
+  {s:'EURUSD=X',l:'EUR/USD'},{s:'BTC-USD',l:'BTC'},
 ];
 async function loadMarketBar() {
   const res = await batch(MBAR.map(x => x.s));
@@ -1446,31 +1321,6 @@ async function loadMarketBar() {
       <span class="mbar-sym">${m.l}</span>
       <span class="mbar-val">${r ? fmt(r.price, r.price > 100 ? 2 : 4) : '--'}</span>
       <span class="mbar-chg ${c}">${r ? pct(r.chg) : '--'}</span>
-    </div>`;
-  }).join('');
-}
-
-/* --- Index Cards --- */
-const IDX = [
-  {s:'^GSPC',l:'S&P 500',sub:'Large Cap'},
-  {s:'^IXIC',l:'NASDAQ',sub:'Composite'},
-  {s:'^DJI', l:'Dow Jones',sub:'Industrial Avg'},
-  {s:'^RUT', l:'Russell 2000',sub:'Small Cap'},
-  {s:'^VIX', l:'VIX',sub:'Volatility Index'},
-];
-async function loadIndexCards() {
-  const res = await batch(IDX.map(x => x.s));
-  document.getElementById('indexCards').innerHTML = IDX.map((idx, i) => {
-    const r = res[i]; const c = cls(r?.chg);
-    const dp = r ? (r.price > 100 ? 2 : 4) : 2;
-    return `<div class="idx-card ${c}">
-      <div class="idx-sym">${idx.l}</div>
-      <div class="idx-name">${idx.sub}</div>
-      <div class="idx-price">${r ? fmt(r.price, dp) : '--'}</div>
-      <div class="idx-chg">
-        <span class="${c}">${r ? sgn(r.pts)+fmt(r.pts) : '--'}</span>
-        <span class="${c}">${r ? pct(r.chg) : '--'}</span>
-      </div>
     </div>`;
   }).join('');
 }
@@ -1551,7 +1401,7 @@ async function loadSectors() {
 /* --- Init --- */
 async function init() {
   showMovers('gain');
-  await Promise.all([loadMarketBar(), loadIndexCards(), loadSnapshot(), loadSectors()]);
+  await Promise.all([loadMarketBar(), loadSnapshot(), loadSectors()]);
 }
 init();
 setInterval(init, 60000);
@@ -1587,13 +1437,16 @@ const GRADIENTS = [
   'style="background:linear-gradient(160deg,#1a0d2e,#2d1545)"',
 ];
 
+let _newsItems = [];
+
 async function loadNews() {
   if (!FINNHUB_KEY) return;
   try {
     const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(8000)});
     if (!r.ok) return;
     const raw = await r.json();
-    const items = (raw||[]).filter(n => n.headline && n.url).slice(0, 7);
+    _newsItems = (raw||[]).filter(n => n.headline && n.url).slice(0, 20);
+    const items = _newsItems.slice(0, 7);
     if (items.length < 3) return;
 
     const [f, a, b, c, d, e, g] = items;
@@ -1648,8 +1501,59 @@ async function loadNews() {
     }
   } catch(e) { /* keep static fallback */ }
 }
+
+/* ============================================================
+   HERO: Market Pulse — dynamic news-driven hero
+   ============================================================ */
+async function loadHero() {
+  // Use cached news data or fetch
+  if (_newsItems.length === 0) {
+    try {
+      const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(8000)});
+      if (r.ok) _newsItems = ((await r.json())||[]).filter(n => n.headline && n.url).slice(0, 20);
+    } catch {}
+  }
+  if (_newsItems.length < 4) return;
+
+  // Update hero headline
+  const lead = _newsItems[0];
+  document.getElementById('heroH1').textContent = lead.headline;
+  document.getElementById('heroTime').textContent = nAgo(lead.datetime).toUpperCase();
+
+  // Make hero clickable
+  const heroMain = document.querySelector('.hero-main');
+  if (heroMain && lead.url) {
+    heroMain.onclick = function() { window.open(lead.url, '_blank', 'noopener'); };
+  }
+
+  // Update date
+  const d = new Date(lead.datetime * 1000);
+  document.getElementById('heroDate').textContent = d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  // Bullets: next 3 headlines
+  const bullets = _newsItems.slice(1, 4);
+  document.getElementById('heroBullets').innerHTML = '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
+    bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.55);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
+
+  // Market impact: S&P 500, Nasdaq, VIX
+  const [spy, qqq, vix] = await Promise.all([yf('^GSPC'), yf('^IXIC'), yf('^VIX')]);
+  const impactData = [
+    {l:'S&P 500', d:spy}, {l:'Nasdaq', d:qqq}, {l:'VIX', d:vix}
+  ];
+  document.getElementById('heroImpact').innerHTML = impactData.map(x => {
+    const r = x.d; const c = cls(r?.chg);
+    return `<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:8px 14px;min-width:120px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px">${x.l}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;margin-bottom:2px">${r ? fmt(r.price, r.price>100?2:4) : '--'}</div>
+      <div class="${c}" style="font-family:'JetBrains Mono',monospace;font-size:12px">${r ? pct(r.chg) : '--'}</div>
+    </div>`;
+  }).join('');
+}
+
 loadNews();
+loadHero();
 setInterval(loadNews, 300000);
+setInterval(loadHero, 300000);
 </script>
 </body>
 </html>

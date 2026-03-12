@@ -350,23 +350,18 @@ try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc)
 function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
 async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
 
-/* FMP batch — ONE call for all stock/index/ETF/commodity symbols */
-let _fmpCache={},_fmpT=0,_fmpP=null;
-async function fmpBatch(symbols){
-  if(Date.now()-_fmpT<CACHE_TTL&&symbols.every(s=>_fmpCache[s]))return symbols.map(s=>_fmpCache[s]);
-  if(!_fmpP){_fmpP=(async()=>{
-    try{
-      const url=`https://financialmodelingprep.com/api/v3/quote/${symbols.map(encodeURIComponent).join(',')}?apikey=${FMP_KEY}`;
-      const r=await fetch(url,{signal:AbortSignal.timeout(10000)});
-      if(!r.ok)throw new Error(r.status);
-      const data=await r.json();
-      if(Array.isArray(data))data.forEach(q=>{_fmpCache[q.symbol]={price:q.price,chg:q.changesPercentage||0,pts:q.change||0};});
-      _fmpT=Date.now();
-    }catch(e){console.warn('FMP error:',e);}
-    _fmpP=null;
-  })();}
-  await _fmpP;
-  return symbols.map(s=>_fmpCache[s]||null);
+/* FMP single-symbol via /stable/quote (free tier) */
+let _fmpCache={};
+async function _fmpOne(sym){
+  if(_fmpCache[sym]&&Date.now()-_fmpCache[sym].ts<CACHE_TTL)return _fmpCache[sym].v;
+  try{
+    const url=`https://financialmodelingprep.com/stable/quote?symbol=${encodeURIComponent(sym)}&apikey=${FMP_KEY}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
+    if(!r.ok)throw new Error(r.status);
+    const data=await r.json();
+    if(Array.isArray(data)&&data[0]){const q=data[0];const v={price:q.price,chg:q.changePercentage||0,pts:q.change||0};_fmpCache[sym]={v,ts:Date.now()};return v;}
+  }catch(e){console.warn('FMP error for',sym,e);}
+  return _fmpCache[sym]?.v||null;
 }
 
 /* Unified quote router */
@@ -378,32 +373,20 @@ async function yf(sym){
     try{
       if(sp==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
       else if(sp==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
-      else if(sp==='__DXY'){const f=await loadFx();/* DXY proxy from major currencies */const res=await fmpBatch(['UUP']);v=res[0]||null;}
+      else if(sp==='__DXY'){v=await _fmpOne('UUP');}
       else if(sp==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
       else if(sp==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-      else if(sp==='__WTI'){const res=await fmpBatch(['USOIL']);v=res[0]||null;if(!v){const res2=await fmpBatch(['USO']);v=res2[0]||null;}}
-      else if(sp==='__SLV'){const res=await fmpBatch(['SLV']);v=res[0]||null;}
-      else{/* FMP: indices (^GSPC etc.), ETFs, stocks — all in one batch */
-        const fmpSym=sym;const res=await fmpBatch([fmpSym]);v=res[0]||null;}
+      else if(sp==='__WTI'){v=await _fmpOne('USO');}
+      else if(sp==='__SLV'){v=await _fmpOne('SLV');}
+      else{v=await _fmpOne(sym);}
     }catch{}
     _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];_saveCache();return v;
   })();
   return(_yfp[sym]=p);
 }
 
-/* Smart batch: groups all FMP symbols into one call */
-async function batchYF(syms){
-  const fmpSyms=[],fmpIdx=[],others=[];
-  syms.forEach((sym,i)=>{if(SPECIAL[sym]){others.push({i,sym});}else{fmpSyms.push(sym);fmpIdx.push({i,sym});}});
-  const results=new Array(syms.length).fill(null);
-  const [fmpData]=await Promise.all([
-    fmpSyms.length?fmpBatch(fmpSyms):Promise.resolve([]),
-    ...others.map(async({i,sym})=>{results[i]=await yf(sym);})
-  ]);
-  fmpIdx.forEach(({i,sym},j)=>{const d=fmpData[j];if(d){results[i]=d;_yfc[sym]={v:d,ts:Date.now()};}});
-  _saveCache();
-  return results;
-}
+/* Parallel fetch all symbols */
+const batchYF=syms=>Promise.all(syms.map(yf));
 
 // INDICES
 const IDX=[

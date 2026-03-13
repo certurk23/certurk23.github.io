@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Low-Latency Trading Stack: RTX 5090 &amp; Core Ultra 9 Architecture | QUANT_MEDIA</title>
+<meta name="description" content="Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.">
+<link rel="canonical" href="https://quantmedia.io/paper-gpu-cpu-trading-infrastructure.html">
+<meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
+<meta name="author" content="Certurk Research | QUANT_MEDIA">
+<meta name="keywords" content="RTX 5090, GPU trading, low latency, CPU architecture, HFT infrastructure, financial modeling">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Low-Latency Trading Stack: RTX 5090 & Core Ultra 9 Architecture">
+<meta property="og:description" content="Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.">
+<meta property="og:url" content="https://quantmedia.io/paper-gpu-cpu-trading-infrastructure.html">
+<meta property="og:site_name" content="QUANT_MEDIA">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Low-Latency Trading Stack: RTX 5090 & Core Ultra 9 Architecture">
+<meta name="twitter:description" content="Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.">
+<meta name="twitter:site" content="@quantmedia_io">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"ScholarlyArticle",
+  "headline":"Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs",
+  "description":"Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.",
+  "author":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "datePublished":"2026-02-01",
+  "dateModified":"2026-03-13",
+  "mainEntityOfPage":"https://quantmedia.io/paper-gpu-cpu-trading-infrastructure.html",
+  "keywords":"RTX 5090, GPU trading, low latency, CPU architecture, HFT infrastructure, financial modeling"
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"},
+    {"@type":"ListItem","position":3,"name":"Low-Latency Trading Stack: RTX 5090 & Core Ultra 9"}
+  ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;transition:background .24s ease,color .24s ease}
+a{text-decoration:none;color:inherit}
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.main-nav a:hover,.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] .main-nav a:hover,[data-theme="light"] .main-nav a.active{color:var(--text)!important}
+.article-hero{background:linear-gradient(135deg,#0a0f0a 0%,#0a1a0f 50%,#0a0a0a 100%);border-bottom:1px solid var(--border);padding:48px 0 40px}
+.article-hero-inner{max-width:820px;margin:0 auto;padding:0 24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+.hero-badge span{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.badge-live{background:var(--accent);color:#fff}.badge-topic{border:1px solid var(--border2);color:var(--dim)}
+.article-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+.article-subtitle{font-size:17px;color:var(--dim);line-height:1.7;max-width:680px;margin-bottom:20px}
+.article-byline{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--dimmer);padding-top:16px;border-top:1px solid var(--border)}
+.byline-author{color:var(--accent);font-weight:600}
+[data-theme="light"] .article-h1{color:var(--text)}
+[data-theme="light"] .article-hero{background:linear-gradient(135deg,#f5f5f3 0%,#eef5ef 50%,#f5f5f3 100%)}
+.article-wrap{max-width:820px;margin:0 auto;padding:40px 24px 60px}
+.article-wrap h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.2px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.article-wrap h2:first-child{margin-top:0}
+.article-wrap h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin:28px 0 12px}
+.article-wrap p{margin-bottom:16px;color:var(--text)}
+.article-wrap ul,.article-wrap ol{margin:0 0 16px 20px;color:var(--text)}
+.article-wrap li{margin-bottom:6px}
+.article-wrap strong{color:#fff}
+[data-theme="light"] .article-wrap h2{color:var(--text)}
+[data-theme="light"] .article-wrap strong{color:var(--text)}
+.code-wrap{margin:20px 0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px}
+.code-filename{color:var(--dim)}.code-lang{color:var(--accent);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+.code-body{padding:16px;overflow-x:auto;background:var(--bg2)}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre;margin:0}
+.kw{color:#c792ea}.str{color:#c3e88d}.fn{color:#82aaff}.cm{color:#546e7a}.num{color:#f78c6c}.typ{color:#ffcb6b}
+.math-block{margin:20px 0;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow-x:auto}
+.math-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.callout{margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 4px 4px 0}
+.callout.warn{border-left-color:var(--gold)}.callout.red{border-left-color:var(--red)}
+.callout-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.callout p{margin:0;font-size:13px;color:var(--dim)}
+.key-takeaways{margin:24px 0;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.key-takeaways h4{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.key-takeaways ul{margin:0 0 0 18px;color:var(--text)}.key-takeaways li{margin-bottom:8px;font-size:14px}
+.related-section{margin:48px 0 0;padding:32px 0 0;border-top:1px solid var(--border)}
+.related-section h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.2px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.related-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px;transition:border-color .14s}
+.related-card:hover{border-color:var(--accent)}
+.related-card h4{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.related-card p{font-size:12px;color:var(--dim);margin:0;line-height:1.5}
+[data-theme="light"] .related-section h2{color:var(--text)}
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 0}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-logo .slash{color:var(--accent)}
+.footer-desc{font-size:12px;color:var(--dim);line-height:1.7;max-width:340px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.footer-col a{display:block;font-size:12px;color:var(--dimmer);padding:3px 0;transition:color .12s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{max-width:1400px;margin:28px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--dimmer)}
+.fbadge.g{color:var(--accent);border-color:rgba(0,166,81,.3)}
+[data-theme="light"] .footer-logo{color:var(--text)}
+[data-theme="light"] .site-footer{background:var(--bg3)}
+@media(max-width:760px){.footer-inner{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="./" class="site-logo">
+      <img src="logo.png" alt="QUANT_MEDIA" style="height:38px;width:auto;display:block">
+    </a>
+    <nav class="main-nav">
+      <a href="./">Home</a>
+      <a href="markets.html">Live Data</a>
+      <a href="news.html">News</a>
+      <a href="stocks.html">Equities</a>
+      <a href="papers.html" class="active">Analysis</a>
+      <a href="research.html">Research</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="hero-badge">
+      <span class="badge-live">Paper 02</span>
+      <span class="badge-topic">Infrastructure</span>
+      <span class="badge-topic">GPU</span>
+      <span class="badge-topic">HFT</span>
+    </div>
+    <h1 class="article-h1">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</h1>
+    <p class="article-subtitle">Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.</p>
+    <div class="article-byline">
+      <span class="byline-author">QUANT_MEDIA Research</span>
+      <span>&middot;</span>
+      <span>February 1, 2026</span>
+      <span>&middot;</span>
+      <span>Infrastructure</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="article-wrap">
+
+  <!-- ABSTRACT -->
+  <div class="callout">
+    <div class="callout-title">Abstract</div>
+    <p>This paper analyzes why a modern low-latency trading stack requires both GPU and CPU-class hardware working in a split-path architecture. While GPUs like the RTX 5090 excel at massively parallel workloads such as Monte Carlo pricing and batched inference, the CPU remains indispensable for market data ingestion, feed normalization, risk checks, and order serialization. We decompose end-to-end latency and demonstrate that the GPU occupies only one term in a multi-component pipeline.</p>
+  </div>
+
+  <!-- KEY TAKEAWAYS -->
+  <div class="key-takeaways">
+    <h4>Key Takeaways</h4>
+    <ul>
+      <li>A GPU does not replace the CPU in a trading stack -- it accelerates one stage in a multi-stage pipeline where the CPU handles latency-critical serial tasks.</li>
+      <li>Feed handlers, risk checks, and order serialization are branchy, stateful operations that CPUs handle far better than GPUs.</li>
+      <li>End-to-end latency decomposes into network, parsing, feature, transfer, GPU, decision, and order components -- optimizing only one is insufficient.</li>
+      <li>Low-latency stacks depend on pinned threads, cache locality, NUMA awareness, and predictable interrupt behavior -- all CPU-domain concerns.</li>
+    </ul>
+  </div>
+
+  <!-- PAPER BODY -->
+  <h2>Introduction</h2>
+  <p>A common misconception in quant infrastructure is that buying the fastest GPU automatically creates a low-latency trading stack. It does not. In practice, a modern trading plant is heterogeneous. The GPU is exceptional for massively parallel workloads such as Monte Carlo pricing, large cross-sectional inference, batched feature generation, and local LLM inference. The CPU remains indispensable for market data ingestion, feed normalization, lock-free queues, risk checks, order serialization, and any control path where tail latency matters more than raw throughput.</p>
+  <p>The correct mental model is not "GPU replaces CPU," but:</p>
+
+  <div class="math-block">
+    <div class="math-label">End-to-end latency decomposition</div>
+    $$L_{\text{total}} = L_{\text{net}} + L_{\text{parse}} + L_{\text{feature}} + L_{\text{transfer}} + L_{\text{gpu}} + L_{\text{decision}} + L_{\text{order}}$$
+  </div>
+
+  <p>If your strategy is sensitive to wire-to-wire latency, the GPU only occupies one term in that decomposition. The rest lives in the CPU, memory subsystem, NIC path, and operating system.</p>
+
+  <h3>Why Core Ultra 9-Class Hardware Still Matters</h3>
+  <ul>
+    <li>Feed handlers are branchy, stateful, and serialization-heavy — GPUs dislike irregular control flow, CPUs excel at it</li>
+    <li>Low-latency stacks depend on pinned threads, cache locality, NUMA awareness, and predictable interrupt behavior</li>
+    <li>The GPU itself needs orchestration: batch assembly, DMA scheduling, memory pinning, and fallback handling all happen on the CPU</li>
+    <li>Pre-trade risk, throttles, and venue adapters are not embarrassingly parallel — they are latency-critical decision layers</li>
+  </ul>
+
+  <h3>A Practical Signal-Flow</h3>
+  <ol>
+    <li>NIC receives multicast or market gateway packets</li>
+    <li>CPU decodes messages and updates the local order book</li>
+    <li>CPU computes lightweight features for immediate execution logic</li>
+    <li>GPU receives batched tensors for heavier models</li>
+    <li>CPU merges GPU output with risk and routing constraints</li>
+    <li>Orders are serialized and transmitted from the CPU path</li>
+  </ol>
+
+  <h3>PyTorch Batched Inference Example</h3>
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">gpu_inference.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <div class="code-body"><pre><span class="kw">import</span> torch
+<span class="kw">import</span> time
+
+device = <span class="str">"cuda"</span> <span class="kw">if</span> torch.cuda.is_available() <span class="kw">else</span> <span class="str">"cpu"</span>
+
+<span class="kw">class</span> <span class="typ">ShortHorizonModel</span>(torch.nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, in_dim=<span class="num">64</span>, hidden=<span class="num">128</span>):
+        <span class="fn">super</span>().__init__()
+        self.net = torch.nn.Sequential(
+            torch.nn.Linear(in_dim, hidden),
+            torch.nn.ReLU(),
+            torch.nn.Linear(hidden, <span class="num">1</span>)
+        )
+
+    <span class="kw">def</span> <span class="fn">forward</span>(self, x):
+        <span class="kw">return</span> self.net(x)
+
+model = <span class="fn">ShortHorizonModel</span>().to(device).eval()
+
+<span class="cm"># Simulated microstructure features from CPU-side pipeline</span>
+features = torch.randn(<span class="num">4096</span>, <span class="num">64</span>, device=device)
+
+<span class="kw">with</span> torch.no_grad():
+    start = time.perf_counter()
+    score = model(features)
+    <span class="kw">if</span> device == <span class="str">"cuda"</span>: torch.cuda.synchronize()
+    elapsed_ms = <span class="num">1000</span> * (time.perf_counter() - start)
+
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Inference latency: {elapsed_ms:.3f} ms"</span>)
+<span class="fn">print</span>(score[:<span class="num">5</span>].flatten())</pre></div>
+  </div>
+
+  <p>The honest answer is this: if your objective is true low latency, an RTX 5090 is a powerful accelerator, not a complete solution. You still need CPU-class hardware because markets are not just matrix multiplication — they are interrupts, packets, queues, clocks, and risk gates.</p>
+
+  <!-- RELATED RESEARCH -->
+  <div class="related-section">
+    <h2>Related Research</h2>
+    <div class="related-grid">
+      <a href="paper-vpin-order-flow-toxicity.html" class="related-card">
+        <h4>VPIN and Order Flow Toxicity</h4>
+        <p>A practical microstructure signal for detecting adverse selection in fragmented equity markets.</p>
+      </a>
+      <a href="paper-hierarchical-risk-parity.html" class="related-card">
+        <h4>Hierarchical Risk Parity (HRP)</h4>
+        <p>Cluster-based portfolio allocation using hierarchical clustering and graph theory.</p>
+      </a>
+      <a href="paper-probabilistic-sharpe-ratio.html" class="related-card">
+        <h4>Probabilistic Sharpe Ratio (PSR)</h4>
+        <p>A statistically rigorous alternative to raw Sharpe ratio.</p>
+      </a>
+      <a href="papers.html" class="related-card">
+        <h4>All Research Papers</h4>
+        <p>Browse the full collection of quantitative research and analysis.</p>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">QUANT<span class="slash">_</span>MEDIA</div>
+      <div class="footer-desc">Independent US financial intelligence platform. Quantitative research, market microstructure, and institutional-grade market analysis by QUANT_MEDIA. All content is for informational and academic purposes only. Not financial advice.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Analysis</h4>
+      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
+      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="papers.html">All Papers</a>
+      <a href="claude-ai-trading.html">Claude AI Trading</a>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <a href="markets.html">Overview</a>
+      <a href="stocks.html">US Equities</a>
+      <a href="stocks.html">Sectors</a>
+      <a href="news.html">Market News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Lab</h4>
+      <a href="research.html">Research Home</a>
+      <a href="infrastructure.html">Infrastructure</a>
+      <a href="papers.html">All Papers</a>
+      <a href="about.html">About QUANT_MEDIA</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 QUANT_MEDIA &middot; Certurk Research. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <div style="display:flex;gap:8px">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">US Markets</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  const t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  try{localStorage.setItem('qm-theme', t);}catch(e){}
+}
+</script>
+</body>
+</html>

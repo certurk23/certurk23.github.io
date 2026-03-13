@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slippage and Latency Modeling in Backtesting | QUANT_MEDIA</title>
+<meta name="description" content="Why PnL arises from signal after implementation. Fill models, latency decomposition, and market impact modeling for realistic backtesting.">
+<link rel="canonical" href="https://quantmedia.io/paper-slippage-latency-modeling.html">
+<meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
+<meta name="author" content="Certurk Research | QUANT_MEDIA">
+<meta name="keywords" content="slippage modeling, latency, backtesting, market impact, fill simulation, execution cost">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Slippage and Latency Modeling in Backtesting | QUANT_MEDIA">
+<meta property="og:description" content="Why PnL arises from signal after implementation. Fill models, latency decomposition, and market impact modeling for realistic backtesting.">
+<meta property="og:url" content="https://quantmedia.io/paper-slippage-latency-modeling.html">
+<meta property="og:site_name" content="QUANT_MEDIA">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slippage and Latency Modeling in Backtesting | QUANT_MEDIA">
+<meta name="twitter:description" content="Why PnL arises from signal after implementation. Fill models, latency decomposition, and market impact modeling for realistic backtesting.">
+<meta name="twitter:site" content="@quantmedia_io">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"ScholarlyArticle",
+  "headline":"Slippage and Latency Modeling in Backtesting",
+  "description":"Why PnL arises from signal after implementation. Fill models, latency decomposition, and market impact modeling for realistic backtesting.",
+  "author":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "datePublished":"2026-02-20",
+  "dateModified":"2026-03-13",
+  "mainEntityOfPage":"https://quantmedia.io/paper-slippage-latency-modeling.html",
+  "keywords":"slippage modeling, latency, backtesting, market impact, fill simulation, execution cost"
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"},
+    {"@type":"ListItem","position":3,"name":"Slippage and Latency Modeling in Backtesting","item":"https://quantmedia.io/paper-slippage-latency-modeling.html"}
+  ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;transition:background .24s ease,color .24s ease}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.main-nav a:hover,.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] .main-nav a:hover,[data-theme="light"] .main-nav a.active{color:var(--text)!important}
+
+/* ARTICLE LAYOUT */
+.article-hero{background:linear-gradient(135deg,#0a0f0a 0%,#0a1a0f 50%,#0a0a0a 100%);border-bottom:1px solid var(--border);padding:48px 0 40px}
+.article-hero-inner{max-width:820px;margin:0 auto;padding:0 24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px}
+.hero-badge span{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.badge-live{background:var(--accent);color:#fff}
+.badge-topic{border:1px solid var(--border2);color:var(--dim)}
+.article-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+.article-subtitle{font-size:17px;color:var(--dim);line-height:1.7;max-width:680px;margin-bottom:20px}
+.article-byline{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--dimmer);padding-top:16px;border-top:1px solid var(--border)}
+.byline-author{color:var(--accent);font-weight:600}
+[data-theme="light"] .article-h1{color:var(--text)}
+[data-theme="light"] .article-hero{background:linear-gradient(135deg,#f5f5f3 0%,#eef5ef 50%,#f5f5f3 100%)}
+
+/* CONTENT */
+.article-wrap{max-width:820px;margin:0 auto;padding:40px 24px 60px}
+.article-wrap h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.2px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.article-wrap h2:first-child{margin-top:0}
+.article-wrap h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin:28px 0 12px}
+.article-wrap p{margin-bottom:16px;color:var(--text)}
+.article-wrap ul,.article-wrap ol{margin:0 0 16px 20px;color:var(--text)}
+.article-wrap li{margin-bottom:6px}
+.article-wrap strong{color:#fff}
+[data-theme="light"] .article-wrap h2{color:var(--text)}
+[data-theme="light"] .article-wrap strong{color:var(--text)}
+
+/* CODE */
+.code-wrap{margin:20px 0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px}
+.code-filename{color:var(--dim)}
+.code-lang{color:var(--accent);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+.code-body{padding:16px;overflow-x:auto;background:var(--bg2)}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre;margin:0}
+.kw{color:#c792ea}.str{color:#c3e88d}.fn{color:#82aaff}.cm{color:#546e7a}.num{color:#f78c6c}.typ{color:#ffcb6b}
+
+/* MATH */
+.math-block{margin:20px 0;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow-x:auto}
+.math-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+/* CALLOUT */
+.callout{margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 4px 4px 0}
+.callout.warn{border-left-color:var(--gold)}
+.callout.red{border-left-color:var(--red)}
+.callout-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.callout p{margin:0;font-size:13px;color:var(--dim)}
+
+/* ABSTRACT & KEY TAKEAWAYS */
+.abstract-block{margin:0 0 32px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 4px 4px 0}
+.abstract-block h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px;padding:0;border:none}
+.abstract-block p{margin:0;font-size:14px;color:var(--dim);line-height:1.7}
+.key-takeaways{margin:0 0 32px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.key-takeaways h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);margin:0 0 12px;padding:0;border:none}
+.key-takeaways ul{margin:0 0 0 18px;padding:0}
+.key-takeaways li{font-size:14px;color:var(--text);margin-bottom:6px;line-height:1.6}
+
+/* RELATED */
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 0}
+.related-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px;transition:border-color .14s}
+.related-card:hover{border-color:var(--accent)}
+.related-card h4{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px}
+.related-card p{font-size:12px;color:var(--dim);margin:0;line-height:1.5}
+
+/* FOOTER */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 0}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-logo .slash{color:var(--accent)}
+.footer-desc{font-size:12px;color:var(--dim);line-height:1.7;max-width:340px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.footer-col a{display:block;font-size:12px;color:var(--dimmer);padding:3px 0;transition:color .12s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{max-width:1400px;margin:28px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--dimmer)}
+.fbadge.g{color:var(--accent);border-color:rgba(0,166,81,.3)}
+[data-theme="light"] .footer-logo{color:var(--text)}
+[data-theme="light"] .site-footer{background:var(--bg3)}
+@media(max-width:760px){.footer-inner{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="./" class="site-logo">
+      <img src="logo.png" alt="QUANT_MEDIA" style="height:38px;width:auto;display:block">
+    </a>
+    <nav class="main-nav">
+      <a href="./">Home</a>
+      <a href="markets.html">Live Data</a>
+      <a href="news.html">News</a>
+      <a href="stocks.html">Equities</a>
+      <a href="papers.html" class="active">Analysis</a>
+      <a href="research.html">Research</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="hero-badge">
+      <span class="badge-live">Paper 09</span>
+      <span class="badge-topic">Execution</span>
+      <span class="badge-topic">Backtest</span>
+      <span class="badge-topic">Market Impact</span>
+      <span class="badge-topic">Latency</span>
+    </div>
+    <h1 class="article-h1">Slippage and Latency Modeling in Backtesting</h1>
+    <p class="article-subtitle">Backtests are usually too optimistic for one simple reason: they assume the market waited for you. This paper decomposes latency, models fill prices with market impact, and shows why PnL arises from signal after implementation.</p>
+    <div class="article-byline">
+      <span class="byline-author">QUANT_MEDIA Research</span>
+      <span>&middot;</span>
+      <span>February 20, 2026</span>
+      <span>&middot;</span>
+      <span>Execution</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="article-wrap">
+
+  <!-- ABSTRACT -->
+  <div class="abstract-block">
+    <h2>Abstract</h2>
+    <p>Backtest engines routinely overstate strategy performance by ignoring the mechanics of order execution. This paper presents a latency decomposition framework and fill-price model incorporating spread crossing, market impact via square-root law, and stochastic drift during the decision-to-fill interval. Realistic slippage modeling is shown to be inseparable from strategy definition itself.</p>
+  </div>
+
+  <!-- KEY TAKEAWAYS -->
+  <div class="key-takeaways">
+    <h2>Key Takeaways</h2>
+    <ul>
+      <li>Total latency decomposes into decision, queue, network, and venue components, each contributing to adverse price movement.</li>
+      <li>Fill prices should be modeled as the future midprice plus half-spread, market impact, and noise, not the current mid.</li>
+      <li>The square-root impact model calibrates execution cost as a function of volatility and participation rate.</li>
+      <li>A strategy with a 1.5 Sharpe in a frictionless backtest may collapse below 0.5 after realistic fill modeling.</li>
+      <li>PnL arises from signal after implementation. Slippage is part of the strategy definition, not a cost assumption.</li>
+    </ul>
+  </div>
+
+  <!-- PAPER BODY -->
+  <h2>Introduction</h2>
+  <p>Backtests are usually too optimistic for one simple reason: they assume the market waited for you. Between the instant a signal is computed and the instant an order is filled, several things happen. Threads wake up, messages are serialized, risk checks run, gateways forward packets, the venue processes the order, and other participants move the book. By the time the fill occurs, the price you thought you traded may no longer exist.</p>
+
+  <h2>Latency Decomposition</h2>
+
+  <div class="math-block">
+    <div class="math-label">Latency Decomposition</div>
+    $$\Delta t = \Delta t_{\text{decision}} + \Delta t_{\text{queue}} + \Delta t_{\text{network}} + \Delta t_{\text{venue}}$$
+  </div>
+
+  <p>A practical fill model for a buy order (where \(M_t\) is the reference midprice at decision time):</p>
+
+  <div class="math-block">
+    <div class="math-label">Fill Price Model</div>
+    $$P_{\text{fill}} = M_{t+\Delta t} + \frac{1}{2}S_{t+\Delta t} + I(q) + \epsilon$$
+  </div>
+
+  <h2>Market Impact</h2>
+
+  <p>A commonly used specification for market impact uses a square-root law:</p>
+
+  <div class="math-block">
+    <div class="math-label">Square-Root Impact Model</div>
+    $$I(q) = \eta \sigma \sqrt{\frac{q}{V}}$$
+  </div>
+
+  <p>where \(\sigma\) is volatility, \(V\) is available volume, and \(\eta\) is a calibrated coefficient.</p>
+
+  <h3>Python Fill Simulator</h3>
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">fill_model.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">simulate_fill</span>(mid, spread, sigma, q, V, latency_ms, side, eta=<span class="num">0.1</span>):
+    <span class="cm"># side: +1 for buy, -1 for sell</span>
+    impact = eta * sigma * np.sqrt(max(q, <span class="num">1</span>) / max(V, <span class="num">1</span>))
+    noise  = np.random.normal(<span class="num">0</span>, spread * <span class="num">0.05</span>)
+
+    <span class="cm"># latency drift: price can move during delay</span>
+    drift      = np.random.normal(<span class="num">0</span>, sigma * np.sqrt(latency_ms / <span class="num">1000.0</span>))
+    future_mid = mid + drift
+
+    fill = future_mid + side * (<span class="num">0.5</span> * spread + impact) + noise
+    <span class="kw">return</span> fill
+
+<span class="cm"># Example</span>
+<span class="kw">for</span> side <span class="kw">in</span> [<span class="num">1</span>, -<span class="num">1</span>]:
+    f = <span class="fn">simulate_fill</span>(
+        mid=<span class="num">100.0</span>, spread=<span class="num">0.02</span>, sigma=<span class="num">0.01</span>,
+        q=<span class="num">10_000</span>, V=<span class="num">1_000_000</span>, latency_ms=<span class="num">8</span>, side=side
+    )
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">f"Fill ({'buy' if side &gt; 0 else 'sell'}): {f:.4f}"</span>)</pre></div>
+  </div>
+
+  <h2>Implications</h2>
+  <p>A strategy with a 1.5 Sharpe ratio in a frictionless backtest may collapse below 0.5 after realistic fill modeling. Mean reversion strategies are especially vulnerable because edge decays quickly and costs are frequent. The broader lesson: <strong>PnL does not arise from signal alone — it arises from signal after implementation</strong>. Slippage and latency are not "cost assumptions." They are part of the strategy definition.</p>
+
+  <!-- RELATED RESEARCH -->
+  <h2 id="related">Related Research</h2>
+  <div class="related-grid">
+    <a href="paper-alternative-data-quant-finance.html" class="related-card">
+      <h4>Alternative Data in Quantitative Finance</h4>
+      <p>Satellite imagery, transaction panels, and e-commerce data as nowcasting signals.</p>
+    </a>
+    <a href="paper-hf-analytical-operations.html" class="related-card">
+      <h4>HF Analytical Operations</h4>
+      <p>Vectorization, rolling-window mathematics, and GPU-accelerated analytics for quant systems.</p>
+    </a>
+    <a href="papers.html" class="related-card">
+      <h4>All Papers</h4>
+      <p>Browse the full QUANT_MEDIA research library covering market microstructure, risk, and execution.</p>
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">QUANT<span class="slash">_</span>MEDIA</div>
+      <div class="footer-desc">Independent US financial intelligence platform. Quantitative research, market microstructure, and institutional-grade market analysis by QUANT_MEDIA. All content is for informational and academic purposes only. Not financial advice.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Analysis</h4>
+      <a href="papers.html#vpin">VPIN &amp; Flow Toxicity</a>
+      <a href="papers.html#hrp">Hierarchical Risk Parity</a>
+      <a href="papers.html#psr">Probabilistic Sharpe</a>
+      <a href="papers.html#slippage">Slippage Modeling</a>
+      <a href="claude-ai-trading.html">Claude AI Trading</a>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <a href="markets.html">Overview</a>
+      <a href="stocks.html">US Equities</a>
+      <a href="stocks.html">Sectors</a>
+      <a href="news.html">Market News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Lab</h4>
+      <a href="research.html">Research Home</a>
+      <a href="infrastructure.html">Infrastructure</a>
+      <a href="papers.html">All Papers</a>
+      <a href="about.html">About QUANT_MEDIA</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 QUANT_MEDIA &middot; Certurk Research. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <div style="display:flex;gap:8px">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">US Markets</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  const t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  try{localStorage.setItem('qm-theme', t);}catch(e){}
+}
+</script>
+</body>
+</html>

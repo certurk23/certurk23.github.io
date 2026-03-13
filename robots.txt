@@ -3,6 +3,5 @@ Allow: /
 
 Disallow: /.claude/
 Disallow: /_fix_all_pages.py
-Disallow: /privacy.html
 
 Sitemap: https://quantmedia.io/sitemap.xml

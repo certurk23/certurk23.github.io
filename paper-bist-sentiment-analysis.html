@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentiment Analysis in the Turkish Stock Market (BIST) | QUANT_MEDIA</title>
+<meta name="description" content="Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.">
+<link rel="canonical" href="https://quantmedia.io/paper-bist-sentiment-analysis.html">
+<meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
+<meta name="author" content="Certurk Research | QUANT_MEDIA">
+<meta name="keywords" content="BIST sentiment analysis, Turkish stock market, financial NLP, Qwen, Llama, sentiment signals">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sentiment Analysis in the Turkish Stock Market (BIST)">
+<meta property="og:description" content="Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.">
+<meta property="og:url" content="https://quantmedia.io/paper-bist-sentiment-analysis.html">
+<meta property="og:site_name" content="QUANT_MEDIA">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sentiment Analysis in the Turkish Stock Market (BIST)">
+<meta name="twitter:description" content="Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.">
+<meta name="twitter:site" content="@quantmedia_io">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"ScholarlyArticle",
+  "headline":"Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama",
+  "description":"Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.",
+  "author":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "datePublished":"2026-03-01",
+  "dateModified":"2026-03-13",
+  "mainEntityOfPage":"https://quantmedia.io/paper-bist-sentiment-analysis.html",
+  "keywords":"BIST sentiment analysis, Turkish stock market, financial NLP, Qwen, Llama, sentiment signals"
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"},
+    {"@type":"ListItem","position":3,"name":"Sentiment Analysis in the Turkish Stock Market (BIST)","item":"https://quantmedia.io/paper-bist-sentiment-analysis.html"}
+  ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;transition:background .24s ease,color .24s ease}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.main-nav a:hover,.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] .main-nav a:hover,[data-theme="light"] .main-nav a.active{color:var(--text)!important}
+
+/* ARTICLE LAYOUT */
+.article-hero{background:linear-gradient(135deg,#0a0f0a 0%,#0a1a0f 50%,#0a0a0a 100%);border-bottom:1px solid var(--border);padding:48px 0 40px}
+.article-hero-inner{max-width:820px;margin:0 auto;padding:0 24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.hero-badge span{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.badge-live{background:var(--accent);color:#fff}
+.badge-topic{border:1px solid var(--border2);color:var(--dim)}
+.article-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+.article-subtitle{font-size:17px;color:var(--dim);line-height:1.7;max-width:680px;margin-bottom:20px}
+.article-byline{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--dimmer);padding-top:16px;border-top:1px solid var(--border)}
+.byline-author{color:var(--accent);font-weight:600}
+[data-theme="light"] .article-h1{color:var(--text)}
+[data-theme="light"] .article-hero{background:linear-gradient(135deg,#f5f5f3 0%,#eef5ef 50%,#f5f5f3 100%)}
+
+/* CONTENT */
+.article-wrap{max-width:820px;margin:0 auto;padding:40px 24px 60px}
+.article-wrap h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.2px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.article-wrap h2:first-child{margin-top:0}
+.article-wrap h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin:28px 0 12px}
+.article-wrap p{margin-bottom:16px;color:var(--text)}
+.article-wrap ul,.article-wrap ol{margin:0 0 16px 20px;color:var(--text)}
+.article-wrap li{margin-bottom:6px}
+.article-wrap strong{color:#fff}
+[data-theme="light"] .article-wrap h2{color:var(--text)}
+[data-theme="light"] .article-wrap strong{color:var(--text)}
+
+/* CODE */
+.code-wrap{margin:20px 0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px}
+.code-filename{color:var(--dim)}
+.code-lang{color:var(--accent);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+.code-body{padding:16px;overflow-x:auto;background:var(--bg2)}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre;margin:0}
+.kw{color:#c792ea}.str{color:#c3e88d}.fn{color:#82aaff}.cm{color:#546e7a}.num{color:#f78c6c}.typ{color:#ffcb6b}
+
+/* MATH */
+.math-block{margin:20px 0;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow-x:auto}
+.math-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+
+/* CALLOUT */
+.callout{margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 4px 4px 0}
+.callout.warn{border-left-color:var(--gold)}
+.callout.red{border-left-color:var(--red)}
+.callout-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.callout p{margin:0;font-size:13px;color:var(--dim)}
+
+/* KEY TAKEAWAYS */
+.key-takeaways{margin:24px 0;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+.key-takeaways h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.key-takeaways ul{margin:0 0 0 18px;color:var(--text)}
+.key-takeaways li{margin-bottom:6px;font-size:14px}
+
+/* FOOTER */
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 0}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-logo .slash{color:var(--accent)}
+.footer-desc{font-size:12px;color:var(--dim);line-height:1.7;max-width:340px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.footer-col a{display:block;font-size:12px;color:var(--dimmer);padding:3px 0;transition:color .12s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{max-width:1400px;margin:28px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--dimmer)}
+.fbadge.g{color:var(--accent);border-color:rgba(0,166,81,.3)}
+[data-theme="light"] .footer-logo{color:var(--text)}
+[data-theme="light"] .site-footer{background:var(--bg3)}
+@media(max-width:760px){.footer-inner{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="./" class="site-logo">
+      <img src="logo.png" alt="QUANT_MEDIA" style="height:38px;width:auto;display:block">
+    </a>
+    <nav class="main-nav">
+      <a href="./">Home</a>
+      <a href="markets.html">Live Data</a>
+      <a href="news.html">News</a>
+      <a href="stocks.html">Equities</a>
+      <a href="papers.html" class="active">Analysis</a>
+      <a href="research.html">Research</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
+        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="hero-badge">
+      <span class="badge-live">Paper 06</span>
+      <span class="badge-topic">NLP / Frontier Research</span>
+      <span class="badge-topic">LLM</span>
+      <span class="badge-topic">BIST</span>
+      <span class="badge-topic">Qwen</span>
+      <span class="badge-topic">Llama</span>
+    </div>
+    <h1 class="article-h1">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h1>
+    <p class="article-subtitle">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa Istanbul.</p>
+    <div class="article-byline">
+      <span class="byline-author">QUANT_MEDIA Research</span>
+      <span>·</span>
+      <span>March 1, 2026</span>
+      <span>·</span>
+      <span>NLP / Frontier Research</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="article-wrap">
+
+  <!-- ABSTRACT -->
+  <div class="callout">
+    <div class="callout-title">Abstract</div>
+    <p>Sentiment analysis in equities is easy to oversell and hard to do well. This paper presents a practical framework for building a time-aware, Turkish-native financial NLP pipeline using open-weight LLMs (Qwen and Llama) for signal extraction on Borsa Istanbul. We address label design, forward return targets, local inference prototyping, and the critical pitfalls of leakage, non-stationarity, and Turkish morphology in financial text.</p>
+  </div>
+
+  <!-- KEY TAKEAWAYS -->
+  <div class="key-takeaways">
+    <h3>Key Takeaways</h3>
+    <ul>
+      <li>Useful sentiment treats the signal as a conditional forecast variable aligned to event timestamps and trading horizons -- not a binary positive/negative label.</li>
+      <li>Open-weight models (Qwen3, Llama 4) make local, Turkish-language financial NLP stacks increasingly practical without external API dependencies.</li>
+      <li>Label design is the central problem: forward return targets must be time-aligned to avoid leakage contamination in backtests.</li>
+      <li>Off-the-shelf English sentiment models misread Turkish financial context, especially KAP-style disclosures -- Turkish-native pipelines are essential.</li>
+      <li>The alpha comes from labeling discipline, entity resolution, and proper out-of-sample testing, not merely from using an LLM.</li>
+    </ul>
+  </div>
+
+  <h2>Sentiment as a Forecast Variable</h2>
+
+  <p>Sentiment analysis in equities is easy to oversell and hard to do well. The useful version treats sentiment as a conditional forecast variable: a noisy signal that may explain cross-sectional returns, volatility, or volume once aligned to the correct event timestamp and trading horizon.</p>
+  <p>In the Turkish market, open-weight LLM ecosystems have matured significantly. Qwen has publicly released Qwen3-family weights, and Meta promotes Llama 4-family models and Llama Stack distributions for self-hosted workflows. That makes a local, Turkish-language financial NLP stack increasingly practical.</p>
+
+  <p>The central problem is label design. For a news item arriving at time \(t\), a common target is the forward return over horizon \(h\):</p>
+
+  <div class="math-block">
+    <div class="math-label">Forward Return Target</div>
+    $$r_{t,h} = \ln\left(\frac{P_{t+h}}{P_t}\right)$$
+  </div>
+
+  <p>A practical sentiment score can be defined as:</p>
+
+  <div class="math-block">
+    <div class="math-label">Sentiment Score</div>
+    $$s_t = p(\text{bullish} \mid x_t) - p(\text{bearish} \mid x_t)$$
+  </div>
+
+  <h3>Local Inference Prototype</h3>
+  <div class="code-wrap">
+    <div class="code-header">
+      <span class="code-filename">bist_sentiment.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <div class="code-body"><pre><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForSequenceClassification
+<span class="kw">import</span> torch
+
+model_name = <span class="str">"Qwen/Qwen3-8B"</span>  <span class="cm"># replace with local checkpoint</span>
+tokenizer  = <span class="fn">AutoTokenizer</span>.from_pretrained(model_name)
+model      = <span class="fn">AutoModelForSequenceClassification</span>.from_pretrained(model_name, num_labels=<span class="num">3</span>)
+
+texts = [
+    <span class="str">"Şirket, beklentilerin üzerinde net kar açıkladı ve yeni yatırım planı duyurdu."</span>,
+    <span class="str">"Faiz kararı sonrası banka hisselerinde satış baskısı artıyor."</span>
+]
+
+inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True</span>, truncation=<span class="kw">True</span>, return_tensors=<span class="str">"pt"</span>)
+<span class="kw">with</span> torch.no_grad():
+    logits = model(**inputs).logits
+    probs  = torch.softmax(logits, dim=-<span class="num">1</span>)
+
+<span class="fn">print</span>(probs)  <span class="cm"># [bearish, neutral, bullish]</span></pre></div>
+  </div>
+
+  <h3>Critical Pitfalls</h3>
+  <ul>
+    <li><strong>Leakage:</strong> if you label a news article with end-of-day return even though it arrived after the close, your backtest is contaminated</li>
+    <li><strong>Non-stationarity:</strong> macro regime changes, regulation, inflation cycles, and sector narratives can all alter the meaning of the same words over time</li>
+    <li><strong>Turkish morphology:</strong> off-the-shelf English finance sentiment models often misread Turkish context, especially in KAP-style disclosures</li>
+  </ul>
+
+  <p>The edge comes not from "using an LLM," but from building a time-aware, Turkish-native, market-aligned inference pipeline. The alpha comes from labeling discipline, entity resolution, and proper out-of-sample testing.</p>
+
+  <!-- Related Research -->
+  <h2 id="related">Related Research</h2>
+  <ul>
+    <li><a href="paper-bid-ask-spread-dynamics.html" style="color:var(--accent)">Market Microstructure: Bid-Ask Spread Dynamics</a> — Decomposing the cost of immediacy for execution models</li>
+    <li><a href="paper-sovereign-ai-local-llms.html" style="color:var(--accent)">Sovereign AI: Local LLMs for Quant Research</a> — Why self-hosted models are structurally superior for investment research</li>
+    <li><a href="paper-genetic-algorithm-alpha.html" style="color:var(--accent)">Automating Alpha Discovery with Genetic Algorithms</a> — Evolutionary search for automated signal generation</li>
+    <li><a href="papers.html" style="color:var(--accent)">All Research Papers</a> — Full paper collection on QUANT_MEDIA</li>
+  </ul>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">QUANT<span class="slash">_</span>MEDIA</div>
+      <div class="footer-desc">Independent US financial intelligence platform. Quantitative research, market microstructure, and institutional-grade market analysis by QUANT_MEDIA. All content is for informational and academic purposes only. Not financial advice.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Analysis</h4>
+      <a href="papers.html#vpin">VPIN &amp; Flow Toxicity</a>
+      <a href="papers.html#hrp">Hierarchical Risk Parity</a>
+      <a href="papers.html#psr">Probabilistic Sharpe</a>
+      <a href="papers.html#slippage">Slippage Modeling</a>
+      <a href="claude-ai-trading.html">Claude AI Trading</a>
+    </div>
+    <div class="footer-col">
+      <h4>Markets</h4>
+      <a href="markets.html">Overview</a>
+      <a href="stocks.html">US Equities</a>
+      <a href="stocks.html">Sectors</a>
+      <a href="news.html">Market News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Lab</h4>
+      <a href="research.html">Research Home</a>
+      <a href="infrastructure.html">Infrastructure</a>
+      <a href="papers.html">All Papers</a>
+      <a href="about.html">About QUANT_MEDIA</a>
+      <a href="methodology.html">Methodology</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 QUANT_MEDIA · Certurk Research. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <div style="display:flex;gap:8px">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">US Markets</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  const t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  try{localStorage.setItem('qm-theme', t);}catch(e){}
+}
+</script>
+</body>
+</html>

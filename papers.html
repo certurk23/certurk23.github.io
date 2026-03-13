@@ -6,21 +6,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analysis — Quantitative Research &amp; Market Studies | QUANT_MEDIA</title>
-<meta name="description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
+<meta name="description" content="11 quantitative research papers on market microstructure, VPIN, portfolio optimization, execution analytics, GPU infrastructure, and AI-driven trading. Open-access academic research by QUANT_MEDIA.">
 <link rel="canonical" href="https://quantmedia.io/papers.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="author" content="Certurk Research | QUANT_MEDIA">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Analysis — Quantitative Research &amp; Market Studies | QUANT_MEDIA">
-<meta property="og:description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
+<meta property="og:description" content="11 quantitative research papers on market microstructure, VPIN, portfolio optimization, execution analytics, and AI-driven trading.">
 <meta property="og:url" content="https://quantmedia.io/papers.html">
 <meta property="og:site_name" content="QUANT_MEDIA">
-<meta property="og:image" content="https://quantmedia.io/og-card.svg">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Analysis — Quantitative Research &amp; Market Studies | QUANT_MEDIA">
-<meta name="twitter:description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
+<meta name="twitter:description" content="11 quantitative research papers on market microstructure, VPIN, portfolio optimization, and AI-driven trading.">
 <meta name="twitter:site" content="@quantmedia_io">
-<meta name="twitter:image" content="https://quantmedia.io/og-card.svg">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>
@@ -33,21 +33,18 @@
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--bd:#242424;--muted:#606060;--green:#00a651;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
 [data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;--bd:#dcdcda;--muted:#999999;--green:#007a3d}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
-.btn-theme{width:30px;height:30px;border-radius:3px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;cursor:pointer;transition:all .14s ease;flex-shrink:0}
-.btn-theme:hover{color:var(--text);border-color:var(--dim);background:var(--bg3)}
-/* UNIFIED SITE HEADER */
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
 .site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .24s ease}
 .header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
 .site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
-.logo-slash{color:var(--accent)}
-.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
 .site-header .main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
 .site-header .main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
 .site-header .main-nav a:hover,.site-header .main-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
@@ -58,62 +55,21 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font
 .btn-subscribe:hover{opacity:.86}
 [data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
 [data-theme="light"] .site-logo{color:var(--text)}
-[data-theme="light"] .top-nav{background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 [data-theme="light"] nav.main-nav a:hover,[data-theme="light"] nav.main-nav a.active{color:var(--text)!important}
-[data-theme="light"] .brand,[data-theme="light"] a.brand{color:var(--text)}
-[data-theme="light"] footer{background:var(--bg3)}
-[data-theme="light"] .hero-title,[data-theme="light"] .hero-stat-val{color:var(--text)!important}
-[data-theme="light"] .section-header h2{color:var(--text)!important}
-[data-theme="light"] .art-card-title,[data-theme="light"] .paper-title{color:var(--text)!important}
-[data-theme="light"] .paper-body h3{color:var(--text)!important}
-[data-theme="light"] .widget-title{color:var(--text)!important}
-a{text-decoration:none;color:inherit}
 
-/* TICKER */
-.ticker-bar{height:var(--ticker-h);background:#000;border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;position:relative}
-.ticker-bar::before,.ticker-bar::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2}
-.ticker-bar::before{left:0;background:linear-gradient(to right,#000,transparent)}
-.ticker-bar::after{right:0;background:linear-gradient(to left,#000,transparent)}
-.ticker-label{flex-shrink:0;padding:0 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;color:#fff;background:var(--accent);height:100%;display:flex;align-items:center;text-transform:uppercase;z-index:3}
-.ticker-track{display:flex;animation:scroll-left 45s linear infinite;white-space:nowrap}
-@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.tick-item{display:inline-flex;align-items:center;gap:10px;padding:0 22px;border-right:1px solid var(--border);height:var(--ticker-h);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:500}
-.tick-name{color:var(--dim);text-transform:uppercase;font-size:11px}
-.tick-val{color:var(--text);font-weight:600}
-.tick-chg.up{color:var(--accent)}.tick-chg.dn{color:var(--red)}
-.up{color:var(--accent)}.dn{color:var(--red)}.nt{color:var(--dim)}
+/* MOBILE NAV */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 
-/* MARKET BAR */
-.market-bar{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;position:sticky;top:var(--nav-h);z-index:140;overflow:hidden;height:var(--mbar-h)}
-.mbar-label{flex-shrink:0;padding:0 14px;height:var(--mbar-h);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);border-right:1px solid var(--border);display:flex;align-items:center;gap:6px}
-.mbar-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:blink 1.5s ease-in-out infinite}
-.mbar-items{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
-.mbar-items::-webkit-scrollbar{display:none}
-.mbar-item{flex-shrink:0;display:flex;align-items:center;gap:9px;padding:0 16px;height:var(--mbar-h);border-right:1px solid var(--border)}
-.mbar-sym{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--dim)}
-.mbar-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text)}
-.mbar-chg{font-family:'JetBrains Mono',monospace;font-size:11px}
-
-/* TOP NAV */
-.top-nav{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.nav-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
-.brand{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:1px;color:#fff;padding-right:28px;border-right:1px solid var(--border2);margin-right:4px;white-space:nowrap}
-.brand span{color:var(--accent)}
-nav.main-nav{display:flex;height:var(--nav-h)}
-nav.main-nav a{display:flex;align-items:center;padding:0 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s,border-color .15s}
-nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-color:var(--accent)}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
-.live-pill{display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.8px;color:var(--accent);text-transform:uppercase}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-
-/* SUB NAV */
-.sub-nav{height:var(--sub-h);background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:calc(var(--nav-h) + var(--mbar-h));z-index:99}
-.sub-nav-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center;height:100%}
-.sub-nav a{display:flex;align-items:center;height:100%;padding:0 14px;font-size:12px;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
-.sub-nav a:hover,.sub-nav a.active{color:var(--text);border-color:var(--accent)}
-
-/* PAGE HERO */
+/* HERO */
 .page-hero{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 0}
 .page-hero-inner{max-width:1400px;margin:0 auto;padding:0 20px}
 .hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
@@ -122,64 +78,32 @@ nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-color:var(--accent)
 .hero-stats{display:flex;gap:32px;margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}
 .hero-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff}
 .hero-stat-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-top:2px}
+[data-theme="light"] .hero-title,[data-theme="light"] .hero-stat-val{color:var(--text)!important}
 
 /* LAYOUT */
 .page-wrap{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:1fr 300px;gap:24px}
 
-/* ARTICLE INDEX GRID */
-.article-index{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:40px}
-.art-card{background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:18px;transition:border-color .15s,background .15s;cursor:pointer;display:block}
-.art-card:hover{border-color:var(--accent);background:var(--bg3)}
-.art-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:8px}
-.art-card-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
-.art-card-abstract{font-size:12px;color:var(--dim);line-height:1.65;margin-bottom:12px}
+/* SECTION HEADER */
+.section-label{margin:0 0 12px;padding:8px 0 8px 10px;border-left:3px solid var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)}
+.section-label.gold{border-left-color:var(--gold)}
+
+/* PAPER CARDS */
+.paper-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:32px}
+.paper-card{background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:20px 24px;transition:border-color .15s,background .15s;display:block}
+.paper-card:hover{border-color:var(--accent);background:var(--bg3)}
+.paper-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
+.paper-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);flex-shrink:0}
+.paper-date{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--dimmer);flex-shrink:0}
+.paper-card-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:8px}
+.paper-card-abstract{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:12px}
+.paper-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .art-tags{display:flex;gap:6px;flex-wrap:wrap}
 .art-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;border:1px solid var(--border2);border-radius:2px;color:var(--dim)}
 .art-tag.green{color:var(--accent);border-color:rgba(0,166,81,.3)}
 .art-tag.blue{color:var(--blue);border-color:rgba(30,136,229,.3)}
 .art-tag.gold{color:var(--gold);border-color:rgba(245,166,35,.3)}
-
-/* SECTION DIVIDER */
-.section-header{display:flex;align-items:center;border-left:3px solid var(--accent);padding-left:10px;margin-bottom:16px;margin-top:40px;scroll-margin-top:100px}
-.section-header:first-of-type{margin-top:0}
-.section-header h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
-
-/* PAPER ARTICLE */
-.paper-article{background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:28px 32px;margin-bottom:2px;scroll-margin-top:100px}
-.paper-number{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-bottom:8px}
-.paper-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:700;color:#fff;margin-bottom:12px;line-height:1.25}
-.paper-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.paper-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;padding:3px 9px;border:1px solid var(--border2);border-radius:2px;color:var(--dim)}
-.paper-tag.green{color:var(--accent);border-color:rgba(0,166,81,.3);background:rgba(0,166,81,.05)}
-.paper-tag.blue{color:var(--blue);border-color:rgba(30,136,229,.3);background:rgba(30,136,229,.05)}
-.paper-tag.gold{color:var(--gold);border-color:rgba(245,166,35,.3);background:rgba(245,166,35,.05)}
-.paper-date{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--dimmer);margin-left:auto}
-
-/* ARTICLE BODY */
-.paper-body p{font-size:14px;color:#bbb;line-height:1.8;margin-bottom:16px}
-.paper-body p:last-child{margin-bottom:0}
-.paper-body strong{color:var(--text);font-weight:600}
-.paper-body em{color:#ccc;font-style:italic}
-.paper-body h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#fff;margin:28px 0 12px;padding-left:10px;border-left:2px solid var(--accent)}
-.paper-body ul{margin:12px 0 16px 24px;display:flex;flex-direction:column;gap:7px}
-.paper-body li{font-size:13px;color:#bbb;line-height:1.7;position:relative}
-.paper-body li::marker{color:var(--accent)}
-.paper-body ol{margin:12px 0 16px 24px;display:flex;flex-direction:column;gap:7px;list-style:decimal}
-.paper-body ol li{font-size:13px;color:#bbb;line-height:1.7}
-.paper-body code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);border:1px solid var(--border2);padding:1px 6px;border-radius:2px;color:#6ab0f5}
-
-/* MATH */
-.math-block{background:var(--bg3);border:1px solid var(--border2);border-top:2px solid var(--accent);padding:20px 28px;margin:18px 0;text-align:center;border-radius:0 0 3px 3px;overflow-x:auto}
-.math-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
-
-/* CODE */
-.code-wrap{margin:20px 0;background:#000;border:1px solid var(--border2);border-radius:3px;overflow:hidden}
-.code-header{background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 14px;display:flex;align-items:center;justify-content:space-between}
-.code-filename{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
-.code-lang{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--accent)}
-.code-body{padding:18px 20px;overflow-x:auto}
-.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9;color:#abb2bf;white-space:pre}
-.kw{color:#c678dd}.fn{color:#61afef}.cm{color:#5c6370;font-style:italic}.num{color:#d19a66}.typ{color:#e5c07b}.str{color:#98c379}
+.read-link{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+[data-theme="light"] .paper-card-title{color:var(--text)!important}
 
 /* SIDEBAR */
 .sidebar{display:flex;flex-direction:column;gap:16px}
@@ -194,6 +118,7 @@ nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-color:var(--accent)
 .stack-row:last-child{border-bottom:none}
 .stack-key{color:var(--dim)}
 .stack-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text)}
+[data-theme="light"] .widget-title{color:var(--text)!important}
 
 /* FOOTER */
 footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
@@ -208,43 +133,23 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .footer-badges{display:flex;gap:8px}
 .fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border2);border-radius:2px;color:var(--dimmer);text-transform:uppercase}
 .fbadge.g{border-color:rgba(0,166,81,.4);color:var(--accent)}
+[data-theme="light"] footer{background:var(--bg3)}
 
-@media(max-width:900px){.page-wrap{grid-template-columns:1fr}.sidebar{display:none}.footer-top{grid-template-columns:1fr}.article-index{grid-template-columns:1fr}.paper-article{padding:20px 18px}}
-/* MOBILE NAV */
-.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
-.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
-.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0}
-.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
-.mobile-nav.open{display:block}
-.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
-.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
-@media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
+@media(max-width:900px){.page-wrap{grid-template-columns:1fr}.sidebar{display:none}.footer-top{grid-template-columns:1fr}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/papers.html","url":"https://quantmedia.io/papers.html","name":"Analysis — Quantitative Research & Market Studies | QUANT_MEDIA","description":"Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-03-11"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"}]},{"@type":"ItemList","name":"Quantitative Research Papers","itemListElement":[{"@type":"ListItem","position":1,"name":"VPIN & Order Flow Toxicity"},{"@type":"ListItem","position":2,"name":"Hierarchical Risk Parity"},{"@type":"ListItem","position":3,"name":"Probabilistic Sharpe Ratio"},{"@type":"ListItem","position":4,"name":"Slippage Modeling"},{"@type":"ListItem","position":5,"name":"Alternate Data Sources"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://quantmedia.io/papers.html","url":"https://quantmedia.io/papers.html","name":"Quantitative Research Papers — QUANT_MEDIA","description":"11 open-access quantitative research papers covering market microstructure, portfolio optimization, execution analytics, GPU infrastructure, and AI-driven trading.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-03-13"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"}]},{"@type":"ItemList","name":"Quantitative Research Papers","itemListElement":[{"@type":"ListItem","position":1,"name":"VPIN and Order Flow Toxicity","url":"https://quantmedia.io/paper-vpin-order-flow-toxicity.html"},{"@type":"ListItem","position":2,"name":"Low-Latency Trading Stack: RTX 5090","url":"https://quantmedia.io/paper-gpu-cpu-trading-infrastructure.html"},{"@type":"ListItem","position":3,"name":"Hierarchical Risk Parity (HRP)","url":"https://quantmedia.io/paper-hierarchical-risk-parity.html"},{"@type":"ListItem","position":4,"name":"Probabilistic Sharpe Ratio (PSR)","url":"https://quantmedia.io/paper-probabilistic-sharpe-ratio.html"},{"@type":"ListItem","position":5,"name":"Bid-Ask Spread Dynamics","url":"https://quantmedia.io/paper-bid-ask-spread-dynamics.html"},{"@type":"ListItem","position":6,"name":"Sentiment Analysis in BIST","url":"https://quantmedia.io/paper-bist-sentiment-analysis.html"},{"@type":"ListItem","position":7,"name":"Sovereign AI: Local LLMs","url":"https://quantmedia.io/paper-sovereign-ai-local-llms.html"},{"@type":"ListItem","position":8,"name":"Genetic Algorithm Alpha Discovery","url":"https://quantmedia.io/paper-genetic-algorithm-alpha.html"},{"@type":"ListItem","position":9,"name":"Slippage and Latency Modeling","url":"https://quantmedia.io/paper-slippage-latency-modeling.html"},{"@type":"ListItem","position":10,"name":"Alternative Data in Quant Finance","url":"https://quantmedia.io/paper-alternative-data-quant-finance.html"},{"@type":"ListItem","position":11,"name":"HF Analytical Operations","url":"https://quantmedia.io/paper-hf-analytical-operations.html"}]}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is VPIN (Volume-Synchronized Probability of Informed Trading)?","acceptedAnswer":{"@type":"Answer","text":"VPIN is a real-time metric that estimates the probability of informed trading in a financial instrument. It measures order flow toxicity by comparing buy-initiated and sell-initiated volume in volume-synchronized time bars, rather than clock time. High VPIN values indicate elevated adverse selection risk for market makers."}},{"@type":"Question","name":"What is Hierarchical Risk Parity (HRP)?","acceptedAnswer":{"@type":"Answer","text":"Hierarchical Risk Parity is a portfolio optimization method that uses hierarchical clustering and graph theory to allocate capital without inverting the covariance matrix. Unlike Markowitz mean-variance optimization, HRP produces more stable, diversified portfolios that are less sensitive to estimation error in the correlation structure."}},{"@type":"Question","name":"What is Probabilistic Sharpe Ratio (PSR)?","acceptedAnswer":{"@type":"Answer","text":"Probabilistic Sharpe Ratio is a statistical test that computes the probability that the true Sharpe ratio of a strategy exceeds a benchmark, accounting for non-normal return distributions, sample length, skewness, and kurtosis. It helps detect backtest overfitting by penalizing strategies tested on short samples with fat-tailed returns."}},{"@type":"Question","name":"How does GPU acceleration help in quantitative trading?","acceptedAnswer":{"@type":"Answer","text":"GPUs accelerate quantitative trading by parallelizing compute-heavy tasks like Monte Carlo simulations, cross-sectional factor inference, batched feature generation, and neural network inference. However, CPUs remain essential for latency-sensitive tasks like market data parsing, order serialization, and risk checks. The optimal architecture uses both in a split-path design."}},{"@type":"Question","name":"What is order flow toxicity in market microstructure?","acceptedAnswer":{"@type":"Answer","text":"Order flow toxicity measures the degree to which incoming orders carry private information that is adverse to liquidity providers. When toxicity is high, market makers face increased adverse selection — they systematically trade against informed counterparties. VPIN and Kyle's lambda are two common metrics used to quantify this toxicity in real-time."}}]}</script>
 </head>
 <body>
 
-<!-- TICKER -->
-<div style="background:#000;border-bottom:1px solid var(--border)">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"AVGO","proName":"NASDAQ:AVGO"},{"description":"NFLX","proName":"NASDAQ:NFLX"},{"description":"AMD","proName":"NASDAQ:AMD"},{"description":"QCOM","proName":"NASDAQ:QCOM"},{"description":"COST","proName":"NASDAQ:COST"},{"description":"ADBE","proName":"NASDAQ:ADBE"},{"description":"INTC","proName":"NASDAQ:INTC"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"MA","proName":"NYSE:MA"},{"description":"LLY","proName":"NYSE:LLY"},{"description":"UNH","proName":"NYSE:UNH"},{"description":"XOM","proName":"NYSE:XOM"},{"description":"HD","proName":"NYSE:HD"},{"description":"PG","proName":"NYSE:PG"},{"description":"JNJ","proName":"NYSE:JNJ"},{"description":"ORCL","proName":"NYSE:ORCL"},{"description":"MRK","proName":"NYSE:MRK"},{"description":"ABBV","proName":"NYSE:ABBV"},{"description":"CVX","proName":"NYSE:CVX"},{"description":"WMT","proName":"NYSE:WMT"},{"description":"BAC","proName":"NYSE:BAC"},{"description":"GS","proName":"NYSE:GS"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
-    </script>
-  </div>
-</div>
-
 <!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" class="site-logo">
+    <a href="./" class="site-logo">
       <img src="logo.png" alt="QUANT_MEDIA" style="height:38px;width:auto;display:block">
     </a>
     <nav class="main-nav">
-      <a href="index.html">Home</a>
+      <a href="./">Home</a>
       <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
@@ -255,7 +160,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
       <button class="btn-subscribe">Subscribe</button>
     </div>
   </div>
@@ -263,7 +167,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="index.html">Home</a>
+  <a href="./">Home</a>
   <a href="markets.html">Live Data</a>
   <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
@@ -272,31 +176,12 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <a href="about.html">About</a>
 </div>
 
-<!-- MARKET BAR -->
-<div class="market-bar">
-  <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
-  <div class="mbar-items" id="mbarItems">
-    <div class="mbar-item"><span class="mbar-sym">Loading…</span></div>
-  </div>
-</div>
-
-<!-- SUB NAV -->
-<div class="sub-nav">
-  <div class="sub-nav-inner">
-    <a href="#index" class="active">All Papers</a>
-    <a href="#vpin">Microstructure</a>
-    <a href="#hrp">Portfolio</a>
-    <a href="#sovereign-ai">ML &amp; AI</a>
-    <a href="#slippage">Execution</a>
-  </div>
-</div>
-
 <!-- HERO -->
 <div class="page-hero">
   <div class="page-hero-inner">
     <div class="hero-eyebrow">QUANT_MEDIA</div>
     <h1 class="hero-title">Research Papers &amp; Notes</h1>
-    <div class="hero-desc">Quantitative research covering market microstructure, portfolio theory, execution analytics, machine learning infrastructure, and alternative data. All papers are independent, non-commercial research.</div>
+    <div class="hero-desc">Quantitative research covering market microstructure, portfolio theory, execution analytics, machine learning infrastructure, and alternative data. All papers are independent, non-commercial, open-access research.</div>
     <div class="hero-stats">
       <div><div class="hero-stat-val">11</div><div class="hero-stat-label">Papers</div></div>
       <div><div class="hero-stat-val">2026</div><div class="hero-stat-label">Latest</div></div>
@@ -309,1046 +194,205 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <div class="page-wrap">
   <main>
 
-    <!-- ARTICLE INDEX -->
-    <div class="section-header" id="index"><h2>Article Index</h2></div>
-    <div style="margin:0 0 12px;padding:8px 0 8px 10px;border-left:3px solid var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)">Core US Research</div>
-    <div class="article-index">
-      <a href="#vpin" class="art-card">
-        <div class="art-num">01</div>
-        <div class="art-card-title">VPIN and Order Flow Toxicity</div>
-        <div class="art-card-abstract">Volume-synchronized probability of informed trading as a practical signal for detecting adverse selection in fragmented equity markets.</div>
-        <div class="art-tags"><span class="art-tag green">VPIN</span><span class="art-tag">Microstructure</span><span class="art-tag">Order Flow</span></div>
+    <!-- CORE US RESEARCH -->
+    <div class="section-label">Core US Research</div>
+
+    <div class="paper-grid">
+      <!-- Paper 01: VPIN -->
+      <a href="paper-vpin-order-flow-toxicity.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 01</span>
+          <span class="paper-date">Jan 2026</span>
+        </div>
+        <div class="paper-card-title">VPIN and Order Flow Toxicity: A Practical Microstructure Signal for Quantitative Traders</div>
+        <div class="paper-card-abstract">Volume-synchronized probability of informed trading as a practical signal for detecting adverse selection in fragmented equity markets. Includes Python implementation, volume bucketing, and trade classification methods.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag green">VPIN</span><span class="art-tag">Microstructure</span><span class="art-tag">Order Flow</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#gpu-cpu" class="art-card">
-        <div class="art-num">02</div>
-        <div class="art-card-title">Low-Latency Stack: RTX 5090 &amp; Core Ultra 9</div>
-        <div class="art-card-abstract">Why GPU-accelerated financial modeling still requires CPU-class hardware. A split-path architecture analysis for real trading systems.</div>
-        <div class="art-tags"><span class="art-tag blue">Infrastructure</span><span class="art-tag">Latency</span><span class="art-tag">GPU</span></div>
+
+      <!-- Paper 02: GPU/CPU -->
+      <a href="paper-gpu-cpu-trading-infrastructure.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 02</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</div>
+        <div class="paper-card-abstract">Why GPU-accelerated financial modeling still requires CPU-class hardware. A split-path architecture analysis for real trading systems with latency decomposition and PyTorch inference examples.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag blue">Infrastructure</span><span class="art-tag">Latency</span><span class="art-tag">GPU</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#hrp" class="art-card">
-        <div class="art-num">03</div>
-        <div class="art-card-title">Hierarchical Risk Parity (HRP)</div>
-        <div class="art-card-abstract">Cluster-based portfolio allocation that avoids covariance inversion and delivers more stable out-of-sample diversification.</div>
-        <div class="art-tags"><span class="art-tag gold">Portfolio</span><span class="art-tag">HRP</span><span class="art-tag">Risk</span></div>
+
+      <!-- Paper 03: HRP -->
+      <a href="paper-hierarchical-risk-parity.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 03</span>
+          <span class="paper-date">Jan 2026</span>
+        </div>
+        <div class="paper-card-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</div>
+        <div class="paper-card-abstract">Cluster-based portfolio allocation that avoids covariance inversion and delivers more stable out-of-sample diversification. Includes correlation distance, recursive bisection, and full Python implementation.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag gold">Portfolio</span><span class="art-tag">HRP</span><span class="art-tag">Risk</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#psr" class="art-card">
-        <div class="art-num">04</div>
-        <div class="art-card-title">Probabilistic Sharpe Ratio &amp; Backtest Overfitting</div>
-        <div class="art-card-abstract">A statistically rigorous alternative to raw Sharpe that adjusts for non-normality, sample length, and multiple testing bias.</div>
-        <div class="art-tags"><span class="art-tag gold">Statistics</span><span class="art-tag">Backtest</span><span class="art-tag">PSR</span></div>
+
+      <!-- Paper 04: PSR -->
+      <a href="paper-probabilistic-sharpe-ratio.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 04</span>
+          <span class="paper-date">Jan 2026</span>
+        </div>
+        <div class="paper-card-title">Probabilistic Sharpe Ratio (PSR) and Backtest Overfitting</div>
+        <div class="paper-card-abstract">A statistically rigorous alternative to raw Sharpe that adjusts for non-normality, sample length, skewness, and kurtosis. Detects backtest overfitting with inferential statistics.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag gold">Statistics</span><span class="art-tag">Backtest</span><span class="art-tag">PSR</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#spreads" class="art-card">
-        <div class="art-num">05</div>
-        <div class="art-card-title">Bid-Ask Spread Dynamics</div>
-        <div class="art-card-abstract">Quoted, effective, and realized spreads as microstructure state variables. Decomposing the cost of immediacy for execution models.</div>
-        <div class="art-tags"><span class="art-tag green">Microstructure</span><span class="art-tag">Spreads</span><span class="art-tag">Execution</span></div>
+
+      <!-- Paper 05: Spreads -->
+      <a href="paper-bid-ask-spread-dynamics.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 05</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">Market Microstructure: Bid-Ask Spread Dynamics</div>
+        <div class="paper-card-abstract">Quoted, effective, and realized spreads as microstructure state variables. Decomposing the cost of immediacy for execution models with adverse selection analysis.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag green">Microstructure</span><span class="art-tag">Spreads</span><span class="art-tag">Execution</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#sovereign-ai" class="art-card">
-        <div class="art-num">07</div>
-        <div class="art-card-title">Sovereign AI: Local LLMs for Quant Research</div>
-        <div class="art-card-abstract">Why self-hosted language models are structurally superior for investment research. The Bastion philosophy and local deployment case.</div>
-        <div class="art-tags"><span class="art-tag blue">Sovereign AI</span><span class="art-tag">LLM</span><span class="art-tag">Privacy</span></div>
+
+      <!-- Paper 07: Sovereign AI -->
+      <a href="paper-sovereign-ai-local-llms.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 07</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</div>
+        <div class="paper-card-abstract">Why self-hosted language models are structurally superior for investment research. The Bastion philosophy — data minimization, auditability, latency predictability, and customization.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag blue">Sovereign AI</span><span class="art-tag">LLM</span><span class="art-tag">Privacy</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#genetic" class="art-card">
-        <div class="art-num">08</div>
-        <div class="art-card-title">Automating Alpha Discovery with Genetic Algorithms</div>
-        <div class="art-card-abstract">Evolutionary search as an alpha hypothesis generator. Fitness design, selection pressure, and rigorous out-of-sample validation.</div>
-        <div class="art-tags"><span class="art-tag gold">Alpha</span><span class="art-tag">Optimization</span><span class="art-tag">GA</span></div>
+
+      <!-- Paper 08: Genetic -->
+      <a href="paper-genetic-algorithm-alpha.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 08</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">Automating Alpha Discovery with Genetic Algorithms</div>
+        <div class="paper-card-abstract">Evolutionary search as an alpha hypothesis generator. Fitness design, selection pressure, and rigorous out-of-sample validation for non-convex trading strategy spaces.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag gold">Alpha</span><span class="art-tag">Optimization</span><span class="art-tag">GA</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#slippage" class="art-card">
-        <div class="art-num">09</div>
-        <div class="art-card-title">Slippage and Latency Modeling in Backtesting</div>
-        <div class="art-card-abstract">Why PnL arises from signal after implementation, not signal alone. Fill models, latency decomposition, and market impact.</div>
-        <div class="art-tags"><span class="art-tag green">Execution</span><span class="art-tag">Backtest</span><span class="art-tag">Impact</span></div>
+
+      <!-- Paper 09: Slippage -->
+      <a href="paper-slippage-latency-modeling.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 09</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">Slippage and Latency Modeling in Backtesting</div>
+        <div class="paper-card-abstract">Why PnL arises from signal after implementation, not signal alone. Fill models, latency decomposition, square-root market impact, and Python fill simulators.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag green">Execution</span><span class="art-tag">Backtest</span><span class="art-tag">Impact</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#alt-data" class="art-card">
-        <div class="art-num">10</div>
-        <div class="art-card-title">The Role of Alternate Data in Quant Finance</div>
-        <div class="art-card-abstract">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance and timestamp integrity.</div>
-        <div class="art-tags"><span class="art-tag blue">Alt Data</span><span class="art-tag">ML</span><span class="art-tag">Nowcasting</span></div>
+
+      <!-- Paper 10: Alt Data -->
+      <a href="paper-alternative-data-quant-finance.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 10</span>
+          <span class="paper-date">Feb 2026</span>
+        </div>
+        <div class="paper-card-title">The Role of Alternate Data in Quantitative Finance</div>
+        <div class="paper-card-abstract">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance, timestamp integrity, and ML pipeline design for alternative data sources.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag blue">Alt Data</span><span class="art-tag">ML</span><span class="art-tag">Nowcasting</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
-      <a href="#vectorization" class="art-card">
-        <div class="art-num">11</div>
-        <div class="art-card-title">Optimization of HF Analytical Operations</div>
-        <div class="art-card-abstract">From vectorization to predictive modeling. Rolling-window mathematics, GPU-accelerated analytics, and feature engineering for quant systems.</div>
-        <div class="art-tags"><span class="art-tag green">Analytics</span><span class="art-tag">GPU</span><span class="art-tag">Vectorization</span></div>
+
+      <!-- Paper 11: Vectorization -->
+      <a href="paper-hf-analytical-operations.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 11</span>
+          <span class="paper-date">Mar 2026</span>
+        </div>
+        <div class="paper-card-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</div>
+        <div class="paper-card-abstract">Rolling-window mathematics, GPU-accelerated analytics, and feature engineering for quantitative trading systems. From raw market data to predictive feature matrices.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag green">Analytics</span><span class="art-tag">GPU</span><span class="art-tag">Vectorization</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
     </div>
 
-    <!-- Frontier / International index -->
-    <div style="margin:0 0 12px;padding:8px 0 8px 10px;border-left:3px solid var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)">Frontier / International</div>
-    <div class="article-index" style="margin-bottom:40px">
-      <a href="#bist-sentiment" class="art-card">
-        <div class="art-num">06</div>
-        <div class="art-card-title">Sentiment Analysis in the Turkish Market (BIST)</div>
-        <div class="art-card-abstract">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul.</div>
-        <div class="art-tags"><span class="art-tag blue">NLP</span><span class="art-tag">LLM</span><span class="art-tag green">BIST</span></div>
+    <!-- FRONTIER / INTERNATIONAL -->
+    <div class="section-label gold">Frontier / International Research</div>
+
+    <div class="paper-grid">
+      <!-- Paper 06: BIST -->
+      <a href="paper-bist-sentiment-analysis.html" class="paper-card">
+        <div class="paper-card-top">
+          <span class="paper-num">Paper 06</span>
+          <span class="paper-date">Mar 2026</span>
+        </div>
+        <div class="paper-card-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</div>
+        <div class="paper-card-abstract">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul. Local inference, label design, and critical pitfalls.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag blue">NLP</span><span class="art-tag">LLM</span><span class="art-tag green">BIST</span></div>
+          <span class="read-link">Read →</span>
+        </div>
       </a>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- CORE US RESEARCH                           -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div style="margin:0 0 24px;padding:16px 0;border-bottom:1px solid var(--bd)">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text);padding-left:10px;border-left:3px solid var(--green)">Core US Research</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px;padding-left:13px">Market microstructure, portfolio theory, execution, and infrastructure</div>
+    <!-- FEATURED: Claude AI Trading -->
+    <div class="section-label" style="border-left-color:var(--blue)">Featured Analysis</div>
+
+    <div class="paper-grid" style="margin-bottom:0">
+      <a href="claude-ai-trading.html" class="paper-card" style="border-left:3px solid var(--blue)">
+        <div class="paper-card-top">
+          <span class="paper-num" style="color:var(--blue)">Featured</span>
+          <span class="paper-date">Mar 2026 · Updated regularly</span>
+        </div>
+        <div class="paper-card-title">Claude AI in Trading: How Large Language Models Are Reshaping Financial Markets</div>
+        <div class="paper-card-abstract">From a $14,000 Polymarket return to Goldman Sachs automation and a trillion-dollar tech selloff — quantitative analysis of how Claude AI has become the most disruptive force in financial markets since algorithmic trading.</div>
+        <div class="paper-card-bottom">
+          <div class="art-tags"><span class="art-tag blue">AI Trading</span><span class="art-tag">Claude</span><span class="art-tag">Wall Street</span></div>
+          <span class="read-link">Read →</span>
+        </div>
+      </a>
     </div>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 01: VPIN -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>Microstructure</h2></div>
-    <article class="paper-article" id="vpin">
-      <div class="paper-number">Paper 01</div>
-      <h2 class="paper-title">VPIN and Order Flow Toxicity: A Practical Microstructure Signal for Quantitative Traders</h2>
-      <div class="paper-meta">
-        <span class="paper-tag green">VPIN</span>
-        <span class="paper-tag">Order Flow</span>
-        <span class="paper-tag">Microstructure</span>
-        <span class="paper-tag">NASDAQ</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>In modern electronic markets, price does not move solely because of public news. A substantial share of short-term price formation is driven by who is trading, how informed they are, and how aggressively they interact with available liquidity. For quantitative researchers, this leads to a central microstructure question: how can we detect when order flow becomes dangerous for liquidity providers?</p>
-        <p>One influential answer is <strong>VPIN</strong>, or Volume-Synchronized Probability of Informed Trading. VPIN is designed to measure <strong>order flow toxicity</strong> — the extent to which incoming flow is adverse to passive market participants such as market makers, internalizers, or execution algorithms. When toxicity rises, quoting tight spreads becomes more dangerous, slippage tends to increase, and short-horizon returns become harder to model using stationary assumptions.</p>
-        <p>At a high level, VPIN replaces calendar time with volume time. Instead of asking what happened during the last minute, it asks what happened during the last fixed amount of traded volume. This shift is important because information does not arrive at a constant rate in financial markets. During news events, open and close auctions, or stress periods, a single minute may contain far more information than several minutes in a quiet regime. Volume-synchronized sampling tries to normalize that uneven information arrival.</p>
-        <p>The core VPIN intuition is straightforward. For each fixed-volume bucket, we estimate the buy volume and the sell volume. The larger the imbalance between the two, the more one-sided the flow appears. A common representation is:</p>
-
-        <div class="math-block">
-          <div class="math-label">Definition — VPIN Estimator</div>
-          $$\text{VPIN} = \frac{\sum |V_{buy} - V_{sell}|}{V_{total}}$$
-        </div>
-
-        <p>In practice, VPIN is computed over a rolling window of the most recent \(n\) volume buckets:</p>
-
-        <div class="math-block">
-          $$\text{VPIN}_t = \frac{1}{nV} \sum_{i=t-n+1}^{t} \left| V_i^{buy} - V_i^{sell} \right|$$
-        </div>
-
-        <p>Here, \(V\) is the fixed bucket size, and \(n\) is the number of buckets in the rolling sample. This normalized formulation makes VPIN interpretable as the recent average order-flow imbalance per unit of volume.</p>
-
-        <h3>Why Order Flow Toxicity Matters</h3>
-        <p>Order flow toxicity is essentially an adverse selection problem. Suppose a market maker posts bid and ask quotes. If the traders hitting those quotes are mostly uninformed and inventory shocks are balanced, the market maker can earn the spread with manageable risk. But if the counterparties are systematically better informed, the market maker is likely to buy just before prices fall and sell just before prices rise.</p>
-        <p>A rising VPIN is often associated with:</p>
-        <ul>
-          <li>wider spreads and reduced displayed depth</li>
-          <li>higher short-term volatility</li>
-          <li>lower passive execution quality</li>
-          <li>more fragile market impact dynamics</li>
-        </ul>
-
-        <h3>Why Use Volume Buckets Instead of Time Bars?</h3>
-        <p>Traditional indicators are built on fixed clock-time bars. That approach imposes an assumption that market activity is homogeneous through time. In reality, a one-minute interval at the open is not statistically comparable to a one-minute interval during midday inactivity. Volume bucketing ensures that each observation contains the same amount of trading activity, creating a more stable basis for measuring imbalances.</p>
-
-        <h3>The Practical Challenge: Classifying Buy and Sell Volume</h3>
-        <p>Exchanges do not always label every trade as buyer-initiated or seller-initiated in a directly usable way. Practitioners usually infer trade direction using:</p>
-        <ul>
-          <li>the tick rule</li>
-          <li>Lee–Ready style signing against quotes</li>
-          <li>direct aggressor flags, when available in proprietary feeds</li>
-        </ul>
-
-        <h3>A Simple Python Implementation</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">vpin_core.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> numpy <span class="kw">as</span> np
-
-<span class="kw">def</span> <span class="fn">classify_trade_sign</span>(price_series: pd.Series) -> pd.Series:
-    price_diff = price_series.diff()
-    sign = np.sign(price_diff)
-    sign = sign.replace(<span class="num">0</span>, np.nan).ffill().fillna(<span class="num">1</span>)
-    <span class="kw">return</span> sign
-
-<span class="kw">def</span> <span class="fn">compute_vpin</span>(trades: pd.DataFrame, bucket_volume: <span class="typ">float</span>, window: <span class="typ">int</span> = <span class="num">50</span>) -> pd.DataFrame:
-    df = trades.copy()
-    df[<span class="str">"sign"</span>] = classify_trade_sign(df[<span class="str">"price"</span>])
-
-    df[<span class="str">"buy_volume"</span>]  = np.where(df[<span class="str">"sign"</span>] &gt; <span class="num">0</span>, df[<span class="str">"volume"</span>], <span class="num">0.0</span>)
-    df[<span class="str">"sell_volume"</span>] = np.where(df[<span class="str">"sign"</span>] &lt; <span class="num">0</span>, df[<span class="str">"volume"</span>], <span class="num">0.0</span>)
-
-    df[<span class="str">"cum_volume"</span>] = df[<span class="str">"volume"</span>].cumsum()
-    df[<span class="str">"bucket_id"</span>] = ((df[<span class="str">"cum_volume"</span>] - <span class="num">1</span>) // bucket_volume).astype(<span class="typ">int</span>)
-
-    bucketed = df.groupby(<span class="str">"bucket_id"</span>).agg({
-        <span class="str">"buy_volume"</span>:  <span class="str">"sum"</span>,
-        <span class="str">"sell_volume"</span>: <span class="str">"sum"</span>,
-        <span class="str">"volume"</span>:      <span class="str">"sum"</span>
-    })
-
-    bucketed[<span class="str">"imbalance"</span>] = (bucketed[<span class="str">"buy_volume"</span>] - bucketed[<span class="str">"sell_volume"</span>]).abs()
-    bucketed[<span class="str">"vpin"</span>] = bucketed[<span class="str">"imbalance"</span>].rolling(window).sum() / (
-        bucketed[<span class="str">"volume"</span>].rolling(window).sum()
-    )
-    <span class="kw">return</span> bucketed</pre></div>
-        </div>
-
-        <h3>A More Realistic Extension</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">vpin_features.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">def</span> <span class="fn">add_microstructure_features</span>(bucketed: pd.DataFrame) -> pd.DataFrame:
-    df = bucketed.copy()
-    df[<span class="str">"order_flow_ratio"</span>]     = (df[<span class="str">"buy_volume"</span>] - df[<span class="str">"sell_volume"</span>]) / df[<span class="str">"volume"</span>]
-    df[<span class="str">"abs_order_flow_ratio"</span>] = df[<span class="str">"order_flow_ratio"</span>].abs()
-    df[<span class="str">"vpin_zscore"</span>] = (
-        (df[<span class="str">"vpin"</span>] - df[<span class="str">"vpin"</span>].rolling(<span class="num">100</span>).mean()) /
-         df[<span class="str">"vpin"</span>].rolling(<span class="num">100</span>).std()
-    )
-    <span class="kw">return</span> df</pre></div>
-        </div>
-
-        <h3>How Quants Use VPIN</h3>
-        <p>From a research perspective, VPIN is rarely the final alpha. It is more commonly used as a state variable:</p>
-        <ul>
-          <li>A market making desk may reduce quote sizes when VPIN exceeds a threshold</li>
-          <li>An execution algorithm may shift from passive to more aggressive participation when toxicity rises</li>
-          <li>A short-horizon prediction model may condition its parameters on whether the current VPIN regime is high or low</li>
-          <li>A portfolio manager may use it as one input in a broader stress-monitoring dashboard</li>
-        </ul>
-
-        <h3>Limitations and Critiques</h3>
-        <p>VPIN is useful, but should not be treated as a universal truth. Trade classification error can materially affect the estimate. Bucket size and rolling window length are hyperparameters; different choices can produce very different behavior. High VPIN does not always mean "informed trading" in a strict economic sense — it may also reflect mechanical one-sided flow, hedging pressure, or fragmented liquidity.</p>
-        <p>VPIN is often strongest as a <strong>descriptive microstructure measure</strong> rather than as a standalone predictive factor. It tells you something about the market's current fragility, but the exact mapping from fragility to future returns is context-dependent.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 02: GPU/CPU Infrastructure -->
-    <!-- ═══════════════════════════════════════════ -->
-    <article class="paper-article" id="gpu-cpu">
-      <div class="paper-number">Paper 02</div>
-      <h2 class="paper-title">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</h2>
-      <div class="paper-meta">
-        <span class="paper-tag blue">Infrastructure</span>
-        <span class="paper-tag">Latency</span>
-        <span class="paper-tag">GPU</span>
-        <span class="paper-tag">HFT</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>A common misconception in quant infrastructure is that buying the fastest GPU automatically creates a low-latency trading stack. It does not. In practice, a modern trading plant is heterogeneous. The GPU is exceptional for massively parallel workloads such as Monte Carlo pricing, large cross-sectional inference, batched feature generation, and local LLM inference. The CPU remains indispensable for market data ingestion, feed normalization, lock-free queues, risk checks, order serialization, and any control path where tail latency matters more than raw throughput.</p>
-        <p>The correct mental model is not "GPU replaces CPU," but:</p>
-
-        <div class="math-block">
-          <div class="math-label">End-to-end latency decomposition</div>
-          $$L_{\text{total}} = L_{\text{net}} + L_{\text{parse}} + L_{\text{feature}} + L_{\text{transfer}} + L_{\text{gpu}} + L_{\text{decision}} + L_{\text{order}}$$
-        </div>
-
-        <p>If your strategy is sensitive to wire-to-wire latency, the GPU only occupies one term in that decomposition. The rest lives in the CPU, memory subsystem, NIC path, and operating system.</p>
-
-        <h3>Why Core Ultra 9-Class Hardware Still Matters</h3>
-        <ul>
-          <li>Feed handlers are branchy, stateful, and serialization-heavy — GPUs dislike irregular control flow, CPUs excel at it</li>
-          <li>Low-latency stacks depend on pinned threads, cache locality, NUMA awareness, and predictable interrupt behavior</li>
-          <li>The GPU itself needs orchestration: batch assembly, DMA scheduling, memory pinning, and fallback handling all happen on the CPU</li>
-          <li>Pre-trade risk, throttles, and venue adapters are not embarrassingly parallel — they are latency-critical decision layers</li>
-        </ul>
-
-        <h3>A Practical Signal-Flow</h3>
-        <ol>
-          <li>NIC receives multicast or market gateway packets</li>
-          <li>CPU decodes messages and updates the local order book</li>
-          <li>CPU computes lightweight features for immediate execution logic</li>
-          <li>GPU receives batched tensors for heavier models</li>
-          <li>CPU merges GPU output with risk and routing constraints</li>
-          <li>Orders are serialized and transmitted from the CPU path</li>
-        </ol>
-
-        <h3>PyTorch Batched Inference Example</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">gpu_inference.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> torch
-<span class="kw">import</span> time
-
-device = <span class="str">"cuda"</span> <span class="kw">if</span> torch.cuda.is_available() <span class="kw">else</span> <span class="str">"cpu"</span>
-
-<span class="kw">class</span> <span class="typ">ShortHorizonModel</span>(torch.nn.Module):
-    <span class="kw">def</span> <span class="fn">__init__</span>(self, in_dim=<span class="num">64</span>, hidden=<span class="num">128</span>):
-        <span class="fn">super</span>().__init__()
-        self.net = torch.nn.Sequential(
-            torch.nn.Linear(in_dim, hidden),
-            torch.nn.ReLU(),
-            torch.nn.Linear(hidden, <span class="num">1</span>)
-        )
-
-    <span class="kw">def</span> <span class="fn">forward</span>(self, x):
-        <span class="kw">return</span> self.net(x)
-
-model = <span class="fn">ShortHorizonModel</span>().to(device).eval()
-
-<span class="cm"># Simulated microstructure features from CPU-side pipeline</span>
-features = torch.randn(<span class="num">4096</span>, <span class="num">64</span>, device=device)
-
-<span class="kw">with</span> torch.no_grad():
-    start = time.perf_counter()
-    score = model(features)
-    <span class="kw">if</span> device == <span class="str">"cuda"</span>: torch.cuda.synchronize()
-    elapsed_ms = <span class="num">1000</span> * (time.perf_counter() - start)
-
-<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Inference latency: {elapsed_ms:.3f} ms"</span>)
-<span class="fn">print</span>(score[:<span class="num">5</span>].flatten())</pre></div>
-        </div>
-
-        <p>The honest answer is this: if your objective is true low latency, an RTX 5090 is a powerful accelerator, not a complete solution. You still need CPU-class hardware because markets are not just matrix multiplication — they are interrupts, packets, queues, clocks, and risk gates.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 03: HRP -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>Portfolio Theory</h2></div>
-    <article class="paper-article" id="hrp">
-      <div class="paper-number">Paper 03</div>
-      <h2 class="paper-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</h2>
-      <div class="paper-meta">
-        <span class="paper-tag gold">Portfolio</span>
-        <span class="paper-tag">HRP</span>
-        <span class="paper-tag">Risk Parity</span>
-        <span class="paper-tag">Clustering</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Classical portfolio theory is elegant, but in practical quant workflows it often breaks where the algebra looks strongest. Mean-variance optimization requires estimating expected returns and inverting the covariance matrix. In small samples, high dimensions, or unstable regimes, that process becomes fragile. Tiny changes in input can produce violent changes in weights.</p>
-        <p><strong>Hierarchical Risk Parity (HRP)</strong> avoids direct covariance inversion and uses hierarchical clustering to structure allocation. Assets are not independent points in space — they form dependency clusters: banks, semiconductors, sovereign bonds, energy names, or factor-like groups.</p>
-        <p>HRP first measures similarity using correlation, then transforms that into a distance metric:</p>
-
-        <div class="math-block">
-          <div class="math-label">Correlation Distance</div>
-          $$d_{ij} = \sqrt{\frac{1 - \rho_{ij}}{2}}$$
-        </div>
-
-        <p>Once the hierarchy is built via clustering, HRP applies two steps: <strong>quasi-diagonalization</strong> (reorder the covariance matrix so similar assets are adjacent) and <strong>recursive bisection</strong>. If two clusters have variances \(\sigma_L^2\) and \(\sigma_R^2\), the left cluster receives weight:</p>
-
-        <div class="math-block">
-          <div class="math-label">Recursive Bisection Allocation</div>
-          $$w_L = 1 - \frac{\sigma_L^2}{\sigma_L^2 + \sigma_R^2}, \quad w_R = 1 - w_L$$
-        </div>
-
-        <h3>Python Implementation</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">hrp.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">from</span> scipy.cluster.hierarchy <span class="kw">import</span> linkage, leaves_list
-<span class="kw">from</span> scipy.spatial.distance <span class="kw">import</span> squareform
-
-<span class="kw">def</span> <span class="fn">correl_dist</span>(corr):
-    <span class="kw">return</span> np.sqrt((<span class="num">1</span> - corr) / <span class="num">2</span>)
-
-<span class="kw">def</span> <span class="fn">get_cluster_var</span>(cov, cluster_items):
-    sub_cov = cov.loc[cluster_items, cluster_items]
-    ivp = <span class="num">1</span> / np.diag(sub_cov)
-    ivp = ivp / ivp.sum()
-    <span class="kw">return</span> np.dot(ivp, np.dot(sub_cov, ivp))
-
-<span class="kw">def</span> <span class="fn">hrp_allocation</span>(returns: pd.DataFrame) -> pd.Series:
-    cov  = returns.cov()
-    corr = returns.corr()
-    dist = <span class="fn">correl_dist</span>(corr)
-
-    link    = <span class="fn">linkage</span>(<span class="fn">squareform</span>(dist.values, checks=<span class="kw">False</span>), method=<span class="str">"single"</span>)
-    sort_ix = corr.index[<span class="fn">leaves_list</span>(link)]
-
-    weights  = pd.Series(<span class="num">1.0</span>, index=sort_ix)
-    clusters = [list(sort_ix)]
-
-    <span class="kw">while</span> clusters:
-        cluster = clusters.pop(<span class="num">0</span>)
-        <span class="kw">if</span> len(cluster) &lt;= <span class="num">1</span>: <span class="kw">continue</span>
-
-        split = len(cluster) // <span class="num">2</span>
-        left, right = cluster[:split], cluster[split:]
-
-        var_left  = <span class="fn">get_cluster_var</span>(cov, left)
-        var_right = <span class="fn">get_cluster_var</span>(cov, right)
-
-        alpha = <span class="num">1</span> - var_left / (var_left + var_right)
-        weights[left]  *= alpha
-        weights[right] *= (<span class="num">1</span> - alpha)
-
-        clusters.extend([left, right])
-
-    <span class="kw">return</span> weights / weights.sum()</pre></div>
-        </div>
-
-        <p>HRP's advantage is that it treats dependence structure as an object worth modeling directly. That becomes valuable when correlations are unstable, samples are short, and optimization error matters more than elegant closed forms. It tends to behave well when traditional optimizers overreact to noisy means and covariances.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 04: PSR -->
-    <!-- ═══════════════════════════════════════════ -->
-    <article class="paper-article" id="psr">
-      <div class="paper-number">Paper 04</div>
-      <h2 class="paper-title">Probabilistic Sharpe Ratio (PSR) and Backtest Overfitting</h2>
-      <div class="paper-meta">
-        <span class="paper-tag gold">Statistics</span>
-        <span class="paper-tag">Backtest</span>
-        <span class="paper-tag">PSR</span>
-        <span class="paper-tag">Sharpe</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>The Sharpe ratio is one of the most abused statistics in quantitative finance. Two strategies can have the same Sharpe ratio even if one is estimated from a short, skewed, fat-tailed sample and the other from a long, well-behaved history. A raw Sharpe number says nothing about statistical confidence, non-normality, or multiple testing.</p>
-
-        <div class="math-block">
-          <div class="math-label">Standard Sharpe Ratio</div>
-          $$\widehat{SR} = \frac{\hat{\mu}}{\hat{\sigma}}$$
-        </div>
-
-        <p>The <strong>Probabilistic Sharpe Ratio (PSR)</strong> estimates the probability that an observed Sharpe ratio exceeds a benchmark \(SR^*\), while adjusting for skewness and kurtosis:</p>
-
-        <div class="math-block">
-          <div class="math-label">Probabilistic Sharpe Ratio</div>
-          $$PSR(SR^*) = \Phi\left( \frac{(\widehat{SR} - SR^*)\sqrt{T-1}} {\sqrt{1 - \gamma_3 \widehat{SR} + \frac{\gamma_4 - 1}{4}\widehat{SR}^2}} \right)$$
-        </div>
-
-        <p>Here, \(T\) is the sample length, \(\gamma_3\) is skewness, \(\gamma_4\) is kurtosis, and \(\Phi\) is the standard normal CDF. The denominator inflates uncertainty when returns are asymmetric or fat-tailed — exactly what classical Sharpe ignores.</p>
-
-        <h3>Python Implementation</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">psr.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">from</span> scipy.stats <span class="kw">import</span> skew, kurtosis, norm
-
-<span class="kw">def</span> <span class="fn">probabilistic_sharpe_ratio</span>(returns, sr_benchmark=<span class="num">0.0</span>, periods_per_year=<span class="num">252</span>):
-    r = pd.Series(returns).dropna()
-    sr_hat = np.sqrt(periods_per_year) * r.mean() / r.std(ddof=<span class="num">1</span>)
-
-    T  = len(r)
-    g3 = <span class="fn">skew</span>(r, bias=<span class="kw">False</span>)
-    g4 = <span class="fn">kurtosis</span>(r, fisher=<span class="kw">False</span>, bias=<span class="kw">False</span>)  <span class="cm"># Pearson kurtosis</span>
-
-    numerator   = (sr_hat - sr_benchmark) * np.sqrt(T - <span class="num">1</span>)
-    denominator = np.sqrt(<span class="num">1</span> - g3 * sr_hat + ((g4 - <span class="num">1</span>) / <span class="num">4.0</span>) * sr_hat**<span class="num">2</span>)
-    z = numerator / denominator
-
-    <span class="kw">return</span> {
-        <span class="str">"sharpe"</span>:   sr_hat,
-        <span class="str">"psr"</span>:      norm.cdf(z),
-        <span class="str">"skew"</span>:     g3,
-        <span class="str">"kurtosis"</span>: g4,
-        <span class="str">"z_score"</span>:  z
-    }
-
-<span class="cm"># Example</span>
-np.random.seed(<span class="num">42</span>)
-rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01</span>, <span class="num">500</span>)
-<span class="fn">print</span>(<span class="fn">probabilistic_sharpe_ratio</span>(rets, sr_benchmark=<span class="num">1.0</span>))</pre></div>
-        </div>
-
-        <p>Ranking strategies by PSR instead of raw Sharpe forces the strategy to "earn" its Sharpe under a stronger evidentiary standard. It penalizes short histories, punishes ugly tail behavior, and gives you a way to compare estimated skill against a benchmark such as \(SR^* = 1\). Standard Sharpe is descriptive. PSR is inferential.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 05: Bid-Ask Spread Dynamics -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>Execution &amp; Market Making</h2></div>
-    <article class="paper-article" id="spreads">
-      <div class="paper-number">Paper 05</div>
-      <h2 class="paper-title">Market Microstructure: Bid-Ask Spread Dynamics</h2>
-      <div class="paper-meta">
-        <span class="paper-tag green">Microstructure</span>
-        <span class="paper-tag">Spreads</span>
-        <span class="paper-tag">Execution</span>
-        <span class="paper-tag">Adverse Selection</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>At the surface, the bid-ask spread looks trivial. But in market microstructure, the spread is not merely a transaction cost — it is a compressed summary of inventory risk, adverse selection, tick-size constraints, queue competition, and market-maker expectations about future order flow.</p>
-
-        <div class="math-block">
-          <div class="math-label">Quoted Spread</div>
-          $$\text{Quoted Spread}_t = Ask_t - Bid_t$$
-        </div>
-
-        <div class="math-block">
-          <div class="math-label">Midpoint</div>
-          $$M_t = \frac{Ask_t + Bid_t}{2}$$
-        </div>
-
-        <p>The <strong>effective spread</strong> measures how far the trade price deviates from the midpoint, adjusted for trade direction (\(D_t = +1\) for buyer-initiated, \(D_t = -1\) for seller-initiated):</p>
-
-        <div class="math-block">
-          <div class="math-label">Effective Spread</div>
-          $$\text{Effective Spread}_t = 2 D_t (P_t - M_t)$$
-        </div>
-
-        <p>The <strong>realized spread</strong> compares the execution price to a later midpoint \(M_{t+\Delta}\), showing ex-post dealer revenue net of information effects:</p>
-
-        <div class="math-block">
-          <div class="math-label">Realized Spread</div>
-          $$\text{Realized Spread}_t = 2 D_t (P_t - M_{t+\Delta})$$
-        </div>
-
-        <h3>Why Do Spreads Widen?</h3>
-        <ul>
-          <li><strong>Inventory risk:</strong> dealers need compensation when they accumulate too much long or short exposure</li>
-          <li><strong>Processing costs:</strong> technology, clearing, capital, and exchange fees</li>
-          <li><strong>Adverse selection:</strong> if incoming orders are likely informed, a passive market maker expects to lose on average after the trade</li>
-        </ul>
-
-        <h3>Python Implementation</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">spreads.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> numpy <span class="kw">as</span> np
-
-<span class="kw">def</span> <span class="fn">compute_spreads</span>(df: pd.DataFrame, horizon=<span class="num">5</span>) -> pd.DataFrame:
-    out = df.copy()
-    out[<span class="str">"mid"</span>]            = (out[<span class="str">"bid"</span>] + out[<span class="str">"ask"</span>]) / <span class="num">2</span>
-    out[<span class="str">"quoted_spread"</span>]  = out[<span class="str">"ask"</span>] - out[<span class="str">"bid"</span>]
-    out[<span class="str">"effective_spread"</span>] = <span class="num">2</span> * out[<span class="str">"trade_sign"</span>] * (out[<span class="str">"trade_price"</span>] - out[<span class="str">"mid"</span>])
-    out[<span class="str">"mid_future"</span>]     = out[<span class="str">"mid"</span>].shift(-horizon)
-    out[<span class="str">"realized_spread"</span>] = <span class="num">2</span> * out[<span class="str">"trade_sign"</span>] * (out[<span class="str">"trade_price"</span>] - out[<span class="str">"mid_future"</span>])
-    out[<span class="str">"price_impact"</span>]   = out[<span class="str">"effective_spread"</span>] - out[<span class="str">"realized_spread"</span>]
-    <span class="kw">return</span> out</pre></div>
-        </div>
-
-        <p>Spread behavior is endogenous — it reflects the interaction between the limit order book and expected future price movement. This is why microstructure-aware models often include spread, queue position, depth imbalance, cancellation rates, and order flow imbalance together rather than in isolation. The spread is the market's local price of immediacy.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 07: Sovereign AI -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>ML &amp; AI</h2></div>
-    <article class="paper-article" id="sovereign-ai">
-      <div class="paper-number">Paper 07</div>
-      <h2 class="paper-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</h2>
-      <div class="paper-meta">
-        <span class="paper-tag blue">Sovereign AI</span>
-        <span class="paper-tag">LLM</span>
-        <span class="paper-tag">Privacy</span>
-        <span class="paper-tag">Infrastructure</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Quant research increasingly depends on language models, but most discussions focus on benchmark performance rather than deployment sovereignty. In real investment workflows, the critical questions are: "Where does the data go?", "Who controls the inference path?", and "Can the full pipeline be audited?"</p>
-        <p>That is the case for <strong>Sovereign AI</strong>: the "Bastion" philosophy — the research environment is a defensible stronghold, not a public plaza. Meta's Llama 4 family and Qwen3 open-weight models make the local-model ecosystem deep enough for general reasoning, code assistance, document QA, and domain adaptation without external APIs.</p>
-
-        <h3>The Case for Local Deployment: Four Pillars</h3>
-        <ul>
-          <li><strong>Data minimization:</strong> local inference reduces the exposure surface for unpublished factor research, private issuer notes, and order-level analytics</li>
-          <li><strong>Auditability:</strong> you can log prompts, outputs, retrieval context, model hashes, and evaluation metrics in one controlled system</li>
-          <li><strong>Latency predictability:</strong> local inference eliminates WAN variability and vendor-side queueing, making the system operationally deterministic</li>
-          <li><strong>Customization:</strong> freedom to fine-tune, distill, constrain tools, attach internal RAG stores, and harden the model around your own research style</li>
-        </ul>
-
-        <div class="math-block">
-          <div class="math-label">Sovereign Research Pipeline</div>
-          $$\text{Research Output} = f(\text{local LLM},\ \text{private data},\ \text{retrieval layer},\ \text{tool policies})$$
-        </div>
-
-        <h3>Self-Hosted Inference Example</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">sovereign_llm.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForCausalLM
-<span class="kw">import</span> torch
-
-model_name = <span class="str">"meta-llama/Llama-3.1-8B-Instruct"</span>
-tokenizer  = <span class="fn">AutoTokenizer</span>.from_pretrained(model_name)
-model      = <span class="fn">AutoModelForCausalLM</span>.from_pretrained(
-    model_name,
-    torch_dtype=torch.float16,
-    device_map=<span class="str">"auto"</span>
-)
-
-prompt = <span class="str">"""You are a quantitative research assistant.
-Summarize the main model-risk concerns in this backtest report."""</span>
-
-inputs = <span class="fn">tokenizer</span>(prompt, return_tensors=<span class="str">"pt"</span>).to(model.device)
-<span class="kw">with</span> torch.no_grad():
-    output = model.generate(**inputs, max_new_tokens=<span class="num">200</span>)
-
-<span class="fn">print</span>(<span class="fn">tokenizer.decode</span>(output[<span class="num">0</span>], skip_special_tokens=<span class="kw">True</span>))</pre></div>
-        </div>
-
-        <p>For generic drafting, external services may be fine under policy. For alpha research, portfolio analytics, internal memos, and data-rich experimentation, local models are structurally better aligned with how serious research organizations manage information. The future of quant research is not merely "AI-assisted" — it is sovereign, inspectable, and local-first.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 08: Genetic Algorithms -->
-    <!-- ═══════════════════════════════════════════ -->
-    <article class="paper-article" id="genetic">
-      <div class="paper-number">Paper 08</div>
-      <h2 class="paper-title">Automating Alpha Discovery with Genetic Algorithms</h2>
-      <div class="paper-meta">
-        <span class="paper-tag gold">Alpha</span>
-        <span class="paper-tag">Optimization</span>
-        <span class="paper-tag">Genetic Algorithms</span>
-        <span class="paper-tag">Research Automation</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Most alpha research pipelines still rely on human-guided search. Genetic algorithms offer an alternative — instead of hand-designing every parameter combination, we let a population of candidate strategies evolve through selection, crossover, and mutation. Trading rules often define non-convex search spaces where gradient methods do not fit naturally and brute force quickly becomes expensive.</p>
-
-        <p>A strategy chromosome might encode: feature choices, lookback windows, threshold values, position sizing rules, stop-loss or take-profit logic, and rebalance frequency. The fitness function should not reward raw return alone:</p>
-
-        <div class="math-block">
-          <div class="math-label">Fitness Function</div>
-          $$\text{Fitness}(g) = PSR(g) - \lambda \cdot \text{Turnover}(g) - \eta \cdot \text{MaxDrawdown}(g)$$
-        </div>
-
-        <p>This matters because the optimizer will exploit whatever you reward. If you maximize in-sample Sharpe without penalties, the algorithm may discover hyperactive, brittle, or capacity-blind rules.</p>
-
-        <h3>Minimal GA Implementation</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">genetic_alpha.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> random
-<span class="kw">import</span> numpy <span class="kw">as</span> np
-
-<span class="kw">def</span> <span class="fn">strategy_fitness</span>(params, prices):
-    short_win, long_win, threshold = params
-    <span class="kw">if</span> short_win &gt;= long_win:
-        <span class="kw">return</span> -<span class="num">1e6</span>
-
-    short_ma = prices.rolling(short_win).mean()
-    long_ma  = prices.rolling(long_win).mean()
-
-    signal = (short_ma / long_ma - <span class="num">1</span> &gt; threshold).astype(<span class="typ">int</span>) - \
-             (short_ma / long_ma - <span class="num">1</span> &lt; -threshold).astype(<span class="typ">int</span>)
-
-    ret     = signal.shift(<span class="num">1</span>) * prices.pct_change()
-    sharpe  = np.sqrt(<span class="num">252</span>) * ret.mean() / ret.std() <span class="kw">if</span> ret.std() &gt; <span class="num">0</span> <span class="kw">else</span> -<span class="num">999</span>
-    turnover = signal.diff().abs().mean()
-
-    <span class="kw">return</span> sharpe - <span class="num">0.5</span> * turnover
-
-<span class="kw">def</span> <span class="fn">mutate</span>(params):
-    p = params.copy()
-    idx = random.randint(<span class="num">0</span>, <span class="num">2</span>)
-    <span class="kw">if</span>   idx == <span class="num">0</span>: p[<span class="num">0</span>] = max(<span class="num">2</span>, p[<span class="num">0</span>] + random.randint(-<span class="num">3</span>, <span class="num">3</span>))
-    <span class="kw">elif</span> idx == <span class="num">1</span>: p[<span class="num">1</span>] = max(<span class="num">5</span>, p[<span class="num">1</span>] + random.randint(-<span class="num">5</span>, <span class="num">5</span>))
-    <span class="kw">else</span>:          p[<span class="num">2</span>] = max(<span class="num">0.0</span>, p[<span class="num">2</span>] + random.uniform(-<span class="num">0.01</span>, <span class="num">0.01</span>))
-    <span class="kw">return</span> p</pre></div>
-        </div>
-
-        <p>Evolutionary search is powerful precisely because it can overfit aggressively. A robust workflow uses nested validation, purged cross-validation, parameter stability checks, transaction-cost modeling, and inferential metrics such as PSR or deflated Sharpe. The best way to think about GA in quant finance is not "automatic profit machine," but <strong>automated hypothesis generator</strong>.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 09: Slippage and Latency -->
-    <!-- ═══════════════════════════════════════════ -->
-    <article class="paper-article" id="slippage">
-      <div class="paper-number">Paper 09</div>
-      <h2 class="paper-title">Slippage and Latency Modeling in Backtesting</h2>
-      <div class="paper-meta">
-        <span class="paper-tag green">Execution</span>
-        <span class="paper-tag">Backtest</span>
-        <span class="paper-tag">Market Impact</span>
-        <span class="paper-tag">Latency</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Backtests are usually too optimistic for one simple reason: they assume the market waited for you. Between the instant a signal is computed and the instant an order is filled, several things happen. Threads wake up, messages are serialized, risk checks run, gateways forward packets, the venue processes the order, and other participants move the book. By the time the fill occurs, the price you thought you traded may no longer exist.</p>
-
-        <div class="math-block">
-          <div class="math-label">Latency Decomposition</div>
-          $$\Delta t = \Delta t_{\text{decision}} + \Delta t_{\text{queue}} + \Delta t_{\text{network}} + \Delta t_{\text{venue}}$$
-        </div>
-
-        <p>A practical fill model for a buy order (where \(M_t\) is the reference midprice at decision time):</p>
-
-        <div class="math-block">
-          <div class="math-label">Fill Price Model</div>
-          $$P_{\text{fill}} = M_{t+\Delta t} + \frac{1}{2}S_{t+\Delta t} + I(q) + \epsilon$$
-        </div>
-
-        <p>A commonly used specification for market impact uses a square-root law:</p>
-
-        <div class="math-block">
-          <div class="math-label">Square-Root Impact Model</div>
-          $$I(q) = \eta \sigma \sqrt{\frac{q}{V}}$$
-        </div>
-
-        <p>where \(\sigma\) is volatility, \(V\) is available volume, and \(\eta\) is a calibrated coefficient.</p>
-
-        <h3>Python Fill Simulator</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">fill_model.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
-
-<span class="kw">def</span> <span class="fn">simulate_fill</span>(mid, spread, sigma, q, V, latency_ms, side, eta=<span class="num">0.1</span>):
-    <span class="cm"># side: +1 for buy, -1 for sell</span>
-    impact = eta * sigma * np.sqrt(max(q, <span class="num">1</span>) / max(V, <span class="num">1</span>))
-    noise  = np.random.normal(<span class="num">0</span>, spread * <span class="num">0.05</span>)
-
-    <span class="cm"># latency drift: price can move during delay</span>
-    drift      = np.random.normal(<span class="num">0</span>, sigma * np.sqrt(latency_ms / <span class="num">1000.0</span>))
-    future_mid = mid + drift
-
-    fill = future_mid + side * (<span class="num">0.5</span> * spread + impact) + noise
-    <span class="kw">return</span> fill
-
-<span class="cm"># Example</span>
-<span class="kw">for</span> side <span class="kw">in</span> [<span class="num">1</span>, -<span class="num">1</span>]:
-    f = <span class="fn">simulate_fill</span>(
-        mid=<span class="num">100.0</span>, spread=<span class="num">0.02</span>, sigma=<span class="num">0.01</span>,
-        q=<span class="num">10_000</span>, V=<span class="num">1_000_000</span>, latency_ms=<span class="num">8</span>, side=side
-    )
-    <span class="fn">print</span>(<span class="fn">f</span><span class="str">f"Fill ({'buy' if side &gt; 0 else 'sell'}): {f:.4f}"</span>)</pre></div>
-        </div>
-
-        <p>A strategy with a 1.5 Sharpe ratio in a frictionless backtest may collapse below 0.5 after realistic fill modeling. Mean reversion strategies are especially vulnerable because edge decays quickly and costs are frequent. The broader lesson: <strong>PnL does not arise from signal alone — it arises from signal after implementation</strong>. Slippage and latency are not "cost assumptions." They are part of the strategy definition.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 10: Alternate Data -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>Alternative Data</h2></div>
-    <article class="paper-article" id="alt-data">
-      <div class="paper-number">Paper 10</div>
-      <h2 class="paper-title">The Role of Alternate Data in Quantitative Finance</h2>
-      <div class="paper-meta">
-        <span class="paper-tag blue">Alt Data</span>
-        <span class="paper-tag">Machine Learning</span>
-        <span class="paper-tag">Nowcasting</span>
-        <span class="paper-tag">Satellite</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Traditional market data tells you what prices did. Alternate data aims to tell you why they might do something next. If public prices already summarize common information, a quant edge must often come from signals that are earlier, orthogonal, or simply structured in a way that the market has not fully absorbed.</p>
-        <p>A useful framing: for a news item or data point arriving at time \(t\), the research task is:</p>
-
-        <div class="math-block">
-          <div class="math-label">Nowcasting Model</div>
-          $$y_{t+1} = \beta^\top x_t + \epsilon_{t+1}$$
-        </div>
-
-        <p>The challenge is not writing that equation — it is making sure \(x_t\) is truly available at time \(t\), properly normalized, and economically linked to the target. Alternate data examples include:</p>
-        <ul>
-          <li><strong>Satellite imagery:</strong> parking-lot traffic, shipping flows, refinery utilization, agricultural conditions</li>
-          <li><strong>Transaction panels:</strong> nowcast consumer spend trends before official earnings releases</li>
-          <li><strong>E-commerce price data:</strong> proxy for inflation pressure or competitive intensity</li>
-        </ul>
-
-        <h3>Machine Learning Pipeline</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">alt_data_model.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestRegressor
-<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> TimeSeriesSplit
-<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> r2_score
-
-df = pd.DataFrame({
-    <span class="str">"web_price_change"</span>:    [<span class="num">0.01</span>, -<span class="num">0.02</span>,  <span class="num">0.00</span>,  <span class="num">0.03</span>,  <span class="num">0.01</span>, -<span class="num">0.01</span>],
-    <span class="str">"traffic_index"</span>:       [<span class="num">102</span>,  <span class="num">98</span>,   <span class="num">101</span>,   <span class="num">110</span>,   <span class="num">108</span>,   <span class="num">99</span>  ],
-    <span class="str">"transaction_growth"</span>:  [<span class="num">0.05</span>,  <span class="num">0.01</span>,  <span class="num">0.02</span>,  <span class="num">0.06</span>,  <span class="num">0.04</span>,  <span class="num">0.00</span>],
-    <span class="str">"target"</span>:              [<span class="num">0.02</span>, -<span class="num">0.01</span>,  <span class="num">0.00</span>,  <span class="num">0.03</span>,  <span class="num">0.01</span>, -<span class="num">0.02</span>]
-})
-
-X = df.drop(columns=[<span class="str">"target"</span>])
-y = df[<span class="str">"target"</span>]
-
-tscv   = <span class="fn">TimeSeriesSplit</span>(n_splits=<span class="num">3</span>)
-scores = []
-
-<span class="kw">for</span> train_idx, test_idx <span class="kw">in</span> tscv.split(X):
-    model = <span class="fn">RandomForestRegressor</span>(n_estimators=<span class="num">200</span>, random_state=<span class="num">42</span>)
-    model.fit(X.iloc[train_idx], y.iloc[train_idx])
-    pred = model.predict(X.iloc[test_idx])
-    scores.append(<span class="fn">r2_score</span>(y.iloc[test_idx], pred))
-
-<span class="fn">print</span>(<span class="str">"Mean OOS R²:"</span>, sum(scores) / len(scores))</pre></div>
-        </div>
-
-        <h3>Data Governance Checklist</h3>
-        <ul>
-          <li>Is the timestamp point-in-time correct?</li>
-          <li>Is the vendor revising history retroactively?</li>
-          <li>Are there survivorship or coverage biases in the dataset?</li>
-          <li>Does the dataset include entities that later disappeared?</li>
-          <li>What rights do we actually have to use and store the data?</li>
-        </ul>
-
-        <p>The best alternate-data teams behave less like headline chasers and more like measurement scientists. They spend as much time on ontology, joins, timestamp integrity, and missing-data behavior as they do on modeling. The real edge comes from converting messy external traces into clean, point-in-time, economically interpretable variables. That translation layer is where most of the alpha lives.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 11: Vectorization & Predictive Modeling -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div class="section-header"><h2>Analytical Engineering</h2></div>
-    <article class="paper-article" id="vectorization">
-      <div class="paper-number">Paper 11</div>
-      <h2 class="paper-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</h2>
-      <div class="paper-meta">
-        <span class="paper-tag green">Analytics</span>
-        <span class="paper-tag">GPU</span>
-        <span class="paper-tag">Vectorization</span>
-        <span class="paper-tag">Feature Engineering</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>In modern electronic markets, raw market data has no value by itself. Its value emerges only after it is transformed into a structured analytical representation that can support inference, forecasting, and execution. This transformation pipeline is the real engineering core of quantitative research. Ticks, trades, quotes, order-book updates, and venue messages arrive as noisy, asynchronous events. To become decision-useful, they must be normalized, aligned, filtered, aggregated, and converted into mathematical features.</p>
-
-        <p>The first stage in this process is the conversion of raw market data into a machine-readable state space. At the lowest level, the data stream typically contains timestamps, prices, sizes, side indicators, venue identifiers, and possibly order-level events. The researcher's task is to convert this event stream into a set of synchronized analytical objects: rolling returns, signed volume, spread dynamics, volatility estimates, imbalance measures, and latent state proxies. A market feed is not yet a feature matrix. It becomes one only after deterministic transformation.</p>
-
-        <h3>The Vectorization Principle</h3>
-        <p>The single most important optimization principle in this transformation is vectorization. In Python-based quantitative systems, loops are usually the wrong abstraction for numerical analytics. They are expressive, but computationally expensive. The preferred approach is to formulate the problem as array algebra and let optimized native kernels execute the computation.</p>
-
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">vectorized_features.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">import</span> numpy <span class="kw">as</span> np
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-
-df = pd.DataFrame({
-    <span class="str">"price"</span>: prices,
-    <span class="str">"volume"</span>: volumes
-})
-
-df[<span class="str">"log_return"</span>] = np.log(df[<span class="str">"price"</span>] / df[<span class="str">"price"</span>].shift(<span class="num">1</span>))
-df[<span class="str">"ma_50"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">50</span>).mean()
-df[<span class="str">"std_50"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">50</span>).std()
-df[<span class="str">"zscore_50"</span>] = (df[<span class="str">"price"</span>] - df[<span class="str">"ma_50"</span>]) / df[<span class="str">"std_50"</span>]
-df[<span class="str">"vwap_proxy"</span>] = (df[<span class="str">"price"</span>] * df[<span class="str">"volume"</span>]).cumsum() / df[<span class="str">"volume"</span>].cumsum()</pre></div>
-        </div>
-
-        <p>From a software engineering perspective, this is not just cleaner code. It is a different computational model. Instead of repeatedly invoking Python-level instructions, the pipeline delegates bulk arithmetic to optimized low-level implementations. In practice, this often reduces operation times from seconds to milliseconds.</p>
-
-        <h3>Rolling Window Mathematics</h3>
-        <p>The mathematical core of high-frequency analytics is built around the rolling window. Market state is local rather than global. We rarely care about the unconditional mean of a price series across an entire year; we care about what the last \(n\) observations imply now.</p>
-
-        <div class="math-block">
-          <div class="math-label">Rolling Moving Average</div>
-          $$\mu_t^{(n)} = \frac{1}{n} \sum_{i=t-n+1}^{t} x_i$$
-        </div>
-
-        <div class="math-block">
-          <div class="math-label">Rolling Standard Deviation</div>
-          $$\sigma_t^{(n)} = \sqrt{\frac{1}{n-1} \sum_{i=t-n+1}^{t} \left(x_i - \mu_t^{(n)}\right)^2}$$
-        </div>
-
-        <div class="math-block">
-          <div class="math-label">Rolling Z-Score</div>
-          $$Z_t^{(n)} = \frac{x_t - \mu_t^{(n)}}{\sigma_t^{(n)}}$$
-        </div>
-
-        <p>These three quantities form the basis of a large fraction of short-horizon analytics. Moving averages estimate local trend or equilibrium. Rolling standard deviation estimates local uncertainty. The Z-score standardizes deviations so that signals become comparable across assets and regimes. In mean-reversion systems, \(Z_t\) is a normalized distance-from-fair-value proxy. In breakout systems, it can be used as a momentum-strength filter.</p>
-
-        <h3>Multi-Feature Pipeline</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">feature_pipeline.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre>window = <span class="num">100</span>
-
-df[<span class="str">"mid_return"</span>] = np.log(df[<span class="str">"mid"</span>] / df[<span class="str">"mid"</span>].shift(<span class="num">1</span>))
-df[<span class="str">"rolling_mean"</span>] = df[<span class="str">"mid_return"</span>].rolling(window).mean()
-df[<span class="str">"rolling_std"</span>] = df[<span class="str">"mid_return"</span>].rolling(window).std()
-df[<span class="str">"return_z"</span>] = (df[<span class="str">"mid_return"</span>] - df[<span class="str">"rolling_mean"</span>]) / df[<span class="str">"rolling_std"</span>]
-
-df[<span class="str">"volume_mean"</span>] = df[<span class="str">"volume"</span>].rolling(window).mean()
-df[<span class="str">"volume_std"</span>] = df[<span class="str">"volume"</span>].rolling(window).std()
-df[<span class="str">"volume_z"</span>] = (df[<span class="str">"volume"</span>] - df[<span class="str">"volume_mean"</span>]) / df[<span class="str">"volume_std"</span>]
-
-df[<span class="str">"spread"</span>] = df[<span class="str">"ask"</span>] - df[<span class="str">"bid"</span>]
-df[<span class="str">"spread_ma"</span>] = df[<span class="str">"spread"</span>].rolling(window).mean()
-df[<span class="str">"spread_z"</span>] = (df[<span class="str">"spread"</span>] - df[<span class="str">"spread_ma"</span>]) / df[<span class="str">"spread"</span>].rolling(window).std()</pre></div>
-        </div>
-
-        <h3>From Features to Prediction</h3>
-        <p>At this stage, the analytical outputs are no longer merely descriptive statistics. They become features — the bridge from analytical engineering to predictive modeling. Once transformed into a feature matrix \(\mathbf{X}_t\), the market state can be passed into machine learning models for classification, regression, ranking, or policy learning.</p>
-
-        <div class="math-block">
-          <div class="math-label">Predictive Layer</div>
-          $$\hat{y}_{t+h} = f(\mathbf{X}_t)$$
-        </div>
-
-        <p>where \(f\) may be a linear model, gradient-boosted trees, a temporal neural network, or a transformer-style sequence model, and \(\hat{y}_{t+h}\) is a forecast of a future quantity such as return, volatility, spread widening, or fill probability. The predictive model is only as good as its input representation.</p>
-
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">predictive_model.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
-
-features = [<span class="str">"return_z"</span>, <span class="str">"volume_z"</span>, <span class="str">"spread_z"</span>]
-
-dataset = df.dropna().copy()
-X = dataset[features]
-y = (dataset[<span class="str">"mid"</span>].shift(-<span class="num">10</span>) > dataset[<span class="str">"mid"</span>]).astype(int).loc[X.index]
-
-model = RandomForestClassifier(
-    n_estimators=<span class="num">200</span>,
-    max_depth=<span class="num">6</span>,
-    random_state=<span class="num">42</span>
-)
-model.fit(X, y)</pre></div>
-        </div>
-
-        <h3>GPU-Accelerated Analytics</h3>
-        <p>The next engineering question is whether these analytical operations should remain on the CPU or be moved to the GPU. CPUs remain strong for control flow, event handling, and latency-sensitive branching logic. GPUs dominate when the task is large-scale, homogeneous, and arithmetic-heavy. Rolling statistics, cross-sectional transformations, large matrix operations, and batched feature generation fit the GPU model well.</p>
-
-        <p>RAPIDS cudf.pandas can accelerate Pandas workflows on the GPU while automatically falling back to standard Pandas for unsupported operations. The implication for quant research is direct: once data has been vectorized, a meaningful portion of the analytics stack can be migrated from CPU to GPU execution with limited code disruption.</p>
-
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">gpu_analytics.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="cm"># %load_ext cudf.pandas</span>
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-<span class="kw">import</span> numpy <span class="kw">as</span> np
-
-df = pd.DataFrame({
-    <span class="str">"price"</span>: prices,
-    <span class="str">"volume"</span>: volumes
-})
-
-df[<span class="str">"ret"</span>] = np.log(df[<span class="str">"price"</span>] / df[<span class="str">"price"</span>].shift(<span class="num">1</span>))
-df[<span class="str">"ma_128"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">128</span>).mean()
-df[<span class="str">"std_128"</span>] = df[<span class="str">"price"</span>].rolling(<span class="num">128</span>).std()
-df[<span class="str">"z_128"</span>] = (df[<span class="str">"price"</span>] - df[<span class="str">"ma_128"</span>]) / df[<span class="str">"std_128"</span>]</pre></div>
-        </div>
-
-        <h3>The Optimization Sequence</h3>
-        <p>GPU acceleration is not a substitute for good systems design. If the pipeline is dominated by Python object overhead, poor memory layout, unnecessary copying, or serial preprocessing, the GPU will not save it. The real optimization sequence is:</p>
-
-        <div class="math-block">
-          <div class="math-label">Engineering Priority Chain</div>
-          $$\text{Correctness} \rightarrow \text{Vectorization} \rightarrow \text{Memory Efficiency} \rightarrow \text{Parallel Execution} \rightarrow \text{Predictive Utility}$$
-        </div>
-
-        <p>The strategic lesson is straightforward. In high-frequency analytical operations, speed is not achieved by isolated tricks. It is achieved by a disciplined architecture: vectorized numerical logic, rolling-window mathematics, feature-oriented transformation, and hardware-aware execution. CPU pipelines remain essential for orchestration and event control. GPU pipelines become decisive once the analytical workload is sufficiently parallel. The institutions that outperform are usually not the ones with the most complex models. They are the ones that transform raw market data into stable predictive features faster, more consistently, and with greater engineering discipline than everyone else.</p>
-      </div>
-    </article>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FRONTIER / INTERNATIONAL RESEARCH          -->
-    <!-- ═══════════════════════════════════════════ -->
-    <div style="margin:40px 0 24px;padding:16px 0;border-top:2px solid var(--bd);border-bottom:1px solid var(--bd)">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text);padding-left:10px;border-left:3px solid var(--gold)">Frontier / International Research</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:4px;padding-left:13px">Experimental and non-US market research</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PAPER 06: BIST Sentiment -->
-    <!-- ═══════════════════════════════════════════ -->
-    <article class="paper-article" id="bist-sentiment">
-      <div class="paper-number">Paper 06</div>
-      <h2 class="paper-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h2>
-      <div class="paper-meta">
-        <span class="paper-tag blue">NLP</span>
-        <span class="paper-tag">LLM</span>
-        <span class="paper-tag green">BIST</span>
-        <span class="paper-tag">Qwen</span>
-        <span class="paper-tag">Llama</span>
-        <span class="paper-date">QUANT_MEDIA · 2026</span>
-      </div>
-      <div class="paper-body">
-        <p>Sentiment analysis in equities is easy to oversell and hard to do well. The useful version treats sentiment as a conditional forecast variable: a noisy signal that may explain cross-sectional returns, volatility, or volume once aligned to the correct event timestamp and trading horizon.</p>
-        <p>In the Turkish market, open-weight LLM ecosystems have matured significantly. Qwen has publicly released Qwen3-family weights, and Meta promotes Llama 4-family models and Llama Stack distributions for self-hosted workflows. That makes a local, Turkish-language financial NLP stack increasingly practical.</p>
-
-        <p>The central problem is label design. For a news item arriving at time \(t\), a common target is the forward return over horizon \(h\):</p>
-
-        <div class="math-block">
-          <div class="math-label">Forward Return Target</div>
-          $$r_{t,h} = \ln\left(\frac{P_{t+h}}{P_t}\right)$$
-        </div>
-
-        <p>A practical sentiment score can be defined as:</p>
-
-        <div class="math-block">
-          <div class="math-label">Sentiment Score</div>
-          $$s_t = p(\text{bullish} \mid x_t) - p(\text{bearish} \mid x_t)$$
-        </div>
-
-        <h3>Local Inference Prototype</h3>
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-filename">bist_sentiment.py</span>
-            <span class="code-lang">Python</span>
-          </div>
-          <div class="code-body"><pre><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForSequenceClassification
-<span class="kw">import</span> torch
-
-model_name = <span class="str">"Qwen/Qwen3-8B"</span>  <span class="cm"># replace with local checkpoint</span>
-tokenizer  = <span class="fn">AutoTokenizer</span>.from_pretrained(model_name)
-model      = <span class="fn">AutoModelForSequenceClassification</span>.from_pretrained(model_name, num_labels=<span class="num">3</span>)
-
-texts = [
-    <span class="str">"Şirket, beklentilerin üzerinde net kar açıkladı ve yeni yatırım planı duyurdu."</span>,
-    <span class="str">"Faiz kararı sonrası banka hisselerinde satış baskısı artıyor."</span>
-]
-
-inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True</span>, truncation=<span class="kw">True</span>, return_tensors=<span class="str">"pt"</span>)
-<span class="kw">with</span> torch.no_grad():
-    logits = model(**inputs).logits
-    probs  = torch.softmax(logits, dim=-<span class="num">1</span>)
-
-<span class="fn">print</span>(probs)  <span class="cm"># [bearish, neutral, bullish]</span></pre></div>
-        </div>
-
-        <h3>Critical Pitfalls</h3>
-        <ul>
-          <li><strong>Leakage:</strong> if you label a news article with end-of-day return even though it arrived after the close, your backtest is contaminated</li>
-          <li><strong>Non-stationarity:</strong> macro regime changes, regulation, inflation cycles, and sector narratives can all alter the meaning of the same words over time</li>
-          <li><strong>Turkish morphology:</strong> off-the-shelf English finance sentiment models often misread Turkish context, especially in KAP-style disclosures</li>
-        </ul>
-
-        <p>The edge comes not from "using an LLM," but from building a time-aware, Turkish-native, market-aligned inference pipeline. The alpha comes from labeling discipline, entity resolution, and proper out-of-sample testing.</p>
-      </div>
-    </article>
 
   </main>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="widget">
-      <div class="widget-header"><span class="widget-title">Contents</span></div>
-      <a href="#vpin" class="toc-item"><span class="toc-num">01</span>VPIN &amp; Order Flow Toxicity</a>
-      <a href="#gpu-cpu" class="toc-item"><span class="toc-num">02</span>Low-Latency Stack: RTX 5090 &amp; CPU</a>
-      <a href="#hrp" class="toc-item"><span class="toc-num">03</span>Hierarchical Risk Parity</a>
-      <a href="#psr" class="toc-item"><span class="toc-num">04</span>Probabilistic Sharpe Ratio</a>
-      <a href="#spreads" class="toc-item"><span class="toc-num">05</span>Bid-Ask Spread Dynamics</a>
-      <a href="#sovereign-ai" class="toc-item"><span class="toc-num">07</span>Sovereign AI &amp; Local LLMs</a>
-      <a href="#genetic" class="toc-item"><span class="toc-num">08</span>Genetic Algorithm Alpha Discovery</a>
-      <a href="#slippage" class="toc-item"><span class="toc-num">09</span>Slippage &amp; Latency Modeling</a>
-      <a href="#alt-data" class="toc-item"><span class="toc-num">10</span>Alternate Data in Quant Finance</a>
-      <a href="#vectorization" class="toc-item"><span class="toc-num">11</span>HF Analytical Optimization</a>
-      <a href="#bist-sentiment" class="toc-item" style="border-top:1px solid var(--gold)"><span class="toc-num" style="color:var(--gold)">06</span>BIST Sentiment (Qwen / Llama)</a>
+      <div class="widget-header"><span class="widget-title">Papers</span></div>
+      <a href="paper-vpin-order-flow-toxicity.html" class="toc-item"><span class="toc-num">01</span>VPIN &amp; Order Flow Toxicity</a>
+      <a href="paper-gpu-cpu-trading-infrastructure.html" class="toc-item"><span class="toc-num">02</span>Low-Latency Stack: RTX 5090 &amp; CPU</a>
+      <a href="paper-hierarchical-risk-parity.html" class="toc-item"><span class="toc-num">03</span>Hierarchical Risk Parity</a>
+      <a href="paper-probabilistic-sharpe-ratio.html" class="toc-item"><span class="toc-num">04</span>Probabilistic Sharpe Ratio</a>
+      <a href="paper-bid-ask-spread-dynamics.html" class="toc-item"><span class="toc-num">05</span>Bid-Ask Spread Dynamics</a>
+      <a href="paper-bist-sentiment-analysis.html" class="toc-item" style="border-top:1px solid var(--gold)"><span class="toc-num" style="color:var(--gold)">06</span>BIST Sentiment (Qwen / Llama)</a>
+      <a href="paper-sovereign-ai-local-llms.html" class="toc-item"><span class="toc-num">07</span>Sovereign AI &amp; Local LLMs</a>
+      <a href="paper-genetic-algorithm-alpha.html" class="toc-item"><span class="toc-num">08</span>Genetic Algorithm Alpha Discovery</a>
+      <a href="paper-slippage-latency-modeling.html" class="toc-item"><span class="toc-num">09</span>Slippage &amp; Latency Modeling</a>
+      <a href="paper-alternative-data-quant-finance.html" class="toc-item"><span class="toc-num">10</span>Alternate Data in Quant Finance</a>
+      <a href="paper-hf-analytical-operations.html" class="toc-item"><span class="toc-num">11</span>HF Analytical Optimization</a>
     </div>
 
     <div class="widget">
@@ -1365,9 +409,9 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
       <div class="widget-header"><span class="widget-title">Quick Links</span></div>
       <a href="research.html" class="toc-item"><span class="toc-num">→</span>Research Home</a>
       <a href="infrastructure.html" class="toc-item"><span class="toc-num">→</span>Infrastructure Docs</a>
+      <a href="claude-ai-trading.html" class="toc-item"><span class="toc-num">→</span>Claude AI Trading</a>
       <a href="markets.html" class="toc-item"><span class="toc-num">→</span>Markets</a>
-      <a href="stocks.html" class="toc-item"><span class="toc-num">→</span>Stocks</a>
-      <a href="about.html" class="toc-item"><span class="toc-num">→</span>About the Lab</a>
+      <a href="about.html" class="toc-item"><span class="toc-num">→</span>About</a>
     </div>
 
     <div class="widget">
@@ -1384,15 +428,16 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
 <footer>
   <div class="footer-top">
     <div>
-      <div class="ft-brand">QUANT_MEDIA</div>
+      <div class="ft-brand">QUANT<span>_</span>MEDIA</div>
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
       <h4>Papers</h4>
-      <a href="#vpin">VPIN &amp; Flow Toxicity</a>
-      <a href="#hrp">Hierarchical Risk Parity</a>
-      <a href="#psr">Probabilistic Sharpe</a>
-      <a href="#slippage">Slippage Modeling</a>
+      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
+      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
+      <a href="claude-ai-trading.html">Claude AI Trading</a>
     </div>
     <div class="ft-col">
       <h4>Lab</h4>
@@ -1404,57 +449,16 @@ inputs = <span class="fn">tokenizer</span>(texts, padding=<span class="kw">True<
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 QUANT_MEDIA · Certurk Research. All rights reserved. Registered Research Entity.</span>
+    <span>&copy; 2026 QUANT_MEDIA &middot; Certurk Research. All rights reserved.</span>
     <div class="footer-badges">
       <span class="fbadge g">Open Research</span>
       <span class="fbadge">Non-Commercial</span>
-      <span class="fbadge">NASDAQ / NYSE Arca</span>
+      <span class="fbadge">US Markets</span>
     </div>
   </div>
 </footer>
 
 <script>
-const ticks=[
-  {name:'VPIN AAPL',val:'0.312',chg:'+0.024',up:true},
-  {name:'OBI SPY',val:'−0.041',chg:'−0.007',up:false},
-  {name:'HURST SPY',val:'0.587',chg:'+0.012',up:true},
-  {name:'LATENCY P99',val:'740 ns',chg:'−18 ns',up:true},
-  {name:'NVDA VPIN',val:'0.389',chg:'−0.011',up:false},
-  {name:'QQQ VPIN',val:'0.224',chg:'+0.008',up:true},
-  {name:'MSFT VPIN',val:'0.271',chg:'−0.005',up:false},
-  {name:'TOXICITY',val:'MODERATE',chg:'●',up:true},
-];
-const t=document.getElementById('ticker');
-const d=[...ticks,...ticks];
-t.innerHTML=d.map(x=>`<span class="tick-item"><span class="tick-name">${x.name}</span><span class="tick-val">${x.val}</span><span class="tick-chg ${x.up?'up':'dn'}">${x.up?'▲':'▼'} ${x.chg}</span></span>`).join('');
-const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-const cls=v=>v>0?'up':v<0?'dn':'nt';
-const sgn=v=>v>0?'+':'';
-const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
-const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
-const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','^GSPC':'SPY','^IXIC':'QQQ','^DJI':'DIA','^RUT':'IWM','^VIX':'VIXY'};
-let _fx=null,_fxT=0,_yfc={},_yfp={};
-async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
-async function yf(sym){
-  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<55000)return _yfc[sym].v;
-  if(_yfp[sym])return _yfp[sym];
-  const p=(async()=>{
-    const m=SYM_MAP[sym];let v=null;
-    try{
-      if(m==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
-      else if(m==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-      else{const fhSym=m||sym;const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});if(r.status===429){delete _yfp[sym];return _yfc[sym]?.v??null;}if(r.ok){const d=await r.json();if(d.c&&d.c!==0)v={price:d.c,chg:d.dp||0,pts:d.d||0};}}
-    }catch{}
-    _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];return v;
-  })();
-  return(_yfp[sym]=p);
-}
-}
-const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'}];
-async function loadMbar(){const res=await Promise.all(MBAR.map(m=>yf(m.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
-loadMbar();setInterval(loadMbar,60000);
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}

@@ -30,7 +30,7 @@
   "@context":"https://schema.org",
   "@type":"TechArticle",
   "headline":"Quantum Signals: Post-Close Multi-Factor Technical Signal Engine for US Equities",
-  "description":"Methodology and architecture of the Quantum Signals engine — a post-close multi-factor technical signal system using RSI, MACD, Bollinger Bands, volume, and trend confluence analysis.",
+  "description":"Live BUY signals dashboard — 500+ US stocks scanned daily with 93 technical indicators. Tier-ranked signals with backtest metrics.",
   "author":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
   "publisher":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
   "datePublished":"2026-03-13",
@@ -147,6 +147,15 @@ a{text-decoration:none;color:inherit}
 .sig-rsi.bullish{color:var(--accent)}
 .sig-cnt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
 .sig-price{font-family:'JetBrains Mono',monospace;font-size:12px}
+.tier-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:5px 14px;border:1px solid var(--border);border-radius:3px;background:var(--bg2);color:var(--dim);cursor:pointer;transition:all .14s}
+.tier-btn:hover{color:var(--text);border-color:var(--accent)}
+.tier-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.sig-tier.ts{color:#00e676;font-weight:700}
+.sig-tier.ta{color:var(--blue);font-weight:600}
+.sig-tier.tb{color:var(--gold)}
+.sig-tier.tc{color:var(--dim)}
+#signalTable th[data-sort]{position:relative;padding-right:18px}
+#signalTable th[data-sort]::after{content:'\25B4\25BE';position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:8px;opacity:.4;line-height:1}
 </style>
 </head>
 <body>
@@ -178,7 +187,7 @@ a{text-decoration:none;color:inherit}
       <span class="badge-topic">US Equities</span>
     </div>
     <h1 class="article-h1">Quantum Signals: Post-Close Multi-Factor Technical Signal Engine</h1>
-    <p class="article-subtitle">A systematic, rules-based multi-factor technical signal engine for US equities. Quantum Signals scans 30 large-cap stocks daily after market close, evaluating RSI, MACD, Bollinger Bands, volume, and trend indicators to generate BUY or WATCH decisions based on 4+ signal confluence.</p>
+    <p class="article-subtitle">A systematic, rules-based multi-factor technical signal engine for 500+ US equities. Quantum Signals scans the full universe daily after market close, evaluating 93 independent technical indicators to generate BUY or HOLD decisions based on optimized confluence thresholds.</p>
     <div class="article-byline">
       <span class="byline-author">QUANT_MEDIA Research</span>
       <span>&middot;</span>
@@ -192,11 +201,11 @@ a{text-decoration:none;color:inherit}
 <div class="page-grid">
   <article class="article-content article-wrap">
 
-    <div class="stat-grid">
-      <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">Technical Indicators<br>Per Stock</div></div>
-      <div class="stat-card"><div class="stat-val">30</div><div class="stat-label">Large-Cap Stocks<br>Scanned Daily</div></div>
-      <div class="stat-card"><div class="stat-val blue">4+</div><div class="stat-label">Signal Confluence<br>Required for BUY</div></div>
-      <div class="stat-card"><div class="stat-val gold">16:30 ET</div><div class="stat-label">Post-Close<br>Daily Refresh</div></div>
+    <div class="stat-grid" id="metricsGrid">
+      <div class="stat-card"><div class="stat-val" id="mBuy">--</div><div class="stat-label">BUY Signals<br>Today</div></div>
+      <div class="stat-card"><div class="stat-val" id="mTotal">--</div><div class="stat-label">Total Stocks<br>Scanned</div></div>
+      <div class="stat-card"><div class="stat-val blue" id="mWR">--</div><div class="stat-label">Backtest<br>Win Rate</div></div>
+      <div class="stat-card"><div class="stat-val gold" id="mSharpe">--</div><div class="stat-label">Sharpe<br>Ratio</div></div>
     </div>
 
     <div class="callout red">
@@ -205,110 +214,127 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <!-- LIVE SIGNALS DASHBOARD — BUY ONLY -->
-    <h2 id="signals" style="margin-top:0">&#9889; Live Signals — BUY Only</h2>
-    <p style="margin-bottom:8px;font-size:13px;color:var(--dim)">Showing only stocks with <strong style="color:var(--accent)">4+ signal confluence</strong> (BUY). WATCH signals are hidden. Last scan: <span id="scanTime">loading...</span></p>
+    <h2 id="signals" style="margin-top:0">&#9889; Active Signals &mdash; BUY Only</h2>
+    <p style="margin-bottom:4px;font-size:13px;color:var(--dim)">Showing only stocks with active <strong style="color:var(--accent)">BUY</strong> decisions. HOLD signals are hidden. Market date: <span id="scanTime" style="color:var(--accent);font-weight:600">loading...</span></p>
+    <p style="margin-bottom:12px;font-size:11px;color:var(--dimmer)">Data source: Twelve Data &rarr; 93-indicator confluence engine &rarr; daily_signal_export.py &rarr; JSON feed. Updated: <span id="updatedTime">--</span></p>
+
+    <!-- TIER FILTER -->
+    <div id="tierFilter" style="display:none;margin-bottom:12px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="tier-btn active" data-tier="all">All</button>
+      <button class="tier-btn" data-tier="S">&#9733; S-Tier</button>
+      <button class="tier-btn" data-tier="A">A-Tier</button>
+      <button class="tier-btn" data-tier="B">B-Tier</button>
+    </div>
+
     <div id="signalStatus" style="padding:20px;text-align:center;font-size:13px;color:var(--dim);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:16px">
-      <div style="margin-bottom:8px">&#9203; Scanning 30 stocks... This may take up to 60 seconds.</div>
-      <div id="scanProgress" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dimmer)">0 / 30</div>
+      &#9203; Loading signal data...
     </div>
     <div id="signalTableWrap" style="display:none;overflow-x:auto;margin-bottom:32px">
-      <table class="param-table" id="signalTable" style="min-width:900px">
+      <table class="param-table" id="signalTable" style="min-width:1100px">
         <thead>
           <tr>
-            <th>Decision</th>
-            <th>Tier</th>
-            <th>Symbol</th>
-            <th>Price</th>
-            <th>RSI(14)</th>
-            <th>Signals</th>
-            <th>Ref. Entry</th>
+            <th style="cursor:pointer" data-sort="d">Decision</th>
+            <th style="cursor:pointer" data-sort="t">Tier</th>
+            <th style="cursor:pointer" data-sort="s">Symbol</th>
+            <th style="cursor:pointer" data-sort="p">Price</th>
+            <th style="cursor:pointer" data-sort="r">RSI</th>
+            <th style="cursor:pointer" data-sort="sc">Signals</th>
+            <th>Entry</th>
             <th>Stop</th>
             <th>Target</th>
+            <th style="cursor:pointer" data-sort="wr">WR%</th>
+            <th style="cursor:pointer" data-sort="tr">BT Ret%</th>
+            <th>Trades</th>
           </tr>
         </thead>
         <tbody id="signalBody"></tbody>
       </table>
     </div>
     <div id="noBuyMsg" style="display:none;padding:20px;text-align:center;font-size:14px;color:var(--gold);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:32px">
-      No BUY signals today. All 30 stocks have fewer than 4 confluent indicators. Check back after the next market close.
+      No BUY signals today. All stocks are in HOLD. Check back after the next market close.
     </div>
 
     <h2 id="overview">What Is Quantum Signals?</h2>
-    <p>Quantum Signals is a <strong>post-close multi-factor technical signal engine</strong> designed for US equities. Every trading day after market close, the system scans 30 pre-selected large-cap stocks across multiple sectors and applies six independent technical indicators to each ticker.</p>
-    <p>When 4 or more indicators simultaneously confirm a bullish setup, the stock receives a <strong>BUY</strong> signal. Stocks with fewer than 4 confirmations are marked as <strong>WATCH</strong> &mdash; meaning they show partial technical interest but lack sufficient confluence for a high-conviction entry.</p>
-    <p>The engine is fully rules-based with zero discretionary override. Every parameter is fixed and transparent.</p>
+    <p>Quantum Signals is a <strong>post-close multi-factor technical signal engine</strong> designed for US equities. Every trading day after market close, the system scans <strong>500+ stocks</strong> across all sectors and applies <strong>93 independent technical indicators</strong> to each ticker using data from Twelve Data API.</p>
+    <p>When the optimized confluence threshold is met (currently 4+ signals), the stock receives a <strong>BUY</strong> signal. Stocks below the threshold are marked as <strong>HOLD</strong>. Stocks are ranked into tiers (S, A, B, C) based on historical backtest performance.</p>
+    <p>The engine is fully rules-based with zero discretionary override. All parameters are optimized via genetic algorithm and validated out-of-sample.</p>
 
-    <h2 id="decision-logic">Decision Logic: The 4+ Confluence Rule</h2>
-    <p>The core principle behind Quantum Signals is <strong>multi-factor confluence</strong>. No single indicator is reliable enough on its own. The system requires agreement from at least 4 out of 6 independent technical dimensions before generating a BUY signal.</p>
+    <h2 id="decision-logic">Decision Logic: Multi-Factor Confluence</h2>
+    <p>The core principle behind Quantum Signals is <strong>multi-factor confluence</strong>. No single indicator is reliable enough on its own. The system evaluates 93 independent signals per stock and requires a minimum confluence threshold (optimized via genetic algorithm) before generating a BUY decision.</p>
 
     <div class="code-wrap">
       <div class="code-header"><span class="code-filename">decision_logic.py</span><span class="code-lang">Python</span></div>
-      <div class="code-body"><pre><span class="kw">def</span> <span class="fn">generate_decision</span>(signals_count, total_indicators=<span class="num">6</span>):
+      <div class="code-body"><pre><span class="kw">def</span> <span class="fn">generate_decision</span>(signals_count, confluence_threshold=<span class="num">4</span>):
     <span class="str">"""
-    signals_count: number of bullish indicators (0-6)
-    Returns: 'BUY' if 4+ signals confirm, else 'WATCH'
+    signals_count: number of bullish indicators (0-93)
+    confluence_threshold: optimized via genetic algorithm
+    Returns: 'BUY' if threshold met, else 'HOLD'
     """</span>
-    <span class="kw">if</span> signals_count >= <span class="num">4</span>:
+    <span class="kw">if</span> signals_count >= confluence_threshold:
         <span class="kw">return</span> <span class="str">"BUY"</span>
-    <span class="kw">return</span> <span class="str">"WATCH"</span></pre></div>
+    <span class="kw">return</span> <span class="str">"HOLD"</span></pre></div>
     </div>
 
     <h3>Tier Classification</h3>
+    <p>Stocks are ranked into tiers based on historical backtest performance (Sharpe ratio, win rate, total return):</p>
     <ul>
-      <li><strong>Tier 1 (6/6 signals):</strong> Maximum confluence &mdash; all six indicators align. Historically the highest-conviction setup.</li>
-      <li><strong>Tier 2 (5/6 signals):</strong> Very strong confluence &mdash; one indicator dissenting. Still a high-quality signal.</li>
-      <li><strong>Tier 3 (4/6 signals):</strong> Minimum threshold for BUY &mdash; the system's entry boundary. Valid but lower conviction.</li>
-      <li><strong>WATCH (0-3/6):</strong> Insufficient confluence. On radar but no actionable signal.</li>
+      <li><strong>&#9733; S-Tier:</strong> Elite performers &mdash; highest Sharpe ratio, best risk-adjusted returns in backtesting. Highest conviction.</li>
+      <li><strong>A-Tier:</strong> Strong performers &mdash; above-average backtest metrics. High conviction.</li>
+      <li><strong>B-Tier:</strong> Solid performers &mdash; acceptable backtest metrics but with wider variance.</li>
+      <li><strong>C-Tier:</strong> Emerging signals &mdash; limited trade history or lower conviction metrics.</li>
+      <li><strong>HOLD:</strong> Below confluence threshold. Not displayed in the dashboard.</li>
     </ul>
 
-    <h2 id="signal-architecture">The Six Signals</h2>
-    <p>Each indicator independently evaluates one technical dimension. They are intentionally diverse to avoid correlation clustering:</p>
+    <h2 id="signal-architecture">The 93-Indicator Signal Architecture</h2>
+    <p>The engine evaluates 93 independent technical indicators across 7 categories. Each indicator produces a binary signal (1 = bullish, 0 = not). Key categories include:</p>
 
-    <h3>1. RSI (Relative Strength Index) &mdash; Momentum</h3>
-    <p>The 14-period RSI measures momentum oscillation between 0&ndash;100. The system flags a bullish signal when RSI is between 30&ndash;50, indicating oversold-to-neutral recovery &mdash; the zone where mean-reversion entries historically perform best.</p>
+    <h3>Momentum Oscillators</h3>
+    <p>RSI (multiple periods: 7, 14, 21), Stochastic RSI, Williams %R, CCI, MFI, and custom momentum divergence detectors. The system identifies oversold recovery zones across multiple timeframes simultaneously.</p>
 
-    <h3>2. MACD Crossover &mdash; Trend Momentum</h3>
-    <p>The classic MACD (12, 26, 9) generates a bullish signal when the MACD line crosses above the signal line. The system checks for crossovers within the last 3 trading sessions to capture fresh momentum shifts.</p>
+    <h3>Trend &amp; Moving Averages</h3>
+    <p>SMA/EMA crossovers (multiple pairs: 9/21, 20/50, 50/200), ADX trend strength, Supertrend, VWAP position, and multi-period trend alignment. Price vs. 50-day and 200-day SMA serve as intermediate and long-term trend filters.</p>
 
-    <h3>3. Bollinger Band Position &mdash; Volatility &amp; Mean Reversion</h3>
-    <p>Using 20-period Bollinger Bands (2 standard deviations), the system generates a bullish signal when the current price is at or below the lower band &mdash; a classic mean-reversion setup.</p>
+    <h3>Volatility &amp; Mean Reversion</h3>
+    <p>Bollinger Bands (position, squeeze, bandwidth), ATR-based volatility regime detection, Keltner Channel interactions, and Donchian Channel breakouts. The system identifies statistically cheap entries relative to recent trading ranges.</p>
 
-    <h3>4. Volume Confirmation &mdash; Institutional Activity</h3>
-    <p>A bullish signal fires when volume exceeds 1.2x (120%) of the 20-day average, indicating above-normal institutional participation. Volume confirmation separates genuine moves from low-conviction noise.</p>
+    <h3>Volume Analysis</h3>
+    <p>Volume ratio vs. 20-day average, OBV trend, volume-price divergence, VWAP deviation, and accumulation/distribution patterns. Volume confirmation separates institutional moves from noise.</p>
 
-    <h3>5. Price vs. 50-Day SMA &mdash; Intermediate Trend</h3>
-    <p>A bullish signal triggers when the current price crosses above or is trading above the 50-day SMA, confirming the stock is in an intermediate uptrend or transitioning from a downtrend.</p>
+    <h3>Pattern Recognition</h3>
+    <p>Candlestick pattern detection (engulfing, hammer, doji), support/resistance level interactions, and price action confirmation signals.</p>
 
-    <h3>6. Price vs. 200-Day SMA &mdash; Long-Term Trend</h3>
-    <p>When price is above the 200-day SMA, the stock is in a secular bull trend. This filter prevents the system from generating BUY signals in stocks that are in structural decline.</p>
+    <h3>Macro &amp; Relative Strength</h3>
+    <p>Sector relative strength vs. SPY, beta-adjusted momentum, and cross-asset correlation signals for regime detection.</p>
+
+    <h3>Statistical Filters</h3>
+    <p>Z-score normalization, percentile rank signals, and multi-period autocorrelation filters to identify mean-reverting vs. trending conditions.</p>
 
     <h2 id="parameters">Strategy Parameters</h2>
     <table class="param-table">
       <thead><tr><th>Parameter</th><th>Value</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>RSI Period</td><td>14</td><td>Standard RSI lookback window</td></tr>
-        <tr><td>RSI Bullish Zone</td><td>30&ndash;50</td><td>Oversold-to-neutral recovery zone</td></tr>
-        <tr><td>MACD Fast / Slow / Signal</td><td>12 / 26 / 9</td><td>Standard MACD parameters</td></tr>
-        <tr><td>Bollinger Band Period</td><td>20</td><td>Lookback for middle band (SMA)</td></tr>
-        <tr><td>Bollinger Band StdDev</td><td>2.0</td><td>Width multiplier for upper/lower bands</td></tr>
-        <tr><td>Volume Threshold</td><td>1.2x</td><td>Minimum ratio vs. 20-day average volume</td></tr>
-        <tr><td>SMA Short</td><td>50-day</td><td>Intermediate trend filter</td></tr>
-        <tr><td>SMA Long</td><td>200-day</td><td>Long-term trend filter</td></tr>
-        <tr><td>Min. Confluence</td><td>4 / 6</td><td>Minimum signals for BUY decision</td></tr>
+        <tr><td>Total Indicators</td><td>93</td><td>Independent technical signals per stock</td></tr>
+        <tr><td>Confluence Threshold</td><td>4+</td><td>Minimum active signals for BUY (GA-optimized)</td></tr>
+        <tr><td>Stop Loss</td><td>14%</td><td>Fixed percentage trailing stop</td></tr>
+        <tr><td>Take Profit</td><td>7.5%</td><td>Target exit percentage</td></tr>
+        <tr><td>Hold Period</td><td>60 days</td><td>Maximum holding period per position</td></tr>
+        <tr><td>Max Positions</td><td>10</td><td>Concurrent position limit</td></tr>
+        <tr><td>Universe</td><td>500+ US stocks</td><td>All sectors, min 500 days of data</td></tr>
         <tr><td>Scan Frequency</td><td>Daily post-close</td><td>After 16:00 ET market close</td></tr>
-        <tr><td>Universe</td><td>30 large-cap US stocks</td><td>Cross-sector representation</td></tr>
-        <tr><td>Default Hold Period</td><td>5&ndash;15 trading days</td><td>Swing-trade horizon for backtests</td></tr>
+        <tr><td>Data Source</td><td>Twelve Data API</td><td>Daily OHLCV candles</td></tr>
+        <tr><td>Tier Ranking</td><td>S / A / B / C</td><td>Based on Sharpe, WR, and total return</td></tr>
+        <tr><td>Optimization</td><td>Genetic Algorithm</td><td>Parameters optimized with OOS validation</td></tr>
       </tbody>
     </table>
 
     <h2 id="columns">Dashboard Column Definitions</h2>
-    <p>The Quantum Signals dashboard displays 12 data columns for each scanned stock:</p>
+    <p>The Quantum Signals dashboard displays 12 data columns for each BUY signal:</p>
 
     <h3>Decision</h3>
-    <p><strong>BUY</strong> or <strong>WATCH</strong>. The final output of the 4+ confluence rule.</p>
+    <p><strong>BUY</strong> only. HOLD signals are hidden from the dashboard. BUY means the stock has met or exceeded the confluence threshold.</p>
 
     <h3>Tier</h3>
-    <p>For BUY signals only: Tier 1 (6/6), Tier 2 (5/6), or Tier 3 (4/6). Higher tiers historically correlate with better outcomes.</p>
+    <p>S-Tier (elite), A-Tier (strong), B-Tier (solid), C-Tier (emerging). Based on historical backtest Sharpe ratio, win rate, and cumulative return.</p>
 
     <h3>Symbol</h3>
     <p>The stock ticker (e.g., AAPL, MSFT, NVDA). All symbols are US-listed large-cap equities.</p>
@@ -320,25 +346,25 @@ a{text-decoration:none;color:inherit}
     <p>The current 14-period Relative Strength Index value. Values in the 30&ndash;50 zone are flagged as bullish.</p>
 
     <h3>Signals</h3>
-    <p>A count showing how many of the 6 indicators are currently bullish (e.g., &ldquo;5/6&rdquo;).</p>
+    <p>A count showing how many of the 93 indicators are currently bullish (e.g., &ldquo;21/93&rdquo;).</p>
 
-    <h3>Ref. Entry</h3>
-    <p>A <strong>reference entry price</strong> calculated as the average of the lower Bollinger Band and the 50-day SMA. Educational context only.</p>
+    <h3>Entry</h3>
+    <p>The <strong>reference entry price</strong> &mdash; current closing price at signal generation. Educational context only.</p>
 
     <h3>Stop</h3>
-    <p>A <strong>reference stop-loss level</strong> set at 3% below the reference entry price. Not a recommendation.</p>
+    <p>A <strong>reference stop-loss level</strong> set at 14% below entry (GA-optimized parameter). Not a recommendation.</p>
 
     <h3>Target</h3>
-    <p>A <strong>reference target price</strong> calculated using a 2:1 reward-to-risk ratio from the reference entry. Educational only.</p>
-
-    <h3>Hold Days</h3>
-    <p>The suggested hold period from backtest optimization, typically 5&ndash;15 trading days.</p>
+    <p>A <strong>reference target price</strong> at 7.5% above entry (GA-optimized parameter). Educational only.</p>
 
     <h3>WR% (Win Rate)</h3>
-    <p>The historical win rate of similar signal configurations from backtesting. Subject to survivorship and lookahead limitations.</p>
+    <p>The historical win rate for this specific stock from backtesting. How often the stock hit its target before the stop or hold period expired.</p>
 
     <h3>BT Return% (Backtest Return)</h3>
-    <p>The average return percentage from backtested trades with the same signal tier. Gross return before commissions and slippage.</p>
+    <p>The cumulative backtest return for this stock using the signal system. Gross return before commissions and slippage.</p>
+
+    <h3>Trades</h3>
+    <p>Total number of historical trades executed for this stock in backtesting. Higher counts indicate more statistical significance.</p>
 
     <h2 id="interpretation">Important Interpretation Notes</h2>
     <div class="callout warn">
@@ -347,8 +373,8 @@ a{text-decoration:none;color:inherit}
     </div>
     <ul>
       <li><strong>BUY &#8800; &ldquo;Buy immediately&rdquo;:</strong> A BUY signal means the technical setup meets the system's confluence threshold. It is not a trade recommendation.</li>
-      <li><strong>WATCH = Partial setup:</strong> Stocks with 1&ndash;3 signals may be approaching a BUY signal in coming sessions.</li>
-      <li><strong>Tier matters:</strong> Tier 1 signals (6/6) historically show stronger forward returns than Tier 3 (4/6).</li>
+      <li><strong>HOLD = Below threshold:</strong> Stocks not meeting the confluence requirement are hidden from the dashboard entirely.</li>
+      <li><strong>Tier matters:</strong> S-Tier signals historically show stronger risk-adjusted returns than C-Tier. Use tier as a conviction filter.</li>
       <li><strong>Volume is the validator:</strong> Volume confirmation often separates profitable setups from false signals.</li>
       <li><strong>Combine with fundamentals:</strong> Quantum Signals is purely technical. Earnings dates, FDA decisions, and other catalysts can override any technical setup.</li>
       <li><strong>No system is infallible:</strong> Even 6/6 Tier 1 signals can fail. Position sizing and stop-loss discipline are critical.</li>
@@ -356,10 +382,12 @@ a{text-decoration:none;color:inherit}
 
     <h2 id="data-sources">Data Sources &amp; Refresh Cycle</h2>
     <ul>
-      <li><strong>Price data:</strong> Sourced from Finnhub API (end-of-day candles) and cross-validated with Yahoo Finance.</li>
-      <li><strong>Technical indicators:</strong> Calculated in-house using standard formulas (no proprietary modifications).</li>
-      <li><strong>Refresh time:</strong> Daily after 16:30 ET (30 minutes after market close to ensure all settlement data is finalized).</li>
-      <li><strong>Universe updates:</strong> The 30-stock universe is reviewed quarterly.</li>
+      <li><strong>Price data:</strong> Sourced from Twelve Data API (daily OHLCV candles). 500+ day history per stock.</li>
+      <li><strong>Technical indicators:</strong> 93 indicators computed via <code>indicators.py</code> + <code>signals.py</code> + <code>filters.py</code>.</li>
+      <li><strong>Optimization:</strong> Genetic algorithm (<code>optimizer.py</code>) with out-of-sample validation (<code>oos_validate.py</code>).</li>
+      <li><strong>Export pipeline:</strong> <code>daily_signal_export.py</code> &rarr; <code>data/quantum_signals.json</code> &rarr; GitHub Pages auto-deploy.</li>
+      <li><strong>Refresh time:</strong> Daily after US market close (scheduled task, Mon-Fri).</li>
+      <li><strong>Universe:</strong> 500+ US stocks with minimum 500 days of data. Reviewed automatically.</li>
     </ul>
 
     <h2 id="related">Related Research</h2>
@@ -441,229 +469,127 @@ function toggleTheme(){
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   QUANTUM SIGNALS ENGINE — BUY ONLY
-   Fetches daily candles from Finnhub, calculates 6 technical
-   indicators, shows only stocks with 4+ confluence (BUY).
+   QUANTUM SIGNALS ENGINE — JSON Feed (BUY ONLY)
+   Fetches data/quantum_signals.json produced by daily_signal_export.py
+   Shows only BUY signals. HOLD signals hidden.
+   509 stocks × 93 indicators. Updated daily post-close.
    ═══════════════════════════════════════════════════════════════ */
-(async function(){
-const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
-const UNIVERSE = [
-  'AAPL','MSFT','NVDA','GOOGL','AMZN','META','TSLA','AVGO','JPM','V',
-  'UNH','MA','HD','PG','JNJ','ABBV','MRK','COST','NFLX','CRM',
-  'AMD','PEP','LLY','ADBE','ORCL','INTC','BA','DIS','PFE','KO'
-];
+(function(){
+const $ = id => document.getElementById(id);
 const fmt = (n,d=2) => n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-let scanned = 0;
+const tierOrder = {S:0,A:1,B:2,C:3};
+const tierLabel = {S:'\u2605 S-Tier',A:'A-Tier',B:'B-Tier',C:'C-Tier'};
+const tierClass = {S:'ts',A:'ta',B:'tb',C:'tc'};
 
-/* --- Fetch daily candles from Finnhub (1 year lookback) --- */
-async function fetchCandles(sym){
-  const to = Math.floor(Date.now()/1000);
-  const from = to - 365*24*60*60; // 1 year
-  const url = `https://finnhub.io/api/v1/stock/candle?symbol=${sym}&resolution=D&from=${from}&to=${to}&token=${FINNHUB_KEY}`;
-  const r = await fetch(url, {signal:AbortSignal.timeout(12000)});
-  const d = await r.json();
-  if(d.s !== 'ok' || !d.c || d.c.length < 200) return null;
-  return {c:d.c, h:d.h, l:d.l, o:d.o, v:d.v, t:d.t};
-}
+let allBuys = [];
+let currentTier = 'all';
+let sortKey = 'sc';
+let sortAsc = false;
 
-/* --- Technical Indicator Calculations --- */
-function calcSMA(closes, period){
-  if(closes.length < period) return null;
-  const slice = closes.slice(-period);
-  return slice.reduce((a,b)=>a+b,0)/period;
-}
-
-function calcRSI(closes, period=14){
-  if(closes.length < period+1) return null;
-  const recent = closes.slice(-(period+1));
-  let gains=0, losses=0;
-  for(let i=1;i<recent.length;i++){
-    const diff = recent[i]-recent[i-1];
-    if(diff>0) gains+=diff; else losses+=Math.abs(diff);
+async function loadData(){
+  try{
+    const r = await fetch('data/quantum_signals.json',{signal:AbortSignal.timeout(15000),cache:'no-cache'});
+    if(!r.ok) throw new Error(r.status);
+    return await r.json();
+  }catch(e){
+    console.error('Signal JSON load error:',e);
+    return null;
   }
-  const avgGain = gains/period;
-  const avgLoss = losses/period;
-  if(avgLoss===0) return 100;
-  const rs = avgGain/avgLoss;
-  return 100 - (100/(1+rs));
 }
 
-function calcMACD(closes){
-  if(closes.length < 35) return {macd:null,signal:null,crossover:false};
-  function ema(data, period){
-    const k = 2/(period+1);
-    let e = data.slice(0,period).reduce((a,b)=>a+b,0)/period;
-    const result = [e];
-    for(let i=period;i<data.length;i++){
-      e = data[i]*k + e*(1-k);
-      result.push(e);
-    }
-    return result;
+function updateMetrics(data){
+  $('mBuy').textContent = data.buy_count;
+  $('mTotal').textContent = data.total_count;
+  if(data.metrics){
+    $('mWR').textContent = data.metrics.win_rate ? data.metrics.win_rate+'%' : '--';
+    $('mSharpe').textContent = data.metrics.sharpe_ratio || '--';
   }
-  const ema12 = ema(closes, 12);
-  const ema26 = ema(closes, 26);
-  // Align: ema12 starts at index 12, ema26 at index 26
-  // MACD line = ema12 - ema26 (aligned from index 26)
-  const offset = 26 - 12; // 14
-  const macdLine = [];
-  for(let i=0;i<ema26.length;i++){
-    macdLine.push(ema12[i+offset] - ema26[i]);
-  }
-  if(macdLine.length < 9) return {macd:null,signal:null,crossover:false};
-  const signalLine = ema(macdLine, 9);
-  // Check crossover in last 3 bars
-  const ml = macdLine.slice(-4);
-  const sl = signalLine.slice(-4);
-  let crossover = false;
-  for(let i=1;i<ml.length;i++){
-    if(ml[i]>sl[i] && ml[i-1]<=sl[i-1]) crossover = true;
-  }
-  return {macd:ml[ml.length-1], signal:sl[sl.length-1], crossover};
+  $('scanTime').textContent = data.market_date || '--';
+  const upd = data.updated ? new Date(data.updated) : null;
+  $('updatedTime').textContent = upd ? upd.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}) : '--';
 }
 
-function calcBollinger(closes, period=20, stddev=2){
-  if(closes.length < period) return {upper:null,middle:null,lower:null};
-  const slice = closes.slice(-period);
-  const mean = slice.reduce((a,b)=>a+b,0)/period;
-  const variance = slice.reduce((a,b)=>a+(b-mean)**2,0)/period;
-  const sd = Math.sqrt(variance);
-  return {upper:mean+stddev*sd, middle:mean, lower:mean-stddev*sd};
-}
-
-/* --- Analyze a single stock --- */
-function analyzeStock(sym, data){
-  const closes = data.c;
-  const volumes = data.v;
-  const price = closes[closes.length-1];
-
-  // 1. RSI
-  const rsi = calcRSI(closes, 14);
-  const rsiBullish = rsi !== null && rsi >= 30 && rsi <= 50;
-
-  // 2. MACD crossover
-  const macd = calcMACD(closes);
-  const macdBullish = macd.crossover || (macd.macd !== null && macd.signal !== null && macd.macd > macd.signal);
-
-  // 3. Bollinger Band — price at or below lower band
-  const bb = calcBollinger(closes, 20, 2);
-  const bbBullish = bb.lower !== null && price <= bb.lower * 1.02; // small tolerance
-
-  // 4. Volume > 1.2x 20-day average
-  const volSMA = volumes.length >= 20 ? volumes.slice(-20).reduce((a,b)=>a+b,0)/20 : null;
-  const currentVol = volumes[volumes.length-1];
-  const volBullish = volSMA !== null && currentVol > volSMA * 1.2;
-
-  // 5. Price > 50-day SMA
-  const sma50 = calcSMA(closes, 50);
-  const sma50Bullish = sma50 !== null && price > sma50;
-
-  // 6. Price > 200-day SMA
-  const sma200 = calcSMA(closes, 200);
-  const sma200Bullish = sma200 !== null && price > sma200;
-
-  const signals = [rsiBullish, macdBullish, bbBullish, volBullish, sma50Bullish, sma200Bullish];
-  const count = signals.filter(Boolean).length;
-  const decision = count >= 4 ? 'BUY' : 'WATCH';
-  const tier = count === 6 ? 1 : count === 5 ? 2 : count === 4 ? 3 : 0;
-
-  // Reference entry = avg(lower BB, 50-SMA)
-  const refEntry = (bb.lower && sma50) ? (bb.lower + sma50) / 2 : price;
-  const stop = refEntry * 0.97;
-  const target = refEntry * 1.06;
-
-  return {sym, price, rsi, count, decision, tier, refEntry, stop, target, rsiBullish};
-}
-
-/* --- Staggered fetch to respect 60 calls/min Finnhub limit --- */
-async function runScan(){
-  const results = [];
-  const batchSize = 6; // ~6 per batch, 5 batches, ~10s spacing
-  for(let i=0; i<UNIVERSE.length; i+=batchSize){
-    const batch = UNIVERSE.slice(i, i+batchSize);
-    const batchResults = await Promise.all(batch.map(async sym => {
-      try{
-        const data = await fetchCandles(sym);
-        scanned++;
-        document.getElementById('scanProgress').textContent = scanned + ' / ' + UNIVERSE.length;
-        if(!data) return null;
-        return analyzeStock(sym, data);
-      }catch(e){
-        scanned++;
-        document.getElementById('scanProgress').textContent = scanned + ' / ' + UNIVERSE.length;
-        return null;
-      }
-    }));
-    results.push(...batchResults.filter(Boolean));
-    // Rate limit pause between batches (except last)
-    if(i + batchSize < UNIVERSE.length){
-      await new Promise(r => setTimeout(r, 8000));
-    }
-  }
-  return results;
-}
-
-/* --- Render BUY-only table --- */
-function renderSignals(results){
-  // Only BUY signals
-  const buys = results.filter(r => r.decision === 'BUY').sort((a,b) => b.count - a.count || (a.rsi||99) - (b.rsi||99));
-  document.getElementById('signalStatus').style.display = 'none';
-
-  if(buys.length === 0){
-    document.getElementById('noBuyMsg').style.display = 'block';
+function renderTable(){
+  const filtered = currentTier === 'all' ? allBuys : allBuys.filter(s=>s.t===currentTier);
+  if(filtered.length===0){
+    $('signalTableWrap').style.display='none';
+    $('noBuyMsg').style.display='block';
+    $('noBuyMsg').textContent = currentTier==='all'
+      ? 'No BUY signals today. All stocks are in HOLD.'
+      : 'No BUY signals in '+tierLabel[currentTier]+' tier.';
     return;
   }
+  $('noBuyMsg').style.display='none';
 
-  const tbody = document.getElementById('signalBody');
-  tbody.innerHTML = buys.map(s => {
-    const tierClass = s.tier===1?'t1':s.tier===2?'t2':'t3';
-    const rsiClass = s.rsiBullish ? 'bullish' : '';
+  // Sort
+  const sorted = [...filtered].sort((a,b)=>{
+    let va=a[sortKey], vb=b[sortKey];
+    if(sortKey==='t'){va=tierOrder[va]||9;vb=tierOrder[vb]||9;}
+    if(sortKey==='s'){return sortAsc?va.localeCompare(vb):vb.localeCompare(va);}
+    if(sortKey==='d'){return 0;}
+    if(typeof va==='number'&&typeof vb==='number') return sortAsc?va-vb:vb-va;
+    return 0;
+  });
+
+  $('signalBody').innerHTML = sorted.map(s=>{
+    const tc = tierClass[s.t]||'tc';
+    const rsiZone = s.r>=30&&s.r<=50;
     return `<tr>
       <td class="sig-buy">BUY</td>
-      <td class="sig-tier ${tierClass}">Tier ${s.tier} (${s.count}/6)</td>
-      <td class="sig-sym">${s.sym}</td>
-      <td class="sig-price">$${fmt(s.price)}</td>
-      <td class="sig-rsi ${rsiClass}">${s.rsi!==null?fmt(s.rsi,1):'--'}</td>
-      <td class="sig-cnt">${s.count}/6</td>
-      <td class="sig-price">$${fmt(s.refEntry)}</td>
-      <td class="sig-price" style="color:var(--red)">$${fmt(s.stop)}</td>
-      <td class="sig-price" style="color:var(--accent)">$${fmt(s.target)}</td>
+      <td class="sig-tier ${tc}">${tierLabel[s.t]||s.t}</td>
+      <td class="sig-sym">${s.s}</td>
+      <td class="sig-price">$${fmt(s.p)}</td>
+      <td class="sig-rsi${rsiZone?' bullish':''}">${fmt(s.r,1)}</td>
+      <td class="sig-cnt">${s.sc}/${s._ns||'93'}</td>
+      <td class="sig-price">$${fmt(s.e)}</td>
+      <td class="sig-price" style="color:var(--red)">$${fmt(s.sl)}</td>
+      <td class="sig-price" style="color:var(--accent)">$${fmt(s.tp)}</td>
+      <td class="sig-cnt">${fmt(s.wr,1)}%</td>
+      <td class="sig-cnt" style="color:${s.tr>0?'var(--accent)':'var(--red)'}">${fmt(s.tr,1)}%</td>
+      <td class="sig-cnt">${s.nt}</td>
     </tr>`;
   }).join('');
-
-  document.getElementById('signalTableWrap').style.display = 'block';
-  document.getElementById('scanTime').textContent = new Date().toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
+  $('signalTableWrap').style.display='block';
 }
 
-/* --- Cache results in sessionStorage for 30 min --- */
-const CACHE_KEY = 'qm_signals_cache';
-const CACHE_TTL = 30 * 60 * 1000;
-
-function getCached(){
-  try{
-    const raw = sessionStorage.getItem(CACHE_KEY);
-    if(!raw) return null;
-    const {data, ts} = JSON.parse(raw);
-    if(Date.now() - ts > CACHE_TTL) return null;
-    return data;
-  }catch{ return null; }
-}
-function setCache(data){
-  try{sessionStorage.setItem(CACHE_KEY, JSON.stringify({data, ts:Date.now()}));}catch{}
-}
-
-/* --- Init --- */
-const cached = getCached();
-if(cached){
-  renderSignals(cached);
-} else {
-  runScan().then(results => {
-    setCache(results);
-    renderSignals(results);
-  }).catch(err => {
-    document.getElementById('signalStatus').innerHTML = '<div style="color:var(--red)">&#9888; Signal scan failed. Finnhub API may be rate-limited. Please refresh in a few minutes.</div>';
-    console.error('Quantum Signals scan error:', err);
+// Tier filter buttons
+document.querySelectorAll('.tier-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    currentTier = this.dataset.tier;
+    renderTable();
   });
-}
+});
+
+// Column sort
+document.querySelectorAll('#signalTable th[data-sort]').forEach(th=>{
+  th.addEventListener('click',function(){
+    const key = this.dataset.sort;
+    if(sortKey===key) sortAsc=!sortAsc;
+    else {sortKey=key;sortAsc=false;}
+    renderTable();
+  });
+});
+
+// Init
+loadData().then(data=>{
+  $('signalStatus').style.display='none';
+  if(!data){
+    $('signalStatus').style.display='block';
+    $('signalStatus').innerHTML='<div style="color:var(--red)">\u26A0 Failed to load signal data. Check back later.</div>';
+    return;
+  }
+  updateMetrics(data);
+  const ns = data.strategy?.n_signals || 93;
+  allBuys = data.signals.filter(s=>s.d==='BUY').map(s=>({...s,_ns:ns}));
+  $('tierFilter').style.display='flex';
+  if(allBuys.length===0){
+    $('noBuyMsg').style.display='block';
+  } else {
+    renderTable();
+  }
+});
 })();
 </script>
 </body>

@@ -36,7 +36,7 @@
   "datePublished":"2026-03-13",
   "dateModified":"2026-03-13",
   "mainEntityOfPage":"https://quantmedia.io/quantum-signals.html",
-  "keywords":"quantum signals, technical signal engine, multi-factor analysis, RSI, MACD, bollinger bands"
+  "keywords":"daily stock signals, US stock buy signals, post-close stock signals, end of day stock screener, multi-factor stock signals, daily stock scanner"
 }</script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
@@ -53,7 +53,11 @@
     {"@type":"Question","name":"What are daily stock signals?","acceptedAnswer":{"@type":"Answer","text":"Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple technical indicators align bullishly on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 4 or more concurrent bullish signals as BUY."}},
     {"@type":"Question","name":"How does a post-close stock signal dashboard work?","acceptedAnswer":{"@type":"Answer","text":"A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It calculates technical indicators for each stock, counts how many are bullish, and flags stocks that meet a minimum confluence threshold. Results are published as a daily signal table."}},
     {"@type":"Question","name":"What does BUY mean in this stock signal dashboard?","acceptedAnswer":{"@type":"Answer","text":"BUY means 4 or more technical indicators are currently bullish for that stock. It is a research signal, not investment advice. Stocks below the threshold are marked WATCH and hidden from the dashboard."}},
-    {"@type":"Question","name":"Are these stock signals free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice."}}
+    {"@type":"Question","name":"Are these stock signals free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice."}},
+    {"@type":"Question","name":"How often are daily stock signals updated?","acceptedAnswer":{"@type":"Answer","text":"Every trading day (Monday through Friday), after the US market closes at 4:00 PM ET. Signals reflect the most recent completed session and are not updated intraday."}},
+    {"@type":"Question","name":"Can I use these signals for day trading?","acceptedAnswer":{"@type":"Answer","text":"No. Quantum Signals is a post-close, end-of-day system. All data reflects the prior day's close. It is not designed for intraday trading. The backtest hold period is 60 trading days."}},
+    {"@type":"Question","name":"What stocks are included in the daily signal scan?","acceptedAnswer":{"@type":"Answer","text":"The universe includes 500+ US-listed equities across all sectors. Stocks must have at least 500 trading days of historical data to be included."}},
+    {"@type":"Question","name":"Does this stock signal system use quantum computing or AI?","acceptedAnswer":{"@type":"Answer","text":"No. The name Quantum is metaphorical, referring to the layered multi-factor signal stacking approach. The engine uses classical technical indicators and a simple confluence-counting rule."}}
   ]
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -191,10 +195,10 @@ a{text-decoration:none;color:inherit}
 <div class="article-hero">
   <div class="article-hero-inner">
     <div class="hero-badge">
-      <span class="badge-live">Methodology</span>
-      <span class="badge-topic">Signals</span>
-      <span class="badge-topic">Technical Analysis</span>
-      <span class="badge-topic">US Equities</span>
+      <span class="badge-live">Daily Signals</span>
+      <span class="badge-topic">Post-Close</span>
+      <span class="badge-topic">500+ US Stocks</span>
+      <span class="badge-topic">Multi-Factor</span>
     </div>
     <h1 class="article-h1">Daily US Stock Signals: Post-Close Technical Signal Dashboard</h1>
     <p class="article-subtitle">A research-focused, rules-based signal engine that scans 500+ US equities daily after market close. Multiple technical indicators are evaluated per stock; when 4 or more align bullishly, the stock is flagged as BUY. All others are marked WATCH. This is an informational tool &mdash; not personalized investment advice.</p>
@@ -265,13 +269,27 @@ a{text-decoration:none;color:inherit}
       No BUY signals today. All stocks are on WATCH (below confluence threshold). Check back after the next market close.
     </div>
 
+    <h2 id="how-to-read">How to Read Today's Stock Signals</h2>
+    <p>The table above shows every stock that currently has 4 or more bullish technical indicators active as of the most recent market close. Here is how to interpret each row:</p>
+    <ol>
+      <li><strong>Check the Decision column.</strong> Every row shown is BUY. Stocks below the threshold (WATCH) are hidden.</li>
+      <li><strong>Look at Signals count.</strong> A stock showing 15/93 has broader technical agreement than one showing 4/93. Higher counts mean more indicators align, but this does not guarantee a better outcome.</li>
+      <li><strong>Use Tier as context.</strong> Tier reflects historical backtest performance for that stock. S-Tier had the strongest historical metrics. Tier does not control the BUY/WATCH decision and is not a forward-looking guarantee.</li>
+      <li><strong>Review Entry, Stop, Target.</strong> These are reference levels derived from the prior close using fixed percentages (stop = &minus;14%, target = +7.5%). They are not execution prices.</li>
+      <li><strong>Check WR% and BT Ret%.</strong> These describe how the stock performed historically in backtesting. They are not predictions. Look at the Trades column to see how many historical trades support these figures.</li>
+    </ol>
+    <div class="callout">
+      <div class="callout-title">Key reminder</div>
+      <p>All data reflects the prior trading day's close. Signals may be invalidated by overnight news, pre-market gaps, or intraday price movement. Always combine with your own research.</p>
+    </div>
+
     <h2 id="overview">What Is Quantum Signals?</h2>
     <p>Quantum Signals is a <strong>research-focused, post-close multi-factor technical signal engine</strong> for US equities. Every trading day after market close, the system scans <strong>500+ stocks</strong> across all sectors and evaluates multiple technical indicators per ticker using end-of-day OHLCV data.</p>
     <p>The decision rule is straightforward: if 4 or more indicators are simultaneously bullish, the stock is flagged as <strong>BUY</strong>. Stocks with fewer than 4 active signals are classified as <strong>WATCH</strong> (no active setup) and are not shown in the dashboard.</p>
     <p>Stocks that appear in the BUY list are also assigned a tier (S, A, B, C) based on that stock's historical backtest performance within the selected strategy variant. Tier is a descriptive ranking &mdash; it does not directly gate the BUY/WATCH decision.</p>
     <p>The engine is fully rules-based with no discretionary override. It is designed for research and informational use.</p>
 
-    <h2 id="decision-logic">Decision Logic</h2>
+    <h2 id="decision-logic">How BUY and WATCH Decisions Are Made</h2>
     <p>The core principle is <strong>multi-factor confluence</strong>. No single indicator is reliable on its own. The system counts how many technical indicators are currently bullish for each stock. If 4 or more are active, the stock is flagged BUY. Otherwise it is WATCH.</p>
 
     <div class="code-wrap">
@@ -297,7 +315,7 @@ a{text-decoration:none;color:inherit}
       <li><strong>WATCH:</strong> Below the confluence threshold. Not displayed in the dashboard.</li>
     </ul>
 
-    <h2 id="signal-architecture">Signal Architecture</h2>
+    <h2 id="signal-architecture">Technical Indicators Used in the Signal Engine</h2>
     <p>The engine computes multiple technical indicators per stock. Each indicator produces a binary signal (1&nbsp;=&nbsp;bullish, 0&nbsp;=&nbsp;not). The BUY/WATCH decision is based solely on the count of active bullish signals vs. the confluence threshold (currently 4). Indicator categories include:</p>
 
     <h3>Momentum Oscillators</h3>
@@ -332,7 +350,7 @@ a{text-decoration:none;color:inherit}
       </tbody>
     </table>
 
-    <h2 id="columns">Column Definitions</h2>
+    <h2 id="columns">Signal Dashboard Column Definitions</h2>
     <table class="param-table">
       <thead><tr><th>Column</th><th>Description</th></tr></thead>
       <tbody>
@@ -346,12 +364,12 @@ a{text-decoration:none;color:inherit}
         <tr><td><strong>Stop</strong></td><td>Reference stop level = Entry &times; (1 &minus; 14%). A model-generated level, not an execution guarantee.</td></tr>
         <tr><td><strong>Target</strong></td><td>Reference target level = Entry &times; (1 + 7.5%). A model-generated level, not an execution guarantee.</td></tr>
         <tr><td><strong>WR%</strong></td><td>Historical win rate for this stock in backtesting (selected strategy variant). Describes past model behavior; does not predict future outcomes.</td></tr>
-        <tr><td><strong>BT Ret%</strong></td><td>Cumulative backtest return for this stock. Gross of commissions, slippage, and market impact. Historical, not predictive.</td></tr>
+        <tr><td><strong>BT Ret%</strong></td><td>Cumulative backtest return for this stock within the selected strategy variant. Historical metric describing past model behavior; not a forecast of future performance.</td></tr>
         <tr><td><strong>Trades</strong></td><td>Number of historical trades in backtesting. Higher counts give more statistical weight to the WR% and BT Ret% figures.</td></tr>
       </tbody>
     </table>
 
-    <h2 id="interpretation">Interpretation Notes</h2>
+    <h2 id="interpretation">Risks, Limitations, and How to Interpret Backtest Data</h2>
     <div class="callout warn">
       <div class="callout-title">Backtest &#8800; Future Performance</div>
       <p>All WR%, BT Return%, and Sharpe values describe historical model behavior under specific backtest assumptions. Real-world execution differs due to slippage, commissions, liquidity, gap risk, and changing market regimes. These metrics are descriptive context, not forecasts.</p>
@@ -374,7 +392,16 @@ a{text-decoration:none;color:inherit}
       <li><strong>Universe:</strong> 500+ US-listed equities across all sectors. Stocks with insufficient data history are excluded automatically.</li>
     </ul>
 
-    <h2 id="faq">Frequently Asked Questions</h2>
+    <h2 id="why-post-close">Why Post-Close Instead of Intraday?</h2>
+    <p>Quantum Signals deliberately operates on end-of-day data rather than intraday ticks. There are several reasons for this design choice:</p>
+    <ul>
+      <li><strong>Data stability:</strong> Closing prices are the most widely referenced and least noisy data point of the trading day. Intraday signals are more prone to whipsaws and false triggers.</li>
+      <li><strong>Indicator reliability:</strong> Most classical technical indicators (RSI, MACD, Bollinger Bands, moving averages) were designed and backtested on daily timeframes. Their statistical properties are better established at daily resolution.</li>
+      <li><strong>Accessibility:</strong> Post-close signals give users time to review the dashboard, conduct additional research, and make informed decisions before the next trading session &mdash; rather than reacting to real-time pressure.</li>
+      <li><strong>Transparency:</strong> End-of-day data is publicly available and verifiable. There is no ambiguity about which price point was used for signal generation.</li>
+    </ul>
+
+    <h2 id="faq">Frequently Asked Questions About Daily Stock Signals</h2>
 
     <h3>What are daily stock signals?</h3>
     <p>Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple technical indicators align bullishly on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 4 or more concurrent bullish signals as BUY.</p>
@@ -391,12 +418,29 @@ a{text-decoration:none;color:inherit}
     <h3>What is the difference between BUY and WATCH?</h3>
     <p>BUY = 4 or more active bullish signals (shown in the dashboard). WATCH = fewer than 4 active signals (hidden). WATCH means no active setup, not a recommendation to hold an existing position.</p>
 
-    <h2 id="related">Related Research</h2>
+    <h3>How often are the signals updated?</h3>
+    <p>Every trading day (Monday through Friday), after the US market closes at 4:00 PM ET. The dashboard reflects the most recent completed session. Signals are not updated intraday.</p>
+
+    <h3>Can I use these signals for day trading?</h3>
+    <p>No. Quantum Signals is a post-close, end-of-day system. All data reflects the prior day's close. It is not designed for intraday or real-time trading decisions. The hold period used in backtesting is 60 trading days.</p>
+
+    <h3>What stocks are included in the scan?</h3>
+    <p>The universe includes 500+ US-listed equities across all sectors. Stocks must have at least 500 trading days of historical data to be included. The universe is reviewed automatically and may change as stocks meet or fall below the data threshold.</p>
+
+    <h3>Does this system use quantum computing or AI?</h3>
+    <p>No. The name &ldquo;Quantum&rdquo; is metaphorical, referring to the layered, multi-factor signal stacking approach. The engine uses classical technical indicators and a simple confluence-counting rule. It does not use quantum computing, machine learning, or artificial intelligence.</p>
+
+    <h2 id="related">Related Research &amp; Tools</h2>
     <ul>
+      <li><a href="stocks.html" style="color:var(--accent)">US Equities Overview</a> &mdash; Live market data for all tracked stocks</li>
+      <li><a href="markets.html" style="color:var(--accent)">Market Dashboard</a> &mdash; Real-time indices, sectors, and macro data</li>
+      <li><a href="methodology.html" style="color:var(--accent)">Research Methodology</a> &mdash; How QUANT_MEDIA approaches quantitative analysis</li>
       <li><a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN &amp; Order Flow Toxicity</a> &mdash; Microstructure signals that complement technical analysis</li>
       <li><a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> &mdash; Statistical framework for evaluating signal engine performance</li>
       <li><a href="paper-slippage-latency-modeling.html" style="color:var(--accent)">Slippage &amp; Latency Modeling</a> &mdash; Understanding execution costs for signal-based strategies</li>
-      <li><a href="paper-genetic-algorithm-alpha.html" style="color:var(--accent)">Genetic Algorithm Alpha</a> &mdash; Evolutionary optimization approaches to signal generation</li>
+      <li><a href="paper-genetic-algorithm-alpha.html" style="color:var(--accent)">Genetic Algorithm Alpha</a> &mdash; Evolutionary optimization in signal generation</li>
+      <li><a href="paper-bid-ask-spread-dynamics.html" style="color:var(--accent)">Bid-Ask Spread Dynamics</a> &mdash; How spreads affect entry and exit quality</li>
+      <li><a href="papers.html" style="color:var(--accent)">All Research Papers</a> &mdash; Full library of quantitative research</li>
     </ul>
 
   </article>
@@ -404,14 +448,16 @@ a{text-decoration:none;color:inherit}
   <aside class="toc-aside">
     <div class="toc-widget">
       <h4>Contents</h4>
-      <a href="#signals" class="toc-link" style="color:var(--accent);font-weight:600">&#9889; Active Signals</a>
-      <a href="#overview" class="toc-link">What Is Quantum Signals?</a>
-      <a href="#decision-logic" class="toc-link">Decision Logic</a>
-      <a href="#signal-architecture" class="toc-link">Signal Architecture</a>
+      <a href="#signals" class="toc-link" style="color:var(--accent);font-weight:600">&#9889; Today's Signals</a>
+      <a href="#how-to-read" class="toc-link">How to Read the Signals</a>
+      <a href="#overview" class="toc-link">What Is This Dashboard?</a>
+      <a href="#decision-logic" class="toc-link">BUY / WATCH Logic</a>
+      <a href="#signal-architecture" class="toc-link">Indicators Used</a>
       <a href="#parameters" class="toc-link">Strategy Parameters</a>
       <a href="#columns" class="toc-link">Column Definitions</a>
-      <a href="#interpretation" class="toc-link">Interpretation Notes</a>
+      <a href="#interpretation" class="toc-link">Risks &amp; Limitations</a>
       <a href="#data-sources" class="toc-link">Data &amp; Refresh Cycle</a>
+      <a href="#why-post-close" class="toc-link">Why Post-Close?</a>
       <a href="#faq" class="toc-link">FAQ</a>
       <a href="#related" class="toc-link">Related Research</a>
     </div>

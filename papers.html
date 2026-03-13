@@ -15,10 +15,12 @@
 <meta property="og:description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
 <meta property="og:url" content="https://quantmedia.io/papers.html">
 <meta property="og:site_name" content="QUANT_MEDIA">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://quantmedia.io/og-card.svg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Analysis — Quantitative Research &amp; Market Studies | QUANT_MEDIA">
 <meta name="twitter:description" content="Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.">
 <meta name="twitter:site" content="@quantmedia_io">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.svg">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>
@@ -221,6 +223,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/papers.html","url":"https://quantmedia.io/papers.html","name":"Analysis — Quantitative Research & Market Studies | QUANT_MEDIA","description":"Quantitative research papers on market microstructure, VPIN, dark pools, order flow toxicity, and high-frequency trading.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-03-11"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"}]},{"@type":"ItemList","name":"Quantitative Research Papers","itemListElement":[{"@type":"ListItem","position":1,"name":"VPIN & Order Flow Toxicity"},{"@type":"ListItem","position":2,"name":"Hierarchical Risk Parity"},{"@type":"ListItem","position":3,"name":"Probabilistic Sharpe Ratio"},{"@type":"ListItem","position":4,"name":"Slippage Modeling"},{"@type":"ListItem","position":5,"name":"Alternate Data Sources"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is VPIN (Volume-Synchronized Probability of Informed Trading)?","acceptedAnswer":{"@type":"Answer","text":"VPIN is a real-time metric that estimates the probability of informed trading in a financial instrument. It measures order flow toxicity by comparing buy-initiated and sell-initiated volume in volume-synchronized time bars, rather than clock time. High VPIN values indicate elevated adverse selection risk for market makers."}},{"@type":"Question","name":"What is Hierarchical Risk Parity (HRP)?","acceptedAnswer":{"@type":"Answer","text":"Hierarchical Risk Parity is a portfolio optimization method that uses hierarchical clustering and graph theory to allocate capital without inverting the covariance matrix. Unlike Markowitz mean-variance optimization, HRP produces more stable, diversified portfolios that are less sensitive to estimation error in the correlation structure."}},{"@type":"Question","name":"What is Probabilistic Sharpe Ratio (PSR)?","acceptedAnswer":{"@type":"Answer","text":"Probabilistic Sharpe Ratio is a statistical test that computes the probability that the true Sharpe ratio of a strategy exceeds a benchmark, accounting for non-normal return distributions, sample length, skewness, and kurtosis. It helps detect backtest overfitting by penalizing strategies tested on short samples with fat-tailed returns."}},{"@type":"Question","name":"How does GPU acceleration help in quantitative trading?","acceptedAnswer":{"@type":"Answer","text":"GPUs accelerate quantitative trading by parallelizing compute-heavy tasks like Monte Carlo simulations, cross-sectional factor inference, batched feature generation, and neural network inference. However, CPUs remain essential for latency-sensitive tasks like market data parsing, order serialization, and risk checks. The optimal architecture uses both in a split-path design."}},{"@type":"Question","name":"What is order flow toxicity in market microstructure?","acceptedAnswer":{"@type":"Answer","text":"Order flow toxicity measures the degree to which incoming orders carry private information that is adverse to liquidity providers. When toxicity is high, market makers face increased adverse selection — they systematically trade against informed counterparties. VPIN and Kyle's lambda are two common metrics used to quantify this toxicity in real-time."}}]}</script>
 </head>
 <body>
 
@@ -292,7 +295,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <div class="page-hero">
   <div class="page-hero-inner">
     <div class="hero-eyebrow">QUANT_MEDIA</div>
-    <div class="hero-title">Research Papers &amp; Notes</div>
+    <h1 class="hero-title">Research Papers &amp; Notes</h1>
     <div class="hero-desc">Quantitative research covering market microstructure, portfolio theory, execution analytics, machine learning infrastructure, and alternative data. All papers are independent, non-commercial research.</div>
     <div class="hero-stats">
       <div><div class="hero-stat-val">11</div><div class="hero-stat-label">Papers</div></div>
@@ -397,7 +400,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="section-header"><h2>Microstructure</h2></div>
     <article class="paper-article" id="vpin">
       <div class="paper-number">Paper 01</div>
-      <h1 class="paper-title">VPIN and Order Flow Toxicity: A Practical Microstructure Signal for Quantitative Traders</h1>
+      <h2 class="paper-title">VPIN and Order Flow Toxicity: A Practical Microstructure Signal for Quantitative Traders</h2>
       <div class="paper-meta">
         <span class="paper-tag green">VPIN</span>
         <span class="paper-tag">Order Flow</span>
@@ -520,7 +523,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <!-- ═══════════════════════════════════════════ -->
     <article class="paper-article" id="gpu-cpu">
       <div class="paper-number">Paper 02</div>
-      <h1 class="paper-title">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</h1>
+      <h2 class="paper-title">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</h2>
       <div class="paper-meta">
         <span class="paper-tag blue">Infrastructure</span>
         <span class="paper-tag">Latency</span>
@@ -605,7 +608,7 @@ features = torch.randn(<span class="num">4096</span>, <span class="num">64</span
     <div class="section-header"><h2>Portfolio Theory</h2></div>
     <article class="paper-article" id="hrp">
       <div class="paper-number">Paper 03</div>
-      <h1 class="paper-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</h1>
+      <h2 class="paper-title">Hierarchical Risk Parity (HRP) for Portfolio Optimization</h2>
       <div class="paper-meta">
         <span class="paper-tag gold">Portfolio</span>
         <span class="paper-tag">HRP</span>
@@ -689,7 +692,7 @@ features = torch.randn(<span class="num">4096</span>, <span class="num">64</span
     <!-- ═══════════════════════════════════════════ -->
     <article class="paper-article" id="psr">
       <div class="paper-number">Paper 04</div>
-      <h1 class="paper-title">Probabilistic Sharpe Ratio (PSR) and Backtest Overfitting</h1>
+      <h2 class="paper-title">Probabilistic Sharpe Ratio (PSR) and Backtest Overfitting</h2>
       <div class="paper-meta">
         <span class="paper-tag gold">Statistics</span>
         <span class="paper-tag">Backtest</span>
@@ -760,7 +763,7 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
     <div class="section-header"><h2>Execution &amp; Market Making</h2></div>
     <article class="paper-article" id="spreads">
       <div class="paper-number">Paper 05</div>
-      <h1 class="paper-title">Market Microstructure: Bid-Ask Spread Dynamics</h1>
+      <h2 class="paper-title">Market Microstructure: Bid-Ask Spread Dynamics</h2>
       <div class="paper-meta">
         <span class="paper-tag green">Microstructure</span>
         <span class="paper-tag">Spreads</span>
@@ -832,7 +835,7 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
     <div class="section-header"><h2>ML &amp; AI</h2></div>
     <article class="paper-article" id="sovereign-ai">
       <div class="paper-number">Paper 07</div>
-      <h1 class="paper-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</h1>
+      <h2 class="paper-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</h2>
       <div class="paper-meta">
         <span class="paper-tag blue">Sovereign AI</span>
         <span class="paper-tag">LLM</span>
@@ -893,7 +896,7 @@ inputs = <span class="fn">tokenizer</span>(prompt, return_tensors=<span class="s
     <!-- ═══════════════════════════════════════════ -->
     <article class="paper-article" id="genetic">
       <div class="paper-number">Paper 08</div>
-      <h1 class="paper-title">Automating Alpha Discovery with Genetic Algorithms</h1>
+      <h2 class="paper-title">Automating Alpha Discovery with Genetic Algorithms</h2>
       <div class="paper-meta">
         <span class="paper-tag gold">Alpha</span>
         <span class="paper-tag">Optimization</span>
@@ -957,7 +960,7 @@ inputs = <span class="fn">tokenizer</span>(prompt, return_tensors=<span class="s
     <!-- ═══════════════════════════════════════════ -->
     <article class="paper-article" id="slippage">
       <div class="paper-number">Paper 09</div>
-      <h1 class="paper-title">Slippage and Latency Modeling in Backtesting</h1>
+      <h2 class="paper-title">Slippage and Latency Modeling in Backtesting</h2>
       <div class="paper-meta">
         <span class="paper-tag green">Execution</span>
         <span class="paper-tag">Backtest</span>
@@ -1028,7 +1031,7 @@ inputs = <span class="fn">tokenizer</span>(prompt, return_tensors=<span class="s
     <div class="section-header"><h2>Alternative Data</h2></div>
     <article class="paper-article" id="alt-data">
       <div class="paper-number">Paper 10</div>
-      <h1 class="paper-title">The Role of Alternate Data in Quantitative Finance</h1>
+      <h2 class="paper-title">The Role of Alternate Data in Quantitative Finance</h2>
       <div class="paper-meta">
         <span class="paper-tag blue">Alt Data</span>
         <span class="paper-tag">Machine Learning</span>
@@ -1104,7 +1107,7 @@ scores = []
     <div class="section-header"><h2>Analytical Engineering</h2></div>
     <article class="paper-article" id="vectorization">
       <div class="paper-number">Paper 11</div>
-      <h1 class="paper-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</h1>
+      <h2 class="paper-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</h2>
       <div class="paper-meta">
         <span class="paper-tag green">Analytics</span>
         <span class="paper-tag">GPU</span>
@@ -1265,7 +1268,7 @@ df[<span class="str">"z_128"</span>] = (df[<span class="str">"price"</span>] - d
     <!-- ═══════════════════════════════════════════ -->
     <article class="paper-article" id="bist-sentiment">
       <div class="paper-number">Paper 06</div>
-      <h1 class="paper-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h1>
+      <h2 class="paper-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</h2>
       <div class="paper-meta">
         <span class="paper-tag blue">NLP</span>
         <span class="paper-tag">LLM</span>

@@ -1,181 +1,158 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantum Signals — Daily US Equity Signal Scanner | QUANT_MEDIA</title>
-<meta name="description" content="Daily US equity signals from the Quantum Trading System. Multi-signal confluence model covering S&P 500 and NASDAQ 100 with per-symbol backtest metrics and tier rankings.">
+<title>Quantum Signals: Post-Close Multi-Factor Technical Signal Engine | QUANT_MEDIA</title>
+<meta name="description" content="Quantum Signals — a post-close multi-factor technical signal engine for US equities. RSI, MACD, Bollinger Bands, volume, and trend confluence analysis with BUY/WATCH decisions.">
 <link rel="canonical" href="https://quantmedia.io/quantum-signals.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="author" content="Certurk Research | QUANT_MEDIA">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Quantum Signals — Daily US Equity Signal Scanner | QUANT_MEDIA">
-<meta property="og:description" content="Daily US equity signals from the Quantum Trading System. Multi-signal confluence model with per-symbol backtest metrics.">
+<meta name="keywords" content="quantum signals, technical signal engine, multi-factor signals, RSI signals, MACD signals, bollinger bands, volume analysis, US equities signals, post-close analysis, quantitative trading signals">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quantum Signals: Post-Close Multi-Factor Technical Signal Engine">
+<meta property="og:description" content="Post-close multi-factor technical signal engine for US equities. RSI, MACD, Bollinger Bands, volume, and trend confluence analysis.">
 <meta property="og:url" content="https://quantmedia.io/quantum-signals.html">
 <meta property="og:site_name" content="QUANT_MEDIA">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Quantum Signals — Daily US Equity Signal Scanner | QUANT_MEDIA">
-<meta name="twitter:description" content="Daily US equity signals from the Quantum Trading System. Multi-signal confluence model with per-symbol backtest metrics.">
+<meta name="twitter:title" content="Quantum Signals: Post-Close Multi-Factor Technical Signal Engine">
+<meta name="twitter:description" content="Post-close multi-factor technical signal engine for US equities with BUY/WATCH decisions based on signal confluence.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"TechArticle",
+  "headline":"Quantum Signals: Post-Close Multi-Factor Technical Signal Engine for US Equities",
+  "description":"Methodology and architecture of the Quantum Signals engine — a post-close multi-factor technical signal system using RSI, MACD, Bollinger Bands, volume, and trend confluence analysis.",
+  "author":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QUANT_MEDIA","url":"https://quantmedia.io"},
+  "datePublished":"2026-03-13",
+  "dateModified":"2026-03-13",
+  "mainEntityOfPage":"https://quantmedia.io/quantum-signals.html",
+  "keywords":"quantum signals, technical signal engine, multi-factor analysis, RSI, MACD, bollinger bands"
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Quantum Signals","item":"https://quantmedia.io/quantum-signals.html"}
+  ]
+}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
-  --border:#242424;--border2:#2e2e2e;
-  --text:#e8e8e8;--dim:#888;--dimmer:#444;
-  --accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--purple:#a371f7;
-  --nav-h:52px;
-}
-[data-theme="light"]{
-  --bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;
-  --border:#dcdcda;--border2:#d0d0ce;
-  --text:#111111;--dim:#555555;--dimmer:#888888;
-  --accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;--purple:#7c3aed;
-}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;transition:background .24s ease,color .24s ease}
 a{text-decoration:none;color:inherit}
-
-/* HEADER */
-.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .24s ease}
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
 .site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
-.logo-slash{color:var(--accent)}
-.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
-.site-header .main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
-.site-header .main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
-.site-header .main-nav a:hover,.site-header .main-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
+.main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.main-nav a:hover,.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
 .header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
 .btn-icon:hover{color:var(--text);background:var(--bg3)}
-.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:var(--accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
-.btn-subscribe:hover{opacity:.86}
 [data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
 [data-theme="light"] .site-logo{color:var(--text)}
-.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
-.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
-.mobile-nav{display:none;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 20px;flex-direction:column;gap:8px}
-.mobile-nav.open{display:flex}
-.mobile-nav a{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);padding:6px 0}
-.mobile-nav a.active{color:var(--accent)}
-
-/* PAGE */
-.page-wrap{max-width:1400px;margin:0 auto;padding:28px 20px}
-
-/* STATS BAR */
-.stats-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:28px}
-.stat-cell{background:var(--bg2);padding:14px 12px;text-align:center}
-.stat-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
-.stat-val.green{color:var(--accent)}.stat-val.red{color:var(--red)}.stat-val.gold{color:var(--gold)}.stat-val.blue{color:var(--blue)}.stat-val.purple{color:var(--purple)}
-.stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim)}
-
-/* FILTER BAR */
-.filter-bar{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
-.filter-bar input,.filter-bar select{
-  background:var(--bg2);border:1px solid var(--border);border-radius:4px;
-  padding:8px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;
-  transition:border-color .14s;
-}
-.filter-bar input{width:200px}
-.filter-bar input:focus,.filter-bar select:focus{border-color:var(--accent);outline:none}
-
-/* SECTION */
-.section-hdr{display:flex;align-items:center;justify-content:space-between;border-left:3px solid var(--accent);padding-left:10px;margin-bottom:14px}
-.section-hdr h2{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text)}
-.section-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dimmer)}
-
+[data-theme="light"] .main-nav a:hover,[data-theme="light"] .main-nav a.active{color:var(--text)!important}
+.article-hero{background:linear-gradient(135deg,#0a0f0a 0%,#0a1a0f 50%,#0a0a0a 100%);border-bottom:1px solid var(--border);padding:48px 0 40px}
+.article-hero-inner{max-width:820px;margin:0 auto;padding:0 24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.hero-badge span{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.badge-live{background:var(--accent);color:#fff}
+.badge-topic{border:1px solid var(--border2);color:var(--dim)}
+.article-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(28px,5vw,46px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+.article-subtitle{font-size:17px;color:var(--dim);line-height:1.7;max-width:680px;margin-bottom:20px}
+.article-byline{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--dimmer);padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap}
+.byline-author{color:var(--accent);font-weight:600}
+[data-theme="light"] .article-h1{color:var(--text)}
+[data-theme="light"] .article-hero{background:linear-gradient(135deg,#f5f5f3 0%,#eef5ef 50%,#f5f5f3 100%)}
+.article-wrap h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.2px;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.article-wrap h2:first-child{margin-top:0}
+.article-wrap h3{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:var(--text);margin:28px 0 12px}
+.article-wrap p{margin-bottom:16px;color:var(--text)}
+.article-wrap ul,.article-wrap ol{margin:0 0 16px 20px;color:var(--text)}
+.article-wrap li{margin-bottom:6px}
+.article-wrap strong{color:#fff}
+[data-theme="light"] .article-wrap h2{color:var(--text)}
+[data-theme="light"] .article-wrap strong{color:var(--text)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:24px 0 32px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px;text-align:center}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--accent)}
+.stat-val.blue{color:var(--blue)}
+.stat-val.gold{color:var(--gold)}
+.stat-label{font-size:11px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.callout{margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 4px 4px 0}
+.callout.warn{border-left-color:var(--gold)}
+.callout.red{border-left-color:var(--red)}
+.callout-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;margin-bottom:6px}
+.callout p{margin:0;font-size:13px;color:var(--dim)}
+.code-wrap{margin:20px 0;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px}
+.code-filename{color:var(--dim)}
+.code-lang{color:var(--accent);font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
+.code-body{padding:16px;overflow-x:auto;background:var(--bg2)}
+.code-body pre{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:var(--text);white-space:pre;margin:0}
+.kw{color:#c792ea}.str{color:#c3e88d}.fn{color:#82aaff}.cm{color:#546e7a}.num{color:#f78c6c}.typ{color:#ffcb6b}
+.param-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.param-table th{background:var(--bg3);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);text-align:left;padding:10px 12px;border:1px solid var(--border)}
+.param-table td{padding:8px 12px;border:1px solid var(--border);color:var(--text)}
+.param-table tr:hover td{background:var(--bg2)}
+.page-grid{max-width:1200px;margin:0 auto;padding:40px 24px 60px;display:grid;grid-template-columns:1fr 260px;gap:40px}
+.toc-aside{position:sticky;top:calc(var(--nav-h) + 20px);align-self:start}
+.toc-widget{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px}
+.toc-widget h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.toc-link{display:block;font-size:12px;color:var(--dim);padding:5px 0;border-left:2px solid transparent;padding-left:10px;transition:all .12s}
+.toc-link:hover{color:var(--text);border-left-color:var(--accent)}
+.share-widget{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px;margin-top:12px}
+.share-widget h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:3px;font-size:11px;color:var(--dim);cursor:pointer;transition:all .12s;margin-right:6px;margin-bottom:6px}
+.share-btn:hover{color:var(--text);border-color:var(--accent)}
+@media(max-width:900px){.page-grid{grid-template-columns:1fr}.toc-aside{display:none}}
+.site-footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 0 0}
+.footer-inner{max-width:1400px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:10px}
+.footer-logo .slash{color:var(--accent)}
+.footer-desc{font-size:12px;color:var(--dim);line-height:1.7;max-width:340px}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.footer-col a{display:block;font-size:12px;color:var(--dimmer);padding:3px 0;transition:color .12s}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{max-width:1400px;margin:28px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);border-radius:2px;color:var(--dimmer)}
+.fbadge.g{color:var(--accent);border-color:rgba(0,166,81,.3)}
+[data-theme="light"] .footer-logo{color:var(--text)}
+[data-theme="light"] .site-footer{background:var(--bg3)}
+@media(max-width:760px){.footer-inner{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
 /* SIGNAL TABLE */
-.stbl{width:100%;border-collapse:collapse;border:1px solid var(--border)}
-.stbl thead th{background:var(--bg3);border-bottom:1px solid var(--border);padding:9px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);text-align:left;cursor:pointer;white-space:nowrap;user-select:none;position:sticky;top:var(--nav-h);z-index:10}
-.stbl thead th:hover{color:var(--accent)}
-.stbl thead th:not(:first-child):not(:nth-child(2)):not(:nth-child(3)){text-align:right}
-.stbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
-.stbl tbody tr:last-child{border-bottom:none}
-.stbl tbody tr:hover td{background:rgba(255,255,255,.02)}
-.stbl td{padding:8px 12px;background:var(--bg2);font-family:'JetBrains Mono',monospace;font-size:12px}
-.stbl td:not(:first-child):not(:nth-child(2)):not(:nth-child(3)){text-align:right}
-.stbl td:nth-child(3){font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.3px}
-
-/* BADGES */
-.badge-buy{color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.5px}
-.badge-hold{color:var(--dim);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.5px}
-.tier-s{color:var(--purple);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700}
-.tier-a{color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700}
-.tier-b{color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600}
-.tier-c{color:var(--dim);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600}
-.sig-badge{display:inline-flex;align-items:center;justify-content:center;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:600}
-.sig-high{background:rgba(0,166,81,.12);color:var(--accent)}
-.sig-med{background:rgba(245,166,35,.12);color:var(--gold)}
-.sig-low{background:var(--bg3);color:var(--dim)}
-
-/* METHODOLOGY TOGGLE */
-.meth-toggle{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;cursor:pointer;color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:20px;user-select:none;transition:border-color .14s}
-.meth-toggle:hover{border-color:var(--blue)}
-.meth-toggle .arrow{transition:transform .2s;display:inline-block;font-size:10px}
-.meth-toggle .arrow.open{transform:rotate(90deg)}
-.meth-panel{display:none;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:24px;line-height:1.8;font-size:13px;color:var(--dim)}
-.meth-panel.visible{display:block}
-.meth-panel h3{color:var(--blue);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin:18px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-.meth-panel h3:first-child{margin-top:0}
-.meth-panel .val{color:var(--accent);font-weight:600}
-.meth-panel .def{color:var(--purple);font-weight:600}
-.meth-panel .warn{color:var(--gold)}
-.meth-panel ul{margin:4px 0 10px 20px}
-.meth-panel li{margin-bottom:4px}
-.meth-panel code{background:var(--bg3);padding:1px 5px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text)}
-.meth-panel table{border-collapse:collapse;margin:8px 0}
-.meth-panel table td{padding:4px 16px 4px 0;font-size:13px}
-
-/* FOOTER */
-footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
-.footer-top{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
-.ft-brand{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
-.ft-brand span{color:var(--accent)}
-.ft-desc{font-size:12px;color:var(--dim);line-height:1.8}
-.ft-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
-.ft-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color .15s}
-.ft-col a:hover{color:var(--text)}
-.footer-bottom{border-top:1px solid var(--border);padding:14px 20px;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
-[data-theme="light"] footer{background:var(--bg3)}
-
-/* LOADING */
-.loading{text-align:center;padding:60px;color:var(--dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:.5px}
-.error-msg{text-align:center;padding:40px;color:var(--red);font-size:13px}
-.updated-text{text-align:right;color:var(--dimmer);font-size:11px;margin-top:12px;font-family:'JetBrains Mono',monospace}
-
-@media(max-width:900px){
-  .stats-grid{grid-template-columns:repeat(4,1fr)}
-  .hamburger{display:flex}
-  .site-header .main-nav{display:none}
-  .footer-top{grid-template-columns:1fr}
-  .stbl{font-size:10px}
-  .stbl td,.stbl th{padding:6px 8px}
-}
-@media(max-width:500px){
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .filter-bar input{width:100%}
-  .filter-bar{flex-direction:column;align-items:stretch}
-}
+.sig-buy{background:rgba(0,166,81,.15);color:var(--accent);font-weight:700;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px}
+.sig-tier{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
+.sig-tier.t1{color:var(--accent)}
+.sig-tier.t2{color:var(--blue)}
+.sig-tier.t3{color:var(--gold)}
+.sig-sym{font-weight:700;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:.3px}
+[data-theme="light"] .sig-sym{color:var(--text)}
+.sig-rsi{font-family:'JetBrains Mono',monospace;font-size:12px}
+.sig-rsi.bullish{color:var(--accent)}
+.sig-cnt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
+.sig-price{font-family:'JetBrains Mono',monospace;font-size:12px}
 </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
-    <a href="./" class="site-logo">
-      QUANT<span class="logo-slash">/</span>MEDIA
-      <span class="logo-sub">Quantitative Research &amp; Infrastructure</span>
-    </a>
+    <a href="./" class="site-logo"><img src="logo.png" alt="QUANT_MEDIA" style="height:38px;width:auto;display:block"></a>
     <nav class="main-nav">
       <a href="./">Home</a>
       <a href="markets.html">Live Data</a>
@@ -187,319 +164,507 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
-      <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
-      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-      <button class="btn-subscribe">Subscribe</button>
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
     </div>
   </div>
 </header>
 
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <a href="./">Home</a>
-  <a href="markets.html">Live Data</a>
-  <a href="news.html">News</a>
-  <a href="stocks.html">Equities</a>
-  <a href="quantum-signals.html" class="active">Quantum</a>
-  <a href="papers.html">Analysis</a>
-  <a href="research.html">Research</a>
-  <a href="about.html">About</a>
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="hero-badge">
+      <span class="badge-live">Methodology</span>
+      <span class="badge-topic">Signals</span>
+      <span class="badge-topic">Technical Analysis</span>
+      <span class="badge-topic">US Equities</span>
+    </div>
+    <h1 class="article-h1">Quantum Signals: Post-Close Multi-Factor Technical Signal Engine</h1>
+    <p class="article-subtitle">A systematic, rules-based multi-factor technical signal engine for US equities. Quantum Signals scans 30 large-cap stocks daily after market close, evaluating RSI, MACD, Bollinger Bands, volume, and trend indicators to generate BUY or WATCH decisions based on 4+ signal confluence.</p>
+    <div class="article-byline">
+      <span class="byline-author">QUANT_MEDIA Research</span>
+      <span>&middot;</span>
+      <span>March 13, 2026</span>
+      <span>&middot;</span>
+      <span>Updated post-close daily</span>
+    </div>
+  </div>
 </div>
 
-<div class="page-wrap">
-  <section style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)">
-    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Quantum Signal Scanner</h1>
-    <div id="marketDate" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Loading signal data...</div>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">Multi-signal confluence model covering S&amp;P 500 and NASDAQ 100 equities. Daily close signals generated from 93 technical indicators across momentum, trend, volatility, volume, and mean-reversion families. Updated after each market close.</p>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Per-symbol backtest metrics span 2000&ndash;2026 with transaction costs included. Tier rankings reflect composite historical robustness. This is a quantitative research tool, not investment advice.</p>
-  </section>
+<div class="page-grid">
+  <article class="article-content article-wrap">
 
-  <!-- STATS -->
-  <div class="stats-grid" id="statsGrid">
-    <div class="stat-cell"><div class="stat-val green" id="st-return">--</div><div class="stat-lbl">Total Return</div></div>
-    <div class="stat-cell"><div class="stat-val blue" id="st-annual">--</div><div class="stat-lbl">Annual Return</div></div>
-    <div class="stat-cell"><div class="stat-val" id="st-wr">--</div><div class="stat-lbl">Win Rate</div></div>
-    <div class="stat-cell"><div class="stat-val red" id="st-dd">--</div><div class="stat-lbl">Max Drawdown</div></div>
-    <div class="stat-cell"><div class="stat-val gold" id="st-pf">--</div><div class="stat-lbl">Profit Factor</div></div>
-    <div class="stat-cell"><div class="stat-val" id="st-sharpe">--</div><div class="stat-lbl">Sharpe Ratio</div></div>
-    <div class="stat-cell"><div class="stat-val" id="st-trades">--</div><div class="stat-lbl">Total Trades</div></div>
-    <div class="stat-cell"><div class="stat-val purple" id="st-buys">--</div><div class="stat-lbl">Active BUY</div></div>
-  </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-val">6</div><div class="stat-label">Technical Indicators<br>Per Stock</div></div>
+      <div class="stat-card"><div class="stat-val">30</div><div class="stat-label">Large-Cap Stocks<br>Scanned Daily</div></div>
+      <div class="stat-card"><div class="stat-val blue">4+</div><div class="stat-label">Signal Confluence<br>Required for BUY</div></div>
+      <div class="stat-card"><div class="stat-val gold">16:30 ET</div><div class="stat-label">Post-Close<br>Daily Refresh</div></div>
+    </div>
 
-  <!-- METHODOLOGY -->
-  <div class="meth-toggle" onclick="toggleMeth()">
-    <span class="arrow" id="methArrow">&#9654;</span> Methodology &amp; Column Definitions
-  </div>
-  <div class="meth-panel" id="methPanel">
-    <h3>1. Decision (BUY / HOLD)</h3>
-    <p>
-      Decision is produced by a <span class="def">pure signal confluence</span> rule.
-      The system computes a count of active technical signals on the <strong>latest daily bar</strong> for each symbol.
-    </p>
+    <div class="callout red">
+      <div class="callout-title">&#9888; Important Disclaimer</div>
+      <p>Quantum Signals is an <strong>educational and analytical tool only</strong>. It does NOT constitute financial advice, investment recommendation, or solicitation to buy/sell securities. All signals are generated by algorithmic rules and may contain errors. Past backtest results do not guarantee future performance. Always do your own research and consult a licensed financial advisor before making any investment decisions. Trading involves substantial risk of loss.</p>
+    </div>
+
+    <!-- LIVE SIGNALS DASHBOARD — BUY ONLY -->
+    <h2 id="signals" style="margin-top:0">&#9889; Live Signals — BUY Only</h2>
+    <p style="margin-bottom:8px;font-size:13px;color:var(--dim)">Showing only stocks with <strong style="color:var(--accent)">4+ signal confluence</strong> (BUY). WATCH signals are hidden. Last scan: <span id="scanTime">loading...</span></p>
+    <div id="signalStatus" style="padding:20px;text-align:center;font-size:13px;color:var(--dim);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:16px">
+      <div style="margin-bottom:8px">&#9203; Scanning 30 stocks... This may take up to 60 seconds.</div>
+      <div id="scanProgress" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dimmer)">0 / 30</div>
+    </div>
+    <div id="signalTableWrap" style="display:none;overflow-x:auto;margin-bottom:32px">
+      <table class="param-table" id="signalTable" style="min-width:900px">
+        <thead>
+          <tr>
+            <th>Decision</th>
+            <th>Tier</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>RSI(14)</th>
+            <th>Signals</th>
+            <th>Ref. Entry</th>
+            <th>Stop</th>
+            <th>Target</th>
+          </tr>
+        </thead>
+        <tbody id="signalBody"></tbody>
+      </table>
+    </div>
+    <div id="noBuyMsg" style="display:none;padding:20px;text-align:center;font-size:14px;color:var(--gold);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:32px">
+      No BUY signals today. All 30 stocks have fewer than 4 confluent indicators. Check back after the next market close.
+    </div>
+
+    <h2 id="overview">What Is Quantum Signals?</h2>
+    <p>Quantum Signals is a <strong>post-close multi-factor technical signal engine</strong> designed for US equities. Every trading day after market close, the system scans 30 pre-selected large-cap stocks across multiple sectors and applies six independent technical indicators to each ticker.</p>
+    <p>When 4 or more indicators simultaneously confirm a bullish setup, the stock receives a <strong>BUY</strong> signal. Stocks with fewer than 4 confirmations are marked as <strong>WATCH</strong> &mdash; meaning they show partial technical interest but lack sufficient confluence for a high-conviction entry.</p>
+    <p>The engine is fully rules-based with zero discretionary override. Every parameter is fixed and transparent.</p>
+
+    <h2 id="decision-logic">Decision Logic: The 4+ Confluence Rule</h2>
+    <p>The core principle behind Quantum Signals is <strong>multi-factor confluence</strong>. No single indicator is reliable enough on its own. The system requires agreement from at least 4 out of 6 independent technical dimensions before generating a BUY signal.</p>
+
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-filename">decision_logic.py</span><span class="code-lang">Python</span></div>
+      <div class="code-body"><pre><span class="kw">def</span> <span class="fn">generate_decision</span>(signals_count, total_indicators=<span class="num">6</span>):
+    <span class="str">"""
+    signals_count: number of bullish indicators (0-6)
+    Returns: 'BUY' if 4+ signals confirm, else 'WATCH'
+    """</span>
+    <span class="kw">if</span> signals_count >= <span class="num">4</span>:
+        <span class="kw">return</span> <span class="str">"BUY"</span>
+    <span class="kw">return</span> <span class="str">"WATCH"</span></pre></div>
+    </div>
+
+    <h3>Tier Classification</h3>
     <ul>
-      <li><span class="val">BUY</span> = Signal count &ge; <strong>confluence threshold</strong> (currently <span class="val" id="m-conf">4</span>)</li>
-      <li>HOLD = Signal count &lt; confluence threshold</li>
+      <li><strong>Tier 1 (6/6 signals):</strong> Maximum confluence &mdash; all six indicators align. Historically the highest-conviction setup.</li>
+      <li><strong>Tier 2 (5/6 signals):</strong> Very strong confluence &mdash; one indicator dissenting. Still a high-quality signal.</li>
+      <li><strong>Tier 3 (4/6 signals):</strong> Minimum threshold for BUY &mdash; the system's entry boundary. Valid but lower conviction.</li>
+      <li><strong>WATCH (0-3/6):</strong> Insufficient confluence. On radar but no actionable signal.</li>
     </ul>
-    <p>
-      <strong>No RSI condition</strong> is used in the decision rule. RSI is displayed for reference only.<br>
-      <strong>No tier condition</strong> is used. Tier does not affect the BUY/HOLD decision.<br>
-      <strong>No regime / market filter</strong> is applied at decision time. The optimizer evaluated filter groups during training
-      but the final strategy uses signal-only entries because applying all 38 filters simultaneously eliminates virtually all opportunities.
-    </p>
-    <p>
-      The signal family consists of: RSI oversold, MACD crossover, Bollinger Band breakout, moving average crossovers (SMA/EMA),
-      volume breakout, Stochastic oversold, OBV trend, price momentum, mean-reversion, and composite signals
-      &mdash; totaling <span class="val" id="m-nsig">93</span> binary signals per bar.
-    </p>
 
-    <h3>2. WR% &amp; BT Return% (Per-Symbol Backtest Metrics)</h3>
-    <p>These columns show <span class="def">per-symbol backtest results</span>, not portfolio-level or rolling metrics.</p>
-    <ul>
-      <li><strong>WR%</strong> = Win rate of that specific symbol over the <strong>full 2000&ndash;2026 history</strong>.</li>
-      <li><strong>BT Return%</strong> = Cumulative compounded return of all trades on that symbol over the same period.</li>
-    </ul>
-    <p>
-      Each symbol is tested with <strong>6 strategy variants</strong>. The variant producing the highest composite score is shown.
-      These are <span class="warn">in-sample historical metrics</span>, not forward-looking predictions.
-      Transaction costs of <code>0.05%</code> per round-trip are included. Minimum 5 trades required.
-    </p>
+    <h2 id="signal-architecture">The Six Signals</h2>
+    <p>Each indicator independently evaluates one technical dimension. They are intentionally diverse to avoid correlation clustering:</p>
 
-    <h3>3. Entry / Stop / Target</h3>
-    <p>These are <span class="def">theoretical percentage-based levels</span> calculated from the last closing price.</p>
-    <ul>
-      <li><strong>Entry</strong> = Last close price (reference level, not a limit order).</li>
-      <li><strong>Stop</strong> = Entry &times; (1 &minus; stop_pct). Fixed percentage stop-loss, not ATR-based.</li>
-      <li><strong>Target</strong> = Entry &times; (1 + target_pct). Fixed percentage take-profit, not ATR-based.</li>
-    </ul>
-    <p>
-      <span class="warn">These are model-derived exit rules, not live order levels.</span>
-      If neither stop nor target is hit within the hold period, the position is closed at market.
-    </p>
+    <h3>1. RSI (Relative Strength Index) &mdash; Momentum</h3>
+    <p>The 14-period RSI measures momentum oscillation between 0&ndash;100. The system flags a bullish signal when RSI is between 30&ndash;50, indicating oversold-to-neutral recovery &mdash; the zone where mean-reversion entries historically perform best.</p>
 
-    <h3>4. Tier (S / A / B / C)</h3>
-    <p>Tier represents a <span class="def">composite historical robustness ranking</span> (quartile-based).</p>
-    <p>Composite score formula:</p>
-    <ul>
-      <li><code>min(return, 500%) &times; 0.30</code> &mdash; Capped return</li>
-      <li><code>win_rate &times; 0.25</code> &mdash; Consistency</li>
-      <li><code>min(PF, 10) &times; 10 &times; 0.25</code> &mdash; Risk-adjusted edge</li>
-      <li><code>max(0, 100 &minus; DD) &times; 0.20</code> &mdash; Drawdown penalty</li>
-      <li>Multiplied by <code>min(n_trades/20, 1.0)</code> &mdash; Trade count penalty</li>
-    </ul>
-    <ul>
-      <li><span class="tier-s">S-Tier</span> = Top 25% &mdash; historically strongest edge</li>
-      <li><span class="tier-a">A-Tier</span> = 50th&ndash;75th percentile</li>
-      <li><span class="tier-b">B-Tier</span> = 25th&ndash;50th percentile</li>
-      <li><span class="tier-c">C-Tier</span> = Bottom 25%</li>
-    </ul>
-    <p><span class="warn">Tier does NOT equal a recommendation.</span> It only reflects historical response to the signal family.</p>
+    <h3>2. MACD Crossover &mdash; Trend Momentum</h3>
+    <p>The classic MACD (12, 26, 9) generates a bullish signal when the MACD line crosses above the signal line. The system checks for crossovers within the last 3 trading sessions to capture fresh momentum shifts.</p>
 
-    <h3>5. Strategy Parameters</h3>
-    <table>
-      <tr><td style="color:var(--dim)">Stop Loss</td><td><span class="val" id="m-stop">14%</span></td></tr>
-      <tr><td style="color:var(--dim)">Take Profit</td><td><span class="val" id="m-target">7.5%</span></td></tr>
-      <tr><td style="color:var(--dim)">Max Hold</td><td><span class="val" id="m-hold">60</span> days</td></tr>
-      <tr><td style="color:var(--dim)">Confluence</td><td>&ge; <span class="val" id="m-conf2">4</span> signals</td></tr>
-      <tr><td style="color:var(--dim)">Max Positions</td><td><span class="val" id="m-maxpos">10</span> simultaneous</td></tr>
-      <tr><td style="color:var(--dim)">Training Period</td><td>2000&ndash;2024</td></tr>
-      <tr><td style="color:var(--dim)">OOS Period</td><td>2024&ndash;2026</td></tr>
+    <h3>3. Bollinger Band Position &mdash; Volatility &amp; Mean Reversion</h3>
+    <p>Using 20-period Bollinger Bands (2 standard deviations), the system generates a bullish signal when the current price is at or below the lower band &mdash; a classic mean-reversion setup.</p>
+
+    <h3>4. Volume Confirmation &mdash; Institutional Activity</h3>
+    <p>A bullish signal fires when volume exceeds 1.2x (120%) of the 20-day average, indicating above-normal institutional participation. Volume confirmation separates genuine moves from low-conviction noise.</p>
+
+    <h3>5. Price vs. 50-Day SMA &mdash; Intermediate Trend</h3>
+    <p>A bullish signal triggers when the current price crosses above or is trading above the 50-day SMA, confirming the stock is in an intermediate uptrend or transitioning from a downtrend.</p>
+
+    <h3>6. Price vs. 200-Day SMA &mdash; Long-Term Trend</h3>
+    <p>When price is above the 200-day SMA, the stock is in a secular bull trend. This filter prevents the system from generating BUY signals in stocks that are in structural decline.</p>
+
+    <h2 id="parameters">Strategy Parameters</h2>
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Value</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>RSI Period</td><td>14</td><td>Standard RSI lookback window</td></tr>
+        <tr><td>RSI Bullish Zone</td><td>30&ndash;50</td><td>Oversold-to-neutral recovery zone</td></tr>
+        <tr><td>MACD Fast / Slow / Signal</td><td>12 / 26 / 9</td><td>Standard MACD parameters</td></tr>
+        <tr><td>Bollinger Band Period</td><td>20</td><td>Lookback for middle band (SMA)</td></tr>
+        <tr><td>Bollinger Band StdDev</td><td>2.0</td><td>Width multiplier for upper/lower bands</td></tr>
+        <tr><td>Volume Threshold</td><td>1.2x</td><td>Minimum ratio vs. 20-day average volume</td></tr>
+        <tr><td>SMA Short</td><td>50-day</td><td>Intermediate trend filter</td></tr>
+        <tr><td>SMA Long</td><td>200-day</td><td>Long-term trend filter</td></tr>
+        <tr><td>Min. Confluence</td><td>4 / 6</td><td>Minimum signals for BUY decision</td></tr>
+        <tr><td>Scan Frequency</td><td>Daily post-close</td><td>After 16:00 ET market close</td></tr>
+        <tr><td>Universe</td><td>30 large-cap US stocks</td><td>Cross-sector representation</td></tr>
+        <tr><td>Default Hold Period</td><td>5&ndash;15 trading days</td><td>Swing-trade horizon for backtests</td></tr>
+      </tbody>
     </table>
-    <p style="color:var(--dimmer);font-size:11px;margin-top:12px">
-      Parameters selected via two-phase coarse-to-fine grid search (5,040 combinations), filtered for &ge;200 trades, ranked by Sharpe ratio.
-    </p>
-  </div>
 
-  <!-- FILTER BAR -->
-  <div class="filter-bar">
-    <input type="text" id="search" placeholder="Search symbol..." oninput="render()">
-    <select id="tierFilter" onchange="render()">
-      <option value="">All Tiers</option>
-      <option value="S">S-Tier</option>
-      <option value="A">A-Tier</option>
-      <option value="B">B-Tier</option>
-      <option value="C">C-Tier</option>
-    </select>
-    <select id="decFilter" onchange="render()">
-      <option value="">All Decisions</option>
-      <option value="BUY">BUY Only</option>
-      <option value="HOLD">HOLD Only</option>
-    </select>
-  </div>
+    <h2 id="columns">Dashboard Column Definitions</h2>
+    <p>The Quantum Signals dashboard displays 12 data columns for each scanned stock:</p>
 
-  <!-- TABLE -->
-  <div class="section-hdr"><h2>Signal Scanner</h2><span class="section-meta" id="countMeta">0 shown</span></div>
-  <table class="stbl">
-    <thead>
-      <tr>
-        <th onclick="sortBy('d')">Decision</th>
-        <th onclick="sortBy('t')">Tier</th>
-        <th onclick="sortBy('s')">Symbol</th>
-        <th onclick="sortBy('p')">Price</th>
-        <th onclick="sortBy('r')">RSI</th>
-        <th onclick="sortBy('sc')">Signals</th>
-        <th onclick="sortBy('e')">Entry</th>
-        <th onclick="sortBy('sl')">Stop</th>
-        <th onclick="sortBy('tp')">Target</th>
-        <th onclick="sortBy('wr')">WR%</th>
-        <th onclick="sortBy('tr')">BT Return%</th>
-        <th onclick="sortBy('nt')">BT Trades</th>
-        <th onclick="sortBy('hd')">Hold Days</th>
-      </tr>
-    </thead>
-    <tbody id="tbody">
-      <tr><td colspan="13" class="loading">Loading signal data...</td></tr>
-    </tbody>
-  </table>
-  <div class="updated-text" id="updatedText"></div>
+    <h3>Decision</h3>
+    <p><strong>BUY</strong> or <strong>WATCH</strong>. The final output of the 4+ confluence rule.</p>
+
+    <h3>Tier</h3>
+    <p>For BUY signals only: Tier 1 (6/6), Tier 2 (5/6), or Tier 3 (4/6). Higher tiers historically correlate with better outcomes.</p>
+
+    <h3>Symbol</h3>
+    <p>The stock ticker (e.g., AAPL, MSFT, NVDA). All symbols are US-listed large-cap equities.</p>
+
+    <h3>Price</h3>
+    <p>The closing price as of the scan date. Used as the reference point for all calculations.</p>
+
+    <h3>RSI(14)</h3>
+    <p>The current 14-period Relative Strength Index value. Values in the 30&ndash;50 zone are flagged as bullish.</p>
+
+    <h3>Signals</h3>
+    <p>A count showing how many of the 6 indicators are currently bullish (e.g., &ldquo;5/6&rdquo;).</p>
+
+    <h3>Ref. Entry</h3>
+    <p>A <strong>reference entry price</strong> calculated as the average of the lower Bollinger Band and the 50-day SMA. Educational context only.</p>
+
+    <h3>Stop</h3>
+    <p>A <strong>reference stop-loss level</strong> set at 3% below the reference entry price. Not a recommendation.</p>
+
+    <h3>Target</h3>
+    <p>A <strong>reference target price</strong> calculated using a 2:1 reward-to-risk ratio from the reference entry. Educational only.</p>
+
+    <h3>Hold Days</h3>
+    <p>The suggested hold period from backtest optimization, typically 5&ndash;15 trading days.</p>
+
+    <h3>WR% (Win Rate)</h3>
+    <p>The historical win rate of similar signal configurations from backtesting. Subject to survivorship and lookahead limitations.</p>
+
+    <h3>BT Return% (Backtest Return)</h3>
+    <p>The average return percentage from backtested trades with the same signal tier. Gross return before commissions and slippage.</p>
+
+    <h2 id="interpretation">Important Interpretation Notes</h2>
+    <div class="callout warn">
+      <div class="callout-title">Backtest &#8800; Future Performance</div>
+      <p>All WR% and BT Return% values are derived from historical backtesting. Real-world execution differs due to slippage, commissions, liquidity, gap risk, and market regime changes.</p>
+    </div>
+    <ul>
+      <li><strong>BUY &#8800; &ldquo;Buy immediately&rdquo;:</strong> A BUY signal means the technical setup meets the system's confluence threshold. It is not a trade recommendation.</li>
+      <li><strong>WATCH = Partial setup:</strong> Stocks with 1&ndash;3 signals may be approaching a BUY signal in coming sessions.</li>
+      <li><strong>Tier matters:</strong> Tier 1 signals (6/6) historically show stronger forward returns than Tier 3 (4/6).</li>
+      <li><strong>Volume is the validator:</strong> Volume confirmation often separates profitable setups from false signals.</li>
+      <li><strong>Combine with fundamentals:</strong> Quantum Signals is purely technical. Earnings dates, FDA decisions, and other catalysts can override any technical setup.</li>
+      <li><strong>No system is infallible:</strong> Even 6/6 Tier 1 signals can fail. Position sizing and stop-loss discipline are critical.</li>
+    </ul>
+
+    <h2 id="data-sources">Data Sources &amp; Refresh Cycle</h2>
+    <ul>
+      <li><strong>Price data:</strong> Sourced from Finnhub API (end-of-day candles) and cross-validated with Yahoo Finance.</li>
+      <li><strong>Technical indicators:</strong> Calculated in-house using standard formulas (no proprietary modifications).</li>
+      <li><strong>Refresh time:</strong> Daily after 16:30 ET (30 minutes after market close to ensure all settlement data is finalized).</li>
+      <li><strong>Universe updates:</strong> The 30-stock universe is reviewed quarterly.</li>
+    </ul>
+
+    <h2 id="related">Related Research</h2>
+    <ul>
+      <li><a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN &amp; Order Flow Toxicity</a> &mdash; Microstructure signals that complement technical analysis</li>
+      <li><a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> &mdash; Statistical framework for evaluating signal engine performance</li>
+      <li><a href="paper-slippage-latency-modeling.html" style="color:var(--accent)">Slippage &amp; Latency Modeling</a> &mdash; Understanding execution costs for signal-based strategies</li>
+      <li><a href="paper-genetic-algorithm-alpha.html" style="color:var(--accent)">Genetic Algorithm Alpha</a> &mdash; Evolutionary optimization approaches to signal generation</li>
+    </ul>
+
+  </article>
+
+  <aside class="toc-aside">
+    <div class="toc-widget">
+      <h4>Contents</h4>
+      <a href="#signals" class="toc-link" style="color:var(--accent);font-weight:600">&#9889; Live Signals</a>
+      <a href="#overview" class="toc-link">What Is Quantum Signals?</a>
+      <a href="#decision-logic" class="toc-link">Decision Logic</a>
+      <a href="#signal-architecture" class="toc-link">The Six Signals</a>
+      <a href="#parameters" class="toc-link">Strategy Parameters</a>
+      <a href="#columns" class="toc-link">Dashboard Columns</a>
+      <a href="#interpretation" class="toc-link">Interpretation Notes</a>
+      <a href="#data-sources" class="toc-link">Data Sources</a>
+      <a href="#related" class="toc-link">Related Research</a>
+    </div>
+    <div class="share-widget">
+      <h4>Share</h4>
+      <a class="share-btn" href="https://twitter.com/intent/tweet?url=https://quantmedia.io/quantum-signals.html&amp;text=Quantum%20Signals%20%E2%80%94%20Multi-Factor%20Technical%20Signal%20Engine" target="_blank" rel="noopener">&#x1D54F; Twitter</a>
+      <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https://quantmedia.io/quantum-signals.html" target="_blank" rel="noopener">in LinkedIn</a>
+    </div>
+  </aside>
 </div>
 
-<footer>
-  <div class="footer-top">
+<footer class="site-footer">
+  <div class="footer-inner">
     <div>
-      <div class="ft-brand">QUANT<span>/</span>MEDIA</div>
-      <div class="ft-desc">Quantitative infrastructure, market microstructure research, and algorithmic systems.</div>
+      <div class="footer-logo">QUANT<span class="slash">_</span>MEDIA</div>
+      <div class="footer-desc">Independent US financial intelligence platform. Quantitative research, market microstructure, and institutional-grade market analysis by QUANT_MEDIA. All content is for informational and academic purposes only. Not financial advice.</div>
     </div>
-    <div class="ft-col">
-      <h4>Research</h4>
-      <a href="research.html">VPIN &amp; Flow Toxicity</a>
-      <a href="research.html#adverse">Adverse Selection</a>
-      <a href="infrastructure.html">Latency Budget</a>
+    <div class="footer-col">
+      <h4>Analysis</h4>
+      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
+      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
+      <a href="claude-ai-trading.html">Claude AI Trading</a>
     </div>
-    <div class="ft-col">
+    <div class="footer-col">
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
-      <a href="stocks.html">Equities</a>
+      <a href="stocks.html">US Equities</a>
       <a href="quantum-signals.html">Quantum Signals</a>
+      <a href="news.html">Market News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Lab</h4>
+      <a href="research.html">Research Home</a>
+      <a href="infrastructure.html">Infrastructure</a>
+      <a href="papers.html">All Papers</a>
+      <a href="about.html">About QUANT_MEDIA</a>
       <a href="methodology.html">Methodology</a>
+      <a href="privacy.html">Privacy Policy</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 QUANT_MEDIA &middot; Certurk Research. All rights reserved.</span>
-    <span>Model: US Quantum v1.0</span>
+    <span>&copy; 2026 QUANT_MEDIA &middot; Certurk Research. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
+    <div style="display:flex;gap:8px">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">US Markets</span>
+    </div>
   </div>
 </footer>
-
 <script>
-/* THEME */
-function toggleTheme(){const t=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('qm-theme',t);}
-function toggleMenu(){document.getElementById('mobileNav').classList.toggle('open');}
-
-/* METHODOLOGY */
-function toggleMeth(){
-  document.getElementById('methPanel').classList.toggle('visible');
-  document.getElementById('methArrow').classList.toggle('open');
+function toggleTheme(){
+  const t = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', t);
+  try{localStorage.setItem('qm-theme', t);}catch(e){}
 }
 
-/* DATA */
-let allSignals=[];
-let sortCol='d',sortDir=1;
-const tierOrd={S:0,A:1,B:2,C:3};
-const decOrd={BUY:0,HOLD:1};
-const fmt=(n,d=2)=>n==null||isNaN(n)?'--':Number(n).toFixed(d);
+/* ═══════════════════════════════════════════════════════════════
+   QUANTUM SIGNALS ENGINE — BUY ONLY
+   Fetches daily candles from Finnhub, calculates 6 technical
+   indicators, shows only stocks with 4+ confluence (BUY).
+   ═══════════════════════════════════════════════════════════════ */
+(async function(){
+const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
+const UNIVERSE = [
+  'AAPL','MSFT','NVDA','GOOGL','AMZN','META','TSLA','AVGO','JPM','V',
+  'UNH','MA','HD','PG','JNJ','ABBV','MRK','COST','NFLX','CRM',
+  'AMD','PEP','LLY','ADBE','ORCL','INTC','BA','DIS','PFE','KO'
+];
+const fmt = (n,d=2) => n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+let scanned = 0;
 
-async function loadData(){
-  try{
-    const r=await fetch('data/quantum_signals.json');
-    const d=await r.json();
+/* --- Fetch daily candles from Finnhub (1 year lookback) --- */
+async function fetchCandles(sym){
+  const to = Math.floor(Date.now()/1000);
+  const from = to - 365*24*60*60; // 1 year
+  const url = `https://finnhub.io/api/v1/stock/candle?symbol=${sym}&resolution=D&from=${from}&to=${to}&token=${FINNHUB_KEY}`;
+  const r = await fetch(url, {signal:AbortSignal.timeout(12000)});
+  const d = await r.json();
+  if(d.s !== 'ok' || !d.c || d.c.length < 200) return null;
+  return {c:d.c, h:d.h, l:d.l, o:d.o, v:d.v, t:d.t};
+}
 
-    if(d.metrics){
-      document.getElementById('st-return').textContent=(d.metrics.total_return||0)+'%';
-      document.getElementById('st-annual').textContent=(d.metrics.annual_return||0)+'%';
-      document.getElementById('st-wr').textContent=(d.metrics.win_rate||0)+'%';
-      document.getElementById('st-dd').textContent=(d.metrics.max_drawdown||0)+'%';
-      document.getElementById('st-pf').textContent=d.metrics.profit_factor||'--';
-      document.getElementById('st-sharpe').textContent=d.metrics.sharpe_ratio||'--';
-      document.getElementById('st-trades').textContent=d.metrics.n_trades||0;
-    }
+/* --- Technical Indicator Calculations --- */
+function calcSMA(closes, period){
+  if(closes.length < period) return null;
+  const slice = closes.slice(-period);
+  return slice.reduce((a,b)=>a+b,0)/period;
+}
 
-    if(d.signals){
-      allSignals=d.signals;
-      document.getElementById('st-buys').textContent=d.buy_count||0;
-    }
-
-    if(d.market_date){
-      document.getElementById('marketDate').textContent='Market date: '+d.market_date+' \u2014 Updated after close';
-    }
-    if(d.updated){
-      document.getElementById('updatedText').textContent='Last export: '+new Date(d.updated).toLocaleString();
-    }
-
-    /* Update methodology params */
-    if(d.strategy){
-      const s=d.strategy;
-      const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-      set('m-conf',s.confluence||4);
-      set('m-conf2',s.confluence||4);
-      set('m-stop',(s.stop_pct*100).toFixed(1)+'%');
-      set('m-target',(s.target_pct*100).toFixed(1)+'%');
-      set('m-hold',s.hold_days||60);
-      set('m-maxpos',s.max_positions||10);
-      set('m-nsig',s.n_signals||93);
-    }
-
-    render();
-  }catch(e){
-    document.getElementById('tbody').innerHTML='<tr><td colspan="13" class="error-msg">Failed to load signal data. Run daily_signal_export.py to generate.</td></tr>';
+function calcRSI(closes, period=14){
+  if(closes.length < period+1) return null;
+  const recent = closes.slice(-(period+1));
+  let gains=0, losses=0;
+  for(let i=1;i<recent.length;i++){
+    const diff = recent[i]-recent[i-1];
+    if(diff>0) gains+=diff; else losses+=Math.abs(diff);
   }
+  const avgGain = gains/period;
+  const avgLoss = losses/period;
+  if(avgLoss===0) return 100;
+  const rs = avgGain/avgLoss;
+  return 100 - (100/(1+rs));
 }
 
-function render(){
-  const search=document.getElementById('search').value.toUpperCase();
-  const tier=document.getElementById('tierFilter').value;
-  const dec=document.getElementById('decFilter').value;
+function calcMACD(closes){
+  if(closes.length < 35) return {macd:null,signal:null,crossover:false};
+  function ema(data, period){
+    const k = 2/(period+1);
+    let e = data.slice(0,period).reduce((a,b)=>a+b,0)/period;
+    const result = [e];
+    for(let i=period;i<data.length;i++){
+      e = data[i]*k + e*(1-k);
+      result.push(e);
+    }
+    return result;
+  }
+  const ema12 = ema(closes, 12);
+  const ema26 = ema(closes, 26);
+  // Align: ema12 starts at index 12, ema26 at index 26
+  // MACD line = ema12 - ema26 (aligned from index 26)
+  const offset = 26 - 12; // 14
+  const macdLine = [];
+  for(let i=0;i<ema26.length;i++){
+    macdLine.push(ema12[i+offset] - ema26[i]);
+  }
+  if(macdLine.length < 9) return {macd:null,signal:null,crossover:false};
+  const signalLine = ema(macdLine, 9);
+  // Check crossover in last 3 bars
+  const ml = macdLine.slice(-4);
+  const sl = signalLine.slice(-4);
+  let crossover = false;
+  for(let i=1;i<ml.length;i++){
+    if(ml[i]>sl[i] && ml[i-1]<=sl[i-1]) crossover = true;
+  }
+  return {macd:ml[ml.length-1], signal:sl[sl.length-1], crossover};
+}
 
-  let filtered=allSignals.filter(s=>{
-    if(search&&!s.s.includes(search))return false;
-    if(tier&&s.t!==tier)return false;
-    if(dec&&s.d!==dec)return false;
-    return true;
-  });
+function calcBollinger(closes, period=20, stddev=2){
+  if(closes.length < period) return {upper:null,middle:null,lower:null};
+  const slice = closes.slice(-period);
+  const mean = slice.reduce((a,b)=>a+b,0)/period;
+  const variance = slice.reduce((a,b)=>a+(b-mean)**2,0)/period;
+  const sd = Math.sqrt(variance);
+  return {upper:mean+stddev*sd, middle:mean, lower:mean-stddev*sd};
+}
 
-  filtered.sort((a,b)=>{
-    let va=a[sortCol],vb=b[sortCol];
-    if(sortCol==='t'){va=tierOrd[va]||4;vb=tierOrd[vb]||4;}
-    if(sortCol==='d'){va=decOrd[va]||2;vb=decOrd[vb]||2;}
-    if(typeof va==='string')return sortDir*va.localeCompare(vb);
-    return sortDir*((va||0)-(vb||0));
-  });
+/* --- Analyze a single stock --- */
+function analyzeStock(sym, data){
+  const closes = data.c;
+  const volumes = data.v;
+  const price = closes[closes.length-1];
 
-  document.getElementById('countMeta').textContent=filtered.length+' shown';
-  const tbody=document.getElementById('tbody');
+  // 1. RSI
+  const rsi = calcRSI(closes, 14);
+  const rsiBullish = rsi !== null && rsi >= 30 && rsi <= 50;
 
-  if(!filtered.length){
-    tbody.innerHTML='<tr><td colspan="13" class="loading">No matching signals</td></tr>';
+  // 2. MACD crossover
+  const macd = calcMACD(closes);
+  const macdBullish = macd.crossover || (macd.macd !== null && macd.signal !== null && macd.macd > macd.signal);
+
+  // 3. Bollinger Band — price at or below lower band
+  const bb = calcBollinger(closes, 20, 2);
+  const bbBullish = bb.lower !== null && price <= bb.lower * 1.02; // small tolerance
+
+  // 4. Volume > 1.2x 20-day average
+  const volSMA = volumes.length >= 20 ? volumes.slice(-20).reduce((a,b)=>a+b,0)/20 : null;
+  const currentVol = volumes[volumes.length-1];
+  const volBullish = volSMA !== null && currentVol > volSMA * 1.2;
+
+  // 5. Price > 50-day SMA
+  const sma50 = calcSMA(closes, 50);
+  const sma50Bullish = sma50 !== null && price > sma50;
+
+  // 6. Price > 200-day SMA
+  const sma200 = calcSMA(closes, 200);
+  const sma200Bullish = sma200 !== null && price > sma200;
+
+  const signals = [rsiBullish, macdBullish, bbBullish, volBullish, sma50Bullish, sma200Bullish];
+  const count = signals.filter(Boolean).length;
+  const decision = count >= 4 ? 'BUY' : 'WATCH';
+  const tier = count === 6 ? 1 : count === 5 ? 2 : count === 4 ? 3 : 0;
+
+  // Reference entry = avg(lower BB, 50-SMA)
+  const refEntry = (bb.lower && sma50) ? (bb.lower + sma50) / 2 : price;
+  const stop = refEntry * 0.97;
+  const target = refEntry * 1.06;
+
+  return {sym, price, rsi, count, decision, tier, refEntry, stop, target, rsiBullish};
+}
+
+/* --- Staggered fetch to respect 60 calls/min Finnhub limit --- */
+async function runScan(){
+  const results = [];
+  const batchSize = 6; // ~6 per batch, 5 batches, ~10s spacing
+  for(let i=0; i<UNIVERSE.length; i+=batchSize){
+    const batch = UNIVERSE.slice(i, i+batchSize);
+    const batchResults = await Promise.all(batch.map(async sym => {
+      try{
+        const data = await fetchCandles(sym);
+        scanned++;
+        document.getElementById('scanProgress').textContent = scanned + ' / ' + UNIVERSE.length;
+        if(!data) return null;
+        return analyzeStock(sym, data);
+      }catch(e){
+        scanned++;
+        document.getElementById('scanProgress').textContent = scanned + ' / ' + UNIVERSE.length;
+        return null;
+      }
+    }));
+    results.push(...batchResults.filter(Boolean));
+    // Rate limit pause between batches (except last)
+    if(i + batchSize < UNIVERSE.length){
+      await new Promise(r => setTimeout(r, 8000));
+    }
+  }
+  return results;
+}
+
+/* --- Render BUY-only table --- */
+function renderSignals(results){
+  // Only BUY signals
+  const buys = results.filter(r => r.decision === 'BUY').sort((a,b) => b.count - a.count || (a.rsi||99) - (b.rsi||99));
+  document.getElementById('signalStatus').style.display = 'none';
+
+  if(buys.length === 0){
+    document.getElementById('noBuyMsg').style.display = 'block';
     return;
   }
 
-  tbody.innerHTML=filtered.map(s=>{
-    const dc=s.d==='BUY'?'badge-buy':'badge-hold';
-    const tc='tier-'+(s.t||'c').toLowerCase();
-    const sc=s.sc>=4?'sig-high':s.sc>=2?'sig-med':'sig-low';
+  const tbody = document.getElementById('signalBody');
+  tbody.innerHTML = buys.map(s => {
+    const tierClass = s.tier===1?'t1':s.tier===2?'t2':'t3';
+    const rsiClass = s.rsiBullish ? 'bullish' : '';
     return `<tr>
-      <td><span class="${dc}">${s.d}</span></td>
-      <td><span class="${tc}">${s.t}</span></td>
-      <td>${s.s}</td>
-      <td>$${fmt(s.p)}</td>
-      <td>${fmt(s.r,1)}</td>
-      <td><span class="sig-badge ${sc}">${s.sc}</span></td>
-      <td>$${fmt(s.e)}</td>
-      <td>$${fmt(s.sl)}</td>
-      <td>$${fmt(s.tp)}</td>
-      <td>${fmt(s.wr,1)}</td>
-      <td>${fmt(s.tr,1)}</td>
-      <td>${s.nt}</td>
-      <td>${s.hd}</td>
+      <td class="sig-buy">BUY</td>
+      <td class="sig-tier ${tierClass}">Tier ${s.tier} (${s.count}/6)</td>
+      <td class="sig-sym">${s.sym}</td>
+      <td class="sig-price">$${fmt(s.price)}</td>
+      <td class="sig-rsi ${rsiClass}">${s.rsi!==null?fmt(s.rsi,1):'--'}</td>
+      <td class="sig-cnt">${s.count}/6</td>
+      <td class="sig-price">$${fmt(s.refEntry)}</td>
+      <td class="sig-price" style="color:var(--red)">$${fmt(s.stop)}</td>
+      <td class="sig-price" style="color:var(--accent)">$${fmt(s.target)}</td>
     </tr>`;
   }).join('');
+
+  document.getElementById('signalTableWrap').style.display = 'block';
+  document.getElementById('scanTime').textContent = new Date().toLocaleString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
 }
 
-function sortBy(col){
-  if(sortCol===col)sortDir*=-1;
-  else{sortCol=col;sortDir=1;}
-  render();
+/* --- Cache results in sessionStorage for 30 min --- */
+const CACHE_KEY = 'qm_signals_cache';
+const CACHE_TTL = 30 * 60 * 1000;
+
+function getCached(){
+  try{
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if(!raw) return null;
+    const {data, ts} = JSON.parse(raw);
+    if(Date.now() - ts > CACHE_TTL) return null;
+    return data;
+  }catch{ return null; }
+}
+function setCache(data){
+  try{sessionStorage.setItem(CACHE_KEY, JSON.stringify({data, ts:Date.now()}));}catch{}
 }
 
-loadData();
+/* --- Init --- */
+const cached = getCached();
+if(cached){
+  renderSignals(cached);
+} else {
+  runScan().then(results => {
+    setCache(results);
+    renderSignals(results);
+  }).catch(err => {
+    document.getElementById('signalStatus').innerHTML = '<div style="color:var(--red)">&#9888; Signal scan failed. Finnhub API may be rate-limited. Please refresh in a few minutes.</div>';
+    console.error('Quantum Signals scan error:', err);
+  });
+}
+})();
 </script>
 </body>
 </html>

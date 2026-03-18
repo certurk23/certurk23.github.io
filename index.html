@@ -51,7 +51,7 @@
   --bd3:    #3a3a3a;
   --text:   #e8e8e8;
   --text2:  #c4c4c4;
-  --text3:  #909090;
+  --text3:  #a0a0a0;
   --muted:  #606060;
   --ink:    #404040;
   --green:  #00a651;
@@ -128,6 +128,7 @@ button{cursor:pointer;font-family:inherit}
   background:var(--red);padding:7px 20px;
   display:flex;align-items:center;gap:12px;cursor:pointer;
   transition:opacity var(--t1);
+  min-height:36px;contain:layout style;
 }
 .breaking-bar:hover{opacity:.92}
 .breaking-pill{
@@ -256,7 +257,7 @@ button{cursor:pointer;font-family:inherit}
 /* ============================================================
    HERO
    ============================================================ */
-.hero-section{background:var(--bg2);border-bottom:1px solid var(--bd)}
+.hero-section{background:var(--bg2);border-bottom:1px solid var(--bd);contain:layout style}
 .hero-inner{
   max-width:var(--max-w);margin:0 auto;
   display:grid;grid-template-columns:1fr 340px;min-height:500px;
@@ -293,7 +294,7 @@ button{cursor:pointer;font-family:inherit}
 .hero-meta{display:flex;align-items:center;gap:18px;margin-bottom:12px}
 .hero-meta-item{
   font-family:'Barlow Condensed',sans-serif;font-size:11px;
-  color:rgba(255,255,255,.4);letter-spacing:.3px;
+  color:rgba(255,255,255,.65);letter-spacing:.3px;
 }
 .hero-meta-item strong{color:rgba(255,255,255,.65)}
 .hero-tags{display:flex;gap:6px;flex-wrap:wrap}
@@ -301,9 +302,9 @@ button{cursor:pointer;font-family:inherit}
   font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;
   letter-spacing:.4px;text-transform:uppercase;padding:2px 8px;
   border:1px solid rgba(255,255,255,.18);border-radius:var(--r1);
-  color:rgba(255,255,255,.4);transition:all var(--t1);
+  color:rgba(255,255,255,.65);transition:all var(--t1);
 }
-.tag:hover{border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.65)}
+.tag:hover{border-color:rgba(255,255,255,.6);color:rgba(255,255,255,.65)}
 
 /* Category badges */
 .badge{
@@ -721,16 +722,15 @@ button{cursor:pointer;font-family:inherit}
 .sr-title{font-size:13px;color:var(--text)}
 .sr-sub{font-size:11px;color:var(--dim)}
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251"
-     crossorigin="anonymous"></script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251";s.crossOrigin="anonymous";s.async=true;document.head.appendChild(s);},3000)});</script>
 </head>
 <body>
 
 <noscript>
-<div style="max-width:1200px;margin:0 auto;padding:40px 20px">
-<h2>QUANT_MEDIA — US Financial Intelligence</h2>
+<div style="max-width:1200px;margin:0 auto;padding:40px 20px" role="main">
+<p style="font-size:24px;font-weight:700">QUANT_MEDIA — US Financial Intelligence</p>
 <p>Independent quantitative research platform covering market microstructure, order flow analysis, portfolio optimization, and high-frequency trading infrastructure. Research by Certurk Research.</p>
-<h3>Research Papers</h3>
+<p style="font-size:18px;font-weight:700;margin-top:20px">Research Papers</p>
 <ul>
 <li><a href="paper-vpin-order-flow-toxicity.html">VPIN and Order Flow Toxicity</a></li>
 <li><a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity (HRP)</a></li>
@@ -739,7 +739,7 @@ button{cursor:pointer;font-family:inherit}
 <li><a href="paper-bid-ask-spread-dynamics.html">Bid-Ask Spread Dynamics</a></li>
 <li><a href="paper-hf-analytical-operations.html">HF Analytical Operations</a></li>
 </ul>
-<h3>Pages</h3>
+<p style="font-size:18px;font-weight:700;margin-top:20px">Pages</p>
 <ul>
 <li><a href="markets.html">Live Market Data</a></li>
 <li><a href="news.html">Financial News</a></li>
@@ -757,15 +757,8 @@ button{cursor:pointer;font-family:inherit}
   <span class="breaking-close">&times;</span>
 </div>
 
-<!-- TICKER -->
-<div style="background:#000;border-bottom:1px solid var(--bd)">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"AVGO","proName":"NASDAQ:AVGO"},{"description":"NFLX","proName":"NASDAQ:NFLX"},{"description":"AMD","proName":"NASDAQ:AMD"},{"description":"QCOM","proName":"NASDAQ:QCOM"},{"description":"COST","proName":"NASDAQ:COST"},{"description":"ADBE","proName":"NASDAQ:ADBE"},{"description":"INTC","proName":"NASDAQ:INTC"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"MA","proName":"NYSE:MA"},{"description":"LLY","proName":"NYSE:LLY"},{"description":"UNH","proName":"NYSE:UNH"},{"description":"XOM","proName":"NYSE:XOM"},{"description":"HD","proName":"NYSE:HD"},{"description":"PG","proName":"NYSE:PG"},{"description":"JNJ","proName":"NYSE:JNJ"},{"description":"ORCL","proName":"NYSE:ORCL"},{"description":"MRK","proName":"NYSE:MRK"},{"description":"ABBV","proName":"NYSE:ABBV"},{"description":"CVX","proName":"NYSE:CVX"},{"description":"WMT","proName":"NYSE:WMT"},{"description":"BAC","proName":"NYSE:BAC"},{"description":"GS","proName":"NYSE:GS"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
-    </script>
-  </div>
-</div>
+<!-- TICKER (deferred — loads after LCP to avoid blocking hero) -->
+<div id="tickerWrap" style="background:#000;border-bottom:1px solid var(--bd);min-height:34px;contain:layout style"></div>
 
 <!-- HEADER -->
 <header class="site-header">
@@ -836,6 +829,7 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </div>
 
+<main>
 <h1 class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0">QUANT_MEDIA: US Financial Intelligence, Quantitative Research & Market Analysis</h1>
 <!-- HERO: Market Pulse -->
 <section class="hero-section">
@@ -845,12 +839,12 @@ button{cursor:pointer;font-family:inherit}
       <div class="hero-content" id="heroContent">
         <div class="hero-eyebrow">
           <span class="badge badge-green">Market Pulse</span>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35)" id="heroTime">LIVE</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)" id="heroTime">LIVE</span>
         </div>
         <h2 class="hero-h1" id="heroH1">US Markets Update — Loading Latest Intelligence...</h2>
         <div id="heroBullets" style="margin-bottom:16px">
           <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
-            <li style="font-size:13px;color:rgba(255,255,255,.55);padding-left:14px;border-left:2px solid var(--green)">Loading market data...</li>
+            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Loading market data...</li>
           </ul>
         </div>
         <div id="heroImpact" style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
@@ -1265,6 +1259,7 @@ button{cursor:pointer;font-family:inherit}
     </aside>
   </div><!-- /content-layout -->
 </div><!-- /page-wrap -->
+</main>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -1656,7 +1651,7 @@ async function loadHero() {
   // Bullets: next 3 headlines
   const bullets = _newsItems.slice(1, 4);
   document.getElementById('heroBullets').innerHTML = '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
-    bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.55);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
+    bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
 
   // Market impact: Gold, BTC, EUR/USD (reliable sources only)
   const [gold, btc, eur] = await Promise.all([yf('GC=F'), yf('BTC-USD'), yf('EURUSD=X')]);
@@ -1666,7 +1661,7 @@ async function loadHero() {
   document.getElementById('heroImpact').innerHTML = impactData.map(x => {
     const r = x.d; const c = cls(r?.chg);
     return `<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:8px 14px;min-width:120px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px">${x.l}</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:4px">${x.l}</div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;margin-bottom:2px">${r ? fmt(r.price, r.price>100?2:4) : '--'}</div>
       <div class="${c}" style="font-family:'JetBrains Mono',monospace;font-size:12px">${r ? pct(r.chg) : '--'}</div>
     </div>`;
@@ -1751,6 +1746,21 @@ document.getElementById('searchInput').addEventListener('input', function(){
       <div><div class="sr-title">${m.title}</div><div class="sr-sub">${m.sub}</div></div>
     </a>`
   ).join('');
+});
+
+/* Deferred TradingView ticker — loads after LCP */
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    var w=document.getElementById('tickerWrap');
+    if(!w)return;
+    var c=document.createElement('div');c.className='tradingview-widget-container';
+    var d=document.createElement('div');d.className='tradingview-widget-container__widget';
+    c.appendChild(d);
+    var s=document.createElement('script');s.type='text/javascript';s.async=true;
+    s.src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
+    s.textContent=JSON.stringify({"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"});
+    c.appendChild(s);w.appendChild(c);
+  }, 2000);
 });
 </script>
 </body>

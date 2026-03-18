@@ -167,12 +167,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- TICKER -->
 <div style="background:#000;border-bottom:1px solid var(--border)">
-  <div class="tradingview-widget-container">
-    <div class="tradingview-widget-container__widget"></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-    {"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"AVGO","proName":"NASDAQ:AVGO"},{"description":"NFLX","proName":"NASDAQ:NFLX"},{"description":"AMD","proName":"NASDAQ:AMD"},{"description":"QCOM","proName":"NASDAQ:QCOM"},{"description":"COST","proName":"NASDAQ:COST"},{"description":"ADBE","proName":"NASDAQ:ADBE"},{"description":"INTC","proName":"NASDAQ:INTC"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"MA","proName":"NYSE:MA"},{"description":"LLY","proName":"NYSE:LLY"},{"description":"UNH","proName":"NYSE:UNH"},{"description":"XOM","proName":"NYSE:XOM"},{"description":"HD","proName":"NYSE:HD"},{"description":"PG","proName":"NYSE:PG"},{"description":"JNJ","proName":"NYSE:JNJ"},{"description":"ORCL","proName":"NYSE:ORCL"},{"description":"MRK","proName":"NYSE:MRK"},{"description":"ABBV","proName":"NYSE:ABBV"},{"description":"CVX","proName":"NYSE:CVX"},{"description":"WMT","proName":"NYSE:WMT"},{"description":"BAC","proName":"NYSE:BAC"},{"description":"GS","proName":"NYSE:GS"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"EUR/USD","proName":"FX:EURUSD"},{"description":"GBP/USD","proName":"FX:GBPUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"}
-    </script>
-  </div>
+  <div id="tickerWrap" style="min-height:34px;contain:layout style"></div>
 </div>
 
 <!-- HEADER -->
@@ -199,6 +194,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </div>
   </div>
 </header>
+<main>
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
@@ -489,5 +485,6 @@ function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getE
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
 </script>
+<script>window.addEventListener('load',function(){setTimeout(function(){var w=document.getElementById('tickerWrap');if(!w)return;var c=document.createElement('div');c.className='tradingview-widget-container';var d=document.createElement('div');d.className='tradingview-widget-container__widget';c.appendChild(d);var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';s.textContent=JSON.stringify({"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"});c.appendChild(s);w.appendChild(c);},2000)});</script>
 </body>
 </html>

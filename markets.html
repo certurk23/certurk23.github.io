@@ -246,7 +246,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <div class="market-bar">
   <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
   <div class="mbar-items" id="mbarItems">
-    <div class="mbar-item"><span class="mbar-sym">Loading…</span></div>
+    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted);font-size:11px">Market data updates when available</span></div>
   </div>
 </div>
 
@@ -271,7 +271,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
   <!-- US INDICES -->
   <div id="indices" class="index-strip" id="idxStrip">
-    <div class="idx-cell"><div class="label">Loading...</div></div>
+    <div class="idx-cell"><div class="label" style="color:var(--dim)">Indices update when market data loads</div></div>
   </div>
 
   <!-- FOREX -->
@@ -392,11 +392,11 @@ const batchYF=syms=>Promise.all(syms.map(yf));
 
 // INDICES
 const IDX=[
-  {sym:'^GSPC',label:'S&P 500',sub:'US Large Cap'},
-  {sym:'^IXIC',label:'NASDAQ',sub:'Composite'},
-  {sym:'^DJI',label:'DOW',sub:'Dow Jones Ind.'},
-  {sym:'^RUT',label:'RUSSELL',sub:'Small Cap 2000'},
-  {sym:'^VIX',label:'VIX',sub:'Volatility Index'},
+  {sym:'SPY',label:'S&P 500',sub:'SPY ETF Proxy'},
+  {sym:'QQQ',label:'NASDAQ',sub:'QQQ ETF Proxy'},
+  {sym:'DIA',label:'DOW',sub:'DIA ETF Proxy'},
+  {sym:'IWM',label:'RUSSELL',sub:'IWM ETF Proxy'},
+  {sym:'VIXY',label:'VIX',sub:'VIXY ETF Proxy'},
 ];
 async function loadIdx(){
   const res=await batchYF(IDX.map(x=>x.sym));

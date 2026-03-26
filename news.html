@@ -212,7 +212,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <div class="market-bar">
   <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
   <div class="mbar-items" id="mbarItems">
-    <div class="mbar-item"><span class="mbar-sym">Loading&hellip;</span></div>
+    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted);font-size:11px">Market data updates when available</span></div>
   </div>
 </div>
 
@@ -220,7 +220,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <!-- PAGE HEADER -->
   <section style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Market News</h1>
-    <div id="newsStatus" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Loading headlines &mdash; Finnhub API</div>
+    <div id="newsStatus" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Finnhub API &mdash; Live Feed</div>
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Real-time financial news from global sources. Headlines are classified by category using automated text analysis and updated continuously from Finnhub&rsquo;s aggregated news feed covering equities, macro, commodities, and digital assets.</p>
   </section>
 
@@ -238,7 +238,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
   <!-- NEWS GRID -->
   <div id="newsGrid">
-    <div class="news-loading"><div class="spinner"></div>Fetching headlines from Finnhub&hellip;</div>
+    <div class="news-loading"><div class="spinner"></div>Connecting to news feed&hellip;</div>
   </div>
 </div>
 
@@ -459,8 +459,8 @@ async function loadNews(){
       _allNews.length+' headlines loaded \u2014 last update: '+now()+' \xb7 Finnhub API';
   }catch(e){
     document.getElementById('newsGrid').innerHTML=
-      '<div class="news-empty">Failed to load news: '+e.message+'. Retrying in 60s\u2026</div>';
-    document.getElementById('newsStatus').textContent='Error loading headlines \u2014 retrying\u2026';
+      '<div class="news-empty" style="text-align:center;padding:40px;color:var(--dim)">Headlines temporarily unavailable. The feed refreshes automatically.</div>';
+    document.getElementById('newsStatus').textContent='Reconnecting\u2026';
   }
 }
 

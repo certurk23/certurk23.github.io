@@ -1483,7 +1483,7 @@ function showMovers(mode) {
   document.getElementById('tabLose').className = 'mover-tab ' + (mode==='lose' ? 'lose-active' : 'inactive');
   const data = mode === 'gain' ? GAINERS_LIVE : LOSERS_LIVE;
   if (data.length === 0) {
-    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Loading...</div>';
+    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Data updates after market open</div>';
     return;
   }
   document.getElementById('moversPanel').innerHTML = data.map((m, i) => {

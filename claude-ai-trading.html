@@ -505,6 +505,30 @@ analysis = research_agent(
 </div>
 
 <!-- FOOTER -->
+
+<!-- QUANTUM SIGNALS CTA -->
+<div style="max-width:820px;margin:24px auto 0;padding:20px 24px;background:rgba(0,166,81,.08);border:1px solid rgba(0,166,81,.2);border-radius:6px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+  <div style="flex:1;min-width:200px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--accent,#00a651);margin-bottom:4px">&#9889; Daily Stock Signals Dashboard</div>
+    <div style="font-size:12px;color:var(--dim,#888)">500+ US stocks scanned daily after market close. Free BUY signals with backtest context.</div>
+  </div>
+  <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
+</div>
+
+<!-- NEWSLETTER CTA -->
+<div style="max-width:820px;margin:40px auto;padding:32px 24px;background:var(--bg2,#111);border:1px solid var(--border,#242424);border-radius:6px;text-align:center">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text,#e8e8e8);margin-bottom:8px">Get Research Updates</div>
+  <div style="font-size:13px;color:var(--dim,#888);margin-bottom:16px;max-width:480px;margin-left:auto;margin-right:auto">Daily pre-open briefing with market signals, research highlights, and quantitative analysis. Free, no spam.</div>
+  <form action="https://formsubmit.co/contact@quantmedia.io" method="POST" style="display:flex;gap:8px;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center" onsubmit="(function(e){e.preventDefault();var f=e.target,b=f.querySelector('button');b.textContent='Sending...';b.disabled=true;fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){f.innerHTML='<div style=\'color:var(--accent,#00a651);font-weight:600;padding:8px\'>Subscribed! Check your inbox.</div>';}else{b.textContent='Try again';b.disabled=false;}}).catch(function(){b.textContent='Try again';b.disabled=false;});})(event)">
+    <input type="hidden" name="_subject" value="New Subscriber (paper page)">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="email" name="email" placeholder="your@email.com" required style="flex:1;min-width:200px;padding:10px 14px;border:1px solid var(--border,#242424);border-radius:4px;background:var(--bg,#0a0a0a);color:var(--text,#e8e8e8);font-size:14px;font-family:inherit">
+    <button type="submit" style="padding:10px 20px;background:var(--accent,#00a651);color:#fff;border:none;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer">Subscribe Free</button>
+  </form>
+  <div style="font-size:10px;color:var(--dimmer,#444);margin-top:10px">No spam. Unsubscribe anytime. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></div>
+</div>
+
 </main>
 <footer class="site-footer">
   <div class="footer-inner">

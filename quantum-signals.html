@@ -220,10 +220,10 @@ a{text-decoration:none;color:inherit}
   <article class="article-content article-wrap">
 
     <div class="stat-grid" id="metricsGrid">
-      <div class="stat-card"><div class="stat-val" id="mBuy">--</div><div class="stat-label">BUY Signals<br>Today</div></div>
-      <div class="stat-card"><div class="stat-val" id="mTotal">--</div><div class="stat-label">Total Stocks<br>Scanned</div></div>
-      <div class="stat-card"><div class="stat-val blue" id="mWR">--</div><div class="stat-label">Backtest<br>Win Rate</div></div>
-      <div class="stat-card"><div class="stat-val gold" id="mSharpe">--</div><div class="stat-label">Sharpe<br>Ratio</div></div>
+      <div class="stat-card"><div class="stat-val" id="mBuy">80</div><div class="stat-label">BUY Signals<br>Today</div></div>
+      <div class="stat-card"><div class="stat-val" id="mTotal">509</div><div class="stat-label">Total Stocks<br>Scanned</div></div>
+      <div class="stat-card"><div class="stat-val blue" id="mWR">67.3%</div><div class="stat-label">Backtest<br>Win Rate</div></div>
+      <div class="stat-card"><div class="stat-val gold" id="mSharpe">2.199</div><div class="stat-label">Sharpe<br>Ratio</div></div>
     </div>
 
     <div class="callout red">
@@ -233,8 +233,8 @@ a{text-decoration:none;color:inherit}
 
     <!-- LIVE SIGNALS DASHBOARD — BUY ONLY -->
     <h2 id="signals" style="margin-top:0">&#9889; Active Signals &mdash; BUY Only</h2>
-    <p style="margin-bottom:4px;font-size:13px;color:var(--dim)">Showing stocks with <strong style="color:var(--accent)">BUY</strong> decisions only (4+ active bullish signals). WATCH stocks are hidden. Market date: <span id="scanTime" style="color:var(--accent);font-weight:600">loading...</span></p>
-    <p style="margin-bottom:12px;font-size:11px;color:var(--dimmer)">End-of-day data. Signals reflect prior close, not real-time prices. Updated: <span id="updatedTime">--</span></p>
+    <p style="margin-bottom:4px;font-size:13px;color:var(--dim)">Showing stocks with <strong style="color:var(--accent)">BUY</strong> decisions only (4+ active bullish signals). WATCH stocks are hidden. Market date: <span id="scanTime" style="color:var(--accent);font-weight:600">Updated daily after close</span></p>
+    <p style="margin-bottom:12px;font-size:11px;color:var(--dimmer)">End-of-day data. Signals reflect prior close, not real-time prices. Updated: <span id="updatedTime">post-close daily</span></p>
 
     <!-- TIER FILTER -->
     <div id="tierFilter" style="display:none;margin-bottom:12px;gap:6px;flex-wrap:wrap">
@@ -245,7 +245,7 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <div id="signalStatus" style="padding:20px;text-align:center;font-size:13px;color:var(--dim);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:16px">
-      &#9203; Loading signal data...
+      Signal data updates daily after the US market close (4:00 PM ET). The table below shows all current BUY signals.
     </div>
     <div id="signalTableWrap" style="display:none;overflow-x:auto;margin-bottom:32px">
       <table class="param-table" id="signalTable" style="min-width:1100px">

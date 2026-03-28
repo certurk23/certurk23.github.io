@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 
 Disallow: /.claude/
-Disallow: /_fix_all_pages.py
+Disallow: /_*.py
 
 Sitemap: https://quantmedia.io/sitemap.xml

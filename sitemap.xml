@@ -2,145 +2,145 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://quantmedia.io/</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/markets.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/stocks.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/quantum-signals.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/news.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/papers.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-vpin-order-flow-toxicity.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-gpu-cpu-trading-infrastructure.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-hierarchical-risk-parity.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-probabilistic-sharpe-ratio.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-bid-ask-spread-dynamics.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-bist-sentiment-analysis.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-sovereign-ai-local-llms.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-genetic-algorithm-alpha.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-slippage-latency-modeling.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-alternative-data-quant-finance.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/paper-hf-analytical-operations.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/claude-ai-trading.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/research.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/methodology.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/infrastructure.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/about.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/privacy.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://quantmedia.io/contact.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

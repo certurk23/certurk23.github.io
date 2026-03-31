@@ -348,18 +348,35 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- ABOUT THIS PAGE -->
 <div style="max-width:1400px;margin:0 auto;padding:32px 20px 0">
-  <div style="border-top:1px solid var(--border);padding-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px 40px">
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">What This Screener Covers</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">S&amp;P 500 equities across Technology, Financials, Healthcare, Consumer Discretionary, Energy, and Industrials. Each stock shows real-time price, daily percentage change, volume, and 52-week position. The sector ETF panel tracks XLK, XLF, XLV, XLE, XLY, and XLI for cross-sector rotation signals.</p>
-    </div>
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">How to Read the Screener</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">Daily gainers and losers highlight short-term momentum and earnings-driven moves. Sector ETF relative strength identifies which parts of the market are attracting institutional flows. For signal-level analysis — entry timing, win rate, and risk-adjusted returns — see the <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a>.</p>
-    </div>
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Quantitative Context</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">Sector rotation analysis is more robust when combined with microstructure signals. QuantMedia's research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a> and <a href="paper-bid-ask-spread-dynamics.html" style="color:var(--accent)">bid-ask spread dynamics</a> provides the theoretical framework behind price formation in individual equities.</p>
+  <div style="border-top:1px solid var(--border);padding-top:28px">
+
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 20px">US Equities &amp; Sector Rotation Guide</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px 44px">
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">What This Screener Covers</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">S&amp;P 500 equities across Technology, Financials, Healthcare, Consumer Discretionary, Energy, and Industrials. Each stock shows real-time price, daily percentage change, volume, and 52-week position. The sector ETF panel tracks XLK, XLF, XLV, XLE, XLY, and XLI for cross-sector rotation signals. Mega-cap stocks — Apple (AAPL), Microsoft (MSFT), NVIDIA (NVDA), Amazon (AMZN), Alphabet (GOOGL), Meta (META), Tesla (TSLA) — collectively represent over 30% of S&amp;P 500 market capitalization and drive a disproportionate share of index-level price movement.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">How to Read the Screener</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Daily gainers and losers highlight short-term momentum and earnings-driven moves. Sector ETF relative strength identifies which parts of the market are attracting institutional flows. Green percentage changes indicate outperformance relative to the prior close; red indicates underperformance. The Volume column shows today's trading activity relative to the stock's normal range — above-average volume on a price move confirms institutional participation. For signal-level analysis — entry timing, win rate, and risk-adjusted returns — see the <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a>.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Understanding Sector Rotation</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Sector rotation is the movement of institutional capital between market sectors in response to changing macroeconomic conditions. During early economic expansion, Financials (XLF) and Consumer Discretionary (XLY) typically lead. Technology (XLK) outperforms in mid-cycle growth phases when earnings revisions are strong. Energy (XLE) tends to lead during inflationary regimes and commodity super-cycles. Healthcare (XLV) and Consumer Staples provide defensive positioning during late-cycle slowdowns and recessions. Tracking sector ETF relative strength over rolling 20-day and 60-day windows provides a quantitative framework for identifying rotation inflection points before they become consensus trades.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Market Microstructure Context</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Stock price movements visible in a screener represent the net result of order flow dynamics happening at the microsecond level. When institutional orders — large market-on-close programs, index rebalance trades, or earnings-driven algorithmic flows — hit the order book, bid-ask spreads widen and price impact increases. QuantMedia's research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a> provides a quantitative framework for measuring the probability of informed trading. High VPIN readings indicate that a disproportionate share of volume is driven by informed traders — a signal of elevated adverse selection risk for passive liquidity providers.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">S&amp;P 500 Mega-Cap Composition</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The S&amp;P 500 index is a market-capitalization-weighted benchmark of 500 large US companies. As of 2026, the top 10 constituents by weight account for approximately 35% of total index market capitalization, creating significant concentration risk. NVIDIA's ascent to a $3 trillion+ valuation reflects the AI infrastructure buildout cycle and semiconductor demand surge. Apple and Microsoft maintain dominant positions through ecosystem lock-in, enterprise software, and cloud infrastructure segments. Understanding the concentration and sector allocation of the S&amp;P 500 is fundamental to interpreting daily index-level moves: a 3% rally in NVIDIA alone can add 30+ basis points to the S&amp;P 500 on any given day.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Risk-Adjusted Analysis &amp; Related Tools</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Raw return figures in a stock screener must be interpreted in the context of risk. A 5% daily gain in a high-volatility stock may represent a lower Sharpe ratio outcome than a 1% gain in a low-volatility defensive name. QuantMedia's research on the <a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> provides a statistically rigorous method for evaluating whether a strategy's Sharpe ratio is likely to persist out-of-sample. For portfolio construction across sectors, the <a href="paper-hierarchical-risk-parity.html" style="color:var(--accent)">Hierarchical Risk Parity</a> framework offers a covariance-matrix-free approach to diversification that is more stable than traditional mean-variance optimization.</p>
+      </div>
     </div>
   </div>
 </div>

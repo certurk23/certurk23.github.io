@@ -314,18 +314,35 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- ABOUT THIS PAGE -->
 <div style="max-width:1400px;margin:0 auto;padding:32px 20px 0">
-  <div style="border-top:1px solid var(--border);padding-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px 40px">
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">What This Dashboard Tracks</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">Live US equity index prices (S&amp;P 500, NASDAQ 100, Dow Jones, Russell 2000), forex rates (EUR/USD, GBP/USD, USD/JPY), commodity futures (WTI crude oil, gold), and VIX volatility. All data updates every 60 seconds during market hours via aggregated real-time feeds.</p>
-    </div>
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Macro Indicators Explained</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">The macro panel tracks Fed Funds Rate expectations, 10Y/2Y Treasury yield spread (yield curve inversion indicator), and cross-asset correlation signals. Yield curve inversion has historically preceded US recessions by 12–18 months and remains a key input in quantitative macro models.</p>
-    </div>
-    <div>
-      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Related Research</h2>
-      <p style="font-size:13px;color:var(--dimmer);line-height:1.75;margin:0">Pair this data with QuantMedia's quantitative research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a>, <a href="paper-hierarchical-risk-parity.html" style="color:var(--accent)">HRP portfolio construction</a>, and <a href="quantum-signals.html" style="color:var(--accent)">daily BUY signal alerts</a> for a complete quantitative view of US equity markets.</p>
+  <div style="border-top:1px solid var(--border);padding-top:28px">
+
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 20px">Global Markets &amp; Macro Data Guide</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px 44px">
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">What This Dashboard Tracks</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Live US equity index prices (S&amp;P 500, NASDAQ 100, Dow Jones, Russell 2000), forex rates (EUR/USD, GBP/USD, USD/JPY, USD/CHF), commodity futures (WTI crude oil, gold, silver), and VIX volatility. The dashboard also covers international indices — DAX, FTSE 100, Nikkei 225, Hang Seng, CAC 40 — providing a synchronized view of global risk appetite. All data updates every 60 seconds during market hours via aggregated real-time feeds from multiple financial data providers.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">US Equity Indices Explained</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The S&amp;P 500 is the primary benchmark for US large-cap equities — a market-cap-weighted index of 500 companies across all sectors. The NASDAQ 100 is technology-heavy, giving it a higher growth and volatility profile. The Dow Jones Industrial Average tracks 30 blue-chip stocks and is price-weighted — making it an imperfect but widely reported market gauge. The Russell 2000 measures small-cap performance and tends to lead in risk-on environments. Divergence between NASDAQ and Russell 2000 — tech leading while small-caps lag — often signals a narrow, momentum-driven rally rather than broad market health.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Forex &amp; Currency Markets</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The foreign exchange market is the world's largest and most liquid financial market, with over $7.5 trillion in daily trading volume. EUR/USD — the world's most-traded currency pair — reflects the relative monetary policy divergence between the ECB and the Federal Reserve. GBP/USD is sensitive to UK economic data, Bank of England decisions, and post-Brexit trade dynamics. USD/JPY has become a critical macro risk signal: when the Bank of Japan maintains ultra-loose policy while the Fed tightens, the yen weakens and carry trades build. Sharp yen reversals (JPY strengthening) are associated with rapid global carry trade unwinding and equity market stress.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Macro Indicators &amp; Yield Curve</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The macro panel tracks Fed Funds Rate expectations, 10Y/2Y Treasury yield spread (yield curve inversion indicator), and cross-asset correlation signals. Yield curve inversion — when short-term rates exceed long-term rates — has historically preceded US recessions by 12–18 months and remains a key input in quantitative macro allocation models. The VIX (CBOE Volatility Index) measures the 30-day implied volatility of S&amp;P 500 options and serves as a real-time fear gauge: VIX below 15 signals complacency, 20–30 indicates elevated concern, and spikes above 40 historically coincide with forced institutional deleveraging and systemic stress events.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Gold, Commodities &amp; Crypto</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Gold is the premier macro hedge asset, exhibiting negative correlation to real interest rates: when real yields fall (nominal rates minus CPI inflation), gold tends to appreciate as the opportunity cost of holding a non-yielding asset decreases. WTI crude oil responds primarily to OPEC+ production decisions, US inventory data from the EIA, and global demand forecasts. Bitcoin has evolved into an institutional asset class tracked alongside gold in macro allocation models — sensitive to liquidity conditions, dollar strength, and risk appetite cycles. During periods of dollar weakness and loose monetary conditions, both gold and Bitcoin tend to outperform traditional fixed income.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Related Quantitative Research</h3>
+        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Understanding macro market data is most useful when paired with rigorous quantitative frameworks. QuantMedia's research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a> explains how informed trading probability spikes before major index moves — a leading indicator visible in volume data before price adjusts. The <a href="paper-hierarchical-risk-parity.html" style="color:var(--accent)">Hierarchical Risk Parity</a> paper provides a cross-asset portfolio construction method robust to correlation breakdowns — common during macro stress events. For daily signals derived from 93 technical indicators across 500+ US equities, see the <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a>.</p>
+      </div>
     </div>
   </div>
 </div>

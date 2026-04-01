@@ -1518,32 +1518,29 @@ function showMovers(mode) {
   }).join('');
 }
 
-/* --- Sectors --- */
+/* --- Sectors (static — no API) --- */
 const SECS = [
   {n:'Technology',s:'XLK'},{n:'Financials',s:'XLF'},
   {n:'Health Care',s:'XLV'},{n:'Energy',s:'XLE'},
   {n:'Industrials',s:'XLI'},{n:'Utilities',s:'XLU'},
   {n:'Cons. Disc.',s:'XLY'},{n:'Materials',s:'XLB'},
 ];
-async function loadSectors() {
-  const res = await batch(SECS.map(x => x.s));
-  document.getElementById('sectorTs').textContent = now();
-  document.getElementById('sectorRows').innerHTML = SECS.map((sec, i) => {
-    const r = res[i]; const c = cls(r?.chg); const v = r?.chg || 0;
-    const w = Math.min(Math.abs(v) * 12, 100);
-    const col = v >= 0 ? 'var(--green)' : 'var(--red)';
+function loadSectors() {
+  document.getElementById('sectorTs').textContent = 'Reference';
+  document.getElementById('sectorRows').innerHTML = SECS.map(sec => {
     return `<div class="sector-row">
       <span class="sector-name">${sec.n}</span>
-      <div class="sector-bar-wrap"><div class="sector-bar" style="width:${w}%;background:${col}"></div></div>
-      <span class="sector-chg ${c}">${r ? pct(r.chg) : '--'}</span>
+      <div class="sector-bar-wrap"><div class="sector-bar" style="width:0%;background:var(--dimmer)"></div></div>
+      <span class="sector-chg nt" style="color:var(--dimmer)">—</span>
     </div>`;
-  }).join('');
+  }).join('') + '<div style="padding:10px 0 2px;font-size:11px"><a href="stocks.html" style="color:var(--accent)">Sector rotation guide →</a></div>';
 }
 
 /* --- Init --- */
 async function init() {
   showMovers(moversMode);
-  await Promise.all([loadMarketBar(), loadSnapshot(), loadSectors()]);
+  loadSectors();
+  await Promise.all([loadMarketBar(), loadSnapshot()]);
   loadMovers(); /* runs staggered, don't await */
 }
 init();

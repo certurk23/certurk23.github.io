@@ -256,9 +256,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div class="sub-nav-inner">
     <a href="#indices" class="active">Indices</a>
     <a href="#forex">Forex</a>
-    <a href="#commodities">Commodities</a>
     <a href="#crypto">Crypto</a>
-    <a href="#movers">Movers</a>
   </div>
 </div>
 
@@ -270,9 +268,47 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">QuantMedia aggregates equity indices, real-time forex (EUR/USD, GBP/USD), energy futures (WTI crude), and volatility regimes (VIX) to surface cross-asset macro signals. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">quantitative research papers</a></p>
   </section>
 
-  <!-- US INDICES -->
-  <div id="indices" class="index-strip" id="idxStrip">
-    <div class="idx-cell"><div class="label" style="color:var(--dim)">Live index data updates every 60 seconds during market hours.</div></div>
+<!-- EDITORIAL GUIDE — static content, appears before data tables -->
+<div style="max-width:1400px;margin:0 auto;padding:28px 20px 32px;border-bottom:1px solid var(--border)">
+  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 6px">Global Markets &amp; Macro Data — Reference Guide</h2>
+  <p style="font-size:14px;color:var(--dim);line-height:1.8;max-width:860px;margin:0 0 24px">How to read this dashboard: what each index tracks, how forex pairs behave, what macro signals like VIX and yield curves actually mean for asset prices.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 48px">
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">US Equity Indices</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">The S&amp;P 500 is the primary benchmark for US large-cap equities — a market-cap-weighted index of 500 companies across all sectors. The NASDAQ 100 is technology-heavy, giving it a higher growth and volatility profile. The Dow Jones Industrial Average tracks 30 blue-chip stocks and is price-weighted, making it a coarser but widely cited gauge. The Russell 2000 measures small-cap performance and tends to lead in risk-on environments. Divergence between NASDAQ and Russell 2000 — technology outperforming while small-caps lag — often signals a narrow, momentum-driven rally rather than broad participation.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Forex &amp; Currency Markets</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">The foreign exchange market trades over $7.5 trillion per day. EUR/USD — the world's most liquid currency pair — reflects the relative monetary policy stance between the ECB and the Federal Reserve. GBP/USD is sensitive to Bank of England decisions and UK macroeconomic releases. USD/JPY is a critical macro risk indicator: when the Bank of Japan maintains ultra-loose policy while the Fed tightens, the yen weakens and carry trades build. Sharp yen reversals (rapid JPY appreciation) are historically associated with forced carry trade unwinding and correlated equity market stress.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">VIX &amp; Yield Curve</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">The VIX (CBOE Volatility Index) measures the 30-day implied volatility of S&amp;P 500 options — a real-time fear gauge. VIX below 15 indicates complacency; 20–30 signals elevated uncertainty; spikes above 40 historically coincide with forced institutional deleveraging and systemic stress. The 10Y/2Y Treasury yield spread (yield curve) is an independent recession leading indicator: inversion — when short-term rates exceed long-term rates — has preceded every US recession since 1955, typically by 12–18 months. Both signals are key inputs in quantitative macro allocation models.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Gold, Oil &amp; Commodities</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Gold exhibits negative correlation to real interest rates: when real yields fall (nominal rates minus CPI inflation), gold appreciates as the opportunity cost of holding a non-yielding asset decreases. It is the premier macro hedge asset and tends to outperform during dollar weakness and geopolitical uncertainty. WTI crude oil responds primarily to OPEC+ production decisions, US EIA inventory data, and global demand forecasts from the IEA. Energy price moves cascade into the CPI, influencing Fed policy expectations and cross-asset positioning across equities, bonds, and currencies simultaneously.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Crypto as a Macro Asset</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Bitcoin has evolved from a speculative asset into an institutional portfolio component tracked alongside gold in macro allocation frameworks. It is sensitive to dollar strength, liquidity conditions, and risk appetite cycles. During periods of dollar weakness and loose monetary policy, Bitcoin and gold tend to outperform fixed income. Bitcoin's 4-year halving cycle — which reduces the mining reward by 50% — has historically been associated with 12–18 month bull cycle initiation. On-chain metrics such as exchange inflows, miner capitulation signals, and realized price levels provide quantitative context for medium-term positioning.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Related Quantitative Research</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">QuantMedia's research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a> shows how informed trading probability spikes ahead of major index moves — a leading indicator visible in volume data before price adjusts. The <a href="paper-hierarchical-risk-parity.html" style="color:var(--accent)">Hierarchical Risk Parity</a> paper provides a cross-asset allocation method robust to correlation breakdowns common during macro stress events. The <a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> paper addresses how to evaluate risk-adjusted returns when comparing strategies across different volatility regimes — directly applicable to cross-asset macro portfolio construction.</p>
+    </div>
+  </div>
+</div>
+
+  <!-- US INDICES — TradingView -->
+  <div id="indices" style="margin-bottom:28px">
+    <div class="section-hdr">
+      <h2>US &amp; Global Indices</h2>
+      <span class="section-meta">TradingView</span>
+    </div>
+    <div class="tradingview-widget-container" id="tvIndices">
+      <div class="tradingview-widget-container__widget"></div>
+    </div>
   </div>
 
   <!-- FOREX -->
@@ -284,15 +320,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="grid-3" id="fxGrid"></div>
   </div>
 
-  <!-- COMMODITIES -->
-  <div id="commodities">
-    <div class="section-hdr">
-      <h2>Commodities &amp; Fixed Income</h2>
-      <span class="section-meta" id="commMeta">Live rates</span>
-    </div>
-    <div class="grid-2" id="commGrid"></div>
-  </div>
-
   <!-- CRYPTO -->
   <div id="crypto">
     <div class="section-hdr">
@@ -300,50 +327,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <span class="section-meta" id="cryptoMeta">Live rates</span>
     </div>
     <div class="grid-2" id="cryptoGrid"></div>
-  </div>
-
-  <!-- MOVERS -->
-  <div id="movers">
-    <div class="section-hdr">
-      <h2>S&amp;P 500 — Top Movers</h2>
-      <span class="section-meta">Indicative</span>
-    </div>
-    <div class="movers-grid" id="moversGrid"></div>
-  </div>
-</div>
-
-<!-- ABOUT THIS PAGE -->
-<div style="max-width:1400px;margin:0 auto;padding:32px 20px 0">
-  <div style="border-top:1px solid var(--border);padding-top:28px">
-
-    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 20px">Global Markets &amp; Macro Data Guide</h2>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px 44px">
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">What This Dashboard Tracks</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Live US equity index prices (S&amp;P 500, NASDAQ 100, Dow Jones, Russell 2000), forex rates (EUR/USD, GBP/USD, USD/JPY, USD/CHF), commodity futures (WTI crude oil, gold, silver), and VIX volatility. The dashboard also covers international indices — DAX, FTSE 100, Nikkei 225, Hang Seng, CAC 40 — providing a synchronized view of global risk appetite. All data updates every 60 seconds during market hours via aggregated real-time feeds from multiple financial data providers.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">US Equity Indices Explained</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The S&amp;P 500 is the primary benchmark for US large-cap equities — a market-cap-weighted index of 500 companies across all sectors. The NASDAQ 100 is technology-heavy, giving it a higher growth and volatility profile. The Dow Jones Industrial Average tracks 30 blue-chip stocks and is price-weighted — making it an imperfect but widely reported market gauge. The Russell 2000 measures small-cap performance and tends to lead in risk-on environments. Divergence between NASDAQ and Russell 2000 — tech leading while small-caps lag — often signals a narrow, momentum-driven rally rather than broad market health.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Forex &amp; Currency Markets</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The foreign exchange market is the world's largest and most liquid financial market, with over $7.5 trillion in daily trading volume. EUR/USD — the world's most-traded currency pair — reflects the relative monetary policy divergence between the ECB and the Federal Reserve. GBP/USD is sensitive to UK economic data, Bank of England decisions, and post-Brexit trade dynamics. USD/JPY has become a critical macro risk signal: when the Bank of Japan maintains ultra-loose policy while the Fed tightens, the yen weakens and carry trades build. Sharp yen reversals (JPY strengthening) are associated with rapid global carry trade unwinding and equity market stress.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Macro Indicators &amp; Yield Curve</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">The macro panel tracks Fed Funds Rate expectations, 10Y/2Y Treasury yield spread (yield curve inversion indicator), and cross-asset correlation signals. Yield curve inversion — when short-term rates exceed long-term rates — has historically preceded US recessions by 12–18 months and remains a key input in quantitative macro allocation models. The VIX (CBOE Volatility Index) measures the 30-day implied volatility of S&amp;P 500 options and serves as a real-time fear gauge: VIX below 15 signals complacency, 20–30 indicates elevated concern, and spikes above 40 historically coincide with forced institutional deleveraging and systemic stress events.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Gold, Commodities &amp; Crypto</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Gold is the premier macro hedge asset, exhibiting negative correlation to real interest rates: when real yields fall (nominal rates minus CPI inflation), gold tends to appreciate as the opportunity cost of holding a non-yielding asset decreases. WTI crude oil responds primarily to OPEC+ production decisions, US inventory data from the EIA, and global demand forecasts. Bitcoin has evolved into an institutional asset class tracked alongside gold in macro allocation models — sensitive to liquidity conditions, dollar strength, and risk appetite cycles. During periods of dollar weakness and loose monetary conditions, both gold and Bitcoin tend to outperform traditional fixed income.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Related Quantitative Research</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Understanding macro market data is most useful when paired with rigorous quantitative frameworks. QuantMedia's research on <a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN order flow toxicity</a> explains how informed trading probability spikes before major index moves — a leading indicator visible in volume data before price adjusts. The <a href="paper-hierarchical-risk-parity.html" style="color:var(--accent)">Hierarchical Risk Parity</a> paper provides a cross-asset portfolio construction method robust to correlation breakdowns — common during macro stress events. For daily signals derived from 93 technical indicators across 500+ US equities, see the <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a>.</p>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -373,87 +356,23 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
 </footer>
 
-<script>
 const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
 const now=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
 
-const FMP_KEY='k3CDDPQlbJ0E5f82DLAoDJGtV3BQd1CV';
-const SPECIAL={'GC=F':'__XAU','CL=F':'__WTI','SI=F':'__SLV','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','DX-Y.NYB':'__DXY'};
-let _fx=null,_fxT=0,_yfc={},_yfp={};
-const CACHE_TTL=120000;
-try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<CACHE_TTL)_yfc[k]=parsed[k];}}}catch{}
-function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
-/* localStorage snapshot — persists across sessions, used as fallback when live API is unavailable */
-const _LS='qm_snap_markets';
-let _snapUsed=false;
-function _lsLoad(sym){try{const d=JSON.parse(localStorage.getItem(_LS)||'{}');return d[sym]||null;}catch{return null;}}
-function _lsSave(sym,v){try{const d=JSON.parse(localStorage.getItem(_LS)||'{}');d[sym]=v;localStorage.setItem(_LS,JSON.stringify(d));}catch{}}
-function _lsDate(){try{const d=JSON.parse(localStorage.getItem(_LS)||'{}');const ts=Object.values(d).map(x=>x._ts||0).filter(Boolean).sort().pop();return ts?new Date(ts).toLocaleDateString('en-US',{month:'short',day:'numeric'}):null;}catch{return null;}}
-async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
-
-/* FMP single-symbol via /stable/quote (free tier) */
-let _fmpCache={};
-async function _fmpOne(sym){
-  if(_fmpCache[sym]&&Date.now()-_fmpCache[sym].ts<CACHE_TTL)return _fmpCache[sym].v;
-  try{
-    const url=`https://financialmodelingprep.com/stable/quote?symbol=${encodeURIComponent(sym)}&apikey=${FMP_KEY}`;
-    const r=await fetch(url,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok)throw new Error(r.status);
-    const data=await r.json();
-    if(Array.isArray(data)&&data[0]){const q=data[0];const v={price:q.price,chg:q.changePercentage||0,pts:q.change||0,_ts:Date.now()};_fmpCache[sym]={v,ts:Date.now()};_lsSave(sym,v);return v;}
-  }catch(e){console.warn('FMP error for',sym,e);}
-  const snap=_lsLoad(sym);if(snap){_snapUsed=true;return snap;}
-  return _fmpCache[sym]?.v||null;
+// TRADINGVIEW — Indices
+function loadTV(){
+  const sc=document.createElement('script');
+  sc.type='text/javascript';
+  sc.src='https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+  sc.async=true;
+  sc.textContent=JSON.stringify({"colorTheme":document.documentElement.getAttribute('data-theme')==='light'?'light':'dark',"dateRange":"1D","showChart":false,"locale":"en","isTransparent":true,"showSymbolLogo":true,"showFloatingTooltip":false,"width":"100%","height":"400","tabs":[{"title":"US Indices","symbols":[{"s":"FOREXCOM:SPXUSD","d":"S&P 500"},{"s":"FOREXCOM:NSXUSD","d":"Nasdaq 100"},{"s":"DJ:DJI","d":"Dow Jones"},{"s":"CAPITALCOM:RTY","d":"Russell 2000"},{"s":"CBOE:VIX","d":"VIX"}]},{"title":"Europe","symbols":[{"s":"CAPITALCOM:UK100","d":"FTSE 100"},{"s":"CAPITALCOM:DE40","d":"DAX"},{"s":"INDEX:CAC40","d":"CAC 40"},{"s":"CAPITALCOM:EU50","d":"Euro Stoxx 50"}]},{"title":"Asia","symbols":[{"s":"INDEX:NKY","d":"Nikkei 225"},{"s":"INDEX:HSI","d":"Hang Seng"},{"s":"CAPITALCOM:AU200","d":"ASX 200"}]}]});
+  document.querySelector('#tvIndices .tradingview-widget-container__widget').appendChild(sc);
 }
 
-/* Unified quote router */
-async function yf(sym){
-  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<CACHE_TTL)return _yfc[sym].v;
-  if(_yfp[sym])return _yfp[sym];
-  const p=(async()=>{
-    const sp=SPECIAL[sym];let v=null;
-    try{
-      if(sp==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
-      else if(sp==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
-      else if(sp==='__DXY'){v=await _fmpOne('UUP');}
-      else if(sp==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
-      else if(sp==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-      else if(sp==='__WTI'){v=await _fmpOne('USO');}
-      else if(sp==='__SLV'){v=await _fmpOne('SLV');}
-      else{v=await _fmpOne(sym);}
-    }catch{}
-    _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];_saveCache();return v;
-  })();
-  return(_yfp[sym]=p);
-}
-
-/* Parallel fetch all symbols */
-const batchYF=syms=>Promise.all(syms.map(yf));
-
-// INDICES
-const IDX=[
-  {sym:'SPY',label:'S&P 500',sub:'SPY ETF Proxy'},
-  {sym:'QQQ',label:'NASDAQ',sub:'QQQ ETF Proxy'},
-  {sym:'DIA',label:'DOW',sub:'DIA ETF Proxy'},
-  {sym:'IWM',label:'RUSSELL',sub:'IWM ETF Proxy'},
-  {sym:'VIXY',label:'VIX',sub:'VIXY ETF Proxy'},
-];
-async function loadIdx(){
-  const res=await batchYF(IDX.map(x=>x.sym));
-  document.getElementById('indices').innerHTML=IDX.map((idx,i)=>{
-    const r=res[i];const c=cls(r?.chg);
-    return`<div class="idx-cell ${c}">
-      <div class="label">${idx.label}</div><div class="sub">${idx.sub}</div>
-      <div class="val">${r?fmt(r.price,r.price>100?2:4):'--'}</div>
-      <div class="chg"><span class="${c}">${r?sgn(r.pts)+fmt(r.pts):''}</span><span class="${c}">${r?pct(r.chg):'--'}</span></div>
-    </div>`;
-  }).join('');
-}
-
-// FOREX
+// FOREX — ExchangeRate API (free, unlimited)
 const FX=[
   [{p:'EUR/USD',f:'Euro / Dollar'},{p:'GBP/USD',f:'Sterling / Dollar'},{p:'USD/JPY',f:'Dollar / Yen'},{p:'USD/CHF',f:'Dollar / Franc'},{p:'AUD/USD',f:'Aussie / Dollar'},{p:'USD/CAD',f:'Dollar / Loonie'}],
   [{p:'USD/MXN',f:'Dollar / Peso'},{p:'USD/BRL',f:'Dollar / Real'},{p:'USD/CNY',f:'Dollar / Yuan'},{p:'USD/INR',f:'Dollar / Rupee'},{p:'USD/KRW',f:'Dollar / Won'},{p:'USD/SGD',f:'Dollar / S$'}],
@@ -461,7 +380,7 @@ const FX=[
 ];
 async function loadFX(){
   let rates=null;
-  try{const r=await fetch('https://open.er-api.com/v6/latest/USD');rates=(await r.json()).rates;}catch{}
+  try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});rates=(await r.json()).rates;}catch{}
   document.getElementById('fxMeta').textContent=now()+' — ExchangeRate API';
   const panels=['Majors','USD Crosses','Other Pairs'];
   document.getElementById('fxGrid').innerHTML=FX.map((grp,gi)=>`
@@ -474,37 +393,16 @@ async function loadFX(){
         else if(to==='USD') price=rates[from]?1/rates[from]:null;
         else price=(rates[from]&&rates[to])?rates[to]/rates[from]:null;
       }
-      const chg=(Math.random()-0.48)*1.4;const c=cls(chg);
       return`<div class="drow">
         <div><div class="dsym">${p}</div><div class="dfull">${f}</div></div>
         <div class="dmono">${price!=null?fmt(price,price>10?4:5):'--'}</div>
-        <div style="text-align:right"><span class="badge ${c}">${sgn(chg)+fmt(chg)}%</span></div>
+        <div style="text-align:right"><span class="badge nt">—</span></div>
       </div>`;
     }).join('')}
     </div>`).join('');
 }
 
-// COMMODITIES — using FMP-compatible symbols
-const COMM=[
-  [{sym:'GC=F',l:'GOLD',f:'Gold $/oz'},{sym:'SLV',l:'SILVER',f:'iShares Silver ETF'},{sym:'CL=F',l:'WTI OIL',f:'Crude $/bbl'},{sym:'BNO',l:'BRENT',f:'US Brent Oil ETN'},{sym:'UNG',l:'NAT GAS',f:'US Natural Gas Fund'},{sym:'CPER',l:'COPPER',f:'US Copper Index Fund'}],
-  [{sym:'TLT',l:'TLT',f:'20+ Year Treasury ETF'},{sym:'IEF',l:'IEF',f:'7-10 Year Treasury ETF'},{sym:'SHY',l:'SHY',f:'1-3 Year Treasury ETF'},{sym:'UUP',l:'DXY',f:'Invesco DB US Dollar'}],
-];
-async function loadComm(){
-  const res=await Promise.all(COMM.map(grp=>batchYF(grp.map(x=>x.sym))));
-  document.getElementById('commMeta').textContent=now()+' — FMP / CoinGecko';
-  const titles=['Commodities','Fixed Income & FX'];
-  document.getElementById('commGrid').innerHTML=COMM.map((grp,gi)=>`
-    <div class="panel"><div class="panel-head">${titles[gi]}</div>
-    ${grp.map((s,i)=>{const r=res[gi][i];const c=cls(r?.chg);
-      return`<div class="drow">
-        <div><div class="dsym">${s.l}</div><div class="dfull">${s.f}</div></div>
-        <div class="dmono">${r?fmt(r.price,r.price>10?2:4):'--'}</div>
-        <div style="text-align:right"><span class="badge ${c}">${r?pct(r.chg):'--'}</span></div>
-      </div>`;}).join('')}
-    </div>`).join('');
-}
-
-// CRYPTO
+// CRYPTO — CoinGecko (free)
 const COINS=[
   {id:'bitcoin',s:'BTC',n:'Bitcoin'},{id:'ethereum',s:'ETH',n:'Ethereum'},
   {id:'solana',s:'SOL',n:'Solana'},{id:'binancecoin',s:'BNB',n:'BNB'},
@@ -515,63 +413,46 @@ const COINS=[
 ];
 async function loadCrypto(){
   let data={};
-  try{const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${COINS.map(c=>c.id).join(',')}&vs_currencies=usd&include_24hr_change=true`);data=await r.json();}catch{}
+  try{const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${COINS.map(c=>c.id).join(',')}&vs_currencies=usd&include_24hr_change=true`,{signal:AbortSignal.timeout(10000)});data=await r.json();}catch{}
   document.getElementById('cryptoMeta').textContent=now()+' — CoinGecko';
   const half=Math.ceil(COINS.length/2);
   const panel=(items)=>items.map(c=>{
-    const price=data[c.id]?.usd??null;const chg=data[c.id]?.usd_24h_change??0;const cl=cls(chg);
+    const price=data[c.id]?.usd??null;const chg=data[c.id]?.usd_24h_change??null;const cl=cls(chg);
     return`<div class="drow">
       <div><div class="dsym">${c.s}</div><div class="dfull">${c.n}</div></div>
       <div class="dmono">${price!=null?'$'+fmt(price,price>1?2:5):'--'}</div>
-      <div style="text-align:right"><span class="badge ${cl}">${pct(chg)}</span></div>
+      <div style="text-align:right"><span class="badge ${cl}">${chg!=null?pct(chg):'--'}</span></div>
     </div>`;}).join('');
   document.getElementById('cryptoGrid').innerHTML=`
     <div class="panel"><div class="panel-head">Digital Assets I</div>${panel(COINS.slice(0,half))}</div>
     <div class="panel"><div class="panel-head">Digital Assets II</div>${panel(COINS.slice(half))}</div>`;
 }
 
-// MOVERS (live via FMP)
-const MOVERS_LIST=[
-  {s:'NVDA',n:'NVIDIA Corp.'},{s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},
-  {s:'TSLA',n:'Tesla Inc.'},{s:'AMD',n:'Advanced Micro'},{s:'META',n:'Meta Platforms'},
-  {s:'AMZN',n:'Amazon.com'},{s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},
-  {s:'JPM',n:'JPMorgan Chase'},{s:'NFLX',n:'Netflix Inc.'},{s:'BA',n:'Boeing Co.'},
-  {s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},{s:'DIS',n:'Walt Disney'},
-  {s:'SMCI',n:'Super Micro'},{s:'PLTR',n:'Palantir Tech.'},{s:'COIN',n:'Coinbase'},
-];
-async function loadMovers(){
-  const res=await batchYF(MOVERS_LIST.map(m=>m.s));
-  const pairs=MOVERS_LIST.map((m,i)=>({s:m.s,n:m.n,p:res[i]?.chg||0})).filter(x=>x.p!==0);
-  pairs.sort((a,b)=>b.p-a.p);
-  const gainers=pairs.filter(x=>x.p>0).slice(0,6);
-  const losers=pairs.filter(x=>x.p<0).reverse().slice(0,6);
-  const rows=arr=>arr.map(s=>`<div class="mrow">
-    <div><div class="dsym">${s.s}</div><div class="dfull">${s.n}</div></div>
-    <span class="badge ${cls(s.p)}">${sgn(s.p)+fmt(s.p)}%</span>
-  </div>`).join('');
-  document.getElementById('moversGrid').innerHTML=`
-    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl g">▲ Top Gainers</span></div>${gainers.length?rows(gainers):'<div style="padding:12px;color:var(--muted);font-size:12px">Market closed</div>'}</div>
-    <div class="movers-panel"><div class="movers-head"><span class="movers-lbl r">▼ Top Losers</span></div>${losers.length?rows(losers):'<div style="padding:12px;color:var(--muted);font-size:12px">Market closed</div>'}</div>`;
+// MARKET BAR — Forex only (no FMP)
+async function loadMbar(){
+  let rates=null;
+  try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});rates=(await r.json()).rates;}catch{}
+  let btc=null;
+  try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();btc=d.bitcoin;}catch{}
+  const items=[
+    {l:'EUR/USD',v:rates?.EUR?fmt(1/rates.EUR,5):null,c:'nt'},
+    {l:'GBP/USD',v:rates?.GBP?fmt(1/rates.GBP,5):null,c:'nt'},
+    {l:'USD/JPY',v:rates?.JPY?fmt(rates.JPY,2):null,c:'nt'},
+    {l:'USD/CHF',v:rates?.CHF?fmt(rates.CHF,5):null,c:'nt'},
+    {l:'BTC',v:btc?'$'+fmt(btc.usd,0):null,c:cls(btc?.usd_24h_change)},
+  ];
+  document.getElementById('mbarItems').innerHTML=items.map(m=>`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${m.v||'--'}</span></div>`).join('');
 }
 
-const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'}];
-async function loadMbar(){const res=await Promise.all(MBAR.map(m=>yf(m.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
-
 async function loadAll(){
-  _snapUsed=false;
-  await Promise.all([loadIdx(),loadMbar(),loadFX()]);
-  await Promise.all([loadComm(),loadCrypto()]);
-  loadMovers();
-  const snapDate=_lsDate();
-  document.getElementById('lastUp').textContent=_snapUsed
-    ?'Showing last known prices'+(snapDate?' · '+snapDate:'')+'  (live feed unavailable)'
-    :'Live data feed — last update: '+now()+' · refreshes every 60s';
+  loadTV();
+  await Promise.all([loadFX(),loadCrypto(),loadMbar()]);
+  document.getElementById('lastUp').textContent='Live data — '+now()+' · Forex: ExchangeRate API · Crypto: CoinGecko';
 }
 loadAll();setInterval(loadAll,120000);
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
 </script>
-<script>window.addEventListener('load',function(){setTimeout(function(){var w=document.getElementById('tickerWrap');if(!w)return;var c=document.createElement('div');c.className='tradingview-widget-container';var d=document.createElement('div');d.className='tradingview-widget-container__widget';c.appendChild(d);var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';s.textContent=JSON.stringify({"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"});c.appendChild(s);w.appendChild(c);},2000)});</script>
 </body>
 </html>

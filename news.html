@@ -225,6 +225,38 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Real-time financial news from global sources. Headlines are classified by category using automated text analysis and updated continuously covering equities, macro, commodities, and digital assets. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="markets.html" style="color:var(--accent)">live market data</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a></p>
   </section>
 
+<!-- EDITORIAL GUIDE — static, appears before dynamic news -->
+<div style="max-width:1400px;margin:0 auto;padding:0 20px 32px;border-bottom:1px solid var(--border)">
+  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 6px">How to Read Financial Market News</h2>
+  <p style="font-size:14px;color:var(--dim);line-height:1.8;max-width:860px;margin:0 0 24px">A guide to the key news categories in this feed — what they mean, why they move markets, and how they connect to macroeconomic conditions and asset prices.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 48px">
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Federal Reserve &amp; Interest Rate News</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">FOMC decisions are among the highest-impact events in global markets. When the Fed adjusts the federal funds rate, it directly influences borrowing costs for banks, corporations, and consumers. Rate hikes typically strengthen the US dollar and compress equity valuations through the discounted cash flow mechanism — a higher discount rate reduces the present value of future earnings. Rate cuts stimulate borrowing and tend to lift equity prices, particularly in growth-sensitive sectors like Technology and Consumer Discretionary. Monitoring Fed speeches, FOMC minutes, and CPI/PCE inflation prints is essential for forecasting near-term rate trajectory.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Earnings Season &amp; Corporate Guidance</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Earnings season — concentrated in January, April, July, and October — drives outsized single-stock and sector-level volatility. EPS relative to analyst consensus determines the initial price reaction, but forward guidance typically carries more weight than the historical quarter's results. Positive guidance revisions trigger momentum buying and can cascade into sector-wide ETF flows. Negative surprises can cause gap-downs of 10–30% in individual names. VPIN order flow metrics tend to spike sharply in the 30-minute window before and after major earnings releases — a quantifiable signal of elevated adverse selection risk for market makers.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Geopolitical Risk &amp; Macro Events</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Geopolitical developments — trade policy shifts, sanctions, energy supply disruptions, and sovereign debt crises — translate rapidly into cross-asset price moves. Gold typically rallies as a safe haven during uncertainty while oil responds to supply chain and production expectations. VIX above 20 signals elevated stress; readings above 30 indicate crisis conditions historically associated with forced institutional deleveraging and correlated selling across equities, credit, and currencies. Geopolitical risk premiums dissipate unevenly — commodity markets often remain elevated long after equity volatility normalizes.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Technology &amp; AI Sector</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Technology sector news has a disproportionate impact on broad indices given mega-cap tech's weight in the S&amp;P 500 and NASDAQ 100. AI infrastructure investment cycles, semiconductor supply chains, and cloud adoption curves drive multi-quarter re-rating events in XLK. Regulatory developments — antitrust proceedings, data privacy legislation, and export controls — can shift institutional positioning rapidly. QuantMedia's research on <a href="paper-sovereign-ai-local-llms.html" style="color:var(--accent)">sovereign AI and local LLM deployment</a> examines how compute constraints and geopolitical fragmentation are reshaping enterprise technology investment decisions.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Cryptocurrency &amp; Digital Assets</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Bitcoin and Ethereum have evolved from speculative assets into institutional portfolio components tracked alongside gold in macro allocation frameworks. Bitcoin spot ETF inflows, halving cycle dynamics, and on-chain metrics such as exchange inflows and miner capitulation signals all inform medium-term price expectations. Regulatory clarity — SEC enforcement actions, stablecoin legislation, and CBDC research — affects institutional participation. Crypto volatility is significantly higher than traditional equities, making risk management via metrics like the <a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> especially relevant for quantitative portfolio construction.</p>
+    </div>
+    <div>
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Energy &amp; Commodities</h3>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">Energy sector performance tracks WTI and Brent crude oil prices, which respond to OPEC+ production decisions, US EIA inventory data, and global demand forecasts. Natural gas prices have decoupled from oil since 2022, driven by LNG export capacity and European demand shifts. XLE is among the highest-beta sector ETFs relative to commodity prices. Gold remains the premier macro hedge — negatively correlated to real interest rates — while silver has both industrial and monetary demand characteristics. Understanding commodity-equity linkages provides context for interpreting energy-related headlines and their cascading effects on CPI data and Fed policy expectations.</p>
+    </div>
+  </div>
+</div>
+
   <!-- FILTER TABS -->
   <div class="filter-bar" id="filterBar">
     <button class="filter-tab active" data-cat="all">All<span class="filter-count" id="cnt-all">0</span></button>
@@ -240,41 +272,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <!-- NEWS GRID -->
   <div id="newsGrid">
     <div class="news-loading">Financial market news covering US equities, Federal Reserve policy, earnings, commodities, and cryptocurrency. Sourced from global financial newswires.</div>
-  </div>
-</div>
-
-<!-- EDITORIAL CONTENT — static, crawlable -->
-<div style="max-width:1400px;margin:0 auto;padding:40px 20px 0">
-  <div style="border-top:1px solid var(--border);padding-top:32px">
-
-    <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 20px">Understanding Financial Market News</h2>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px 48px">
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Federal Reserve &amp; Interest Rate News</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Federal Open Market Committee (FOMC) decisions are among the highest-impact events in global financial markets. When the Fed adjusts the federal funds rate, it directly influences the cost of borrowing for banks, corporations, and consumers. Rate hikes typically strengthen the US dollar and compress equity valuations via the discounted cash flow mechanism — a higher discount rate reduces the present value of future earnings. Conversely, rate cuts stimulate borrowing and tend to lift equity prices, particularly in growth-sensitive sectors like Technology and Consumer Discretionary. Monitoring Fed speeches, FOMC minutes, and CPI/PCE inflation data is essential for understanding near-term interest rate trajectory.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Earnings Season &amp; Corporate Guidance</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Earnings season — concentrated in January, April, July, and October — drives outsized single-stock and sector-level volatility. A company's earnings per share (EPS) relative to analyst consensus estimates determines the initial price reaction; however, forward guidance often carries more weight than the historical quarter's results. Positive guidance revisions trigger momentum buying and can cascade into sector-wide ETF flows. Negative surprises can cause gap-downs of 10–30% in individual names and drag their sector ETFs lower. QuantMedia tracks earnings-related volatility through VPIN order flow metrics, which tend to spike sharply in the 30-minute window before and after major earnings releases.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Geopolitical Risk &amp; Macro Events</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Geopolitical developments — trade policy shifts, sanctions, energy supply disruptions, and sovereign debt crises — translate rapidly into asset price movements across equities, commodities, and currencies. WTI crude oil and gold are particularly sensitive to geopolitical risk premiums: gold typically rallies as a safe haven during uncertainty, while oil responds to supply chain and production expectations. The VIX volatility index (CBOE Volatility Index) is a real-time gauge of market fear and expected S&amp;P 500 30-day volatility. A VIX above 20 generally signals elevated stress; readings above 30 indicate crisis conditions historically associated with forced institutional deleveraging.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Technology &amp; AI Sector Developments</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Technology sector news has a disproportionate impact on broad index performance given the heavy weighting of mega-cap tech in the S&amp;P 500 and NASDAQ 100. AI infrastructure investment cycles, semiconductor supply chain developments, and cloud computing adoption curves all drive multi-quarter re-rating events in the XLK sector ETF. Regulatory developments — antitrust investigations, data privacy legislation, and export control measures — can shift institutional positioning rapidly. QuantMedia's research on <a href="paper-sovereign-ai-local-llms.html" style="color:var(--accent)">sovereign AI and local LLM deployment</a> examines how AI compute constraints and geopolitical fragmentation are reshaping enterprise technology investment decisions.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Cryptocurrency &amp; Digital Asset News</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Bitcoin and Ethereum have evolved from niche assets into institutional portfolio components tracked alongside gold and Treasury yields in macro allocation frameworks. Bitcoin spot ETF approval, halving cycle dynamics, and on-chain metrics such as exchange inflows and miner capitulation signals drive medium-term price expectations. Regulatory clarity — SEC enforcement actions, stablecoin legislation, and central bank digital currency (CBDC) research — affects institutional participation levels. Crypto volatility tends to be significantly higher than traditional equities, making position sizing and risk management via metrics like the Probabilistic Sharpe Ratio especially important for quantitative portfolio construction.</p>
-      </div>
-      <div>
-        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:10px">Energy Markets &amp; Commodities</h3>
-        <p style="font-size:13px;color:var(--dimmer);line-height:1.85;margin:0">Energy sector performance is closely tied to WTI and Brent crude oil prices, which in turn respond to OPEC+ production decisions, US Strategic Petroleum Reserve (SPR) levels, and global demand forecasts from the EIA. Natural gas prices have decoupled significantly from oil in recent years, driven by LNG export capacity and European demand shifts post-2022. The XLE energy sector ETF is one of the highest-beta sector plays relative to commodity prices. Gold remains the premier macro hedge asset, with negative correlation to real interest rates — as real yields fall (nominal rates minus inflation), gold tends to appreciate. Understanding these commodity-equity linkages provides context for interpreting energy-related financial headlines and their sector-level market impact.</p>
-      </div>
-    </div>
   </div>
 </div>
 

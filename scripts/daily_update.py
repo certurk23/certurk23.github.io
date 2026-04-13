@@ -44,7 +44,8 @@ ROOT     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TODAY    = datetime.date.today().isoformat()
 NOW_UTC  = datetime.datetime.now(datetime.timezone.utc)
 NOW_ISO  = NOW_UTC.strftime('%Y-%m-%dT%H:%M:%SZ')
-NOW_FMT  = NOW_UTC.strftime('%b %d %Y, %H:%M UTC')
+NOW_DISP = NOW_UTC.strftime('%b %d %Y, %H:%M UTC')  # UI: lastUp div, Done log
+NOW_NEWS = NOW_UTC.strftime('%b %d, %H:%M UTC')     # UI: news snapshot header
 
 # FINNHUB_KEY must be set as a GitHub Actions secret (repo Settings -> Secrets).
 # No hardcoded fallback: if missing, news fetch is skipped and a clear message is logged.
@@ -260,11 +261,11 @@ def update_markets_html(forex, crypto):
     if changed:
         html = re.sub(
             r'(<div id="lastUp"[^>]*>)[^<]*(</div>)',
-            rf'\1Last updated: {NOW_FMT}\2',
+            rf'\1Last updated: {NOW_DISP}\2',
             html
         )
         write_file('markets.html', html)
-        print(f"  markets.html written ({NOW_FMT})")
+        print(f"  markets.html written ({NOW_DISP})")
 
 
 # ---- 4. News ----------------------------------------------------------------
@@ -316,7 +317,7 @@ def fetch_news():
         return []
 
 def render_news_html(articles):
-    ts    = NOW_UTC.strftime('%b %d, %H:%M UTC')
+    ts = NOW_NEWS
     cards = []
     for a in articles[:12]:
         sm  = (a['summary'][:130] + '...') if len(a['summary']) > 130 else a['summary']
@@ -347,7 +348,7 @@ def update_news_html(articles):
         return
     html = inject(read_file('news.html'), 'NEWS_SNAP', render_news_html(articles))
     write_file('news.html', html)
-    print(f"  news.html written ({NOW_FMT})")
+    print(f"  news.html written ({NOW_DISP})")
 
 
 # ---- 5. Quantum Signals -----------------------------------------------------
@@ -494,14 +495,12 @@ def compute_quantum_signals():
     wr_avg = round(float(np.mean([r['wr'] for r in results if r['d'] == 'BUY'])), 1) \
              if buy_n else 0.0
 
-    # Strategy fields use original-system values for dashboard copy compatibility.
-    # confluence=4 / n_signals=93 is what the quantum-signals.html page copy references.
     payload = {
         'updated':     NOW_ISO,
         'market_date': TODAY,
         'strategy': {
             'stop_pct': 0.14, 'target_pct': 0.075, 'hold_days': 60,
-            'confluence': 4, 'max_positions': 10, 'n_signals': 93,
+            'confluence': 22, 'max_positions': 10, 'n_signals': 30,
         },
         'metrics': {
             'total_return': 0.0, 'annual_return': 0.0, 'win_rate': wr_avg,

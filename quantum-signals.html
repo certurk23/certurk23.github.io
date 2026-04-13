@@ -54,9 +54,9 @@
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "mainEntity":[
-    {"@type":"Question","name":"What are daily stock signals?","acceptedAnswer":{"@type":"Answer","text":"Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 4 or more active bullish signals as BUY."}},
-    {"@type":"Question","name":"How does a post-close stock signal dashboard work?","acceptedAnswer":{"@type":"Answer","text":"A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold. Results are published as a daily signal table."}},
-    {"@type":"Question","name":"What does BUY mean in this stock signal dashboard?","acceptedAnswer":{"@type":"Answer","text":"BUY means 4 or more bullish signals are currently active for that stock. It is a research signal, not investment advice. Stocks below the threshold are marked WATCH and hidden from the dashboard."}},
+    {"@type":"Question","name":"What are daily stock signals?","acceptedAnswer":{"@type":"Answer","text":"Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY."}},
+    {"@type":"Question","name":"How does a post-close stock signal dashboard work?","acceptedAnswer":{"@type":"Answer","text":"A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold (22 of 30 signals). Results are published as a daily signal table."}},
+    {"@type":"Question","name":"What does BUY mean in this stock signal dashboard?","acceptedAnswer":{"@type":"Answer","text":"BUY means 22 or more bullish signals (out of 30) are currently active for that stock. It is a research signal, not investment advice. Stocks below the threshold are marked WATCH and hidden from the dashboard."}},
     {"@type":"Question","name":"Are these stock signals free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice."}},
     {"@type":"Question","name":"How often are daily stock signals updated?","acceptedAnswer":{"@type":"Answer","text":"Every trading day (Monday through Friday), after the US market closes at 4:00 PM ET. Signals reflect the most recent completed session and are not updated intraday."}},
     {"@type":"Question","name":"Can I use these signals for day trading?","acceptedAnswer":{"@type":"Answer","text":"No. Quantum Signals is a post-close, end-of-day system. All data reflects the prior day's close. It is not designed for intraday trading. The backtest hold period is 60 trading days."}},
@@ -273,13 +273,13 @@ a{text-decoration:none;color:inherit}
       </table>
     </div>
     <div id="noBuyMsg" style="display:none;padding:16px 20px;font-size:14px;color:var(--gold);background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:2px;margin-bottom:16px">
-      No BUY signals today. All stocks are on WATCH — below the 4-signal confluence threshold.
+      No BUY signals today. All stocks are on WATCH — below the signal confluence threshold.
     </div>
 
     <!-- NO-BUY DAY CONTEXT — always visible, most useful on Watch-only days -->
     <div id="noBuyContext" style="display:none;margin-bottom:32px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:2px">
       <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin:0 0 10px;letter-spacing:.2px">How to Interpret a Watch-Only Day</h3>
-      <p style="font-size:13px;color:var(--dim);line-height:1.75;margin:0 0 12px">A day with no BUY signals is not a malfunction — it is the system working as intended. The confluence threshold exists precisely to avoid publishing low-conviction setups. When fewer than 4 bullish signals align on any stock, the engine returns no output rather than forcing a signal where none exists.</p>
+      <p style="font-size:13px;color:var(--dim);line-height:1.75;margin:0 0 12px">A day with no BUY signals is not a malfunction — it is the system working as intended. The confluence threshold exists precisely to avoid publishing low-conviction setups. When fewer than 22 bullish signals align on any stock, the engine returns no output rather than forcing a signal where none exists.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 32px;margin-top:4px">
         <div>
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:6px">What it means</div>
@@ -311,20 +311,20 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <h2 id="overview">What Is Quantum Signals?</h2>
-    <p>Quantum Signals is a <strong>research-focused, post-close multi-factor technical signal engine</strong> for US equities. Every trading day after market close, the system scans <strong>500+ stocks</strong> across all sectors and evaluates 93 signals per ticker using end-of-day OHLCV data.</p>
-    <p>The decision rule is straightforward: if 4 or more signals are simultaneously bullish, the stock is flagged as <strong>BUY</strong>. Stocks with fewer than 4 active bullish signals are classified as <strong>WATCH</strong> (no active setup) and are not shown in the dashboard.</p>
+    <p>Quantum Signals is a <strong>research-focused, post-close multi-factor technical signal engine</strong> for US equities. Every trading day after market close, the system scans <strong>~180 liquid large-cap stocks</strong> and evaluates 30 technical signals per ticker using end-of-day OHLCV data.</p>
+    <p>The decision rule is straightforward: if 22 or more signals are simultaneously bullish (≥73% agreement of 30), the stock is flagged as <strong>BUY</strong>. Stocks below the threshold are classified as <strong>WATCH</strong> (no active setup) and are not shown in the dashboard.</p>
     <p>Stocks that appear in the BUY list are also assigned a tier (S, A, B, C) based on that stock's historical backtest performance within the selected strategy variant. Tier is a descriptive ranking &mdash; it does not directly gate the BUY/WATCH decision.</p>
     <p>The engine is fully rules-based with no discretionary override. It is designed for research and informational use.</p>
 
     <h2 id="decision-logic">How BUY and WATCH Decisions Are Made</h2>
-    <p>The core principle is <strong>multi-factor confluence</strong>. No single indicator is reliable on its own. The system counts how many signals are currently bullish for each stock. If 4 or more are active, the stock is flagged BUY. Otherwise it is WATCH.</p>
+    <p>The core principle is <strong>multi-factor confluence</strong>. No single indicator is reliable on its own. The system counts how many signals are currently bullish for each stock. If 22 or more are active (out of 30), the stock is flagged BUY. Otherwise it is WATCH.</p>
 
     <div class="code-wrap">
       <div class="code-header"><span class="code-filename">decision_logic.py</span><span class="code-lang">Python</span></div>
-      <div class="code-body"><pre><span class="kw">def</span> <span class="fn">generate_decision</span>(signals_count, confluence_threshold=<span class="num">4</span>):
+      <div class="code-body"><pre><span class="kw">def</span> <span class="fn">generate_decision</span>(signals_count, confluence_threshold=<span class="num">22</span>):
     <span class="str">"""
     signals_count: number of currently active bullish signals
-    confluence_threshold: minimum required for BUY (currently 4)
+    confluence_threshold: minimum required for BUY (currently 22 of 30)
     Returns: 'BUY' if threshold met, else 'WATCH'
     """</span>
     <span class="kw">if</span> signals_count >= confluence_threshold:
@@ -343,10 +343,10 @@ a{text-decoration:none;color:inherit}
     </ul>
 
     <h2 id="signal-architecture">What the Engine Evaluates</h2>
-    <p>The engine evaluates 93 signals per stock. Each produces a binary output (1&nbsp;=&nbsp;bullish, 0&nbsp;=&nbsp;not active). The BUY/WATCH decision is based solely on the count of active bullish signals vs. the confluence threshold (currently 4). Categories include:</p>
+    <p>The engine evaluates 30 technical signals per stock. Each produces a binary output (1&nbsp;=&nbsp;bullish, 0&nbsp;=&nbsp;not active). The BUY/WATCH decision is based solely on the count of active bullish signals vs. the confluence threshold (currently 22 of 30). Categories include:</p>
 
     <h3>Momentum Oscillators</h3>
-    <p>RSI (multiple periods), Stochastic RSI, Williams %R, CCI, MFI. These measure whether a stock is in an oversold, neutral, or overbought zone. RSI(14) is displayed in the dashboard for context but <strong>does not independently gate the BUY/WATCH decision</strong> &mdash; it is one of 93 signals.</p>
+    <p>RSI (multiple periods), Stochastic RSI, Williams %R, CCI, MFI. These measure whether a stock is in an oversold, neutral, or overbought zone. RSI(14) is displayed in the dashboard for context but <strong>does not independently gate the BUY/WATCH decision</strong> &mdash; it is one of 30 signals.</p>
 
     <h3>Trend &amp; Moving Averages</h3>
     <p>SMA/EMA crossovers (multiple pairs), ADX trend strength, price vs. 50-day and 200-day SMA. These identify whether a stock is in an uptrend, downtrend, or transition.</p>
@@ -365,14 +365,14 @@ a{text-decoration:none;color:inherit}
     <table class="param-table">
       <thead><tr><th>Parameter</th><th>Value</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Confluence Threshold</td><td>4+</td><td>Minimum active bullish signals required for BUY</td></tr>
+        <tr><td>Confluence Threshold</td><td>22 / 30</td><td>Minimum active bullish signals required for BUY</td></tr>
         <tr><td>Reference Stop</td><td>Entry &times; (1 &minus; 14%)</td><td>Fixed percentage below entry; reference level, not an execution guarantee</td></tr>
         <tr><td>Reference Target</td><td>Entry &times; (1 + 7.5%)</td><td>Fixed percentage above entry; reference level only</td></tr>
         <tr><td>Hold Period</td><td>60 trading days</td><td>Maximum holding window used in backtests</td></tr>
         <tr><td>Max Positions</td><td>10</td><td>Concurrent position limit used in backtests</td></tr>
-        <tr><td>Universe</td><td>500+ US stocks</td><td>All sectors, minimum 500 days of historical data</td></tr>
+        <tr><td>Universe</td><td>~180 liquid large-caps</td><td>All sectors, minimum 500 days of historical data</td></tr>
         <tr><td>Scan Frequency</td><td>Daily post-close</td><td>After 16:00 ET market close</td></tr>
-        <tr><td>Data Source</td><td>Twelve Data API</td><td>End-of-day OHLCV candles</td></tr>
+        <tr><td>Data Source</td><td>Yahoo Finance (yfinance)</td><td>End-of-day OHLCV candles</td></tr>
         <tr><td>Tier Ranking</td><td>S / A / B / C</td><td>Descriptive rank based on stock-level backtest metrics</td></tr>
       </tbody>
     </table>
@@ -381,12 +381,12 @@ a{text-decoration:none;color:inherit}
     <table class="param-table">
       <thead><tr><th>Column</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td><strong>Decision</strong></td><td>BUY = 4+ active bullish signals. Only BUY rows are shown; WATCH stocks are hidden.</td></tr>
+        <tr><td><strong>Decision</strong></td><td>BUY = 22+ active bullish signals (≥73% of 30). Only BUY rows are shown; WATCH stocks are hidden.</td></tr>
         <tr><td><strong>Tier</strong></td><td>Descriptive ranking (S/A/B/C) based on stock-level backtest metrics for this strategy variant. Does not gate the BUY/WATCH decision.</td></tr>
         <tr><td><strong>Symbol</strong></td><td>US-listed stock ticker.</td></tr>
         <tr><td><strong>Price</strong></td><td>Closing price on the scan date. All reference levels are derived from this value.</td></tr>
-        <tr><td><strong>RSI</strong></td><td>14-period Relative Strength Index. Shown for context only &mdash; RSI is one of 93 signals and does not independently determine BUY/WATCH.</td></tr>
-        <tr><td><strong>Signals</strong></td><td>Count of currently active bullish signals out of 93 (e.g., &ldquo;21/93&rdquo;). Higher counts indicate broader technical agreement.</td></tr>
+        <tr><td><strong>RSI</strong></td><td>14-period Relative Strength Index. Shown for context only &mdash; RSI is one of 30 signals and does not independently determine BUY/WATCH.</td></tr>
+        <tr><td><strong>Signals</strong></td><td>Count of currently active bullish signals out of 30 (e.g., &ldquo;22/30&rdquo;). Higher counts indicate broader technical agreement.</td></tr>
         <tr><td><strong>Entry</strong></td><td>Reference entry level = latest closing price. Not an execution price or next-day-open prediction.</td></tr>
         <tr><td><strong>Stop</strong></td><td>Reference stop = Entry &times; (1 &minus; 14%). Model-generated; not an execution guarantee.</td></tr>
         <tr><td><strong>Target</strong></td><td>Reference target = Entry &times; (1 + 7.5%). Model-generated; not an execution guarantee.</td></tr>
@@ -414,7 +414,7 @@ a{text-decoration:none;color:inherit}
     <h2 id="data-sources">Data Sources &amp; Refresh Cycle</h2>
     <ul>
       <li><strong>Price data:</strong> End-of-day OHLCV candles via Twelve Data API. Minimum 500 trading days of history per stock.</li>
-      <li><strong>Signals:</strong> 93 signals computed server-side after each close.</li>
+      <li><strong>Signals:</strong> 30 technical signals computed after each close.</li>
       <li><strong>Refresh schedule:</strong> Monday through Friday, after 16:00 ET market close. Signals reflect the most recent completed trading session.</li>
       <li><strong>Universe:</strong> 500+ US-listed equities across all sectors. Stocks with insufficient data history are excluded automatically.</li>
     </ul>
@@ -431,13 +431,13 @@ a{text-decoration:none;color:inherit}
     <h2 id="faq">Frequently Asked Questions About Daily Stock Signals</h2>
 
     <h3>What are daily stock signals?</h3>
-    <p>Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 4 or more active bullish signals as BUY.</p>
+    <p>Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY.</p>
 
     <h3>How does a post-close stock signal dashboard work?</h3>
-    <p>A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold. Results are published as a daily signal table.</p>
+    <p>A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold (22 of 30 signals). Results are published as a daily signal table.</p>
 
     <h3>What does BUY mean in this signal dashboard?</h3>
-    <p>BUY means 4 or more bullish signals are currently active for that stock. It is a research signal, not investment advice or a trade recommendation. Stocks below the threshold are marked WATCH and hidden from the dashboard.</p>
+    <p>BUY means 22 or more bullish signals (out of 30) are currently active for that stock. It is a research signal, not investment advice or a trade recommendation. Stocks below the threshold are marked WATCH and hidden from the dashboard.</p>
 
     <h3>Are these stock signals free?</h3>
     <p>Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice.</p>
@@ -563,7 +563,7 @@ function toggleTheme(){
    QUANTUM SIGNALS ENGINE — JSON Feed (BUY ONLY)
    Fetches data/quantum_signals.json produced by daily_signal_export.py
    Shows only BUY signals. HOLD signals hidden.
-   509 stocks × 93 indicators. Updated daily post-close.
+   ~180 liquid large-caps × 30 technical indicators. Updated daily post-close.
    ═══════════════════════════════════════════════════════════════ */
 (function(){
 const $ = id => document.getElementById(id);
@@ -606,7 +606,7 @@ function renderTable(){
     $('signalTableWrap').style.display='none';
     $('noBuyMsg').style.display='block';
     $('noBuyMsg').textContent = currentTier==='all'
-      ? 'No BUY signals today. All stocks are on WATCH — below the 4-signal confluence threshold.'
+      ? 'No BUY signals today. All stocks are on WATCH — below the signal confluence threshold.'
       : 'No BUY signals in '+tierLabel[currentTier]+' tier.';
     // Show the interpretive context block only on a true Watch-only day (all tiers empty)
     $('noBuyContext').style.display = (currentTier==='all' && allBuys.length===0) ? 'block' : 'none';

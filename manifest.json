@@ -1,0 +1,16 @@
+{
+  "name": "QuantMedia",
+  "short_name": "QuantMedia",
+  "description": "Independent quantitative research: market microstructure, live market data, and financial analysis.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00a651",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}

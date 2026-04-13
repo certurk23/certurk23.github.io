@@ -2,15 +2,16 @@ name: Daily Market Update
 
 on:
   schedule:
-    # 23:30 UTC = 7:30 PM ET — 3 hours after NYSE close, signals ready
+    # 23:30 UTC = 19:30 ET (winter) / 18:30 ET (summer, DST)
+    # Runs Mon–Fri, ~3 h after NYSE close, after most post-close data is ready
     - cron: '30 23 * * 1-5'
-  workflow_dispatch:
+  workflow_dispatch:   # allow manual trigger from Actions tab
 
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write   # needed for git push
 
     steps:
       - name: Checkout repository
@@ -18,25 +19,30 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
       - name: Install dependencies
-        run: pip install requests pandas numpy yfinance
+        run: pip install --quiet requests pandas numpy yfinance
 
       - name: Run daily update pipeline
         run: python scripts/daily_update.py
         env:
-          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}   # set via repo Settings → Secrets
 
-      - name: Commit and push changes
+      - name: Commit and push if files changed
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --quiet && git diff --staged --quiet \
-            && echo "No changes to commit" \
-            || (git commit -m "Daily signal update $(date +%Y-%m-%d)" && git push)
+          # Only commit when there are real changes; skip noisy empty commits
+          if git diff --staged --quiet; then
+            echo "No changes detected — skipping commit"
+          else
+            CHANGED=$(git diff --staged --name-only | tr '\n' ' ')
+            git commit -m "Daily signal update $(date -u +%Y-%m-%d) — ${CHANGED}"
+            git push
+          fi

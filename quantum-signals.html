@@ -210,7 +210,7 @@ a{text-decoration:none;color:inherit}
     <div class="article-byline">
       <span class="byline-author">QuantMedia Research</span>
       <span>&middot;</span>
-      <span>March 13, 2026</span>
+      <span>April 2026</span>
       <span>&middot;</span>
       <span>Updated post-close daily</span>
     </div>
@@ -269,8 +269,28 @@ a{text-decoration:none;color:inherit}
         <tbody id="signalBody"></tbody>
       </table>
     </div>
-    <div id="noBuyMsg" style="display:none;padding:20px;text-align:center;font-size:14px;color:var(--gold);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:32px">
-      No BUY signals today. All stocks are on WATCH (below confluence threshold). Check back after the next market close.
+    <div id="noBuyMsg" style="display:none;padding:16px 20px;font-size:14px;color:var(--gold);background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:2px;margin-bottom:16px">
+      No BUY signals today. All stocks are on WATCH — below the 4-signal confluence threshold.
+    </div>
+
+    <!-- NO-BUY DAY CONTEXT — always visible, most useful on Watch-only days -->
+    <div id="noBuyContext" style="display:none;margin-bottom:32px;padding:20px 24px;background:var(--bg2);border:1px solid var(--border);border-radius:2px">
+      <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--text);margin:0 0 10px;letter-spacing:.2px">How to Interpret a Watch-Only Day</h3>
+      <p style="font-size:13px;color:var(--dim);line-height:1.75;margin:0 0 12px">A day with no BUY signals is not a malfunction — it is the system working as intended. The confluence threshold exists precisely to avoid publishing low-conviction setups. When fewer than 4 bullish signals align on any stock, the engine returns no output rather than forcing a signal where none exists.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 32px;margin-top:4px">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:6px">What it means</div>
+          <p style="font-size:12px;color:var(--dim);line-height:1.7;margin:0">The current market environment does not meet the multi-factor conditions the engine requires. This can occur during high-volatility regimes, after sharp corrective moves, or during consolidation phases where trend, momentum, and volume signals are not simultaneously bullish.</p>
+        </div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:6px">What to do</div>
+          <p style="font-size:12px;color:var(--dim);line-height:1.7;margin:0">Review the <a href="markets.html" style="color:var(--accent)">live market dashboard</a> for macro context — elevated VIX, yield curve stress, or broad index weakness often explains why stocks are failing the confluence test. Use the time to review methodology and prepare watchlists for when conditions improve.</p>
+        </div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Historical frequency</div>
+          <p style="font-size:12px;color:var(--dim);line-height:1.7;margin:0">Watch-only days are a normal and recurring output. In high-volatility periods, they can cluster across consecutive sessions. A return to active BUY signals typically follows regime stabilization — when trend, momentum, and volume indicators re-align across the scan universe.</p>
+        </div>
+      </div>
     </div>
 
     <h2 id="how-to-read">How to Read Today's Stock Signals</h2>
@@ -583,11 +603,14 @@ function renderTable(){
     $('signalTableWrap').style.display='none';
     $('noBuyMsg').style.display='block';
     $('noBuyMsg').textContent = currentTier==='all'
-      ? 'No BUY signals today. All stocks are on WATCH (below confluence threshold).'
+      ? 'No BUY signals today. All stocks are on WATCH — below the 4-signal confluence threshold.'
       : 'No BUY signals in '+tierLabel[currentTier]+' tier.';
+    // Show the interpretive context block only on a true Watch-only day (all tiers empty)
+    $('noBuyContext').style.display = (currentTier==='all' && allBuys.length===0) ? 'block' : 'none';
     return;
   }
   $('noBuyMsg').style.display='none';
+  $('noBuyContext').style.display='none';
 
   // Sort
   const sorted = [...filtered].sort((a,b)=>{
@@ -654,6 +677,7 @@ loadData().then(data=>{
   $('tierFilter').style.display='flex';
   if(allBuys.length===0){
     $('noBuyMsg').style.display='block';
+    $('noBuyContext').style.display='block';
   } else {
     renderTable();
   }

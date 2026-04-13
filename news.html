@@ -221,8 +221,9 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <!-- PAGE HEADER -->
   <section style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Market News</h1>
-    <div id="newsStatus" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Finnhub API &mdash; Live Feed</div>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Real-time financial news from global sources. Headlines are classified by category using automated text analysis and updated continuously covering equities, macro, commodities, and digital assets. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="markets.html" style="color:var(--accent)">live market data</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a></p>
+    <div id="newsStatus" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Live market news &mdash; Updated every 2 minutes</div>
+    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">Real-time financial news aggregated from global newswires including Reuters, Bloomberg, CNBC, the Wall Street Journal, and the Financial Times. Headlines are automatically classified into categories — Fed &amp; Rates, Earnings, Tech &amp; AI, Energy, Crypto, and Volatility — and refreshed every two minutes.</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Use the category filters below to focus on the macro stories most relevant to your research. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="markets.html" style="color:var(--accent)">live market data</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">research papers</a></p>
   </section>
 
 <!-- EDITORIAL GUIDE — static, appears before dynamic news -->
@@ -298,7 +299,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 QuantMedia &middot; Certurk Research. All rights reserved.</span>
-    <span>Data: Finnhub &middot; Yahoo Finance &middot; CoinGecko</span>
+    <span>News sourced from global financial newswires</span>
   </div>
 </footer>
 
@@ -489,7 +490,7 @@ async function loadNews(){
     updateCounts();
     renderNews();
     document.getElementById('newsStatus').textContent=
-      _allNews.length+' headlines loaded \u2014 last update: '+now()+' \xb7 Finnhub API';
+      _allNews.length+' headlines \u2014 last updated: '+now();
   }catch(e){
     document.getElementById('newsGrid').innerHTML=
       '<div class="news-empty" style="text-align:center;padding:40px;color:var(--dim)">Headlines temporarily unavailable. The feed refreshes automatically.</div>';

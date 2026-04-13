@@ -754,7 +754,7 @@ button{cursor:pointer;font-family:inherit}
 <!-- BREAKING ALERT -->
 <div class="breaking-bar" id="breakingBar" onclick="this.style.display='none'">
   <span class="breaking-pill">Breaking</span>
-  <span class="breaking-text">VPIN on NASDAQ Composite crosses 0.31 threshold — elevated toxicity regime detected in AAPL, NVDA order flow</span>
+  <span class="breaking-text">Research: How VPIN order flow toxicity signals institutional positioning ahead of directional moves — read the full paper</span>
   <span class="breaking-close">&times;</span>
 </div>
 
@@ -826,7 +826,7 @@ button{cursor:pointer;font-family:inherit}
 <div class="market-bar">
   <div class="mbar-label"><span class="live-dot"></span>Markets</div>
   <div class="mbar-items" id="marketBar">
-    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">Fetching live data&hellip;</span></div>
+    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">Live market data &middot; Updates during market hours</span></div>
   </div>
 </div>
 
@@ -850,11 +850,22 @@ button{cursor:pointer;font-family:inherit}
           </ul>
         </div>
         <div id="heroImpact" style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
-          <!-- Filled by JS: SPY, QQQ, VIX mini cards -->
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">S&amp;P 500</div>
+            <div id="heroSPY" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">NASDAQ 100</div>
+            <div id="heroQQQ" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">VIX</div>
+            <div id="heroVIX" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
+          </div>
         </div>
         <div class="hero-meta">
           <span class="hero-meta-item"><strong>QuantMedia</strong> Research</span>
-          <span class="hero-meta-item" id="heroDate">March 2026</span>
+          <span class="hero-meta-item" id="heroDate">April 2026</span>
         </div>
       </div>
     </div>
@@ -887,7 +898,7 @@ button{cursor:pointer;font-family:inherit}
   <div class="sec-hdr" style="margin-bottom:14px">
     <div style="display:flex;align-items:center">
       <span class="sec-label">Market News</span>
-      <span class="sec-sub" id="newsDate">March 2026</span>
+      <span class="sec-sub" id="newsDate">Latest Coverage</span>
     </div>
     <a href="news.html" class="sec-link">All News &rarr;</a>
   </div>
@@ -990,7 +1001,7 @@ button{cursor:pointer;font-family:inherit}
 <div class="page-wrap">
 
   <!-- DATA PANELS -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px" id="dataPanels">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px" id="dataPanels">
 
     <!-- Top Movers -->
     <div class="widget">
@@ -1005,26 +1016,17 @@ button{cursor:pointer;font-family:inherit}
       <div id="moversPanel"></div>
     </div>
 
-    <!-- Sectors -->
-    <div class="widget">
-      <div class="widget-hdr">
-        <span class="widget-title">Sectors</span>
-        <span class="widget-ts" id="sectorTs">&mdash;</span>
-      </div>
-      <div id="sectorRows"></div>
-    </div>
-
     <!-- Macro Calendar -->
     <div class="widget">
       <div class="widget-hdr">
         <span class="widget-title">Macro Calendar</span>
         <span class="widget-ts">This Week</span>
       </div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Mon 8:30</div><div class="cal-event">Core CPI YoY — Feb 2026</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Wed 14:00</div><div class="cal-event">FOMC Rate Decision</div></div>
-      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">Initial Jobless Claims</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">PPI MoM — Feb 2026</div></div>
-      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Fri 10:00</div><div class="cal-event">UMich Consumer Sentiment</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 10 8:30</div><div class="cal-event">CPI YoY — Mar 2026</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 11 8:30</div><div class="cal-event">PPI MoM — Mar 2026</div></div>
+      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Apr 17 8:30</div><div class="cal-event">Initial Jobless Claims</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 16 8:30</div><div class="cal-event">Retail Sales MoM — Mar 2026</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 29 14:00</div><div class="cal-event">FOMC Rate Decision</div></div>
     </div>
   </div>
 
@@ -1518,28 +1520,10 @@ function showMovers(mode) {
   }).join('');
 }
 
-/* --- Sectors (static — no API) --- */
-const SECS = [
-  {n:'Technology',s:'XLK'},{n:'Financials',s:'XLF'},
-  {n:'Health Care',s:'XLV'},{n:'Energy',s:'XLE'},
-  {n:'Industrials',s:'XLI'},{n:'Utilities',s:'XLU'},
-  {n:'Cons. Disc.',s:'XLY'},{n:'Materials',s:'XLB'},
-];
-function loadSectors() {
-  document.getElementById('sectorTs').textContent = 'Reference';
-  document.getElementById('sectorRows').innerHTML = SECS.map(sec => {
-    return `<div class="sector-row">
-      <span class="sector-name">${sec.n}</span>
-      <div class="sector-bar-wrap"><div class="sector-bar" style="width:0%;background:var(--dimmer)"></div></div>
-      <span class="sector-chg nt" style="color:var(--dimmer)">—</span>
-    </div>`;
-  }).join('') + '<div style="padding:10px 0 2px;font-size:11px"><a href="stocks.html" style="color:var(--accent)">Sector rotation guide →</a></div>';
-}
 
 /* --- Init --- */
 async function init() {
   showMovers(moversMode);
-  loadSectors();
   await Promise.all([loadMarketBar(), loadSnapshot()]);
   loadMovers(); /* runs staggered, don't await */
 }

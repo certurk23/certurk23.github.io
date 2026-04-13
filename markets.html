@@ -267,7 +267,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <div class="page-wrap">
   <section class="page-intro" style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Live US Market Data &amp; Macro Intelligence</h1>
-    <div id="lastUp" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Live market data — indices, forex, and crypto</div>
+    <div id="lastUp" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Last updated: Apr 13 2026, 22:33 UTC</div>
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">Real-time S&amp;P 500, NASDAQ, and Dow Jones data alongside live forex rates, commodity prices, and institutional flow signals. Track Fed rate expectations, yield curve inversion dynamics, and cross-asset macro conditions — all updated every 60 seconds from aggregated market sources.</p>
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">QuantMedia aggregates equity indices, real-time forex (EUR/USD, GBP/USD), energy futures (WTI crude), and volatility regimes (VIX) to surface cross-asset macro signals. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">quantitative research papers</a></p>
   </section>
@@ -321,33 +321,9 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <h2>Forex</h2>
       <span class="section-meta" id="fxMeta">Live rates</span>
     </div>
-    <div class="grid-3" id="fxGrid">
-      <div class="panel"><div class="panel-head">Majors</div>
-        <div class="drow"><div><div class="dsym">EUR/USD</div><div class="dfull">Euro / Dollar</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">GBP/USD</div><div class="dfull">Sterling / Dollar</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/JPY</div><div class="dfull">Dollar / Yen</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/CHF</div><div class="dfull">Dollar / Franc</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">AUD/USD</div><div class="dfull">Aussie / Dollar</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/CAD</div><div class="dfull">Dollar / Loonie</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-      </div>
-      <div class="panel"><div class="panel-head">USD Crosses</div>
-        <div class="drow"><div><div class="dsym">USD/MXN</div><div class="dfull">Dollar / Peso</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/BRL</div><div class="dfull">Dollar / Real</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/CNY</div><div class="dfull">Dollar / Yuan</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/INR</div><div class="dfull">Dollar / Rupee</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/KRW</div><div class="dfull">Dollar / Won</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/SGD</div><div class="dfull">Dollar / S$</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-      </div>
-      <div class="panel"><div class="panel-head">Other Pairs</div>
-        <div class="drow"><div><div class="dsym">EUR/GBP</div><div class="dfull">Euro / Sterling</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">EUR/JPY</div><div class="dfull">Euro / Yen</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">EUR/CHF</div><div class="dfull">Euro / Franc</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">GBP/JPY</div><div class="dfull">Sterling / Yen</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">NZD/USD</div><div class="dfull">Kiwi / Dollar</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">USD/SEK</div><div class="dfull">Dollar / Krona</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-      </div>
-    </div>
-  </div>
+    <!-- QM:FOREX:START -->
+<div class="grid-3" id="fxGrid"><div class="panel"><div class="panel-head">Majors</div><div class="drow"><div><div class="dsym">EUR/USD</div><div class="dfull">Euro / Dollar</div></div><div class="dmono">1.1681</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">GBP/USD</div><div class="dfull">Sterling / Dollar</div></div><div class="dmono">1.3407</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/JPY</div><div class="dfull">Dollar / Yen</div></div><div class="dmono">159.6762</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CHF</div><div class="dfull">Dollar / Franc</div></div><div class="dmono">0.7920</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">AUD/USD</div><div class="dfull">Aussie / Dollar</div></div><div class="dmono">0.7029</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CAD</div><div class="dfull">Dollar / Loonie</div></div><div class="dmono">1.3865</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div><div class="panel"><div class="panel-head">USD Crosses</div><div class="drow"><div><div class="dsym">USD/MXN</div><div class="dfull">Dollar / Peso</div></div><div class="dmono">17.4134</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/BRL</div><div class="dfull">Dollar / Real</div></div><div class="dmono">5.0199</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CNY</div><div class="dfull">Dollar / Yuan</div></div><div class="dmono">6.8379</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/INR</div><div class="dfull">Dollar / Rupee</div></div><div class="dmono">93.1770</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/KRW</div><div class="dfull">Dollar / Won</div></div><div class="dmono">1,485.53</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/SGD</div><div class="dfull">Dollar / S$</div></div><div class="dmono">1.2767</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div><div class="panel"><div class="panel-head">Other Pairs</div><div class="drow"><div><div class="dsym">EUR/GBP</div><div class="dfull">Euro / Sterling</div></div><div class="dmono">0.8712</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">EUR/JPY</div><div class="dfull">Euro / Yen</div></div><div class="dmono">186.5137</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">EUR/CHF</div><div class="dfull">Euro / Franc</div></div><div class="dmono">0.9251</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">GBP/JPY</div><div class="dfull">Sterling / Yen</div></div><div class="dmono">214.0770</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">NZD/USD</div><div class="dfull">Kiwi / Dollar</div></div><div class="dmono">0.5812</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/SEK</div><div class="dfull">Dollar / Krona</div></div><div class="dmono">9.3196</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div></div>
+<!-- QM:FOREX:END -->
 
   <!-- CRYPTO -->
   <div id="crypto">
@@ -355,7 +331,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <h2>Crypto</h2>
       <span class="section-meta" id="cryptoMeta">Live rates</span>
     </div>
-    <div class="grid-2" id="cryptoGrid">
+    <!-- QM:CRYPTO:START -->
+<div class="grid-2" id="cryptoGrid">
       <div class="panel"><div class="panel-head">Digital Assets I</div>
         <div class="drow"><div><div class="dsym">BTC</div><div class="dfull">Bitcoin</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
         <div class="drow"><div><div class="dsym">ETH</div><div class="dfull">Ethereum</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
@@ -372,7 +349,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="drow"><div><div class="dsym">NMR</div><div class="dfull">Numeraire</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
         <div class="drow"><div><div class="dsym">GRT</div><div class="dfull">The Graph</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
       </div>
-    </div>
+<!-- QM:CRYPTO:END -->
   </div>
 </div>
 

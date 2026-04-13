@@ -1,0 +1,42 @@
+name: Daily Market Update
+
+on:
+  schedule:
+    # 23:30 UTC = 7:30 PM ET — 3 hours after NYSE close, signals ready
+    - cron: '30 23 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install requests pandas numpy yfinance
+
+      - name: Run daily update pipeline
+        run: python scripts/daily_update.py
+        env:
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --quiet && git diff --staged --quiet \
+            && echo "No changes to commit" \
+            || (git commit -m "Daily signal update $(date +%Y-%m-%d)" && git push)

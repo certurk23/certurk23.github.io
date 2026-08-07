@@ -37,6 +37,31 @@ ENGINE = {
 ENGINE['agreement_pct'] = round(
     100.0 * ENGINE['confluence_min'] / ENGINE['n_signals'])   # 73
 
+
+def signal_config():
+    """Public, machine-readable projection of ENGINE, published at
+    /data/signal_config.json. Anything consuming the methodology (site copy,
+    validator, external readers) reads this rather than hardcoding numbers."""
+    return {
+        '_comment': ('Generated from ENGINE in scripts/qm_config.py by '
+                     'scripts/daily_update.py. Do not hand-edit: '
+                     'scripts/validate_site.py fails the build when site copy '
+                     'stops matching these values.'),
+        'eligible_universe_label': ENGINE['universe_label'],
+        'universe_count':          ENGINE['universe_count'],
+        'universe_note':           ENGINE['universe_note'],
+        'signal_count':            ENGINE['n_signals'],
+        'buy_threshold':           ENGINE['confluence_min'],
+        'agreement_pct':           ENGINE['agreement_pct'],
+        'min_sessions':            ENGINE['min_sessions'],
+        'hold_days':               ENGINE['hold_days'],
+        'stop_atr':                ENGINE['stop_atr'],
+        'target_atr':              ENGINE['target_atr'],
+        'update_cadence':          'post-close',
+        'schedule_utc':            'Mon-Fri 23:30 UTC',
+        'data_source':             ENGINE['data_source'],
+    }
+
 # ---------------------------------------------------------------------------
 # Per-source validation thresholds. A fetch that cannot clear these is treated
 # as a failure and the previous good snapshot is preserved instead.
@@ -229,6 +254,7 @@ REQUIRED_FILES = {
     'sitemap.xml':            1_000,
     'robots.txt':                50,
     'qm-data.js':             1_000,
+    'data/signal_config.json':  200,
 }
 
 # Pages whose copy must quote the live engine numbers.

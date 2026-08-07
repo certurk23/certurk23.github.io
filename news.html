@@ -231,7 +231,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Financial Market News: Daily Headline Digest</h1>
     <div id="newsStatus" class="qm-fresh" style="font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Loading latest snapshot&hellip;</div>
     <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">A once-daily digest of US market headlines aggregated from global newswires including Reuters, Bloomberg, CNBC and the Financial Times. Headlines are captured after the US close, de-duplicated, and classified automatically into six categories &mdash; Fed &amp; Rates, Earnings, Tech &amp; AI, Energy, Crypto and Volatility. <strong>QuantMedia does not report the news:</strong> every headline links directly to the originating publisher, which retains all rights to its reporting. What we add is the classification and the interpretation guide below.</p>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">Use the category filters below to focus on the macro stories most relevant to your research. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="markets.html" style="color:var(--accent)">live market data</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">research papers</a></p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="markets.html" style="color:var(--accent)">US market data</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">quantitative research papers</a></p>
   </section>
 
 <!-- EDITORIAL GUIDE — static, appears before dynamic news -->
@@ -425,12 +425,26 @@ function loadNews(){
     if(snap) snap.style.display='none';
     QM.stamp('newsStatus',feed.fetched_utc,_allNews.length+' headlines captured');
   }).catch(function(){
-    // Leave #newsSnap and the editorial guide in place. Never blank the page.
+    // Degrade to ONE accurate message. Saying the same thing in the banner,
+    // the status line, the snapshot block and the grid made a working
+    // fallback read as a broken page - and the old grid copy pointed at a
+    // "snapshot above" that is not there when no snapshot has ever run.
+    var snap=document.getElementById('newsSnap');
+    var hasSnapshot=snap && snap.querySelector('.news-feed');
+    if(snap && !hasSnapshot) snap.style.display='none';
+
     var grid=document.getElementById('newsGrid');
-    if(grid) grid.innerHTML='<div class="news-empty">The interactive headline feed is temporarily '+
-      'unavailable. The latest captured snapshot above and the category guide remain available.</div>';
+    if(grid) grid.innerHTML='<div class="news-empty">'+
+      (hasSnapshot
+        ? 'Showing the last captured headlines above. The interactive feed returns with the next scheduled run.'
+        : 'No headline snapshot has been captured yet. The reading guide below explains how each '+
+          'news category transmits into asset prices, and the '+
+          '<a href="papers.html" style="color:var(--accent)">research library</a> is unaffected.')+
+      '</div>';
+
     var st=document.getElementById('newsStatus');
-    if(st){st.textContent='Headline feed temporarily unavailable';st.className='qm-warn';}
+    // The site-wide banner already states the outage; keep this factual and short.
+    if(st){st.textContent=hasSnapshot?'Showing last captured snapshot':'Awaiting first headline capture';st.className='qm-warn';}
     var bar=document.getElementById('filterBar');
     if(bar) bar.style.display='none';
   });

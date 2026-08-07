@@ -456,6 +456,9 @@ def _run_validator_on(mutate):
         validate_site._reset()
         for fn in (validate_site.check_required_files,
                    validate_site.check_forbidden_strings,
+                   validate_site.check_signal_config,
+                   validate_site.check_stale_homepage_copy,
+                   validate_site.check_no_fabricated_attribution,
                    validate_site.check_methodology_consistency,
                    validate_site.check_html_structure,
                    validate_site.check_blank_data_regression,
@@ -568,6 +571,47 @@ def test_v9_catches_missing_injection_anchor():
     assert any('anchors' in e for e in errs), errs
 
 
+def test_v11_catches_fabricated_publisher_byline():
+    """The homepage shipped seven invented stories bylined to real newsrooms."""
+    def mutate(site):
+        t = _read(site, 'index.html')
+        _write(site, 'index.html', t.replace(
+            '</body>', '<div class="nc-src">Financial Times</div></body>'))
+    errs = _run_validator_on(mutate)
+    assert any('fabricated attribution' in e or 'Financial Times' in e
+               for e in errs), errs
+
+
+def test_v12_catches_dated_macro_calendar():
+    """Hardcoded dated events expire and then read as current."""
+    def mutate(site):
+        t = _read(site, 'index.html')
+        _write(site, 'index.html', t.replace(
+            '</body>', '<div class="cal-time">Apr 10 8:30</div></body>'))
+    errs = _run_validator_on(mutate)
+    assert any('calendar' in e for e in errs), errs
+
+
+def test_v13_catches_fake_relative_timestamp():
+    def mutate(site):
+        t = _read(site, 'index.html')
+        _write(site, 'index.html', t.replace(
+            '</body>', '<span class="nc-time">4h ago</span></body>'))
+    errs = _run_validator_on(mutate)
+    assert any('relative timestamp' in e for e in errs), errs
+
+
+def test_v14_catches_signal_config_drift():
+    """Published config must not drift from ENGINE."""
+    def mutate(site):
+        p = os.path.join(site, 'data', 'signal_config.json')
+        d = json.load(open(p, encoding='utf-8'))
+        d['buy_threshold'] = 4          # the legacy value
+        json.dump(d, open(p, 'w', encoding='utf-8'))
+    errs = _run_validator_on(mutate)
+    assert any('buy_threshold' in e for e in errs), errs
+
+
 def test_v10_catches_future_lastmod():
     def mutate(site):
         t = _read(site, 'sitemap.xml')
@@ -614,7 +658,11 @@ def main():
         ('V7 catches blank-grid regression',  test_v7_catches_blank_grid_regression),
         ('V8 catches hardcoded API key',      test_v8_catches_hardcoded_api_key),
         ('V9 catches missing anchor',         test_v9_catches_missing_injection_anchor),
-        ('V10 catches future lastmod',        test_v10_catches_future_lastmod),
+        ('V10 catches future lastmod',      test_v10_catches_future_lastmod),
+        ('V11 catches fake publisher byline', test_v11_catches_fabricated_publisher_byline),
+        ('V12 catches dated macro calendar', test_v12_catches_dated_macro_calendar),
+        ('V13 catches fake relative time',  test_v13_catches_fake_relative_timestamp),
+        ('V14 catches signal config drift', test_v14_catches_signal_config_drift),
     ]
     for name, fn in scenarios:
         check(name, fn)

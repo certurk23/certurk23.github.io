@@ -92,6 +92,15 @@ window.QM = (function () {
      even if an individual widget forgets to degrade, this does not. */
   function freshnessBanner() {
     if (document.getElementById('qm-freshness-banner')) return;   // idempotent
+    // Only speak up on pages that actually display market data. Warning about
+    // a stalled feed on a page with no feed on it is just noise, and noise
+    // trains people to ignore the banner when it matters.
+    var showsData = document.getElementById('mbarItems') ||
+                    document.getElementById('marketBar') ||
+                    document.getElementById('lastUp') ||
+                    document.getElementById('newsStatus') ||
+                    document.getElementById('signalTableWrap');
+    if (!showsData) return;
     get('status').then(function (s) {
       if (!s) return;
       if (document.getElementById('qm-freshness-banner')) return;

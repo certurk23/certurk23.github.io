@@ -844,7 +844,7 @@ button{cursor:pointer;font-family:inherit}
       <div class="hero-content" id="heroContent">
         <div class="hero-eyebrow">
           <span class="badge badge-green">Market Pulse</span>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)" id="heroTime">LIVE</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)" id="heroTime">Post-close</span>
         </div>
         <h1 class="hero-h1" id="heroH1">US Markets &mdash; Daily Quantitative Research &amp; Signal Analysis</h1>
         <div id="heroBullets" style="margin-bottom:16px">
@@ -909,96 +909,32 @@ button{cursor:pointer;font-family:inherit}
   </div>
 
   <div id="newsGrid">
-  <!-- Top row: featured + right column -->
-  <div class="news-grid">
+    <!-- Static fallback ONLY. loadNews() replaces this with real headlines
+         from data/news.json as soon as a snapshot exists.
 
-    <!-- Featured -->
-    <a href="markets.html" class="nc-featured">
-      <div class="nc-featured-img nc-fi-macro">
-        <svg class="nc-chart-svg" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38" fill="none" stroke="#00a651" stroke-width="2.5"/>
-          <polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38 600,190 0,190" fill="#00a651" fill-opacity="0.06"/>
-          <polyline points="0,160 60,155 120,162 180,150 240,148 300,155 360,145 420,140 480,142 540,138 600,130" fill="none" stroke="#1e88e5" stroke-width="1.5" stroke-dasharray="4,3"/>
-        </svg>
+         What used to sit here were seven invented news cards attributed to
+         CNBC, the Financial Times, the Wall Street Journal, Bloomberg,
+         Reuters and Institutional Investor, complete with fabricated
+         statistics and hardcoded "4h ago" timestamps that never changed.
+         None of it was real reporting and none of it linked anywhere.
+         Never reintroduce placeholder content that imitates a publisher. -->
+    <div class="news-empty" style="padding:28px 24px;background:var(--card,#111);border:1px solid var(--line,#242424);border-radius:6px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text,#e8e8e8);margin-bottom:10px">
+        Headlines publish after each US close
       </div>
-      <div class="nc-featured-body">
-        <div>
-          <div class="nc-cat">Macro · Equities</div>
-          <div class="nc-featured-title">S&P 500 Climbs to 6,827 as Oil Plunges 14% — Macro Rotation Accelerates Into Quality Factors</div>
-          <div class="nc-featured-exrp">Energy sector selloff triggers cross-asset reallocation. Capital rotating into utilities, healthcare, and quality defensive names. Fed rate hold amplifies growth equity bid. Quant momentum signals flipping positive on large-cap blend.</div>
-        </div>
-        <div class="nc-meta"><span class="nc-src">Reuters</span><span class="nc-time">2h ago</span></div>
-      </div>
-    </a>
-
-    <!-- Right column -->
-    <div class="nc-col">
-      <a href="markets.html" class="nc-item">
-        <div class="nc-item-img nc-ii-fed">
-          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
-            <text x="50%" y="58%" text-anchor="middle" font-size="36" fill="#1e88e5" font-family="monospace">%</text>
-          </svg>
-        </div>
-        <div class="nc-item-body">
-          <div>
-            <div class="nc-cat">Fed · Rates</div>
-            <div class="nc-item-title">FOMC Holds at 4.25–4.50% — Powell: "No Rush to Cut"; 10Y Yield Climbs to 4.31%</div>
-          </div>
-          <div class="nc-meta"><span class="nc-src">Bloomberg</span><span class="nc-time">3h ago</span></div>
-        </div>
-      </a>
-      <a href="markets.html" class="nc-item">
-        <div class="nc-item-img nc-ii-tech">
-          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
-            <text x="50%" y="58%" text-anchor="middle" font-size="28" fill="#00a651" font-family="monospace">AI</text>
-          </svg>
-        </div>
-        <div class="nc-item-body">
-          <div>
-            <div class="nc-cat">Tech · AI</div>
-            <div class="nc-item-title">NVDA +1.63% — Blackwell GPU Demand Exceeds Supply Through Q3; Data Center Capex Cycle Intact</div>
-          </div>
-          <div class="nc-meta"><span class="nc-src">CNBC</span><span class="nc-time">4h ago</span></div>
-        </div>
-      </a>
-      <a href="markets.html" class="nc-item">
-        <div class="nc-item-img nc-ii-vix">
-          <svg viewBox="0 0 96 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.3">
-            <text x="50%" y="58%" text-anchor="middle" font-size="22" fill="#e5322d" font-family="monospace">VIX</text>
-          </svg>
-        </div>
-        <div class="nc-item-body">
-          <div>
-            <div class="nc-cat">Volatility · Risk</div>
-            <div class="nc-item-title">VIX Spikes to 22.80 — Vol Term Structure Inverts; Options Market Pricing 3-Week Expansion Window</div>
-          </div>
-          <div class="nc-meta"><span class="nc-src">Financial Times</span><span class="nc-time">5h ago</span></div>
-        </div>
-      </a>
+      <p style="font-size:13.5px;line-height:1.8;color:var(--muted,#888);margin:0 0 14px;max-width:640px">
+        This panel carries a once-daily digest of US market headlines captured
+        after the 16:00 ET close, de-duplicated and classified into six
+        categories. Every headline links to the originating publisher &mdash;
+        QuantMedia does not report the news and does not reproduce it.
+      </p>
+      <p style="font-size:13.5px;line-height:1.8;color:var(--muted,#888);margin:0">
+        In the meantime:
+        <a href="news.html" style="color:var(--green,#00a651)">how to read financial market news</a> &middot;
+        <a href="quantum-signals.html" style="color:var(--green,#00a651)">daily US stock signals</a> &middot;
+        <a href="papers.html" style="color:var(--green,#00a651)">quantitative research library</a>
+      </p>
     </div>
-  </div>
-
-  <!-- Bottom row: 3 equal cards -->
-  <div class="news-row2">
-    <a href="research.html" class="nc-card">
-      <div class="nc-cat">Microstructure</div>
-      <div class="nc-card-title">Dark Pool Volume Hits 47% of Total US Equity Flow — ATS Activity at 4-Year High, Accumulation Pattern Detected</div>
-      <div class="nc-card-exrp">Off-exchange institutional activity at historic levels. VPIN toxicity signal elevated across AAPL, NVDA, and SPY. Directional move expected within 3-week window.</div>
-      <div class="nc-meta"><span class="nc-src">Microstructure Research</span><span class="nc-time">6h ago</span></div>
-    </a>
-    <a href="markets.html" class="nc-card">
-      <div class="nc-cat">Fixed Income</div>
-      <div class="nc-card-title">10Y–2Y Yield Curve Re-Inverts After Brief Normalization — Duration Risk Returns to Center Stage</div>
-      <div class="nc-card-exrp">Stronger-than-expected CPI pushes real yields to 2.1% on the 10Y. Markets repricing Fed path — first cut now priced for September 2026 at latest.</div>
-      <div class="nc-meta"><span class="nc-src">Wall Street Journal</span><span class="nc-time">7h ago</span></div>
-    </a>
-    <a href="papers.html" class="nc-card">
-      <div class="nc-cat">Quant · Systematic</div>
-      <div class="nc-card-title">Systematic Funds Unwind Momentum Positions — Factor Crowding Risk Elevated Across Mag-7 Complex</div>
-      <div class="nc-card-exrp">Quant deleveraging event detected via order flow analysis. Sector rotation into value and quality factors. HRP-based portfolios outperforming by 180bps YTD.</div>
-      <div class="nc-meta"><span class="nc-src">Institutional Investor</span><span class="nc-time">8h ago</span></div>
-    </a>
-  </div>
   </div><!-- /newsGrid -->
 </div>
 
@@ -1024,14 +960,21 @@ button{cursor:pointer;font-family:inherit}
     <!-- Macro Calendar -->
     <div class="widget">
       <div class="widget-hdr">
-        <span class="widget-title">Macro Calendar</span>
-        <span class="widget-ts">This Week</span>
+        <span class="widget-title">US Release Schedule</span>
+        <span class="widget-ts">Recurring</span>
       </div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 10 8:30</div><div class="cal-event">CPI YoY — Mar 2026</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 11 8:30</div><div class="cal-event">PPI MoM — Mar 2026</div></div>
-      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Apr 17 8:30</div><div class="cal-event">Initial Jobless Claims</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 16 8:30</div><div class="cal-event">Retail Sales MoM — Mar 2026</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Apr 29 14:00</div><div class="cal-event">FOMC Rate Decision</div></div>
+      <!-- Deliberately a RECURRING CADENCE, not dated events. This widget
+           previously listed specific April 2026 dates under the heading
+           "This Week" and kept showing them months after they had passed.
+           There is no reliable free calendar feed in the pipeline, so rather
+           than fabricate dates this states the release rhythm, which is
+           stable and stays true without maintenance. -->
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">Initial Jobless Claims &mdash; weekly</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Fri 8:30</div><div class="cal-event">Non-Farm Payrolls &mdash; first Friday</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Mid-month 8:30</div><div class="cal-event">CPI, then PPI the following day</div></div>
+      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Mid-month 8:30</div><div class="cal-event">Retail Sales MoM</div></div>
+      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">14:00</div><div class="cal-event">FOMC decision &mdash; 8 meetings a year</div></div>
+      <div style="padding:10px 0 0;font-size:11px;line-height:1.65;color:var(--muted,#888)">All times ET. Exact dates come from the <a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener" style="color:var(--green,#00a651)">BLS</a> and <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener" style="color:var(--green,#00a651)">Federal Reserve</a> calendars.</div>
     </div>
   </div>
 

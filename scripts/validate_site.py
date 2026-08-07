@@ -89,6 +89,76 @@ def check_forbidden_strings():
 # ---------------------------------------------------------------------------
 # 3. Signal methodology copy agrees with ENGINE
 # ---------------------------------------------------------------------------
+def check_signal_config():
+    """The published config must match ENGINE exactly - it is what external
+    readers and the site copy are validated against."""
+    rel = 'data/signal_config.json'
+    path = os.path.join(ROOT, rel)
+    if not os.path.exists(path):
+        err(f'{rel}: MISSING (single source of truth for methodology)')
+        return
+    try:
+        d = json.loads(read(rel))
+    except Exception as e:
+        err(f'{rel}: does not parse ({e})')
+        return
+    expect = C.signal_config()
+    for k, v in expect.items():
+        if k.startswith('_'):
+            continue
+        if d.get(k) != v:
+            err(f'{rel}: {k}={d.get(k)!r} but ENGINE says {v!r} '
+                '- regenerate via the pipeline')
+
+
+# Hardcoded month/year in visible copy is how the homepage ended up telling
+# visitors it was April months later. Publication dates are legitimate; a
+# dated label on a "current" widget is not.
+STALE_DATE_COPY = re.compile(
+    r'>\s*(?:This Week|Today|Latest)\s*<[^>]*>[^<]*'
+    r'(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2}', re.I)
+DATED_EVENT_ROW = re.compile(
+    r'class="cal-time">\s*(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)'
+    r'[a-z]*\s+\d{1,2}', re.I)
+FAKE_RELATIVE_TIME = re.compile(r'class="nc-time">\s*\d+\s*h ago\s*<', re.I)
+
+
+def check_stale_homepage_copy():
+    """Catches the specific regressions the homepage actually shipped."""
+    for name in ('index.html',):
+        path = os.path.join(ROOT, name)
+        if not os.path.exists(path):
+            continue
+        text = read(name)
+        if DATED_EVENT_ROW.search(text):
+            err(f'{name}: macro calendar contains hardcoded dated events '
+                '- they expire and then read as current')
+        if FAKE_RELATIVE_TIME.search(text):
+            err(f'{name}: hardcoded relative timestamps ("Nh ago") in static '
+                'markup - these never update and always claim to be recent')
+        if STALE_DATE_COPY.search(text):
+            err(f'{name}: a "current" label sits next to a hardcoded date')
+
+
+# Static markup must never impersonate a publisher. The homepage previously
+# shipped seven invented stories bylined to real newsrooms.
+PUBLISHERS = ('CNBC', 'Financial Times', 'Wall Street Journal', 'Bloomberg',
+              'Reuters', 'Institutional Investor')
+
+
+def check_no_fabricated_attribution():
+    for name in html_files():
+        text = read(name)
+        for pub in PUBLISHERS:
+            # A publisher name inside a static source byte is only legitimate
+            # when it came from the feed at runtime (i.e. a JS template).
+            for m in re.finditer(
+                    rf'class="nc-src">\s*{re.escape(pub)}\s*<', text):
+                err(f'{name}: static markup bylines content to {pub} '
+                    '- fabricated attribution, remove it')
+                break
+
+
 def check_methodology_consistency():
     uni = str(C.ENGINE['universe_count'])
     nsig = str(C.ENGINE['n_signals'])
@@ -362,14 +432,17 @@ def main():
     print('=' * 66)
 
     checks = [
-        ('required files',         check_required_files),
-        ('forbidden strings',      check_forbidden_strings),
+        ('required files',          check_required_files),
+        ('forbidden strings',       check_forbidden_strings),
+        ('signal config',           check_signal_config),
         ('methodology consistency', check_methodology_consistency),
-        ('html structure',         check_html_structure),
-        ('blank-data regression',  check_blank_data_regression),
-        ('signal payload',         check_signals),
-        ('status ledger',          check_status),
-        ('sitemap',                check_sitemap),
+        ('stale homepage copy',     check_stale_homepage_copy),
+        ('fabricated attribution',  check_no_fabricated_attribution),
+        ('html structure',          check_html_structure),
+        ('blank-data regression',   check_blank_data_regression),
+        ('signal payload',          check_signals),
+        ('status ledger',           check_status),
+        ('sitemap',                 check_sitemap),
     ]
     for label, fn in checks:
         before = len(ERRORS)

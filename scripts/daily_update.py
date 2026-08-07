@@ -75,6 +75,12 @@ DATA_DIR = os.path.join(ROOT, 'data')
 NOW_UTC  = datetime.datetime.now(datetime.timezone.utc)
 NOW_ISO  = NOW_UTC.strftime('%Y-%m-%dT%H:%M:%SZ')
 
+# Identifies this specific run end-to-end. In CI it is the Actions run id, so
+# a deployment can be traced back to the exact workflow execution; locally it
+# falls back to a timestamp-derived value.
+RUN_ID = (os.environ.get('GITHUB_RUN_ID')
+          or NOW_UTC.strftime('local-%Y%m%dT%H%M%SZ'))
+
 # The most recent US session that has actually finished. NEVER use the calendar
 # date: a Saturday run would otherwise stamp signals with a Saturday.
 SESSION_DATE = C.last_completed_session(NOW_UTC)
@@ -1012,7 +1018,12 @@ def build_status(fx, cx, nx, bar, sig_on_disk, signals_fresh):
         overall = 'PARTIAL'
 
     return {
-        'last_pipeline_run':    NOW_ISO,
+        # A unique id per run. The deploy check polls the live file for THIS
+        # value, so an HTTP 200 serving a cached older copy cannot be mistaken
+        # for a successful deployment.
+        'pipeline_run_id':      RUN_ID,
+        'generated_at':         NOW_ISO,
+        'last_pipeline_run':    NOW_ISO,     # retained: older pages read this
         'pipeline_result':      overall,
         'latest_us_session':    str(SESSION_DATE),
 
@@ -1133,6 +1144,11 @@ def main():
 
     update_markets_html(fx, cx)
     update_news_html(nx)
+
+    # Republish the methodology config so the site copy, the validator and any
+    # external reader all resolve to the same numbers.
+    write_json('data/signal_config.json', C.signal_config())
+    written.append('data/signal_config.json')
 
     sig_on_disk = read_json('data/quantum_signals.json') or {}
     status = build_status(fx, cx, nx, bar, sig_on_disk, signals is not None)

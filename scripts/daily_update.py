@@ -9,7 +9,8 @@ What it produces
   data/markets.json          FX + crypto snapshot (keyless public APIs)
   data/news.json             Categorised headline snapshot (Finnhub, needs FINNHUB_KEY)
   data/quantum_signals.json  Post-close technical signal scan
-  data/site_status.json      Per-feed freshness ledger consumed by every page
+  data/status.json           Per-feed freshness ledger consumed by every page
+  data/signal_config.json    Published methodology config (from ENGINE)
   markets.html / news.html   Server-rendered snapshots injected at QM: markers
   sitemap.xml                lastmod bumped for DATA-DRIVEN pages only
 
@@ -249,6 +250,39 @@ def get_json(url, timeout=15, tries=MAX_ATTEMPTS, label=''):
                 time.sleep(wait)
                 continue
     raise FetchError(last)
+
+
+def yf_download(tickers, **kw):
+    """yfinance wrapper that survives signature drift between major versions.
+
+    yfinance tracks an undocumented endpoint and its own API moves too; an
+    unexpected keyword should degrade to a plain call rather than take the
+    whole scan down.
+    """
+    try:
+        return yf.download(tickers, **kw)
+    except TypeError as e:
+        print(f"    yfinance rejected a kwarg ({e}); retrying minimally")
+        minimal = {k: v for k, v in kw.items() if k in ('period', 'auto_adjust')}
+        return yf.download(tickers, **minimal)
+
+
+def frame_for(raw, sym):
+    """Extract one ticker's OHLCV frame from a multi-ticker download.
+
+    Column layout differs by version and by single/multi ticker: it may be a
+    MultiIndex with the ticker on level 1 (Price, Ticker) or level 0, or a
+    plain frame for a single ticker. Try each rather than assuming.
+    """
+    if not isinstance(raw.columns, pd.MultiIndex):
+        return raw
+    for level in (1, 0):
+        try:
+            if sym in raw.columns.get_level_values(level):
+                return raw.xs(sym, level=level, axis=1)
+        except (KeyError, IndexError):
+            continue
+    raise KeyError(sym)
 
 
 def _num(v):
@@ -692,8 +726,7 @@ def compute_quantum_signals():
     last_err = 'no data'
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
-            raw = yf.download(TICKERS, period='1y', auto_adjust=True,
-                              progress=False, threads=True)
+            raw = yf_download(TICKERS, period='1y', auto_adjust=True,                              progress=False, threads=True)
             if raw is not None and len(raw):
                 break
             last_err = 'empty frame'
@@ -710,8 +743,7 @@ def compute_quantum_signals():
     results, skipped = [], []
     for sym in TICKERS:
         try:
-            df = (raw.xs(sym, level=1, axis=1)
-                  if isinstance(raw.columns, pd.MultiIndex) else raw).dropna()
+            df = frame_for(raw, sym).dropna()
             if len(df) < MIN_SESSIONS:
                 skipped.append(sym)
                 continue
@@ -836,7 +868,7 @@ def fetch_market_bar():
         raise FetchError('yfinance not installed')
 
     syms = [s for s, _ in BAR_SYMBOLS]
-    raw = yf.download(syms, period='5d', auto_adjust=False,
+    raw = yf_download(syms, period='5d', auto_adjust=False,
                       progress=False, threads=True)
     if raw is None or not len(raw):
         raise FetchError('yfinance returned no rows')
@@ -845,8 +877,7 @@ def fetch_market_bar():
     out = []
     for sym, label in BAR_SYMBOLS:
         try:
-            close = (raw['Close'][sym] if isinstance(raw.columns, pd.MultiIndex)
-                     else raw['Close']).dropna()
+            close = frame_for(raw, sym)['Close'].dropna() if isinstance(raw.columns, pd.MultiIndex) else raw['Close'].dropna()
             if len(close) < 2:
                 continue
             last, prev = float(close.iloc[-1]), float(close.iloc[-2])

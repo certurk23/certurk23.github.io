@@ -146,17 +146,30 @@ PUBLISHERS = ('CNBC', 'Financial Times', 'Wall Street Journal', 'Bloomberg',
               'Reuters', 'Institutional Investor')
 
 
+QM_REGION = re.compile(r'<!-- QM:[A-Z_]+:START -->.*?<!-- QM:[A-Z_]+:END -->',
+                       re.DOTALL)
+LINKED_ITEM = re.compile(r'<a\b[^>]*href="https?://[^"]+"[^>]*>.*?</a>', re.DOTALL)
+
+
 def check_no_fabricated_attribution():
+    """Flag publisher bylines that are NOT backed by a link to the article.
+
+    The distinction matters and the first version of this check got it wrong:
+    it flagged the pipeline's own news snapshot, which carries genuine Reuters
+    and CNBC bylines pulled from the feed, and blocked a deploy that contained
+    perfectly good data. Legitimate attribution always sits inside an anchor
+    pointing at the original article; the fabricated cards had no link at all.
+
+    So: strip pipeline-injected regions and every external link, then anything
+    still claiming a publisher is invented.
+    """
     for name in html_files():
-        text = read(name)
+        text = QM_REGION.sub('', read(name))     # pipeline-generated: exempt
+        text = LINKED_ITEM.sub('', text)         # linked to source: legitimate
         for pub in PUBLISHERS:
-            # A publisher name inside a static source byte is only legitimate
-            # when it came from the feed at runtime (i.e. a JS template).
-            for m in re.finditer(
-                    rf'class="nc-src">\s*{re.escape(pub)}\s*<', text):
-                err(f'{name}: static markup bylines content to {pub} '
-                    '- fabricated attribution, remove it')
-                break
+            if re.search(rf'class="nc-src">\s*{re.escape(pub)}\s*<', text):
+                err(f'{name}: bylines content to {pub} with no link to the '
+                    'original article - fabricated attribution, remove it')
 
 
 def check_methodology_consistency():

@@ -15,6 +15,7 @@ production worse than it was before the run.
 import datetime
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -612,6 +613,39 @@ def test_v14_catches_signal_config_drift():
     assert any('buy_threshold' in e for e in errs), errs
 
 
+def test_v15_allows_linked_publisher_byline():
+    """Regression: run #46 was blocked because the validator flagged the
+    pipeline's own news snapshot, which carries genuine Reuters/CNBC bylines
+    linked to the original articles. Real attribution must pass."""
+    def mutate(site):
+        t = _read(site, 'news.html')
+        card = ('<a href="https://www.reuters.com/markets/x" target="_blank" '
+                'rel="noopener noreferrer" class="nc">'
+                '<div class="nc-headline">A real headline from the feed</div>'
+                '<div class="nc-foot"><span class="nc-src">Reuters</span></div></a>')
+        _write(site, 'news.html', t.replace('</footer>', '</footer>' + card))
+    errs = _run_validator_on(mutate)
+    assert not any('fabricated attribution' in e or 'Reuters' in e
+                   for e in errs), \
+        f'linked byline must NOT be flagged as fabricated: {errs}'
+
+
+def test_v16_allows_pipeline_injected_region():
+    """Content inside QM injection markers is machine-generated from a
+    validated feed and must be exempt."""
+    def mutate(site):
+        t = _read(site, 'news.html')
+        inject = ('<!-- QM:NEWS_SNAP:START -->'
+                  '<div class="nc-foot"><span class="nc-src">CNBC</span></div>'
+                  '<!-- QM:NEWS_SNAP:END -->')
+        _write(site, 'news.html',
+               re.sub(r'<!-- QM:NEWS_SNAP:START -->.*?<!-- QM:NEWS_SNAP:END -->',
+                      inject, t, flags=re.DOTALL))
+    errs = _run_validator_on(mutate)
+    assert not any('CNBC' in e for e in errs), \
+        f'pipeline-injected region must be exempt: {errs}'
+
+
 def test_v10_catches_future_lastmod():
     def mutate(site):
         t = _read(site, 'sitemap.xml')
@@ -659,6 +693,8 @@ def main():
         ('V8 catches hardcoded API key',      test_v8_catches_hardcoded_api_key),
         ('V9 catches missing anchor',         test_v9_catches_missing_injection_anchor),
         ('V10 catches future lastmod',      test_v10_catches_future_lastmod),
+        ('V15 allows linked byline',        test_v15_allows_linked_publisher_byline),
+        ('V16 allows injected region',      test_v16_allows_pipeline_injected_region),
         ('V11 catches fake publisher byline', test_v11_catches_fabricated_publisher_byline),
         ('V12 catches dated macro calendar', test_v12_catches_dated_macro_calendar),
         ('V13 catches fake relative time',  test_v13_catches_fake_relative_timestamp),

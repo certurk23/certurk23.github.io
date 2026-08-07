@@ -1,0 +1,22 @@
+# Production dependencies for scripts/daily_update.py
+# ===================================================
+# ONLY packages the pipeline actually imports. Nothing here exists to satisfy
+# tooling — scripts/qm_config.py, validate_site.py and test_pipeline.py are
+# deliberately standard-library-only so they run before this file is installed.
+#
+# Two different pinning policies on purpose:
+#
+#   requests / pandas / numpy — PIN EXACTLY. These have stable APIs; the risk
+#   is an unexpected upgrade changing behaviour under us. That is what silently
+#   broke this pipeline once already.
+#
+#   yfinance — TRACK RECENT. Its entire job is scraping an undocumented Yahoo
+#   endpoint that changes without notice, so an old pin is guaranteed to break.
+#   Pinning it to 0.2.51 is exactly why run #46 got "yfinance returned no data
+#   (empty frame)" while every other source came back fresh. For this library,
+#   staleness is the failure mode, so we take fixes inside the major version.
+
+requests==2.34.2
+numpy==2.1.3
+pandas==2.2.3
+yfinance>=1.5.2,<2.0

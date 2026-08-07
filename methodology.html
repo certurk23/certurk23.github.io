@@ -129,7 +129,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}.footer-top{grid-template-columns:1fr}}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/methodology.html","url":"https://quantmedia.io/methodology.html","name":"Methodology & Data Sources | QuantMedia","description":"Data sources, methodology, editorial standards, and disclosures for QuantMedia.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-04-14"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://quantmedia.io/methodology.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/methodology.html","url":"https://quantmedia.io/methodology.html","name":"Methodology & Data Sources | QuantMedia","description":"Data sources, methodology, editorial standards, and disclosures for QuantMedia.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-08-07"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://quantmedia.io/methodology.html"}]}]}</script>
 </head>
 <body>
 
@@ -188,16 +188,18 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <tr><th>Provider</th><th>Data Type</th><th>Coverage</th><th>Latency / Notes</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>Finnhub</strong></td><td>US equity quotes, index data</td><td>S&amp;P 500, NASDAQ, NYSE</td><td>15-minute delayed quotes (free tier)</td></tr>
-        <tr><td><strong>CoinGecko</strong></td><td>Cryptocurrency prices</td><td>BTC, ETH, SOL, and major altcoins</td><td>Near real-time; rate-limited</td></tr>
+        <tr><td><strong>Yahoo Finance</strong> (via <code>yfinance</code>)</td><td>End-of-day OHLCV bars; index and futures closes</td><td>180-name signal universe; S&amp;P 500, Nasdaq, Dow, VIX, gold, WTI, DXY</td><td>End-of-day only. Captured once per weekday after the US close.</td></tr>
+        <tr><td><strong>Finnhub</strong></td><td>News headlines</td><td>General market newswire</td><td>Server-side only, once per weekday. The API key is held as a repository secret and is never sent to the browser.</td></tr>
+        <tr><td><strong>CoinGecko</strong></td><td>Cryptocurrency prices</td><td>BTC, ETH, SOL, and major altcoins</td><td>Captured once per weekday by the pipeline; not streamed to the browser</td></tr>
         <tr><td><strong>Open Exchange Rates</strong></td><td>Foreign exchange rates</td><td>USD crosses (EUR, GBP, JPY, etc.)</td><td>Indicative mid-market rates; updated periodically</td></tr>
         <tr><td><strong>TradingView</strong></td><td>Embedded ticker tape widget</td><td>Major indices, equities, FX, commodities</td><td>Real-time via TradingView embed</td></tr>
       </tbody>
     </table>
 
     <div class="insight-box">
-      <div class="insight-label">Important Note on Data Delays</div>
-      <p>Equity quotes sourced from Finnhub's free tier are <strong>delayed by approximately 15 minutes</strong>. These are not real-time prices and should not be used for live trading decisions. The TradingView ticker tape widget provides its own real-time data feed independently.</p>
+      <div class="insight-label">Important note on data freshness</div>
+      <p>With one exception, <strong>nothing on this site is real-time</strong>. Equity, forex, crypto and commodity figures are <strong>end-of-day snapshots</strong> captured once per weekday by an automated pipeline that runs at 23:30 UTC, after the 16:00 ET US close. They are stored as static JSON files and served from this domain; the browser makes no live market-data calls. The single exception is the embedded TradingView widget, which streams its own data independently.</p>
+      <p>Every page derives its freshness label from the timestamp of the snapshot it is displaying, so a stalled pipeline shows &ldquo;delayed&rdquo; or &ldquo;data feed paused&rdquo; with the real capture date rather than continuing to claim it is current. If a data source fails, the previous snapshot is retained with its original timestamp instead of being replaced by blank cells. <strong>None of this data is suitable for live trading decisions.</strong></p>
     </div>
   </div>
 
@@ -206,7 +208,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <h2>News Classification</h2>
   </div>
   <div class="article-card">
-    <p>Financial news on the News page is fetched from public RSS feeds and classified into categories using <strong>regex-based pattern matching</strong>. Categories include:</p>
+    <p>Headlines on the News page are retrieved server-side once per weekday from the Finnhub general news endpoint, de-duplicated, and classified into categories using <strong>word-boundary regular expressions</strong> (an earlier version matched bare substrings, which mis-filed any headline containing the letters &ldquo;ai&rdquo; &mdash; <em>gain</em>, <em>against</em>, <em>remain</em> &mdash; as technology news). Categories are:</p>
     <ul>
       <li><strong>Fed / Monetary Policy</strong> -- headlines containing references to the Federal Reserve, FOMC, interest rates, or monetary policy</li>
       <li><strong>Tech / AI</strong> -- references to major technology companies, semiconductors, AI, or software</li>
@@ -216,6 +218,29 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <li><strong>Macro / Economy</strong> -- GDP, employment, inflation, and broad economic indicators</li>
     </ul>
     <p>Classification is purely algorithmic. No editorial judgment or human curation is applied to news categorization. Headlines are displayed as received from source feeds with attribution to the originating publisher.</p>
+  </div>
+
+  <!-- SIGNAL ENGINE -->
+  <div class="section-header" id="signal-engine">
+    <h2>Signal Engine Methodology</h2>
+  </div>
+  <div class="article-card">
+    <p>The <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> dashboard is produced by a single deterministic script, <code>scripts/daily_update.py</code>, which runs after each US close. Its full behaviour is summarised here so the figures quoted across the site can be checked against one definition.</p>
+    <table class="data-tbl">
+      <thead><tr><th>Parameter</th><th>Value</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Universe</td><td>180 US-listed equities</td><td>A fixed liquidity list, not an index. Includes large-cap S&amp;P 500 names alongside high-volume tickers that are not index constituents.</td></tr>
+        <tr><td>Eligibility</td><td>&ge; 60 sessions</td><td>Completed daily OHLCV bars required within the trailing 1-year window. Names failing this are skipped for the day rather than scored on partial history.</td></tr>
+        <tr><td>Signals</td><td>30 binary checks</td><td>10 trend/moving-average, 4 momentum oscillator, 3 Bollinger, 3 volume, 4 rate-of-change, 2 52-week position, 2 stochastic, 2 volatility-regime.</td></tr>
+        <tr><td>Decision rule</td><td>score &ge; 22 &rarr; BUY</td><td>At least 73% agreement. Everything below the threshold is WATCH and is not displayed.</td></tr>
+        <tr><td>Reference levels</td><td>ATR(14) multiples</td><td>Stop = close &minus; 2.0 &times; ATR; target = close + 1.5 &times; ATR. Volatility-scaled, not fixed percentages.</td></tr>
+        <tr><td>Schedule</td><td>Mon&ndash;Fri, 23:30 UTC</td><td>One run per weekday. No intraday updates, no weekend runs.</td></tr>
+      </tbody>
+    </table>
+    <div class="insight-box">
+      <div class="insight-label">What the engine does not do</div>
+      <p>The threshold is not optimised against historical returns, so it is not fitted to any particular market period &mdash; and equally carries no claim of being an optimal cut-off. The engine uses no fundamental data, no machine learning and no discretionary override. <strong>QuantMedia publishes no track record for it:</strong> there is no live or audited performance history, no Sharpe ratio and no trade log, because no verified out-of-sample record exists to report. Requiring broad multi-factor agreement also biases output toward trend continuation, which means signals thin out in choppy or falling markets by construction.</p>
+    </div>
   </div>
 
   <!-- RESEARCH METHODOLOGY -->

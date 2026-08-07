@@ -7,22 +7,24 @@
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QuantMedia — US Financial Intelligence & Quantitative Research</title>
-<meta name="description" content="Free US financial intelligence: daily stock signals, quantitative research, live market data, and macro analysis. Updated daily after close.">
+<meta name="description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
 <link rel="canonical" href="https://quantmedia.io/">
+<!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
+<script src="qm-data.js"></script>
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="author" content="QuantMedia">
 <meta name="keywords" content="quantitative finance, market microstructure, VPIN, order flow, financial intelligence, algorithmic trading, market data">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="QuantMedia — US Financial Intelligence & Quantitative Research">
-<meta property="og:description" content="Free US financial intelligence: daily stock signals, quantitative research, live market data, and macro analysis. Updated daily after close.">
+<meta property="og:description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
 <meta property="og:url" content="https://quantmedia.io/">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="QuantMedia — US Financial Intelligence & Quantitative Research">
-<meta name="twitter:description" content="Free US financial intelligence: daily stock signals, quantitative research, live market data, and macro analysis. Updated daily after close.">
+<meta name="twitter:description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <!-- Favicon -->
@@ -31,7 +33,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Independent US financial research: quantitative analysis, market microstructure, and live US market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — US Financial Intelligence & Quantitative Research","description":"Independent US financial research: quantitative analysis, market microstructure, and live US market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-04-14"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Independent US financial research: a post-close stock signal engine, open-access quantitative finance papers, and end-of-day market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — US Financial Intelligence & Quantitative Research","description":"Independent US financial research: a post-close stock signal engine, open-access quantitative finance papers, and end-of-day market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-08-07"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
@@ -829,7 +831,7 @@ button{cursor:pointer;font-family:inherit}
 <div class="market-bar">
   <div class="mbar-label"><span class="live-dot"></span>Markets</div>
   <div class="mbar-items" id="marketBar">
-    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">Live market data &middot; Updates during market hours</span></div>
+    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">Market data snapshots &middot; Captured after each US close</span></div>
   </div>
 </div>
 
@@ -847,9 +849,9 @@ button{cursor:pointer;font-family:inherit}
         <h1 class="hero-h1" id="heroH1">US Markets &mdash; Daily Quantitative Research &amp; Signal Analysis</h1>
         <div id="heroBullets" style="margin-bottom:16px">
           <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
-            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Post-close signal dashboard scanning 500+ US equities daily</li>
+            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Post-close signal dashboard scoring 180 liquid US equities daily</li>
             <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Quantitative research papers on microstructure and portfolio theory</li>
-            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Live market data, sector analysis, and financial news</li>
+            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Market data snapshots, sector analysis, and financial news</li>
           </ul>
         </div>
         <div id="heroImpact" style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
@@ -868,7 +870,7 @@ button{cursor:pointer;font-family:inherit}
         </div>
         <div class="hero-meta">
           <span class="hero-meta-item"><strong>QuantMedia</strong> Research</span>
-          <span class="hero-meta-item" id="heroDate">April 2026</span>
+          <span class="hero-meta-item" id="heroDate">Updated each weekday after the US close</span>
         </div>
       </div>
     </div>
@@ -881,7 +883,7 @@ button{cursor:pointer;font-family:inherit}
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 56px;align-items:start">
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">About QuantMedia</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers with full Python implementations, a post-close signal dashboard scanning 500+ US equities daily, live market data across equities, forex, and commodities, and categorized financial news updated continuously from global sources.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers with full Python implementations, a post-close signal dashboard scoring 180 liquid US equities daily, end-of-day market data across equities, forex, and commodities, and a categorised daily digest of market headlines from global newswires.</p>
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">What We Research</h2>
@@ -889,7 +891,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">Platform Tools</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> applies 93 technical rules to 500+ US equities after each market close, flagging stocks above a multi-factor confluence threshold. The <a href="stocks.html" style="color:var(--accent)">US equities screener</a> tracks S&amp;P 500 stocks, sector ETFs, and index rotation in real time. The <a href="markets.html" style="color:var(--accent)">global markets dashboard</a> monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The <a href="stocks.html" style="color:var(--accent)">US equities screener</a> tracks S&amp;P 500 stocks, sector ETFs, and index rotation in real time. The <a href="markets.html" style="color:var(--accent)">global markets dashboard</a> monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
         <p style="font-size:11px;color:var(--muted);margin:0">All content is for educational and informational purposes only. Not financial advice.</p>
       </div>
     </div>
@@ -1355,8 +1357,10 @@ function toggleTheme() {
 /* ============================================================
    MARKET DATA — FMP Batch (primary) + CoinGecko + open.er-api
    ============================================================ */
-const FMP_KEY = 'k3CDDPQlbJ0E5f82DLAoDJGtV3BQd1CV';
-const FINNHUB_KEY = 'd6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
+/* No API keys in client source. Everything below reads snapshots from
+   /data/*.json written by scripts/daily_update.py. The previous version
+   shipped live FMP and Finnhub tokens in this file, which are public the
+   moment the page loads. */
 
 const fmt  = (n, d=2) => n == null || isNaN(n) ? '--' : n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
 const pct  = v => v == null ? '--' : (v > 0 ? '+' : '') + fmt(v) + '%';
@@ -1364,143 +1368,120 @@ const cls  = v => v > 0 ? 'up' : v < 0 ? 'dn' : 'nt';
 const sgn  = v => v > 0 ? '+' : '';
 const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2-digit', minute:'2-digit'});
 
-/* Special symbols routed to non-FMP sources */
-const SPECIAL = {
-  'GC=F':     '__XAU',
-  'CL=F':     '__WTI',
-  'EURUSD=X': '__EUR',
-  'GBPUSD=X': '__GBP',
-  'BTC-USD':  '__BTC',
-};
-
-/* Forex via open.er-api.com — free, no key, CORS-enabled */
-let _fx = null, _fxT = 0, _yfc = {}, _yfp = {};
-const CACHE_TTL = 120000;
-try{const sc=sessionStorage.getItem('qm_yfc');if(sc){const parsed=JSON.parse(sc);for(const k in parsed){if(Date.now()-parsed[k].ts<CACHE_TTL)_yfc[k]=parsed[k];}}}catch{}
-function _saveCache(){try{sessionStorage.setItem('qm_yfc',JSON.stringify(_yfc));}catch{}}
-
-async function loadFx() {
-  if (_fx && Date.now() - _fxT < 60000) return _fx;
-  try {
-    const r = await fetch('https://open.er-api.com/v6/latest/USD', {signal: AbortSignal.timeout(8000)});
-    const d = await r.json(); _fx = d.rates; _fxT = Date.now(); return _fx;
-  } catch { return null; }
+/* --- Market data: one snapshot read, shared by the bar and the sidebar ---
+   data/markets_bar.json is written nightly with real instruments pulled
+   server-side. The previous client version proxied gold with the PAX-Gold
+   token and WTI with a CoinGecko id, which are not those markets. */
+let _barPromise = null;
+function barRows() {
+  if (!_barPromise) _barPromise = QM.get('markets_bar');
+  return _barPromise;
 }
 
-/* FMP single-symbol fetch via /stable/quote (free tier: no batch, no legacy v3) */
-let _fmpCache = {};
-async function _fmpOne(sym) {
-  if (_fmpCache[sym] && Date.now() - _fmpCache[sym].ts < CACHE_TTL) return _fmpCache[sym].v;
-  try {
-    const url = `https://financialmodelingprep.com/stable/quote?symbol=${encodeURIComponent(sym)}&apikey=${FMP_KEY}`;
-    const r = await fetch(url, {signal: AbortSignal.timeout(8000)});
-    if (!r.ok) throw new Error(r.status);
-    const data = await r.json();
-    if (Array.isArray(data) && data[0]) {
-      const q = data[0];
-      const v = {price: q.price, chg: q.changePercentage || 0, pts: q.change || 0};
-      _fmpCache[sym] = {v, ts: Date.now()};
-      return v;
-    }
-  } catch(e) { console.warn('FMP error for', sym, e); }
-  return _fmpCache[sym]?.v || null;
+function rowFor(feed, sym) {
+  const rows = feed && feed.data;
+  if (!rows) return null;
+  return rows.find(r => r.s === sym) || null;
 }
 
-/* Unified quote: routes to FMP (stocks/indices), CoinGecko (crypto/gold), open.er-api (forex) */
-async function yf(sym) {
-  if (_yfc[sym] && Date.now() - _yfc[sym].ts < CACHE_TTL) return _yfc[sym].v;
-  if (_yfp[sym]) return _yfp[sym];
-  const p = (async () => {
-    const sp = SPECIAL[sym]; let v = null;
-    try {
-      if (sp === '__EUR') { const f = await loadFx(); v = f?.EUR ? {price:+(1/f.EUR).toFixed(5),chg:0,pts:0} : null; }
-      else if (sp === '__GBP') { const f = await loadFx(); v = f?.GBP ? {price:+(1/f.GBP).toFixed(5),chg:0,pts:0} : null; }
-      else if (sp === '__BTC') {
-        const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true', {signal:AbortSignal.timeout(8000)});
-        const d = await r.json(); if (d.bitcoin) { const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0; v={price:p,chg:c,pts:p*c/100}; }
-      } else if (sp === '__XAU') {
-        const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});
-        const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}
-      } else if (sp === '__WTI') {
-        const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=crude-oil&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)}).catch(()=>null);
-        if(r&&r.ok){const d=await r.json();if(d['crude-oil']){const p=d['crude-oil'].usd,c=d['crude-oil'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-        if(!v) v = await _fmpOne('USO');
-      } else {
-        /* FMP route: indices (^GSPC etc.) and stocks (AAPL etc.) via /stable/quote */
-        v = await _fmpOne(sym);
-      }
-    } catch {}
-    _yfc[sym] = {v, ts: Date.now()}; delete _yfp[sym]; _saveCache(); return v;
-  })();
-  return (_yfp[sym] = p);
-}
-
-/* Parallel fetch: all symbols fire concurrently via yf() */
-const batch = syms => Promise.all(syms.map(yf));
-
-/* --- Market Bar (only reliable sources: CoinGecko + Forex) --- */
+/* --- Market Bar --- */
 const MBAR = [
-  {s:'GC=F',l:'Gold'},
-  {s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},
-  {s:'BTC-USD',l:'BTC'},
+  {s:'^GSPC',    l:'S&P 500'},
+  {s:'^IXIC',    l:'Nasdaq'},
+  {s:'^VIX',     l:'VIX'},
+  {s:'GC=F',     l:'Gold'},
+  {s:'EURUSD=X', l:'EUR/USD'},
+  {s:'BTC-USD',  l:'BTC'},
 ];
 async function loadMarketBar() {
-  const res = await batch(MBAR.map(x => x.s));
-  document.getElementById('marketBar').innerHTML = MBAR.map((m, i) => {
-    const r = res[i]; const c = cls(r?.chg);
+  const feed = await barRows();
+  const host = document.getElementById('marketBar');
+  if (!host) return;
+  const cells = MBAR.map(m => {
+    const r = rowFor(feed, m.s);
+    if (!r) return '';
     return `<div class="mbar-item">
       <span class="mbar-sym">${m.l}</span>
-      <span class="mbar-val">${r ? fmt(r.price, r.price > 100 ? 2 : 4) : '--'}</span>
-      <span class="mbar-chg ${c}">${r ? pct(r.chg) : '--'}</span>
+      <span class="mbar-val">${fmt(r.p, Math.abs(r.p) > 100 ? 2 : 4)}</span>
+      <span class="mbar-chg ${cls(r.c)}">${pct(r.c)}</span>
     </div>`;
-  }).join('');
+  }).filter(Boolean);
+  // An empty bar is hidden rather than left as a row of dashes.
+  if (!cells.length) { const w = host.closest('.market-bar') || host; w.style.display = 'none'; return; }
+  host.innerHTML = cells.join('');
 }
 
 /* --- Snapshot Sidebar --- */
 const SNAP = [
+  {s:'^GSPC',    l:'S&P 500', sub:'US large cap'},
+  {s:'^VIX',     l:'VIX',     sub:'Implied volatility'},
   {s:'GC=F',     l:'Gold',    sub:'Spot $/oz'},
+  {s:'CL=F',     l:'WTI',     sub:'Crude $/bbl'},
   {s:'EURUSD=X', l:'EUR/USD', sub:'Forex'},
-  {s:'GBPUSD=X', l:'GBP/USD', sub:'Forex'},
   {s:'BTC-USD',  l:'Bitcoin', sub:'Crypto'},
 ];
 async function loadSnapshot() {
-  const res = await batch(SNAP.map(x => x.s));
-  document.getElementById('snapTs').textContent = now();
-  document.getElementById('snapRows').innerHTML = SNAP.map((s, i) => {
-    const r = res[i]; const c = cls(r?.chg);
-    const dp = r ? (r.price > 100 ? 2 : 4) : 2;
+  const feed = await barRows();
+  const host = document.getElementById('snapRows');
+  if (!host) return;
+  const rows = SNAP.map(s => {
+    const r = rowFor(feed, s.s);
+    if (!r) return '';
+    const dp = Math.abs(r.p) > 100 ? 2 : 4;
     return `<div class="snap-row">
       <div><div class="snap-sym">${s.l}</div><div class="snap-name">${s.sub}</div></div>
       <div style="text-align:right">
-        <div class="snap-price">${r ? fmt(r.price, dp) : '--'}</div>
-        <div class="snap-chg ${c}">${r ? pct(r.chg) : '--'}</div>
+        <div class="snap-price">${fmt(r.p, dp)}</div>
+        <div class="snap-chg ${cls(r.c)}">${pct(r.c)}</div>
       </div>
     </div>`;
-  }).join('');
+  }).filter(Boolean);
+  const ts = document.getElementById('snapTs');
+  if (!rows.length) {
+    host.innerHTML = '<div class="snap-row" style="color:var(--muted);font-size:12px">' +
+                     'Next snapshot publishes after the US close.</div>';
+    if (ts) { ts.textContent = 'pending'; }
+    return;
+  }
+  host.innerHTML = rows.join('');
+  // Timestamp reflects the snapshot, not the visitor's clock.
+  if (ts && feed) QM.stamp(ts, feed.fetched_utc, 'Close');
 }
 
-/* --- Movers (Dynamic — 15 stocks, parallel fetch) --- */
-const WATCHLIST = [
-  {s:'NVDA',n:'NVIDIA Corp.'},{s:'AAPL',n:'Apple Inc.'},{s:'MSFT',n:'Microsoft Corp.'},
-  {s:'TSLA',n:'Tesla Inc.'},{s:'AMD',n:'Advanced Micro'},{s:'META',n:'Meta Platforms'},
-  {s:'AMZN',n:'Amazon.com'},{s:'GOOGL',n:'Alphabet Inc.'},{s:'AVGO',n:'Broadcom Inc.'},
-  {s:'JPM',n:'JPMorgan Chase'},{s:'NFLX',n:'Netflix Inc.'},{s:'BA',n:'Boeing Co.'},
-  {s:'INTC',n:'Intel Corp.'},{s:'PFE',n:'Pfizer Inc.'},{s:'DIS',n:'Walt Disney'},
-];
+/* --- Movers: top and bottom performers from the 180-name scan universe --- */
+/* Display names for the tickers most likely to surface in the movers list.
+   Anything not listed falls back to its symbol. */
+const NAMES = {
+  NVDA:'NVIDIA',AAPL:'Apple',MSFT:'Microsoft',TSLA:'Tesla',AMD:'Advanced Micro',
+  META:'Meta Platforms',AMZN:'Amazon',GOOGL:'Alphabet',AVGO:'Broadcom',
+  JPM:'JPMorgan Chase',NFLX:'Netflix',BA:'Boeing',INTC:'Intel',PFE:'Pfizer',
+  COIN:'Coinbase',HOOD:'Robinhood',PLTR:'Palantir',MU:'Micron',MRVL:'Marvell',
+  SMCI:'Super Micro',CRWD:'CrowdStrike',SNOW:'Snowflake',DDOG:'Datadog',
+  NET:'Cloudflare',ZS:'Zscaler',PANW:'Palo Alto',ENPH:'Enphase',FSLR:'First Solar',
+  OXY:'Occidental',SLB:'SLB',HAL:'Halliburton',FCX:'Freeport-McMoRan',
+  NEM:'Newmont',GOLD:'Barrick',AEM:'Agnico Eagle',UNH:'UnitedHealth',
+  LLY:'Eli Lilly',XOM:'Exxon Mobil',CVX:'Chevron',WMT:'Walmart',COST:'Costco',
+  ORCL:'Oracle',CRM:'Salesforce',ADBE:'Adobe',NOW:'ServiceNow',UBER:'Uber',
+  SOFI:'SoFi',NU:'Nu Holdings',AFRM:'Affirm',UPST:'Upstart',AI:'C3.ai',
+};
 let GAINERS_LIVE = [], LOSERS_LIVE = [];
 let moversMode = 'gain';
 
+/* Movers come from the same 180-name scan universe as the signal engine,
+   so the homepage and quantum-signals.html can never disagree. */
 async function loadMovers() {
-  try {
-    const results = await Promise.all(WATCHLIST.map(w => yf(w.s)));
-    const pairs = WATCHLIST.map((w, i) => ({s:w.s, n:w.n, p:results[i]?.chg || 0}))
-      .filter(x => x.p !== 0);
-    if (pairs.length === 0) return;
-    pairs.sort((a, b) => b.p - a.p);
-    GAINERS_LIVE = pairs.filter(x => x.p > 0).slice(0, 6);
-    LOSERS_LIVE = pairs.filter(x => x.p < 0).reverse().slice(0, 6);
-    showMovers(moversMode);
-  } catch {}
+  const data = await QM.get('quantum_signals');
+  const rows = data && data.signals;
+  if (!rows || !rows.length) return;
+  const pairs = rows.filter(r => typeof r.chg === 'number' && r.chg !== 0)
+                    .map(r => ({s: r.s, n: NAMES[r.s] || r.s, p: r.chg}));
+  if (!pairs.length) return;
+  pairs.sort((a, b) => b.p - a.p);
+  GAINERS_LIVE = pairs.slice(0, 6);
+  LOSERS_LIVE  = pairs.slice(-6).reverse();
+  const lbl = document.getElementById('moversStamp');
+  if (lbl) QM.stamp(lbl, data.updated, 'Session close');
+  showMovers(moversMode);
 }
 
 function showMovers(mode) {
@@ -1509,7 +1490,7 @@ function showMovers(mode) {
   document.getElementById('tabLose').className = 'mover-tab ' + (mode==='lose' ? 'lose-active' : 'inactive');
   const data = mode === 'gain' ? GAINERS_LIVE : LOSERS_LIVE;
   if (data.length === 0) {
-    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">Data updates after market open</div>';
+    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center;line-height:1.7">Movers publish with the next post-close scan.<br><a href="quantum-signals.html" style="color:var(--green)">See the signal dashboard</a></div>';
     return;
   }
   document.getElementById('moversPanel').innerHTML = data.map((m, i) => {
@@ -1531,20 +1512,24 @@ async function init() {
   loadMovers(); /* runs staggered, don't await */
 }
 init();
-setInterval(init, 120000);
 
 /* ============================================================
-   FINNHUB NEWS FEED
+   NEWS FEED — reads data/news.json (no API key)
    ============================================================ */
 
 function nAgo(ts) {
+  if (!ts) return '';
   const m = Math.floor((Date.now()/1000 - ts) / 60);
   return m < 1 ? 'just now' : m < 60 ? m+'m ago' : m < 1440 ? Math.floor(m/60)+'h ago' : Math.floor(m/1440)+'d ago';
 }
+/* The pipeline already assigns a category with word-boundary matching; trust
+   it. The old client-side regex used bare substrings and filed anything
+   containing the letters "ai" (gain, against, remain) under Tech. */
 function nCat(n) {
-  const h = (n.headline+' '+(n.category||'')).toLowerCase();
+  if (n.category) return n.category;
+  const h = (n.headline||'').toLowerCase();
   if (/fed|fomc|rate|yield|treasury|powell/.test(h)) return 'Fed · Rates';
-  if (/nvidia|nvda|ai |artificial|chip|semi/.test(h)) return 'Tech · AI';
+  if (/nvidia|nvda|\bai\b|artificial|chip|semi/.test(h)) return 'Tech · AI';
   if (/vix|volatil|option|hedge/.test(h)) return 'Volatility';
   if (/oil|energy|crude|opec/.test(h)) return 'Energy';
   if (/bitcoin|crypto|btc|eth/.test(h)) return 'Crypto';
@@ -1567,12 +1552,11 @@ const GRADIENTS = [
 let _newsItems = [];
 
 async function loadNews() {
-  if (!FINNHUB_KEY) return;
   try {
-    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(8000)});
-    if (!r.ok) return;
-    const raw = await r.json();
-    _newsItems = (raw||[]).filter(n => n.headline && n.url).slice(0, 20);
+    const feed = await QM.get('news');
+    const raw = feed && feed.data;
+    if (!raw || !raw.length) return;   // keep the static fallback markup
+    _newsItems = raw.filter(n => n.headline && n.url).slice(0, 20);
     const items = _newsItems.slice(0, 7);
     if (items.length < 3) return;
 
@@ -1633,13 +1617,14 @@ async function loadNews() {
    HERO: Market Pulse — dynamic news-driven hero
    ============================================================ */
 async function loadHero() {
-  // Use cached news data or fetch
+  // Reuse whatever loadNews() already parsed; both read the same snapshot.
   if (_newsItems.length === 0) {
-    try {
-      const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {signal: AbortSignal.timeout(8000)});
-      if (r.ok) _newsItems = ((await r.json())||[]).filter(n => n.headline && n.url).slice(0, 20);
-    } catch {}
+    const feed = await QM.get('news');
+    if (feed && feed.data) {
+      _newsItems = feed.data.filter(n => n.headline && n.url).slice(0, 20);
+    }
   }
+  // Not enough headlines to drive the hero: leave the static markup in place.
   if (_newsItems.length < 4) return;
 
   // Update hero headline
@@ -1662,32 +1647,36 @@ async function loadHero() {
   document.getElementById('heroBullets').innerHTML = '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
     bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
 
-  // Market impact: Gold, BTC, EUR/USD (reliable sources only)
-  const [gold, btc, eur] = await Promise.all([yf('GC=F'), yf('BTC-USD'), yf('EURUSD=X')]);
-  const impactData = [
-    {l:'Gold', d:gold}, {l:'Bitcoin', d:btc}, {l:'EUR/USD', d:eur}
-  ];
-  document.getElementById('heroImpact').innerHTML = impactData.map(x => {
-    const r = x.d; const c = cls(r?.chg);
+  // Cross-asset context from the same nightly snapshot as the market bar.
+  const feed = await barRows();
+  const impact = [
+    {l:'S&P 500', s:'^GSPC'}, {l:'Gold', s:'GC=F'},
+    {l:'Bitcoin', s:'BTC-USD'}, {l:'EUR/USD', s:'EURUSD=X'},
+  ].map(x => ({l: x.l, r: rowFor(feed, x.s)})).filter(x => x.r);
+  const box = document.getElementById('heroImpact');
+  if (!box) return;
+  // Show nothing rather than a row of dashes.
+  if (!impact.length) { box.style.display = 'none'; return; }
+  box.innerHTML = impact.map(x => {
+    const r = x.r;
     return `<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:8px 14px;min-width:120px">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:4px">${x.l}</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;margin-bottom:2px">${r ? fmt(r.price, r.price>100?2:4) : '--'}</div>
-      <div class="${c}" style="font-family:'JetBrains Mono',monospace;font-size:12px">${r ? pct(r.chg) : '--'}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;margin-bottom:2px">${fmt(r.p, Math.abs(r.p)>100?2:4)}</div>
+      <div class="${cls(r.c)}" style="font-family:'JetBrains Mono',monospace;font-size:12px">${pct(r.c)}</div>
     </div>`;
   }).join('');
 }
 
+// The snapshots refresh once per weekday, so polling them adds nothing.
 loadNews();
 loadHero();
-setInterval(loadNews, 300000);
-setInterval(loadHero, 300000);
 
 /* ============================================================
    SITE SEARCH
    ============================================================ */
 const SEARCH_INDEX = [
   {t:'page', title:'Home', sub:'Homepage — market data, news, analysis', url:'index.html', kw:'home homepage ana sayfa'},
-  {t:'page', title:'Live Data', sub:'Real-time US market data dashboard', url:'markets.html', kw:'markets live data piyasa veri indices forex commodities crypto'},
+  {t:'page', title:'Live Data', sub:'US market data: indices, forex and crypto snapshots', url:'markets.html', kw:'markets live data piyasa veri indices forex commodities crypto'},
   {t:'page', title:'News', sub:'Financial news feed with category filters', url:'news.html', kw:'news haber haberler fed tech energy crypto earnings'},
   {t:'page', title:'Equities', sub:'US stocks, sectors, gainers & losers', url:'stocks.html', kw:'stocks equities hisse senet sectors gainers losers'},
   {t:'page', title:'Analysis', sub:'Research papers & quantitative studies', url:'papers.html', kw:'analysis papers makaleler research araştırma'},

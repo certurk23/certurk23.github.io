@@ -8,21 +8,23 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live US Market Data — Forex, Crypto & Indices | QuantMedia</title>
-<meta name="description" content="Real-time US market data: S&P 500, NASDAQ, Dow Jones, forex, commodities, and VIX. Live dashboard updated every 60 seconds during market hours.">
+<title>US Market Data: Indices, Forex &amp; Crypto Snapshots | QuantMedia</title>
+<meta name="description" content="US market dashboard: index levels plus end-of-day snapshots for 18 forex pairs and 12 digital assets, with a reference guide to reading VIX, the yield curve and cross-asset signals.">
 <link rel="canonical" href="https://quantmedia.io/markets.html">
+<!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
+<script src="qm-data.js"></script>
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
-<meta name="keywords" content="live market data, forex rates, crypto prices, S&P 500, NASDAQ, real-time financial data, indices">
+<meta name="keywords" content="US market data, forex rates, crypto prices, S&P 500, NASDAQ, VIX, yield curve, market dashboard">
 <meta name="author" content="QuantMedia">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Live US Market Data: S&P 500, NASDAQ, Forex & Commodities">
-<meta property="og:description" content="Real-time US market data: S&P 500, NASDAQ, Dow Jones, forex, commodities, and VIX. Live dashboard updated every 60 seconds during market hours.">
+<meta property="og:title" content="US Market Data: Indices, Forex and Crypto Snapshots">
+<meta property="og:description" content="US market dashboard: index levels plus end-of-day snapshots for 18 forex pairs and 12 digital assets, with a reference guide to reading VIX, the yield curve and cross-asset signals.">
 <meta property="og:url" content="https://quantmedia.io/markets.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Live US Market Data: S&P 500, NASDAQ, Forex & Commodities">
-<meta name="twitter:description" content="Real-time US market data: S&P 500, NASDAQ, Dow Jones, forex, commodities, and VIX. Live dashboard updated every 60 seconds during market hours.">
+<meta name="twitter:title" content="US Market Data: Indices, Forex and Crypto Snapshots">
+<meta name="twitter:description" content="US market dashboard: index levels plus end-of-day snapshots for 18 forex pairs and 12 digital assets, with a reference guide to reading VIX, the yield curve and cross-asset signals.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
@@ -78,6 +80,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font
 [data-theme="light"] .panel-head{color:var(--text)!important}
 [data-theme="light"] .movers-head .movers-lbl{color:var(--text)!important}
 a{text-decoration:none;color:inherit}
+.qm-fresh{color:var(--accent)}.qm-warn{color:var(--gold)}.qm-stale{color:var(--red)}
+.qm-awaiting .panel-head{color:var(--gold)}
 
 /* TICKER */
 .ticker-bar{height:var(--ticker-h);background:#000;border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;position:relative}
@@ -200,7 +204,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/markets.html","url":"https://quantmedia.io/markets.html","name":"Markets — Live Data & Macro Indicators | QuantMedia","description":"Live US market data, macro indicators, sector rotation, Fed watch, and institutional flow analysis.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-04-14"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Markets","item":"https://quantmedia.io/markets.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/markets.html","url":"https://quantmedia.io/markets.html","name":"Markets — Live Data & Macro Indicators | QuantMedia","description":"US market dashboard with index levels, end-of-day forex and crypto snapshots, and a reference guide to macro indicators including VIX and the yield curve.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-08-07"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Markets","item":"https://quantmedia.io/markets.html"}]}]}</script>
 </head>
 <body>
 
@@ -249,7 +253,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- MARKET BAR -->
 <div class="market-bar">
-  <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
+  <div class="mbar-label"><span class="mbar-dot"></span><span id="mbarLabel">Last close</span></div>
   <div class="mbar-items" id="mbarItems">
     <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted);font-size:11px">S&amp;P 500 · NASDAQ · Dow · EUR/USD · Gold · WTI · BTC</span></div>
   </div>
@@ -266,10 +270,10 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <div class="page-wrap">
   <section class="page-intro" style="margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)">
-    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">Live US Market Data &amp; Macro Intelligence</h1>
-    <div id="lastUp" style="font-size:11px;color:var(--accent);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">Last updated: Apr 13 2026, 22:33 UTC</div>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">Real-time S&amp;P 500, NASDAQ, and Dow Jones data alongside live forex rates, commodity prices, and institutional flow signals. Track Fed rate expectations, yield curve inversion dynamics, and cross-asset macro conditions — all updated every 60 seconds from aggregated market sources.</p>
-    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">QuantMedia aggregates equity indices, real-time forex (EUR/USD, GBP/USD), energy futures (WTI crude), and volatility regimes (VIX) to surface cross-asset macro signals. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="papers.html" style="color:var(--accent)">quantitative research papers</a></p>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 10px">US Market Data: Indices, Forex &amp; Crypto</h1>
+    <div id="lastUp" data-snapshot="" style="font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px" class="qm-fresh">Data snapshot: loading&hellip;</div>
+    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0 0 8px">Cross-asset market data for US equity indices, 18 forex pairs, and 12 major digital assets, with a reference guide to reading each one. The index chart below streams from TradingView during market hours; the forex and crypto tables are <strong>end-of-day snapshots</strong> captured by our pipeline after each US close &mdash; the timestamp above always shows the snapshot they belong to.</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.75;max-width:820px;margin:0">The guide below covers what the S&amp;P 500, NASDAQ 100, Dow and Russell 2000 each measure, how the major currency pairs respond to central bank policy, and how VIX and the 10Y/2Y yield spread are read as macro risk signals. See also: <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> &middot; <a href="stocks.html" style="color:var(--accent)">US equities screener</a> &middot; <a href="sector-rotation-guide.html" style="color:var(--accent)">sector rotation guide</a> &middot; <a href="papers.html" style="color:var(--accent)">quantitative research papers</a></p>
   </section>
 
 <!-- EDITORIAL GUIDE — static content, appears before data tables -->
@@ -319,40 +323,26 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div id="forex">
     <div class="section-hdr">
       <h2>Forex</h2>
-      <span class="section-meta" id="fxMeta">Live rates</span>
+      <span class="section-meta" id="fxMeta">Daily close snapshot</span>
     </div>
     <!-- QM:FOREX:START -->
-<div class="grid-3" id="fxGrid"><div class="panel"><div class="panel-head">Majors</div><div class="drow"><div><div class="dsym">EUR/USD</div><div class="dfull">Euro / Dollar</div></div><div class="dmono">1.1681</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">GBP/USD</div><div class="dfull">Sterling / Dollar</div></div><div class="dmono">1.3407</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/JPY</div><div class="dfull">Dollar / Yen</div></div><div class="dmono">159.6762</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CHF</div><div class="dfull">Dollar / Franc</div></div><div class="dmono">0.7920</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">AUD/USD</div><div class="dfull">Aussie / Dollar</div></div><div class="dmono">0.7029</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CAD</div><div class="dfull">Dollar / Loonie</div></div><div class="dmono">1.3865</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div><div class="panel"><div class="panel-head">USD Crosses</div><div class="drow"><div><div class="dsym">USD/MXN</div><div class="dfull">Dollar / Peso</div></div><div class="dmono">17.4134</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/BRL</div><div class="dfull">Dollar / Real</div></div><div class="dmono">5.0199</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/CNY</div><div class="dfull">Dollar / Yuan</div></div><div class="dmono">6.8379</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/INR</div><div class="dfull">Dollar / Rupee</div></div><div class="dmono">93.1770</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/KRW</div><div class="dfull">Dollar / Won</div></div><div class="dmono">1,485.53</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/SGD</div><div class="dfull">Dollar / S$</div></div><div class="dmono">1.2767</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div><div class="panel"><div class="panel-head">Other Pairs</div><div class="drow"><div><div class="dsym">EUR/GBP</div><div class="dfull">Euro / Sterling</div></div><div class="dmono">0.8712</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">EUR/JPY</div><div class="dfull">Euro / Yen</div></div><div class="dmono">186.5137</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">EUR/CHF</div><div class="dfull">Euro / Franc</div></div><div class="dmono">0.9251</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">GBP/JPY</div><div class="dfull">Sterling / Yen</div></div><div class="dmono">214.0770</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">NZD/USD</div><div class="dfull">Kiwi / Dollar</div></div><div class="dmono">0.5812</div><div style="text-align:right"><span class="badge nt">live</span></div></div><div class="drow"><div><div class="dsym">USD/SEK</div><div class="dfull">Dollar / Krona</div></div><div class="dmono">9.3196</div><div style="text-align:right"><span class="badge nt">live</span></div></div></div></div>
+<div class="grid-3" id="fxGrid"><div class="panel qm-awaiting"><div class="panel-head">Awaiting next snapshot</div><div style="padding:14px 16px;font-size:13px;line-height:1.7;color:var(--dim)">Spot rates for 18 major and cross pairs publish here after each daily pipeline run. The reference guide above explains what each pair tracks and why it moves.</div></div></div>
 <!-- QM:FOREX:END -->
+  </div>
 
   <!-- CRYPTO -->
   <div id="crypto">
     <div class="section-hdr">
       <h2>Crypto</h2>
-      <span class="section-meta" id="cryptoMeta">Live rates</span>
+      <span class="section-meta" id="cryptoMeta">Daily close snapshot</span>
     </div>
     <!-- QM:CRYPTO:START -->
-<div class="grid-2" id="cryptoGrid">
-      <div class="panel"><div class="panel-head">Digital Assets I</div>
-        <div class="drow"><div><div class="dsym">BTC</div><div class="dfull">Bitcoin</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">ETH</div><div class="dfull">Ethereum</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">SOL</div><div class="dfull">Solana</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">BNB</div><div class="dfull">BNB</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">XRP</div><div class="dfull">XRP</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">ADA</div><div class="dfull">Cardano</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-      </div>
-      <div class="panel"><div class="panel-head">Digital Assets II</div>
-        <div class="drow"><div><div class="dsym">AVAX</div><div class="dfull">Avalanche</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">LINK</div><div class="dfull">Chainlink</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">DOT</div><div class="dfull">Polkadot</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">UNI</div><div class="dfull">Uniswap</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">NMR</div><div class="dfull">Numeraire</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-        <div class="drow"><div><div class="dsym">GRT</div><div class="dfull">The Graph</div></div><div class="dmono" style="color:var(--dimmer)">—</div><div style="text-align:right"><span class="badge nt">—</span></div></div>
-      </div>
+<div class="grid-2" id="cryptoGrid"><div class="panel qm-awaiting"><div class="panel-head">Awaiting next snapshot</div><div style="padding:14px 16px;font-size:13px;line-height:1.7;color:var(--dim)">Spot prices and 24-hour changes for 12 major digital assets publish here after each daily pipeline run. The macro context for crypto as an asset class is covered in the guide above.</div></div></div>
 <!-- QM:CRYPTO:END -->
   </div>
 </div>
 
+</main>
 <footer>
   <div class="footer-top">
     <div>
@@ -375,107 +365,110 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
   <div class="footer-bottom">
     <span>© 2026 QuantMedia. All rights reserved.</span>
-    <span>Live data aggregated from global market sources</span>
+    <span>Index data via TradingView. Forex and crypto snapshots captured post-close.</span>
   </div>
 </footer>
 
+<script>
+/* ===========================================================================
+   markets.html client script
+   ---------------------------------------------------------------------------
+   NOTE: the opening script tag was missing in production, so this entire
+   block rendered as visible text and nothing on the page ran. That is why the
+   crypto grid sat on placeholder dashes and the TradingView panel never
+   appeared. Keep the opening tag.
+
+   Data comes from data/*.json written by scripts/daily_update.py. The grids
+   are already server-rendered in the HTML above; this script only REPLACES a
+   grid when it genuinely has rows to show. It must never overwrite good
+   server-rendered markup with dashes.
+   =========================================================================== */
 const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
-const now=()=>new Date().toLocaleTimeString('en-US',{hour12:false});
 
-// TRADINGVIEW — Indices
+// TRADINGVIEW — Indices (third-party, genuinely live during market hours)
 function loadTV(){
+  const host=document.querySelector('#tvIndices .tradingview-widget-container__widget');
+  if(!host) return;
   const sc=document.createElement('script');
   sc.type='text/javascript';
   sc.src='https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
   sc.async=true;
   sc.textContent=JSON.stringify({"colorTheme":document.documentElement.getAttribute('data-theme')==='light'?'light':'dark',"dateRange":"1D","showChart":false,"locale":"en","isTransparent":true,"showSymbolLogo":true,"showFloatingTooltip":false,"width":"100%","height":"400","tabs":[{"title":"US Indices","symbols":[{"s":"FOREXCOM:SPXUSD","d":"S&P 500"},{"s":"FOREXCOM:NSXUSD","d":"Nasdaq 100"},{"s":"DJ:DJI","d":"Dow Jones"},{"s":"CAPITALCOM:RTY","d":"Russell 2000"},{"s":"CBOE:VIX","d":"VIX"}]},{"title":"Europe","symbols":[{"s":"CAPITALCOM:UK100","d":"FTSE 100"},{"s":"CAPITALCOM:DE40","d":"DAX"},{"s":"INDEX:CAC40","d":"CAC 40"},{"s":"CAPITALCOM:EU50","d":"Euro Stoxx 50"}]},{"title":"Asia","symbols":[{"s":"INDEX:NKY","d":"Nikkei 225"},{"s":"INDEX:HSI","d":"Hang Seng"},{"s":"CAPITALCOM:AU200","d":"ASX 200"}]}]});
-  document.querySelector('#tvIndices .tradingview-widget-container__widget').appendChild(sc);
+  host.appendChild(sc);
 }
 
-// FOREX — ExchangeRate API (free, unlimited)
-const FX=[
-  [{p:'EUR/USD',f:'Euro / Dollar'},{p:'GBP/USD',f:'Sterling / Dollar'},{p:'USD/JPY',f:'Dollar / Yen'},{p:'USD/CHF',f:'Dollar / Franc'},{p:'AUD/USD',f:'Aussie / Dollar'},{p:'USD/CAD',f:'Dollar / Loonie'}],
-  [{p:'USD/MXN',f:'Dollar / Peso'},{p:'USD/BRL',f:'Dollar / Real'},{p:'USD/CNY',f:'Dollar / Yuan'},{p:'USD/INR',f:'Dollar / Rupee'},{p:'USD/KRW',f:'Dollar / Won'},{p:'USD/SGD',f:'Dollar / S$'}],
-  [{p:'EUR/GBP',f:'Euro / Sterling'},{p:'EUR/JPY',f:'Euro / Yen'},{p:'EUR/CHF',f:'Euro / Franc'},{p:'GBP/JPY',f:'Sterling / Yen'},{p:'NZD/USD',f:'Kiwi / Dollar'},{p:'USD/SEK',f:'Dollar / Krona'}],
+const FX_GROUPS=[
+  ['Majors',['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','USD/CAD']],
+  ['USD Crosses',['USD/MXN','USD/BRL','USD/CNY','USD/INR','USD/KRW','USD/SGD']],
+  ['Other Pairs',['EUR/GBP','EUR/JPY','EUR/CHF','GBP/JPY','NZD/USD','USD/SEK']],
 ];
-async function loadFX(){
-  let rates=null;
-  try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});rates=(await r.json()).rates;}catch{}
-  document.getElementById('fxMeta').textContent='Live rates \u2014 '+now();
-  const panels=['Majors','USD Crosses','Other Pairs'];
-  document.getElementById('fxGrid').innerHTML=FX.map((grp,gi)=>`
-    <div class="panel"><div class="panel-head">${panels[gi]}</div>
-    ${grp.map(({p,f})=>{
-      const [from,to]=p.split('/');
-      let price=null;
-      if(rates){
-        if(from==='USD') price=rates[to];
-        else if(to==='USD') price=rates[from]?1/rates[from]:null;
-        else price=(rates[from]&&rates[to])?rates[to]/rates[from]:null;
-      }
-      return`<div class="drow">
-        <div><div class="dsym">${p}</div><div class="dfull">${f}</div></div>
-        <div class="dmono">${price!=null?fmt(price,price>10?4:5):'--'}</div>
-        <div style="text-align:right"><span class="badge nt">—</span></div>
-      </div>`;
-    }).join('')}
-    </div>`).join('');
+
+function renderFX(feed){
+  const rows=feed&&feed.data;
+  if(!rows||!Object.keys(rows).length) return;   // keep server-rendered markup
+  const grid=document.getElementById('fxGrid');
+  if(!grid) return;
+  grid.innerHTML=FX_GROUPS.map(([label,pairs])=>{
+    const cells=pairs.filter(p=>rows[p]).map(p=>{
+      const e=rows[p], v=e.price;
+      const s=v>=10000?fmt(v,0):v>=1000?fmt(v,2):fmt(v,4);
+      return `<div class="drow"><div><div class="dsym">${p}</div><div class="dfull">${e.name}</div></div>`
+           + `<div class="dmono">${s}</div>`
+           + `<div style="text-align:right"><span class="badge nt">close</span></div></div>`;
+    }).join('');
+    return cells?`<div class="panel"><div class="panel-head">${label}</div>${cells}</div>`:'';
+  }).join('');
+  const meta=document.getElementById('fxMeta');
+  if(meta) meta.textContent=QM.freshness(feed.fetched_utc).state==='paused'?'Delayed snapshot':'Daily close snapshot';
 }
 
-// CRYPTO — CoinGecko (free)
-const COINS=[
-  {id:'bitcoin',s:'BTC',n:'Bitcoin'},{id:'ethereum',s:'ETH',n:'Ethereum'},
-  {id:'solana',s:'SOL',n:'Solana'},{id:'binancecoin',s:'BNB',n:'BNB'},
-  {id:'ripple',s:'XRP',n:'XRP'},{id:'cardano',s:'ADA',n:'Cardano'},
-  {id:'avalanche-2',s:'AVAX',n:'Avalanche'},{id:'chainlink',s:'LINK',n:'Chainlink'},
-  {id:'polkadot',s:'DOT',n:'Polkadot'},{id:'uniswap',s:'UNI',n:'Uniswap'},
-  {id:'numeraire',s:'NMR',n:'Numeraire'},{id:'the-graph',s:'GRT',n:'The Graph'},
-];
-async function loadCrypto(){
-  let data={};
-  try{const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${COINS.map(c=>c.id).join(',')}&vs_currencies=usd&include_24hr_change=true`,{signal:AbortSignal.timeout(10000)});data=await r.json();}catch{}
-  document.getElementById('cryptoMeta').textContent='Live rates \u2014 '+now();
-  const half=Math.ceil(COINS.length/2);
-  const panel=(items)=>items.map(c=>{
-    const price=data[c.id]?.usd??null;const chg=data[c.id]?.usd_24h_change??null;const cl=cls(chg);
-    return`<div class="drow">
-      <div><div class="dsym">${c.s}</div><div class="dfull">${c.n}</div></div>
-      <div class="dmono">${price!=null?'$'+fmt(price,price>1?2:5):'--'}</div>
-      <div style="text-align:right"><span class="badge ${cl}">${chg!=null?pct(chg):'--'}</span></div>
-    </div>`;}).join('');
-  document.getElementById('cryptoGrid').innerHTML=`
-    <div class="panel"><div class="panel-head">Digital Assets I</div>${panel(COINS.slice(0,half))}</div>
-    <div class="panel"><div class="panel-head">Digital Assets II</div>${panel(COINS.slice(half))}</div>`;
+function renderCrypto(feed){
+  const rows=feed&&feed.data;
+  if(!rows||!Object.keys(rows).length) return;   // keep server-rendered markup
+  const grid=document.getElementById('cryptoGrid');
+  if(!grid) return;
+  const keys=Object.keys(rows), half=Math.ceil(keys.length/2);
+  const panel=list=>list.map(k=>{
+    const e=rows[k], v=e.price, c=e.chg;
+    const s=v>=1000?fmt(v,0):v>=1?fmt(v,2):fmt(v,4);
+    return `<div class="drow"><div><div class="dsym">${k}</div><div class="dfull">${e.name}</div></div>`
+         + `<div class="dmono">$${s}</div>`
+         + `<div style="text-align:right"><span class="badge ${cls(c)}">${pct(c)}</span></div></div>`;
+  }).join('');
+  grid.innerHTML=`<div class="panel"><div class="panel-head">Digital Assets I</div>${panel(keys.slice(0,half))}</div>`
+                +`<div class="panel"><div class="panel-head">Digital Assets II</div>${panel(keys.slice(half))}</div>`;
+  const meta=document.getElementById('cryptoMeta');
+  if(meta) meta.textContent=QM.freshness(feed.fetched_utc).state==='paused'?'Delayed snapshot':'Daily close snapshot';
 }
 
-// MARKET BAR — Forex only (no FMP)
-async function loadMbar(){
-  let rates=null;
-  try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});rates=(await r.json()).rates;}catch{}
-  let btc=null;
-  try{const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();btc=d.bitcoin;}catch{}
-  const items=[
-    {l:'EUR/USD',v:rates?.EUR?fmt(1/rates.EUR,5):null,c:'nt'},
-    {l:'GBP/USD',v:rates?.GBP?fmt(1/rates.GBP,5):null,c:'nt'},
-    {l:'USD/JPY',v:rates?.JPY?fmt(rates.JPY,2):null,c:'nt'},
-    {l:'USD/CHF',v:rates?.CHF?fmt(rates.CHF,5):null,c:'nt'},
-    {l:'BTC',v:btc?'$'+fmt(btc.usd,0):null,c:cls(btc?.usd_24h_change)},
-  ];
-  document.getElementById('mbarItems').innerHTML=items.map(m=>`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${m.v||'--'}</span></div>`).join('');
+/* Freshness comes from the newest snapshot timestamp, never from the browser
+   clock. If no snapshot exists yet the page says so plainly. */
+function stampPage(feeds){
+  const stamps=feeds.filter(Boolean).map(f=>f.fetched_utc).filter(Boolean).sort();
+  const el=document.getElementById('lastUp');
+  if(!el) return;
+  if(!stamps.length){
+    el.textContent='Data snapshot pending — the next scheduled run publishes here.';
+    el.className='qm-warn';
+    return;
+  }
+  const newest=stamps[stamps.length-1];
+  el.setAttribute('data-snapshot',newest);
+  QM.stamp(el,newest,'Data snapshot');
 }
 
-async function loadAll(){
-  loadTV();
-  await Promise.all([loadFX(),loadCrypto(),loadMbar()]);
-  document.getElementById('lastUp').textContent='Live market data \u2014 last updated: '+now();
-}
-loadAll();setInterval(loadAll,120000);
-function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
-document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
-function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
+loadTV();
+QM.marketBar('mbarItems','mbarLabel');
+Promise.all([QM.get('markets_fx'),QM.get('markets_crypto')]).then(([fx,cx])=>{
+  renderFX(fx); renderCrypto(cx); stampPage([fx,cx]);
+});
+
+function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');if(!h||!m)return;h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');if(h)h.classList.remove('open');if(m)m.classList.remove('open');document.body.style.overflow='';});});
+function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('qm-theme',n);}catch(e){}}
 </script>
 </body>
 </html>

@@ -2,47 +2,185 @@ name: Daily Market Update
 
 on:
   schedule:
-    # 23:30 UTC = 19:30 ET (winter) / 18:30 ET (summer, DST)
-    # Runs Mon–Fri, ~3 h after NYSE close, after most post-close data is ready
+    # 23:30 UTC, Monday-Friday.
+    # The US equity close is 16:00 ET, which is 20:00 UTC during EDT and
+    # 21:00 UTC during EST. 23:30 UTC therefore sits 2.5-3.5h after the close
+    # all year round, with no DST branch to get wrong. Cron in GitHub Actions
+    # is ALWAYS UTC and never observes DST.
+    # Day-of-week 1-5 is Mon-Fri in UTC; a UTC Friday evening is still Friday
+    # afternoon in ET, so the Friday session is captured.
     - cron: '30 23 * * 1-5'
-  workflow_dispatch:   # allow manual trigger from Actions tab
+  workflow_dispatch:
+    inputs:
+      skip_deploy_check:
+        description: 'Skip the live deployment verification'
+        type: boolean
+        default: false
+
+# A slow run must never overlap the next scheduled one and race on push.
+concurrency:
+  group: daily-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write     # push generated data
+  pages: read         # read the Pages config to verify the deploy mechanism
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # needed for git push
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+          # A PAT (when present) makes the commit count as real repository
+          # activity, which is what stops GitHub auto-disabling this cron
+          # after 60 days. Falls back to GITHUB_TOKEN.
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
+      # Runs BEFORE the dependency install: the reliability suite is
+      # stdlib-only by design, so a logic regression fails in ~2s rather than
+      # after a three-minute pip install and a live API run.
+      - name: Run reliability tests
+        run: python scripts/test_pipeline.py
+
+      # Pinned deliberately. The pipeline died silently in April 2026 when an
+      # unpinned transitive upgrade broke the run. Do not float these.
       - name: Install dependencies
-        run: pip install --quiet requests pandas numpy yfinance
-
-      - name: Run daily update pipeline
-        run: python scripts/daily_update.py
-        env:
-          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}   # set via repo Settings → Secrets
-
-      - name: Commit and push if files changed
         run: |
+          python -m pip install --upgrade pip
+          pip install --quiet \
+            "requests==2.32.3" \
+            "pandas==2.2.3" \
+            "numpy==2.1.3" \
+            "yfinance==0.2.51"
+          pip list | grep -Ei 'requests|pandas|numpy|yfinance'
+
+      # Never fails the build. Individual sources fail soft and fall back to
+      # last-known-good; the validator below is the gate that decides whether
+      # the result is fit to publish.
+      - name: Run daily update pipeline
+        env:
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+        run: python scripts/daily_update.py
+
+      # THE CORRUPTION GATE. Non-zero here means nothing is committed and
+      # nothing is deployed, so production keeps whatever it already had.
+      #
+      # It blocks on corruption only (broken JSON, unbalanced HTML, blank
+      # grids, legacy methodology, leaked keys). It deliberately does NOT
+      # block on staleness: data/status.json is what tells users the feed is
+      # paused, so refusing to deploy it would hide the outage and strand any
+      # source that did refresh. Staleness is reported by the final step.
+      - name: Validate generated output
+        run: python scripts/validate_site.py
+
+      - name: Commit and push if changed
+        id: commit
+        run: |
+          set -euo pipefail
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          # Only commit when there are real changes; skip noisy empty commits
           if git diff --staged --quiet; then
-            echo "No changes detected — skipping commit"
-          else
-            CHANGED=$(git diff --staged --name-only | tr '\n' ' ')
-            git commit -m "Daily signal update $(date -u +%Y-%m-%d) — ${CHANGED}"
-            git push
+            echo "No content changes - skipping commit"
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "Changed files:"
+          git diff --staged --name-only
+          COUNT=$(git diff --staged --name-only | wc -l)
+          git commit -m "Daily data update $(date -u +%Y-%m-%d) (${COUNT} files)"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && break
+            echo "rebase attempt $i failed, retrying"; sleep 5
+          done
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+          echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+
+      # Answers "which mechanism actually deploys this site?" rather than
+      # assuming. build_type "legacy" = deploy from a branch (a push is
+      # enough); "workflow" = a separate Pages workflow must run, and a data
+      # commit alone will NOT deploy.
+      - name: Check Pages deployment mechanism
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          INFO=$(gh api "repos/${GITHUB_REPOSITORY}/pages" 2>/dev/null || echo '{}')
+          BUILD_TYPE=$(echo "$INFO" | python -c "import json,sys;print(json.load(sys.stdin).get('build_type','unknown'))" 2>/dev/null || echo unknown)
+          BRANCH=$(echo "$INFO" | python -c "import json,sys;print((json.load(sys.stdin).get('source') or {}).get('branch','?'))" 2>/dev/null || echo '?')
+          PATH_=$(echo "$INFO" | python -c "import json,sys;print((json.load(sys.stdin).get('source') or {}).get('path','?'))" 2>/dev/null || echo '?')
+          echo "Pages build_type=$BUILD_TYPE source=$BRANCH$PATH_ (this ref: $GITHUB_REF_NAME)"
+          {
+            echo "### Pages deployment"
+            echo "- build_type: \`$BUILD_TYPE\`"
+            echo "- source: \`$BRANCH\` \`$PATH_\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$BUILD_TYPE" = "workflow" ]; then
+            echo "::warning::Pages builds via a separate workflow. A data commit alone may not deploy - confirm the Pages workflow triggers on push to ${GITHUB_REF_NAME}."
+          elif [ "$BUILD_TYPE" = "legacy" ] && [ "$BRANCH" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Pages deploys from '$BRANCH' but this workflow pushed to '$GITHUB_REF_NAME'. The data will never go live."
+            exit 1
+          fi
+
+      # Proves the new bytes are actually being served, not just committed.
+      - name: Verify live deployment
+        if: steps.commit.outputs.committed == 'true' && !inputs.skip_deploy_check
+        run: |
+          set -uo pipefail
+          EXPECTED=$(python -c "import json;print(json.load(open('data/status.json'))['last_pipeline_run'][:10])")
+          echo "Expecting live status.json last_pipeline_run to start with $EXPECTED"
+          for i in $(seq 1 10); do
+            sleep 30
+            LIVE=$(curl -fsSL "https://quantmedia.io/data/status.json?cb=$RANDOM" \
+                   | python -c "import json,sys;print(json.load(sys.stdin)['last_pipeline_run'][:10])" 2>/dev/null || echo none)
+            echo "attempt $i: live=$LIVE expected=$EXPECTED"
+            if [ "$LIVE" = "$EXPECTED" ]; then
+              echo "Pages deployment confirmed"
+              echo "- deployment: :white_check_mark: confirmed live" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+          echo "::error::Pages did not serve the new snapshot within 5 minutes."
+          echo "::error::Check Settings > Pages > Source, and that the branch matches."
+          exit 1
+
+      # Runs last on purpose: good data is already committed and deployed by
+      # this point. This only turns the run red so a failing upstream is
+      # visible, instead of the site silently degrading for months.
+      - name: Report source failures
+        if: always()
+        run: |
+          set -uo pipefail
+          python - <<'PY'
+          import json, pathlib, sys
+          p = pathlib.Path('data/status.json')
+          if not p.exists():
+              print('::error::data/status.json missing - pipeline did not complete')
+              sys.exit(1)
+          s = json.loads(p.read_text())
+          print(f"pipeline_result={s.get('pipeline_result')}")
+          for src, state in (s.get('sources') or {}).items():
+              print(f"  {src}: {state}")
+          for e in s.get('errors') or []:
+              print(f'::warning::source failure: {e}')
+          # Signals are the site's core product: a paused signal feed is an
+          # outage even when every other source is fine.
+          if s.get('signals_status') == 'paused':
+              print('::error::signal data is stale beyond tolerance')
+              sys.exit(1)
+          if s.get('pipeline_result') == 'FAILED':
+              print('::error::pipeline reported FAILED')
+              sys.exit(1)
+          PY

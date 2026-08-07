@@ -8,24 +8,26 @@
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily US Stock Signals: Post-Close Signal Dashboard | QuantMedia</title>
-<meta name="description" content="Rules-based BUY signals for S&P 500 stocks. 93-factor analysis, Sharpe 2.199, 67.3% win rate. Updated post-close daily. Research use only.">
+<meta name="description" content="Free post-close stock signals for 180 liquid US equities. Each stock is scored against 30 technical signals; 22 or more bullish flags a BUY. Rules-based, research use only.">
 <link rel="canonical" href="https://quantmedia.io/quantum-signals.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="author" content="QuantMedia">
 <meta name="keywords" content="daily stock signals, US stock buy signals, post-close stock signals, end of day stock screener, multi-factor stock screener, technical stock signals today, daily stock scanner, stock signal dashboard, US equities signals">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Daily US Stock Signals: Post-Close Dashboard | QuantMedia">
-<meta property="og:description" content="Free daily BUY signals for S&P 500 stocks. Multi-factor analysis, Sharpe 2.199, 67.3% win rate. Updated after market close. Research use only.">
+<meta property="og:description" content="180 liquid US equities scored against 30 technical signals after every close. 22 or more bullish signals flags a BUY. Free, rules-based, research use only.">
 <meta property="og:url" content="https://quantmedia.io/quantum-signals.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Daily US Stock Signals: Post-Close Dashboard | QuantMedia">
-<meta name="twitter:description" content="Free daily BUY signals for S&P 500 stocks. Multi-factor analysis, Sharpe 2.199, 67.3% win rate. Updated after market close. Research use only.">
+<meta name="twitter:description" content="180 liquid US equities scored against 30 technical signals after every close. 22 or more bullish signals flags a BUY. Free, rules-based, research use only.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
+<script src="qm-data.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
@@ -34,11 +36,11 @@
   "@context":"https://schema.org",
   "@type":"TechArticle",
   "headline":"Daily US Stock Signals — Post-Close Signal Dashboard",
-  "description":"Free daily US stock signals updated after market close. Signal dashboard scans 500+ equities using multi-factor technical analysis with backtest context. Research and informational use only.",
+  "description":"Free daily US stock signals updated after market close. 180 liquid US-listed equities are scored against 30 binary technical signals; 22 or more bullish signals flags a BUY. Research and informational use only.",
   "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
   "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
   "datePublished":"2026-03-13",
-  "dateModified":"2026-04-14",
+  "dateModified":"2026-08-07",
   "mainEntityOfPage":"https://quantmedia.io/quantum-signals.html",
   "keywords":"daily stock signals, US stock buy signals, post-close stock signals, end of day stock screener, multi-factor stock signals, daily stock scanner"
 }</script>
@@ -54,14 +56,14 @@
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "mainEntity":[
-    {"@type":"Question","name":"What are daily stock signals?","acceptedAnswer":{"@type":"Answer","text":"Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY."}},
+    {"@type":"Question","name":"What are daily stock signals?","acceptedAnswer":{"@type":"Answer","text":"Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scores 180 liquid US-listed equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY."}},
     {"@type":"Question","name":"How does a post-close stock signal dashboard work?","acceptedAnswer":{"@type":"Answer","text":"A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold (22 of 30 signals). Results are published as a daily signal table."}},
     {"@type":"Question","name":"What does BUY mean in this stock signal dashboard?","acceptedAnswer":{"@type":"Answer","text":"BUY means 22 or more bullish signals (out of 30) are currently active for that stock. It is a research signal, not investment advice. Stocks below the threshold are marked WATCH and hidden from the dashboard."}},
     {"@type":"Question","name":"Are these stock signals free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice."}},
     {"@type":"Question","name":"How often are daily stock signals updated?","acceptedAnswer":{"@type":"Answer","text":"Every trading day (Monday through Friday), after the US market closes at 4:00 PM ET. Signals reflect the most recent completed session and are not updated intraday."}},
     {"@type":"Question","name":"Can I use these signals for day trading?","acceptedAnswer":{"@type":"Answer","text":"No. Quantum Signals is a post-close, end-of-day system. All data reflects the prior day's close. It is not designed for intraday trading. The backtest hold period is 60 trading days."}},
-    {"@type":"Question","name":"What stocks are included in the daily signal scan?","acceptedAnswer":{"@type":"Answer","text":"The universe includes 500+ US-listed equities across all sectors. Stocks must have at least 500 trading days of historical data to be included."}},
-    {"@type":"Question","name":"Does this stock signal system use quantum computing or AI?","acceptedAnswer":{"@type":"Answer","text":"No. The name Quantum is metaphorical, referring to the layered multi-factor signal stacking approach. The engine uses classical technical indicators and a simple confluence-counting rule."}}
+    {"@type":"Question","name":"What stocks are included in the daily signal scan?","acceptedAnswer":{"@type":"Answer","text":"The universe is a fixed list of 180 liquid US-listed equities spanning every major sector. It is a curated liquidity list rather than an index: it includes large-cap S&P 500 names alongside high-volume growth, fintech, semiconductor, mining and alternative-asset tickers that are not S&P 500 constituents. A stock must return at least 60 completed daily sessions of clean open/high/low/close/volume data in the trailing one-year window to be scored; names that fail that check are skipped for the day."}},
+    {"@type":"Question","name":"Does this system use quantum computing or AI?","acceptedAnswer":{"@type":"Answer","text":"No. The name “Quantum” is metaphorical, referring to the layered, multi-factor signal stacking approach. The engine uses classical technical indicators and a simple confluence-counting rule. It does not use quantum computing, machine learning, or artificial intelligence."}}
   ]
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,6 +116,7 @@ a{text-decoration:none;color:inherit}
 .stat-val.blue{color:var(--blue)}
 .stat-val.gold{color:var(--gold)}
 .stat-label{font-size:11px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.qm-fresh{color:var(--accent)}.qm-warn{color:var(--gold)}.qm-stale{color:var(--red)}
 .callout{margin:24px 0;padding:16px 20px;border-left:3px solid var(--accent);background:var(--bg2);border-radius:0 4px 4px 0}
 .callout.warn{border-left-color:var(--gold)}
 .callout.red{border-left-color:var(--red)}
@@ -204,18 +207,18 @@ a{text-decoration:none;color:inherit}
     <div class="hero-badge">
       <span class="badge-live">Daily Signals</span>
       <span class="badge-topic">Post-Close</span>
-      <span class="badge-topic">500+ US Stocks</span>
-      <span class="badge-topic">Multi-Factor</span>
+      <span class="badge-topic">180 US Equities</span>
+      <span class="badge-topic">30 Signals &middot; 22 Threshold</span>
     </div>
     <h1 class="article-h1">Daily US Stock Signals: Post-Close Signal Dashboard</h1>
-    <p class="article-subtitle">A rules-based signal engine that scans 500+ US equities after each market close. Every stock is evaluated against 93 technical signals; when 4 or more are bullish, the stock is flagged BUY. All others are marked WATCH. This is a research tool &mdash; not personalized investment advice.</p>
-    <p style="font-size:12px;color:var(--dimmer);margin-top:-12px;margin-bottom:20px"><em>Note: &ldquo;Quantum&rdquo; is used metaphorically. This system does not use quantum computing. The name refers to the layered, multi-factor signal stacking and cross-validation approach.</em></p>
+    <p class="article-subtitle">A rules-based signal engine that scores <strong>180 liquid US-listed equities</strong> after each market close. Every stock is evaluated against <strong>30 binary technical signals</strong>; when <strong>22 or more</strong> are bullish (at least 73% agreement), the stock is flagged BUY. All others are marked WATCH. This is a research tool &mdash; not personalized investment advice.</p>
+    <p style="font-size:12px;color:var(--dimmer);margin-top:-12px;margin-bottom:20px"><em>Note: &ldquo;Quantum&rdquo; is used metaphorically. This system does not use quantum computing, machine learning, or AI. The name refers to the layered, multi-factor signal stacking approach.</em></p>
     <div class="article-byline">
       <span class="byline-author">QuantMedia Research</span>
       <span>&middot;</span>
-      <span>April 2026</span>
+      <span>Published March 2026</span>
       <span>&middot;</span>
-      <span>Updated post-close daily</span>
+      <span id="heroStamp">Scan runs Mon&ndash;Fri after the US close</span>
     </div>
   </div>
 </div>
@@ -224,11 +227,12 @@ a{text-decoration:none;color:inherit}
   <article class="article-content article-wrap">
 
     <div class="stat-grid" id="metricsGrid">
-      <div class="stat-card"><div class="stat-val" id="mBuy">80</div><div class="stat-label">BUY Signals<br>Today</div></div>
-      <div class="stat-card"><div class="stat-val" id="mTotal">509</div><div class="stat-label">Total Stocks<br>Scanned</div></div>
-      <div class="stat-card"><div class="stat-val blue" id="mWR">67.3%</div><div class="stat-label">Backtest<br>Win Rate</div></div>
-      <div class="stat-card"><div class="stat-val gold" id="mSharpe">2.199</div><div class="stat-label">Sharpe<br>Ratio</div></div>
+      <div class="stat-card"><div class="stat-val" id="mBuy">&ndash;</div><div class="stat-label">BUY Signals<br>Latest Scan</div></div>
+      <div class="stat-card"><div class="stat-val" id="mTotal">180</div><div class="stat-label">Stocks<br>Scored</div></div>
+      <div class="stat-card"><div class="stat-val blue" id="mMedian">&ndash;</div><div class="stat-label">Median Signal<br>Count (of 30)</div></div>
+      <div class="stat-card"><div class="stat-val gold" id="mThresh">22</div><div class="stat-label">BUY Threshold<br>(of 30)</div></div>
     </div>
+    <p style="font-size:11px;color:var(--dimmer);margin:-20px 0 24px">These four figures describe the most recent completed scan. They are counts produced by the rules below &mdash; not performance results, and not a forecast.</p>
 
     <div class="callout red">
       <div class="callout-title">&#9888; Important Disclaimer</div>
@@ -237,36 +241,25 @@ a{text-decoration:none;color:inherit}
 
     <!-- LIVE SIGNALS DASHBOARD — BUY ONLY -->
     <h2 id="signals" style="margin-top:0">&#9889; Active Signals &mdash; BUY Only</h2>
-    <p style="margin-bottom:4px;font-size:13px;color:var(--dim)">Showing stocks with <strong style="color:var(--accent)">BUY</strong> decisions only (4+ active bullish signals). WATCH stocks are hidden. Market date: <span id="scanTime" style="color:var(--accent);font-weight:600">Updated daily after close</span></p>
-    <p style="margin-bottom:12px;font-size:11px;color:var(--dimmer)">End-of-day data. Signals reflect prior close, not real-time prices. Updated: <span id="updatedTime">post-close daily</span></p>
-
-    <!-- TIER FILTER -->
-    <div id="tierFilter" style="display:none;margin-bottom:12px;gap:6px;flex-wrap:wrap">
-      <button class="tier-btn active" data-tier="all">All</button>
-      <button class="tier-btn" data-tier="S">&#9733; S-Tier</button>
-      <button class="tier-btn" data-tier="A">A-Tier</button>
-      <button class="tier-btn" data-tier="B">B-Tier</button>
-    </div>
+    <p style="margin-bottom:4px;font-size:13px;color:var(--dim)">Showing stocks with a <strong style="color:var(--accent)">BUY</strong> decision only (22 or more of 30 signals bullish). WATCH stocks are hidden. Session scored: <span id="scanTime" style="color:var(--accent);font-weight:600">loading&hellip;</span></p>
+    <p style="margin-bottom:12px;font-size:11px;color:var(--dimmer)" id="updatedTime">End-of-day data. Signals reflect the prior close, not real-time prices.</p>
 
     <div id="signalStatus" style="padding:20px 24px;font-size:13px;color:var(--dim);background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:16px;line-height:1.75">
-      Signal data is generated after the US market close (4:00 PM ET) and published the same evening. The engine scans 500+ S&amp;P 500 equities against 93 technical rules — momentum, trend, volume, and volatility signals. A stock is flagged <strong style="color:var(--accent)">BUY</strong> when 4 or more signals align bullishly. All others are marked <strong>WATCH</strong>. On days with no qualifying setups, no signals are published — a deliberate design choice to avoid forcing low-conviction entries. Check back after 5:00 PM ET on US market days.
+      Signal data is generated after the US market close (4:00 PM ET) and published the same evening. The engine scores 180 liquid US-listed equities against 30 binary technical signals &mdash; trend, momentum, volume, and volatility. A stock is flagged <strong style="color:var(--accent)">BUY</strong> when 22 or more are simultaneously bullish. All others are marked <strong>WATCH</strong>. On days with no qualifying setups, no signals are published &mdash; a deliberate design choice to avoid forcing low-conviction entries.
     </div>
     <div id="signalTableWrap" style="display:none;overflow-x:auto;margin-bottom:32px">
-      <table class="param-table" id="signalTable" style="min-width:1100px">
+      <table class="param-table" id="signalTable" style="min-width:900px">
         <thead>
           <tr>
-            <th style="cursor:pointer" data-sort="d">Decision</th>
-            <th style="cursor:pointer" data-sort="t">Tier</th>
+            <th>Decision</th>
             <th style="cursor:pointer" data-sort="s">Symbol</th>
-            <th style="cursor:pointer" data-sort="p">Price</th>
-            <th style="cursor:pointer" data-sort="r">RSI</th>
+            <th style="cursor:pointer" data-sort="p">Close</th>
             <th style="cursor:pointer" data-sort="sc">Signals</th>
-            <th>Entry</th>
-            <th>Stop</th>
-            <th>Target</th>
-            <th style="cursor:pointer" data-sort="wr">WR%</th>
-            <th style="cursor:pointer" data-sort="tr">BT Ret%</th>
-            <th>Trades</th>
+            <th style="cursor:pointer" data-sort="r" data-col="r">RSI(14)</th>
+            <th style="cursor:pointer" data-sort="r22" data-col="r22">22D Ret%</th>
+            <th>Ref. Stop</th>
+            <th>Ref. Target</th>
+            <th style="cursor:pointer" data-sort="up20" data-col="up20">20D Up-Rate</th>
           </tr>
         </thead>
         <tbody id="signalBody"></tbody>
@@ -297,13 +290,13 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <h2 id="how-to-read">How to Read Today's Stock Signals</h2>
-    <p>The table above shows every stock with 4 or more active bullish signals as of the most recent market close. Here is how to interpret each row:</p>
+    <p>The table above shows every stock with 22 or more active bullish signals as of the most recent market close. Here is how to interpret each row:</p>
     <ol>
       <li><strong>Check the Decision column.</strong> Every row shown is BUY. Stocks below the threshold (WATCH) are hidden.</li>
-      <li><strong>Look at Signals count.</strong> A stock showing 15/93 has broader agreement than one showing 4/93. Higher counts mean more bullish signals are active, but this does not guarantee a better outcome.</li>
-      <li><strong>Use Tier as context.</strong> Tier reflects historical backtest performance for that stock. S-Tier had the strongest historical metrics. Tier does not control the BUY/WATCH decision and is not a forward-looking guarantee.</li>
-      <li><strong>Review Entry, Stop, Target.</strong> These are reference levels derived from the prior close using fixed percentages (stop = &minus;14%, target = +7.5%). They are not execution prices.</li>
-      <li><strong>Check WR% and BT Ret%.</strong> These describe how the stock performed historically in backtesting. They are not predictions. Look at the Trades column to see how many historical trades support these figures.</li>
+      <li><strong>Look at the Signals count.</strong> A stock showing 26/30 has broader technical agreement than one showing 22/30. Higher counts mean more of the 30 checks are simultaneously bullish &mdash; they do not imply a better outcome.</li>
+      <li><strong>Read RSI(14) as context, not as the trigger.</strong> RSI is one of the 30 inputs. It is displayed because it is the most widely recognised of them, but it never decides BUY or WATCH on its own.</li>
+      <li><strong>Treat Ref. Stop and Ref. Target as volatility bands, not orders.</strong> They are derived from the stock's own 14-day Average True Range (stop = close &minus; 2.0 &times; ATR, target = close + 1.5 &times; ATR), so a volatile stock gets a wider band than a quiet one. They are not execution prices and carry no guarantee.</li>
+      <li><strong>Read 20D Up-Rate as a base rate.</strong> It is the share of overlapping 20-session windows in the trailing year in which that stock finished higher. It describes the stock's own recent behaviour &mdash; it is <em>not</em> a win rate for these signals and not a backtest of this strategy.</li>
     </ol>
     <div class="callout">
       <div class="callout-title">Key reminder</div>
@@ -311,10 +304,18 @@ a{text-decoration:none;color:inherit}
     </div>
 
     <h2 id="overview">What Is Quantum Signals?</h2>
-    <p>Quantum Signals is a <strong>research-focused, post-close multi-factor technical signal engine</strong> for US equities. Every trading day after market close, the system scans <strong>~180 liquid large-cap stocks</strong> and evaluates 30 technical signals per ticker using end-of-day OHLCV data.</p>
-    <p>The decision rule is straightforward: if 22 or more signals are simultaneously bullish (≥73% agreement of 30), the stock is flagged as <strong>BUY</strong>. Stocks below the threshold are classified as <strong>WATCH</strong> (no active setup) and are not shown in the dashboard.</p>
-    <p>Stocks that appear in the BUY list are also assigned a tier (S, A, B, C) based on that stock's historical backtest performance within the selected strategy variant. Tier is a descriptive ranking &mdash; it does not directly gate the BUY/WATCH decision.</p>
+    <p>Quantum Signals is a <strong>research-focused, post-close multi-factor technical signal engine</strong> for US equities. Every trading day after market close, the system scores <strong>180 liquid US-listed equities</strong> against 30 technical signals per ticker using end-of-day open/high/low/close/volume data.</p>
+    <p>The decision rule is straightforward: if 22 or more signals are simultaneously bullish (at least 73% agreement of 30), the stock is flagged as <strong>BUY</strong>. Stocks below the threshold are classified as <strong>WATCH</strong> (no active setup) and are not shown in the dashboard.</p>
     <p>The engine is fully rules-based with no discretionary override. It is designed for research and informational use.</p>
+
+    <h3 id="why-180">Why 180 stocks and not the whole S&amp;P 500?</h3>
+    <p>Two separate reasons, and it is worth being precise about both because the distinction matters for interpreting the output.</p>
+    <p><strong>The universe is a liquidity list, not an index.</strong> It is a fixed, hand-maintained set of 180 US-listed tickers chosen for continuous quotation and deep daily volume. It is not the S&amp;P 500 and does not track index membership: it deliberately includes high-volume names that are <em>not</em> S&amp;P 500 constituents &mdash; Coinbase, Robinhood, Nu Holdings, Agnico Eagle, Brookfield and similar &mdash; while omitting several hundred smaller index members whose thinner order books make end-of-day technical signals noisier and less reproducible. Screening a smaller, consistently liquid universe produces signals that behave more stably from one session to the next.</p>
+    <p><strong>A daily eligibility gate can reduce that number further.</strong> Each ticker must return at least <strong>60 completed daily sessions</strong> of clean OHLCV data within the trailing one-year download window. Any name that fails to download, is halted, has recently listed, or comes back with gaps is skipped for that day rather than being scored on incomplete history. The &ldquo;Stocks Scored&rdquo; figure at the top of this page is therefore the count that actually passed the gate on the most recent run, which is normally the full 180 and occasionally slightly fewer.</p>
+    <div class="callout warn">
+      <div class="callout-title">A note on earlier versions of this page</div>
+      <p>Before this system was rebuilt, this page described a larger universe and a different signal count inherited from an earlier prototype. Those figures no longer described what the code ran. The universe size, signal count and threshold quoted throughout this page are now read directly from the production pipeline that generates the table above.</p>
+    </div>
 
     <h2 id="decision-logic">How BUY and WATCH Decisions Are Made</h2>
     <p>The core principle is <strong>multi-factor confluence</strong>. No single indicator is reliable on its own. The system counts how many signals are currently bullish for each stock. If 22 or more are active (out of 30), the stock is flagged BUY. Otherwise it is WATCH.</p>
@@ -332,15 +333,9 @@ a{text-decoration:none;color:inherit}
     <span class="kw">return</span> <span class="str">"WATCH"</span></pre></div>
     </div>
 
-    <h3>Tier Classification</h3>
-    <p>Tier is a <strong>descriptive ranking</strong> based on each stock's historical backtest performance within the selected strategy variant. It does not directly control the BUY/WATCH decision &mdash; a C-Tier stock with 4+ signals still appears as BUY.</p>
-    <ul>
-      <li><strong>&#9733; S-Tier:</strong> Strongest historical backtest metrics (Sharpe, win rate, return) within this strategy variant.</li>
-      <li><strong>A-Tier:</strong> Above-average historical performance.</li>
-      <li><strong>B-Tier:</strong> Acceptable metrics with wider variance across backtest windows.</li>
-      <li><strong>C-Tier:</strong> Limited trade history or weaker backtest metrics. Included for completeness.</li>
-      <li><strong>WATCH:</strong> Below the confluence threshold. Not displayed in the dashboard.</li>
-    </ul>
+    <h3>Why 22 of 30, and what the threshold does not do</h3>
+    <p>The threshold is a deliberately blunt instrument: count the bullish checks, compare to 22, publish or don't. It is not optimised against past returns, which means it is not fitted to any particular market period &mdash; but it also means it carries no claim of being the &ldquo;best&rdquo; cut-off. A stock at 22/30 and a stock at 27/30 both appear as BUY; the Signals column is there so you can see the difference rather than having it hidden behind a single label.</p>
+    <p>Requiring roughly three-quarters agreement across trend, momentum, volume and volatility families means a stock generally has to be in a broad, confirmed uptrend to qualify. The direct consequence is that the engine produces few or no signals in choppy and falling markets. That is the intended behaviour, not a fault &mdash; but it also means the output is structurally biased toward trend continuation and will be least useful precisely at turning points.</p>
 
     <h2 id="signal-architecture">What the Engine Evaluates</h2>
     <p>The engine evaluates 30 technical signals per stock. Each produces a binary output (1&nbsp;=&nbsp;bullish, 0&nbsp;=&nbsp;not active). The BUY/WATCH decision is based solely on the count of active bullish signals vs. the confluence threshold (currently 22 of 30). Categories include:</p>
@@ -358,22 +353,21 @@ a{text-decoration:none;color:inherit}
     <p>Volume ratio vs. moving averages, OBV trend, accumulation/distribution. Volume confirmation helps distinguish genuine moves from low-participation noise.</p>
 
     <h3>Regime Filters</h3>
-    <p>The system includes a library of regime and quality filters (volatility regime, trend quality, etc.). <strong>Important:</strong> the full filter stack is not applied as a hard gate in the live signal engine, because applying all filters simultaneously removes nearly all entries. In the current dashboard variant, the confluence count drives the decision; regime filters inform the backtest tier rankings but do not veto live signals.</p>
+    <p>Two of the 30 checks act as a volatility sanity filter: they confirm that the stock's 14-day ATR sits inside a workable band relative to price &mdash; not so quiet that the reading is meaningless, not so violent that a technical setup is unlikely to hold. <strong>Important:</strong> these are counted like any other signal. There is no separate veto stage, no discretionary override, and no hidden filter layer that removes stocks after scoring. The confluence count is the entire decision.</p>
 
     <h2 id="parameters">Strategy Parameters</h2>
     <p>The following parameters define the current dashboard variant. These are fixed and transparent.</p>
     <table class="param-table">
       <thead><tr><th>Parameter</th><th>Value</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td>Confluence Threshold</td><td>22 / 30</td><td>Minimum active bullish signals required for BUY</td></tr>
-        <tr><td>Reference Stop</td><td>Entry &times; (1 &minus; 14%)</td><td>Fixed percentage below entry; reference level, not an execution guarantee</td></tr>
-        <tr><td>Reference Target</td><td>Entry &times; (1 + 7.5%)</td><td>Fixed percentage above entry; reference level only</td></tr>
-        <tr><td>Hold Period</td><td>60 trading days</td><td>Maximum holding window used in backtests</td></tr>
-        <tr><td>Max Positions</td><td>10</td><td>Concurrent position limit used in backtests</td></tr>
-        <tr><td>Universe</td><td>~180 liquid large-caps</td><td>All sectors, minimum 500 days of historical data</td></tr>
-        <tr><td>Scan Frequency</td><td>Daily post-close</td><td>After 16:00 ET market close</td></tr>
-        <tr><td>Data Source</td><td>Yahoo Finance (yfinance)</td><td>End-of-day OHLCV candles</td></tr>
-        <tr><td>Tier Ranking</td><td>S / A / B / C</td><td>Descriptive rank based on stock-level backtest metrics</td></tr>
+        <tr><td>Universe</td><td>180 US-listed equities</td><td>Fixed liquidity list across all major sectors; not an index and not limited to S&amp;P 500 members</td></tr>
+        <tr><td>Signals per Stock</td><td>30</td><td>Binary technical checks across trend, momentum, volatility, volume and 52-week position</td></tr>
+        <tr><td>Confluence Threshold</td><td>22 / 30</td><td>Minimum active bullish signals required for BUY (at least 73% agreement)</td></tr>
+        <tr><td>Eligibility Gate</td><td>60 sessions</td><td>Minimum completed daily OHLCV bars in the trailing 1-year window; short or gapped histories are skipped</td></tr>
+        <tr><td>Reference Stop</td><td>Close &minus; 2.0 &times; ATR(14)</td><td>Volatility-scaled reference level, not an execution guarantee</td></tr>
+        <tr><td>Reference Target</td><td>Close + 1.5 &times; ATR(14)</td><td>Volatility-scaled reference level only</td></tr>
+        <tr><td>Scan Frequency</td><td>Mon&ndash;Fri post-close</td><td>Pipeline runs at 23:30 UTC, after the 16:00 ET close</td></tr>
+        <tr><td>Data Source</td><td>Yahoo Finance via yfinance</td><td>End-of-day OHLCV candles, split- and dividend-adjusted</td></tr>
       </tbody>
     </table>
 
@@ -381,31 +375,29 @@ a{text-decoration:none;color:inherit}
     <table class="param-table">
       <thead><tr><th>Column</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td><strong>Decision</strong></td><td>BUY = 22+ active bullish signals (≥73% of 30). Only BUY rows are shown; WATCH stocks are hidden.</td></tr>
-        <tr><td><strong>Tier</strong></td><td>Descriptive ranking (S/A/B/C) based on stock-level backtest metrics for this strategy variant. Does not gate the BUY/WATCH decision.</td></tr>
+        <tr><td><strong>Decision</strong></td><td>BUY = 22 or more active bullish signals (at least 73% of 30). Only BUY rows are shown; WATCH stocks are hidden.</td></tr>
         <tr><td><strong>Symbol</strong></td><td>US-listed stock ticker.</td></tr>
-        <tr><td><strong>Price</strong></td><td>Closing price on the scan date. All reference levels are derived from this value.</td></tr>
-        <tr><td><strong>RSI</strong></td><td>14-period Relative Strength Index. Shown for context only &mdash; RSI is one of 30 signals and does not independently determine BUY/WATCH.</td></tr>
-        <tr><td><strong>Signals</strong></td><td>Count of currently active bullish signals out of 30 (e.g., &ldquo;22/30&rdquo;). Higher counts indicate broader technical agreement.</td></tr>
-        <tr><td><strong>Entry</strong></td><td>Reference entry level = latest closing price. Not an execution price or next-day-open prediction.</td></tr>
-        <tr><td><strong>Stop</strong></td><td>Reference stop = Entry &times; (1 &minus; 14%). Model-generated; not an execution guarantee.</td></tr>
-        <tr><td><strong>Target</strong></td><td>Reference target = Entry &times; (1 + 7.5%). Model-generated; not an execution guarantee.</td></tr>
-        <tr><td><strong>WR%</strong></td><td>Win rate &mdash; percentage of backtest trades that hit the target before the stop or hold limit. Historical; does not predict future outcomes.</td></tr>
-        <tr><td><strong>BT Ret%</strong></td><td>Backtest return &mdash; cumulative return for this stock across all backtest trades. Historical; not a forecast.</td></tr>
-        <tr><td><strong>Trades</strong></td><td>Number of backtest trades. Higher counts give more statistical weight to WR% and BT Ret%.</td></tr>
+        <tr><td><strong>Close</strong></td><td>Closing price on the session shown at the top of the table. All reference levels derive from this value.</td></tr>
+        <tr><td><strong>Signals</strong></td><td>Count of currently active bullish signals out of 30 (e.g. &ldquo;24/30&rdquo;). Higher counts indicate broader technical agreement, not a stronger expected return.</td></tr>
+        <tr><td><strong>RSI(14)</strong></td><td>14-period Relative Strength Index at the close. Context only &mdash; RSI is one of the 30 checks and never independently determines BUY/WATCH.</td></tr>
+        <tr><td><strong>22D Ret%</strong></td><td>Simple price return over the last 22 trading sessions (roughly one calendar month). Describes recent momentum; it is an input to context, not to the decision.</td></tr>
+        <tr><td><strong>Ref. Stop</strong></td><td>Close &minus; 2.0 &times; ATR(14). A volatility-scaled reference band, so wider for volatile names. Model-generated; not an order and not a guarantee.</td></tr>
+        <tr><td><strong>Ref. Target</strong></td><td>Close + 1.5 &times; ATR(14). Same basis as the stop. Model-generated; not an order and not a guarantee.</td></tr>
+        <tr><td><strong>20D Up-Rate</strong></td><td>Share of overlapping 20-session windows in the trailing year in which this stock closed higher than it started. A base rate for the individual stock. It is <strong>not</strong> a win rate for these signals, not a backtest of this strategy, and carries no forward-looking claim.</td></tr>
       </tbody>
     </table>
 
     <h2 id="interpretation">Risks, Limitations, and How to Interpret Backtest Data</h2>
     <div class="callout warn">
-      <div class="callout-title">Backtest &#8800; Future Performance</div>
-      <p>All WR%, BT Return%, and Sharpe values describe historical model behavior under specific backtest assumptions. Real-world execution differs due to slippage, commissions, liquidity, gap risk, and changing market regimes. These metrics are descriptive context, not forecasts.</p>
+      <div class="callout-title">This page publishes no performance record</div>
+      <p>QuantMedia does not publish a track record for this engine, and the figures on this page are not one. There is no live or audited performance history, no Sharpe ratio, no cumulative return and no trade log &mdash; because no verified out-of-sample record exists to report. The only numbers shown are counts from the current scan and descriptive statistics about individual stocks. Any figure that looked like a performance claim on an earlier version of this page has been removed rather than restated.</p>
     </div>
     <ul>
-      <li><strong>BUY &#8800; &ldquo;Buy immediately&rdquo;:</strong> A BUY flag means 4+ bullish signals are currently active. It is not a trade recommendation or call to action.</li>
-      <li><strong>WATCH = Below threshold:</strong> Stocks with fewer than 4 active bullish signals are not shown. WATCH means &ldquo;no active setup,&rdquo; not &ldquo;hold your existing position.&rdquo;</li>
-      <li><strong>Tier is descriptive, not prescriptive:</strong> S-Tier stocks had stronger backtest metrics in this strategy variant, but tier does not guarantee better forward performance.</li>
-      <li><strong>Entry, Stop, Target are reference levels:</strong> Derived from the prior close using fixed percentages. They are not live execution prices and do not account for overnight gaps, spreads, or liquidity.</li>
+      <li><strong>BUY &#8800; &ldquo;Buy immediately&rdquo;:</strong> A BUY flag means 22 or more of the 30 checks are currently bullish. It is not a trade recommendation, a call to action, or personalised advice.</li>
+      <li><strong>WATCH = Below threshold:</strong> Stocks with fewer than 22 active bullish signals are not shown. WATCH means &ldquo;no active setup,&rdquo; not &ldquo;hold your existing position&rdquo; and not &ldquo;sell.&rdquo;</li>
+      <li><strong>Purely technical, purely backward-looking:</strong> Every input is derived from past price and volume. The engine has no knowledge of earnings dates, guidance, litigation, index changes, or any fundamental data.</li>
+      <li><strong>Trend-following bias:</strong> Requiring broad agreement means signals cluster in rising markets and disappear in falling ones. The engine will be least informative at inflection points.</li>
+      <li><strong>Reference levels are volatility bands:</strong> Derived from ATR at the prior close. They are not live execution prices and do not account for overnight gaps, spreads, or liquidity.</li>
       <li><strong>Signals are end-of-day:</strong> All data reflects the prior close. Intraday price movements may invalidate signals before the next update.</li>
       <li><strong>Combine with your own research:</strong> Quantum Signals is purely technical. Earnings, regulatory events, macro shifts, and other catalysts can override any technical setup.</li>
       <li><strong>No system is infallible:</strong> Even high-signal-count stocks can decline. Risk management and position sizing remain the investor's responsibility.</li>
@@ -413,10 +405,11 @@ a{text-decoration:none;color:inherit}
 
     <h2 id="data-sources">Data Sources &amp; Refresh Cycle</h2>
     <ul>
-      <li><strong>Price data:</strong> End-of-day OHLCV candles via Twelve Data API. Minimum 500 trading days of history per stock.</li>
-      <li><strong>Signals:</strong> 30 technical signals computed after each close.</li>
-      <li><strong>Refresh schedule:</strong> Monday through Friday, after 16:00 ET market close. Signals reflect the most recent completed trading session.</li>
-      <li><strong>Universe:</strong> 500+ US-listed equities across all sectors. Stocks with insufficient data history are excluded automatically.</li>
+      <li><strong>Price data:</strong> End-of-day OHLCV candles from Yahoo Finance via the <code>yfinance</code> library, split- and dividend-adjusted. Each ticker needs at least 60 completed sessions in the trailing 1-year window to be scored.</li>
+      <li><strong>Signals:</strong> 30 binary technical checks computed after each close by <code>scripts/daily_update.py</code>.</li>
+      <li><strong>Refresh schedule:</strong> Monday through Friday at 23:30 UTC, after the 16:00 ET close. Signals reflect the most recent completed trading session. There is no intraday update and no weekend run.</li>
+      <li><strong>Universe:</strong> 180 US-listed equities across all major sectors. Tickers that fail the data-completeness check are skipped for that day.</li>
+      <li><strong>If the scan does not run:</strong> the previous output is retained and the session date above continues to show the date it actually belongs to. The page will say the data is delayed rather than presenting an old scan as current.</li>
     </ul>
 
     <h2 id="why-post-close">Why Post-Close Instead of Intraday?</h2>
@@ -431,37 +424,38 @@ a{text-decoration:none;color:inherit}
     <h2 id="faq">Frequently Asked Questions About Daily Stock Signals</h2>
 
     <h3>What are daily stock signals?</h3>
-    <p>Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scans 500+ US equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY.</p>
+    <p>Daily stock signals are systematic, rules-based alerts generated after the market close. They identify stocks where multiple bullish signals are active on the same day. Quantum Signals scores 180 liquid US-listed equities each evening and flags stocks with 22 or more active bullish signals (out of 30) as BUY.</p>
 
     <h3>How does a post-close stock signal dashboard work?</h3>
     <p>A post-close signal dashboard processes end-of-day price and volume data after the US market closes at 4:00 PM ET. It evaluates each stock's signals, counts how many are bullish, and flags stocks that meet a minimum confluence threshold (22 of 30 signals). Results are published as a daily signal table.</p>
 
-    <h3>What does BUY mean in this signal dashboard?</h3>
+    <h3>What does BUY mean in this stock signal dashboard?</h3>
     <p>BUY means 22 or more bullish signals (out of 30) are currently active for that stock. It is a research signal, not investment advice or a trade recommendation. Stocks below the threshold are marked WATCH and hidden from the dashboard.</p>
 
     <h3>Are these stock signals free?</h3>
     <p>Yes. The Quantum Signals dashboard is free and updated daily after market close. It is provided for research and informational purposes only and does not constitute financial advice.</p>
 
     <h3>What is the difference between BUY and WATCH?</h3>
-    <p>BUY = 4 or more active bullish signals (shown in the dashboard). WATCH = fewer than 4 active bullish signals (hidden). WATCH means no active setup, not a recommendation to hold an existing position.</p>
+    <p>BUY = 22 or more of the 30 signals are active (shown in the dashboard). WATCH = fewer than 22 active signals (hidden). WATCH means no active setup &mdash; it is not a recommendation to hold or to sell an existing position.</p>
 
-    <h3>How often are the signals updated?</h3>
+    <h3>How often are daily stock signals updated?</h3>
     <p>Every trading day (Monday through Friday), after the US market closes at 4:00 PM ET. The dashboard reflects the most recent completed session. Signals are not updated intraday.</p>
 
     <h3>Can I use these signals for day trading?</h3>
     <p>No. Quantum Signals is a post-close, end-of-day system. All data reflects the prior day's close. It is not designed for intraday or real-time trading decisions. The hold period used in backtesting is 60 trading days.</p>
 
-    <h3>What stocks are included in the scan?</h3>
-    <p>The universe includes 500+ US-listed equities across all sectors. Stocks must have at least 500 trading days of historical data to be included. The universe is reviewed automatically and may change as stocks meet or fall below the data threshold.</p>
+    <h3>What stocks are included in the daily signal scan?</h3>
+    <p>The universe is a fixed list of 180 liquid US-listed equities spanning every major sector. It is a curated liquidity list rather than an index &mdash; it includes large-cap S&amp;P 500 names alongside high-volume growth, fintech, semiconductor, mining and alternative-asset tickers that are not S&amp;P 500 constituents. Each stock must return at least 60 completed daily sessions of clean OHLCV data in the trailing one-year window to be scored on any given day; names that fail that check are skipped rather than scored on partial history. See <a href="#why-180" style="color:var(--accent)">why 180 and not the whole S&amp;P 500</a> for the reasoning.</p>
 
     <h3>Does this system use quantum computing or AI?</h3>
     <p>No. The name &ldquo;Quantum&rdquo; is metaphorical, referring to the layered, multi-factor signal stacking approach. The engine uses classical technical indicators and a simple confluence-counting rule. It does not use quantum computing, machine learning, or artificial intelligence.</p>
 
     <h2 id="related">Related Research &amp; Tools</h2>
     <ul>
-      <li><a href="stocks.html" style="color:var(--accent)">US Equities Overview</a> &mdash; Live market data for all tracked stocks</li>
-      <li><a href="markets.html" style="color:var(--accent)">Market Dashboard</a> &mdash; Real-time indices, sectors, and macro data</li>
-      <li><a href="methodology.html" style="color:var(--accent)">Research Methodology</a> &mdash; How QuantMedia approaches quantitative analysis</li>
+      <li><a href="methodology.html#signal-engine" style="color:var(--accent)">Signal engine methodology</a> &mdash; The same parameters documented alongside every other data source on the site</li>
+      <li><a href="stocks.html" style="color:var(--accent)">US equities screener</a> &mdash; Sector rotation and factor context for the names in the table above</li>
+      <li><a href="sector-rotation-guide.html" style="color:var(--accent)">Sector rotation guide</a> &mdash; Why several BUY signals clustering in one sector is worth more than any single name</li>
+      <li><a href="markets.html" style="color:var(--accent)">Market data dashboard</a> &mdash; Index, forex and crypto snapshots for macro context</li>
       <li><a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN &amp; Order Flow Toxicity</a> &mdash; Microstructure signals that complement technical analysis</li>
       <li><a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> &mdash; Statistical framework for evaluating signal engine performance</li>
       <li><a href="paper-slippage-latency-modeling.html" style="color:var(--accent)">Slippage &amp; Latency Modeling</a> &mdash; Understanding execution costs for signal-based strategies</li>
@@ -478,6 +472,7 @@ a{text-decoration:none;color:inherit}
       <a href="#signals" class="toc-link" style="color:var(--accent);font-weight:600">&#9889; Today's Signals</a>
       <a href="#how-to-read" class="toc-link">How to Read the Signals</a>
       <a href="#overview" class="toc-link">What Is This Dashboard?</a>
+      <a href="#why-180" class="toc-link">Why 180 Stocks?</a>
       <a href="#decision-logic" class="toc-link">BUY / WATCH Logic</a>
       <a href="#signal-architecture" class="toc-link">What the Engine Evaluates</a>
       <a href="#parameters" class="toc-link">Strategy Parameters</a>
@@ -560,26 +555,24 @@ function toggleTheme(){
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   QUANTUM SIGNALS ENGINE — JSON Feed (BUY ONLY)
-   Fetches data/quantum_signals.json produced by daily_signal_export.py
-   Shows only BUY signals. HOLD signals hidden.
-   ~180 liquid large-caps × 30 technical indicators. Updated daily post-close.
+   QUANTUM SIGNALS ENGINE — reads data/quantum_signals.json
+   Written nightly by scripts/daily_update.py. No API keys in the browser.
+   180 liquid US-listed equities, 30 binary signals, BUY at score >= 22.
+   Every column maps to a field the pipeline actually computes. Do not add
+   a column the data cannot support (the old Tier / WR% / BT-Ret% / Trades
+   columns were removed because nothing populated them).
    ═══════════════════════════════════════════════════════════════ */
 (function(){
 const $ = id => document.getElementById(id);
 const fmt = (n,d=2) => n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-const tierOrder = {S:0,A:1,B:2,C:3};
-const tierLabel = {S:'\u2605 S-Tier',A:'A-Tier',B:'B-Tier',C:'C-Tier'};
-const tierClass = {S:'ts',A:'ta',B:'tb',C:'tc'};
-
+let nSignals = 30;
 let allBuys = [];
-let currentTier = 'all';
 let sortKey = 'sc';
 let sortAsc = false;
 
 async function loadData(){
   try{
-    const r = await fetch('data/quantum_signals.json',{signal:AbortSignal.timeout(15000),cache:'no-cache'});
+    const r = await fetch('data/quantum_signals.json',{cache:'no-cache'});
     if(!r.ok) throw new Error(r.status);
     return await r.json();
   }catch(e){
@@ -589,72 +582,68 @@ async function loadData(){
 }
 
 function updateMetrics(data){
-  $('mBuy').textContent = data.buy_count;
-  $('mTotal').textContent = data.total_count;
-  if(data.metrics){
-    $('mWR').textContent = data.metrics.win_rate ? data.metrics.win_rate+'%' : '--';
-    $('mSharpe').textContent = data.metrics.sharpe_ratio || '--';
-  }
-  $('scanTime').textContent = data.market_date || '--';
-  const upd = data.updated ? new Date(data.updated) : null;
-  $('updatedTime').textContent = upd ? upd.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}) : '--';
+  const eng = data.engine || data.strategy || {};
+  nSignals = eng.n_signals || 30;
+  $('mBuy').textContent    = data.buy_count != null ? data.buy_count : '--';
+  $('mTotal').textContent  = data.total_count || eng.scored || '--';
+  $('mMedian').textContent = data.median_score != null ? data.median_score : '--';
+  $('mThresh').textContent = eng.confluence_min || eng.confluence || 22;
+  $('scanTime').textContent = data.market_date || 'unavailable';
+
+  const hero = $('heroStamp');
+  if(hero) hero.textContent = 'Latest scan: ' + (data.market_date || 'unavailable');
+
+  // Freshness is derived from the snapshot timestamp, never asserted.
+  const f = window.QM ? QM.freshness(data.updated, 'Scan completed')
+                      : {label:'', state:'fresh'};
+  $('updatedTime').textContent =
+    'End-of-day data; signals reflect the close of the session shown above, not real-time prices. ' + f.label;
+  if(f.state === 'delayed' || f.state === 'paused') $('updatedTime').style.color = 'var(--gold)';
 }
 
 function renderTable(){
-  const filtered = currentTier === 'all' ? allBuys : allBuys.filter(s=>s.t===currentTier);
-  if(filtered.length===0){
+  if(allBuys.length===0){
     $('signalTableWrap').style.display='none';
     $('noBuyMsg').style.display='block';
-    $('noBuyMsg').textContent = currentTier==='all'
-      ? 'No BUY signals today. All stocks are on WATCH — below the signal confluence threshold.'
-      : 'No BUY signals in '+tierLabel[currentTier]+' tier.';
-    // Show the interpretive context block only on a true Watch-only day (all tiers empty)
-    $('noBuyContext').style.display = (currentTier==='all' && allBuys.length===0) ? 'block' : 'none';
+    $('noBuyContext').style.display='block';
     return;
   }
   $('noBuyMsg').style.display='none';
   $('noBuyContext').style.display='none';
 
-  // Sort
-  const sorted = [...filtered].sort((a,b)=>{
-    let va=a[sortKey], vb=b[sortKey];
-    if(sortKey==='t'){va=tierOrder[va]||9;vb=tierOrder[vb]||9;}
-    if(sortKey==='s'){return sortAsc?va.localeCompare(vb):vb.localeCompare(va);}
-    if(sortKey==='d'){return 0;}
-    if(typeof va==='number'&&typeof vb==='number') return sortAsc?va-vb:vb-va;
-    return 0;
+  // Drop any column the current payload cannot populate, rather than render
+  // a full column of dashes. (Older snapshots predate the RSI/up-rate fields.)
+  const hasCol = {};
+  ['r','r22','up20'].forEach(k=>{ hasCol[k] = allBuys.some(s=>s[k]!=null); });
+  document.querySelectorAll('#signalTable th[data-col]').forEach(th=>{
+    th.style.display = hasCol[th.dataset.col] === false ? 'none' : '';
+  });
+
+  const sorted = [...allBuys].sort((a,b)=>{
+    const va=a[sortKey], vb=b[sortKey];
+    if(sortKey==='s') return sortAsc?va.localeCompare(vb):vb.localeCompare(va);
+    if(va==null) return 1;
+    if(vb==null) return -1;
+    return sortAsc?va-vb:vb-va;
   });
 
   $('signalBody').innerHTML = sorted.map(s=>{
-    const tc = tierClass[s.t]||'tc';
-    const rsiZone = s.r>=30&&s.r<=50;
+    const rsiZone = s.r!=null && s.r>=30 && s.r<=70;
+    const retCol = s.r22>0?'var(--accent)':s.r22<0?'var(--red)':'inherit';
     return `<tr>
       <td class="sig-buy">BUY</td>
-      <td class="sig-tier ${tc}">${tierLabel[s.t]||s.t}</td>
       <td class="sig-sym">${s.s}</td>
       <td class="sig-price">$${fmt(s.p)}</td>
-      <td class="sig-rsi${rsiZone?' bullish':''}">${fmt(s.r,1)}</td>
-      <td class="sig-cnt">${s.sc}/${s._ns||'93'}</td>
-      <td class="sig-price">$${fmt(s.e)}</td>
+      <td class="sig-cnt"><strong>${s.sc}</strong>/${nSignals}</td>
+      ${hasCol.r?`<td class="sig-rsi${rsiZone?' bullish':''}">${fmt(s.r,1)}</td>`:''}
+      ${hasCol.r22?`<td class="sig-cnt" style="color:${retCol}">${s.r22>0?'+':''}${fmt(s.r22,1)}%</td>`:''}
       <td class="sig-price" style="color:var(--red)">$${fmt(s.sl)}</td>
       <td class="sig-price" style="color:var(--accent)">$${fmt(s.tp)}</td>
-      <td class="sig-cnt">${fmt(s.wr,1)}%</td>
-      <td class="sig-cnt" style="color:${s.tr>0?'var(--accent)':'var(--red)'}">${fmt(s.tr,1)}%</td>
-      <td class="sig-cnt">${s.nt}</td>
+      ${hasCol.up20?`<td class="sig-cnt">${fmt(s.up20,1)}%</td>`:''}
     </tr>`;
   }).join('');
   $('signalTableWrap').style.display='block';
 }
-
-// Tier filter buttons
-document.querySelectorAll('.tier-btn').forEach(btn=>{
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('active'));
-    this.classList.add('active');
-    currentTier = this.dataset.tier;
-    renderTable();
-  });
-});
 
 // Column sort
 document.querySelectorAll('#signalTable th[data-sort]').forEach(th=>{
@@ -666,24 +655,20 @@ document.querySelectorAll('#signalTable th[data-sort]').forEach(th=>{
   });
 });
 
-// Init
+// Init. On failure the methodology stays on screen; the page never blanks.
 loadData().then(data=>{
-  $('signalStatus').style.display='none';
   if(!data){
-    $('signalStatus').style.display='block';
-    $('signalStatus').innerHTML='<div style="color:var(--red)">\u26A0 Failed to load signal data. Check back later.</div>';
+    $('signalStatus').innerHTML =
+      '<strong style="color:var(--gold)">The latest signal table is temporarily unavailable.</strong><br>'+
+      'The scan output could not be loaded. The methodology, parameters and column '+
+      'definitions below describe the engine in full and remain accurate. The table '+
+      'repopulates automatically once the next post-close scan publishes.';
     return;
   }
+  $('signalStatus').style.display='none';
   updateMetrics(data);
-  const ns = data.strategy?.n_signals || 93;
-  allBuys = data.signals.filter(s=>s.d==='BUY').map(s=>({...s,_ns:ns}));
-  $('tierFilter').style.display='flex';
-  if(allBuys.length===0){
-    $('noBuyMsg').style.display='block';
-    $('noBuyContext').style.display='block';
-  } else {
-    renderTable();
-  }
+  allBuys = (data.signals||[]).filter(s=>s.d==='BUY');
+  renderTable();
 });
 })();
 </script>

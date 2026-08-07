@@ -219,7 +219,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["WebPage","TechArticle"],"@id":"https://quantmedia.io/infrastructure.html","url":"https://quantmedia.io/infrastructure.html","name":"Infrastructure — Quant Trading Systems & Architecture | QuantMedia","headline":"Quantitative Trading Systems & Architecture","description":"Technical architecture for quantitative trading: data pipelines, execution systems, backtesting, and real-time market microstructure tools.","author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"},"publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"dateModified":"2026-04-14","isPartOf":{"@id":"https://quantmedia.io/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Infrastructure","item":"https://quantmedia.io/infrastructure.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["WebPage","TechArticle"],"@id":"https://quantmedia.io/infrastructure.html","url":"https://quantmedia.io/infrastructure.html","name":"Infrastructure — Quant Trading Systems & Architecture | QuantMedia","headline":"Quantitative Trading Systems & Architecture","description":"Technical architecture for quantitative trading: data pipelines, execution systems, backtesting, and real-time market microstructure tools.","author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"},"publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"dateModified":"2026-08-07","isPartOf":{"@id":"https://quantmedia.io/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Infrastructure","item":"https://quantmedia.io/infrastructure.html"}]}]}</script>
 </head>
 <body>
 
@@ -267,7 +267,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- MARKET BAR -->
 <div class="market-bar">
-  <div class="mbar-label"><span class="mbar-dot"></span>Live</div>
+  <div class="mbar-label"><span class="mbar-dot"></span><span id="mbarLabel">Last close</span></div>
   <div class="mbar-items" id="mbarItems">
     <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted);font-size:11px">Market data updates when available</span></div>
   </div>
@@ -289,7 +289,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div class="page-hero-inner">
     <div class="page-eyebrow">QuantMedia — Technical Documentation</div>
     <h1 class="page-title">HFT Infrastructure Architecture</h1>
-    <div class="page-desc">A detailed breakdown of the hardware, software, and network stack powering sub-microsecond order flow analysis at Equinix NY4/NY5 co-location facilities.</div>
+    <div class="page-desc">A reference architecture for sub-microsecond order flow analysis: how the hardware, kernel, and network stack of a co-located trading system fit together, and where each nanosecond of the latency budget actually goes. This is a design study compiled from vendor specifications and published benchmarks &mdash; QuantMedia does not operate co-located trading infrastructure.</div>
   </div>
 </div>
 
@@ -300,7 +300,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <!-- CO-LOCATION -->
     <div class="section-header" id="colocation"><h2>Co-location & Data Center Topology</h2></div>
     <div class="article-card">
-      <p>All production systems operate within <strong>Equinix NY4 (Secaucus, NJ)</strong> and <strong>NY5 (Parsippany, NJ)</strong> — the primary co-location facilities for NASDAQ (Carteret) and NYSE (Mahwah) matching engines respectively. Physical proximity to exchange matching engines is the foundational latency advantage.</p>
+      <p>Latency-sensitive US equity systems are typically hosted in <strong>Equinix NY4 (Secaucus, NJ)</strong> and <strong>NY5 (Parsippany, NJ)</strong> — the principal co-location facilities serving the NASDAQ (Carteret) and NYSE (Mahwah) matching engines respectively. Physical proximity to the matching engine is the foundational latency advantage, and every figure in this document is quoted relative to that baseline.</p>
 
       <div class="topology">
         <div class="topo-node highlight">
@@ -604,30 +604,11 @@ const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFract
 const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
-const FINNHUB_KEY='d6o5n7hr01qu09ci6v60d6o5n7hr01qu09ci6v6g';
-const SYM_MAP={'GC=F':'__XAU','SI=F':'SLV','CL=F':'USO','BZ=F':'BNO','NG=F':'UNG','HG=F':'CPER','DX-Y.NYB':'UUP','EURUSD=X':'__EUR','GBPUSD=X':'__GBP','BTC-USD':'__BTC','^GSPC':'SPY','^IXIC':'QQQ','^DJI':'DIA','^RUT':'IWM','^VIX':'VIXY'};
-let _fx=null,_fxT=0,_yfc={},_yfp={};
-async function loadFx(){if(_fx&&Date.now()-_fxT<60000)return _fx;try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(8000)});const d=await r.json();_fx=d.rates;_fxT=Date.now();return _fx;}catch{return null;}}
-async function yf(sym){
-  if(_yfc[sym]&&Date.now()-_yfc[sym].ts<55000)return _yfc[sym].v;
-  if(_yfp[sym])return _yfp[sym];
-  const p=(async()=>{
-    const m=SYM_MAP[sym];let v=null;
-    try{
-      if(m==='__EUR'){const f=await loadFx();v=f?.EUR?{price:+(1/f.EUR).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__GBP'){const f=await loadFx();v=f?.GBP?{price:+(1/f.GBP).toFixed(5),chg:0,pts:0}:null;}
-      else if(m==='__BTC'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d.bitcoin){const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;v={price:p,chg:c,pts:p*c/100};}}
-      else if(m==='__XAU'){const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd&include_24hr_change=true',{signal:AbortSignal.timeout(8000)});const d=await r.json();if(d['pax-gold']){const p=d['pax-gold'].usd,c=d['pax-gold'].usd_24h_change||0;v={price:+p.toFixed(2),chg:+c.toFixed(2),pts:+(p*c/100).toFixed(2)};}}
-      else{const fhSym=m||sym;const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(fhSym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});if(r.status===429){delete _yfp[sym];return _yfc[sym]?.v??null;}if(r.ok){const d=await r.json();if(d.c&&d.c!==0)v={price:d.c,chg:d.dp||0,pts:d.d||0};}}
-    }catch{}
-    _yfc[sym]={v,ts:Date.now()};delete _yfp[sym];return v;
-  })();
-  return(_yfp[sym]=p);
-}
-}
-const MBAR=[{s:'GC=F',l:'Gold'},{s:'CL=F',l:'WTI'},{s:'^VIX',l:'VIX'},{s:'EURUSD=X',l:'EUR/USD'},{s:'GBPUSD=X',l:'GBP/USD'},{s:'BTC-USD',l:'BTC'}];
-async function loadMbar(){const res=await Promise.all(MBAR.map(m=>yf(m.s)));document.getElementById('mbarItems').innerHTML=MBAR.map((m,i)=>{const r=res[i];const c=cls(r?.chg);return`<div class="mbar-item"><span class="mbar-sym">${m.l}</span><span class="mbar-val">${r?fmt(r.price,r.price>100?2:4):'--'}</span><span class="mbar-chg ${c}">${r?pct(r.chg):'--'}</span></div>`;}).join('');}
-loadMbar();setInterval(loadMbar,60000);
+/* Market bar reads data/markets_bar.json via qm-data.js. The previous block
+   embedded a live Finnhub key in client source and also contained a stray
+   closing brace, which was a syntax error that silently killed every script
+   below it on this page (theme toggle, mobile nav, market bar). */
+QM.marketBar('mbarItems','mbarLabel');
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}

@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--text:#e8e8e8;--dim:#888;--accent:#00a651;--border2:#2e2e2e}
 [data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--text:#111111;--dim:#555555;--accent:#007a3d;--border2:#d0d0ce}
@@ -46,6 +46,30 @@ p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:28px}
 .nav-links a{display:inline-block;margin:4px 8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .14s ease}
 .nav-links a:hover{color:var(--accent)}
 </style>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 <div class="wrap">
@@ -66,6 +90,7 @@ p{font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:28px}
     <a href="research.html">Microstructure</a>
     <a href="infrastructure.html">Infrastructure</a>
     <a href="about.html">About</a>
+    <a href="/author/cemil-erturk.html">Author</a>
   </div>
 </div>
 </body>

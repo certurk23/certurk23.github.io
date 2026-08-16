@@ -16,7 +16,7 @@
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="keywords" content="trading infrastructure, quantitative systems, low-latency trading, market data pipeline, HFT infrastructure">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Infrastructure — Quant Trading Systems &amp; Architecture | QuantMedia">
 <meta property="og:description" content="Technical architecture for quantitative trading: data pipelines, execution systems, backtesting, and real-time market microstructure tools.">
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
 [data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
@@ -220,6 +220,30 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["WebPage","TechArticle"],"@id":"https://quantmedia.io/infrastructure.html","url":"https://quantmedia.io/infrastructure.html","name":"Infrastructure — Quant Trading Systems & Architecture | QuantMedia","headline":"Quantitative Trading Systems & Architecture","description":"Technical architecture for quantitative trading: data pipelines, execution systems, backtesting, and real-time market microstructure tools.","author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"},"publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"dateModified":"2026-08-07","isPartOf":{"@id":"https://quantmedia.io/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Infrastructure","item":"https://quantmedia.io/infrastructure.html"}]}]}</script>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 
@@ -243,6 +267,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="papers.html">Papers</a>
       <a href="research.html" class="active">Microstructure</a>
       <a href="about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -570,10 +595,18 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="infrastructure.html">Infrastructure</a>
     </div>
     <div class="ft-col">
+      <h4>Data &amp; Code</h4>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+    </div>
+    <div class="ft-col">
       <h4>Lab</h4>
       <a href="about.html">About QuantMedia</a>
       <a href="methodology.html">Methodology</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -581,7 +614,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <span>© 2026 QuantMedia. All rights reserved.</span>
     <div class="footer-badges">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">US Markets</span>
     </div>
   </div>

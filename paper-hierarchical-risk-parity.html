@@ -11,7 +11,7 @@
 <meta name="description" content="Hierarchical Risk Parity (HRP) in Python: cluster-based allocation without covariance inversion. Full code, backtest, and Markowitz comparison included.">
 <link rel="canonical" href="https://quantmedia.io/paper-hierarchical-risk-parity.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta name="keywords" content="hierarchical risk parity, HRP, portfolio optimization, clustering, risk parity, covariance matrix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hierarchical Risk Parity (HRP): Python Portfolio Optimization Guide">
@@ -30,31 +30,79 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
-<script type="application/ld+json">{
-  "@context":"https://schema.org",
-  "@type":"Article","citation":[{"@type": "CreativeWork", "name": "Building Diversified Portfolios that Outperform Out of Sample", "author": "López de Prado, M.", "datePublished": "2016", "publication": "Journal of Portfolio Management 42(4), 59–69"}, {"@type": "CreativeWork", "name": "Portfolio Selection", "author": "Markowitz, H.", "datePublished": "1952", "publication": "Journal of Finance 7(1), 77–91"}, {"@type": "CreativeWork", "name": "The Markowitz Optimization Enigma: Is Optimized Optimal?", "author": "Michaud, R.", "datePublished": "1989", "publication": "Financial Analysts Journal 45(1), 31–42"}, {"@type": "CreativeWork", "name": "A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices", "author": "Ledoit, O. & Wolf, M.", "datePublished": "2004", "publication": "Journal of Multivariate Analysis 88(2), 365–411"}, {"@type": "CreativeWork", "name": "Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?", "author": "DeMiguel, V., Garlappi, L. & Uppal, R.", "datePublished": "2009", "publication": "Review of Financial Studies 22(5), 1915–1953"}],
-  "headline":"Hierarchical Risk Parity (HRP): Python Portfolio Optimization Guide",
-  "description":"Cluster-based portfolio allocation using hierarchical clustering and graph theory. HRP avoids covariance inversion for more stable diversification.",
-  "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
-  "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
-  "datePublished":"2026-01-20",
-  "dateModified":"2026-01-20",
-  "mainEntityOfPage":"https://quantmedia.io/paper-hierarchical-risk-parity.html",
-  "keywords":"hierarchical risk parity, HRP, portfolio optimization, clustering, risk parity, covariance matrix","wordCount":504
-}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "citation": [
+    {
+      "@type": "CreativeWork",
+      "name": "Building Diversified Portfolios that Outperform Out of Sample",
+      "author": "López de Prado, M.",
+      "datePublished": "2016",
+      "publication": "Journal of Portfolio Management 42(4), 59–69"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Portfolio Selection",
+      "author": "Markowitz, H.",
+      "datePublished": "1952",
+      "publication": "Journal of Finance 7(1), 77–91"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "The Markowitz Optimization Enigma: Is Optimized Optimal?",
+      "author": "Michaud, R.",
+      "datePublished": "1989",
+      "publication": "Financial Analysts Journal 45(1), 31–42"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices",
+      "author": "Ledoit, O. & Wolf, M.",
+      "datePublished": "2004",
+      "publication": "Journal of Multivariate Analysis 88(2), 365–411"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?",
+      "author": "DeMiguel, V., Garlappi, L. & Uppal, R.",
+      "datePublished": "2009",
+      "publication": "Review of Financial Studies 22(5), 1915–1953"
+    }
+  ],
+  "headline": "Hierarchical Risk Parity (HRP): Python Portfolio Optimization Guide",
+  "description": "Cluster-based portfolio allocation using hierarchical clustering and graph theory. HRP avoids covariance inversion for more stable diversification.",
+  "author": {
+    "@type": "Person",
+    "name": "Cemil Ertürk",
+    "url": "https://quantmedia.io/author/cemil-erturk.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "QuantMedia",
+    "url": "https://quantmedia.io"
+  },
+  "datePublished": "2026-01-20",
+  "dateModified": "2026-08-16",
+  "mainEntityOfPage": "https://quantmedia.io/paper-hierarchical-risk-parity.html",
+  "keywords": "hierarchical risk parity, HRP, portfolio optimization, clustering, risk parity, covariance matrix",
+  "wordCount": 504
+}
+</script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
   "@type":"BreadcrumbList",
   "itemListElement":[
     {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
-    {"@type":"ListItem","position":2,"name":"Analysis","item":"https://quantmedia.io/papers.html"},
+    {"@type":"ListItem","position":2,"name":"Papers","item":"https://quantmedia.io/papers.html"},
     {"@type":"ListItem","position":3,"name":"Hierarchical Risk Parity (HRP)"}
   ]
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
@@ -173,6 +221,65 @@ a{text-decoration:none;color:inherit}
 .qm-refnote{font-size:12.5px;color:var(--dim);line-height:1.75;margin:14px 0 0;
   padding-top:12px;border-top:1px solid var(--border)}
 </style>
+<style>
+.qm-record{border:1px solid var(--border,#242424);border-radius:6px;background:var(--bg2,#111);
+  padding:20px 22px;margin:32px 0}
+.qm-record h3{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.2px;text-transform:uppercase;color:var(--accent,#00a651);margin:0 0 14px}
+.qm-record dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0 0 16px;font-size:13.5px}
+.qm-record dt{color:var(--dimmer,#888);white-space:nowrap}
+.qm-record dd{margin:0;color:var(--text2,#c4c4c4)}
+.qm-cite{margin-top:14px}
+.qm-cite h4{font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--dimmer,#888);margin:14px 0 6px}
+.qm-cite pre{background:var(--bg3,#181818);border:1px solid var(--border,#242424);border-radius:4px;
+  padding:12px 14px;margin:0;overflow-x:auto;font-family:'JetBrains Mono',monospace;
+  font-size:12px;line-height:1.65;color:var(--text2,#c4c4c4);white-space:pre;tab-size:2}
+.qm-cite .plain{white-space:pre-wrap;word-break:break-word}
+.qm-copy{font:inherit;font-size:11px;letter-spacing:.5px;text-transform:uppercase;
+  background:none;border:1px solid var(--border2,#2e2e2e);color:var(--dimmer,#888);
+  border-radius:3px;padding:4px 10px;cursor:pointer;margin-left:8px}
+.qm-copy:hover{color:var(--text,#e8e8e8);border-color:var(--accent,#00a651)}
+@media(pointer:coarse){.qm-copy{min-height:44px;min-width:64px;padding:0 14px}}
+@media(max-width:600px){.qm-record dl{grid-template-columns:1fr;gap:2px 0}
+  .qm-record dt{margin-top:8px}}
+</style>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+<style>
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav,.main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 
@@ -190,8 +297,9 @@ a{text-decoration:none;color:inherit}
       <a href="papers.html" class="active">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
-    <div class="header-right">
+    <div class="header-right"><button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
         <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"/>
@@ -204,6 +312,19 @@ a{text-decoration:none;color:inherit}
     </div>
   </div>
 </header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="/">Home</a>
+  <a href="/markets.html">Live Data</a>
+  <a href="/news.html">News</a>
+  <a href="/stocks.html">Equities</a>
+  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/papers.html">Papers</a>
+  <a href="/research.html">Microstructure</a>
+  <a href="/about.html">About</a>
+</div>
+
 
 <!-- ARTICLE HERO -->
 <main>
@@ -218,9 +339,9 @@ a{text-decoration:none;color:inherit}
     <h1 class="article-h1">Hierarchical Risk Parity (HRP) for Portfolio Optimization</h1>
     <p class="article-subtitle">Cluster-based portfolio allocation using hierarchical clustering and graph theory. HRP avoids covariance inversion for more stable diversification.</p>
     <div class="article-byline">
-      <span class="byline-author">QuantMedia Research</span>
+      <span class="byline-author"><a href="/author/cemil-erturk.html" style="color:inherit">Cemil Ertürk</a></span>
       <span>&middot;</span>
-      <span>January 20, 2026</span>
+      <span>January 20, 2026</span><span>&middot;</span><span>Updated August 16, 2026</span>
       <span>&middot;</span>
       <span>Portfolio Theory</span>
     </div>
@@ -359,6 +480,34 @@ a{text-decoration:none;color:inherit}
 
 
 <div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Sub-optimal in sample by construction.</strong> Mean-variance solves for minimum in-sample variance, so any in-sample comparison favours it automatically. HRP's case rests entirely on out-of-sample behaviour, and only out-of-sample tests are informative.</li><li><strong>No return objective.</strong> HRP allocates risk and ignores expected returns. Where genuine return forecasts exist, discarding them is a real cost rather than a free simplification.</li><li><strong>Linkage is a free parameter.</strong> Single, average and Ward linkage produce different trees and therefore different weights. The choice is a modelling decision that should be disclosed, not a detail.</li><li><strong>Correlation instability.</strong> Correlations converge during stress, flattening the cluster tree exactly when diversification matters most. The hierarchy is estimated from the same noisy data it is meant to protect against.</li><li><strong>Regularised mean-variance is a stronger baseline.</strong> Much of textbook mean-variance's instability is addressed by shrinkage estimators, constraints or resampling. Comparisons against an unconstrained optimiser overstate HRP's advantage.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>López de Prado, M. (2016). &ldquo;Building Diversified Portfolios that Outperform Out of Sample.&rdquo; <em>Journal of Portfolio Management 42(4), 59–69</em>.</li><li>Markowitz, H. (1952). &ldquo;Portfolio Selection.&rdquo; <em>Journal of Finance 7(1), 77–91</em>.</li><li>Michaud, R. (1989). &ldquo;The Markowitz Optimization Enigma: Is Optimized Optimal?.&rdquo; <em>Financial Analysts Journal 45(1), 31–42</em>.</li><li>Ledoit, O. &amp; Wolf, M. (2004). &ldquo;A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices.&rdquo; <em>Journal of Multivariate Analysis 88(2), 365–411</em>.</li><li>DeMiguel, V., Garlappi, L. &amp; Uppal, R. (2009). &ldquo;Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?.&rdquo; <em>Review of Financial Studies 22(5), 1915–1953</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
+<div class="qm-sec qm-record" id="research-record">
+  <h3>Research record</h3>
+  <dl>
+    <dt>Author</dt><dd><a href="/author/cemil-erturk.html">Cemil Ertürk</a> &middot; QuantMedia Research</dd>
+    <dt>Published</dt><dd>January 20, 2026</dd>
+    <dt>Last material revision</dt><dd>August 16, 2026</dd>
+    <dt>Research version</dt><dd>1.1</dd>
+    <dt>Topic</dt><dd>Portfolio Theory</dd>
+    <dt>Code</dt><dd><a href="/reproducibility.html">Runnable implementation with tests</a></dd>
+    <dt>Review status</dt><dd>Independent research. Not peer reviewed.</dd>
+  </dl>
+  <div class="qm-cite">
+    <h4>How to cite this research
+      <button class="qm-copy" data-target="cite-paper-hierarchical-risk-parity-html-p" type="button">Copy</button></h4>
+    <pre class="plain" id="cite-paper-hierarchical-risk-parity-html-p">Cemil Ertürk. &quot;Hierarchical Risk Parity (HRP) for Portfolio Optimization.&quot; QuantMedia, 2026. https://quantmedia.io/paper-hierarchical-risk-parity.html</pre>
+    <h4>BibTeX
+      <button class="qm-copy" data-target="cite-paper-hierarchical-risk-parity-html-b" type="button">Copy</button></h4>
+    <pre id="cite-paper-hierarchical-risk-parity-html-b">@misc{erturk2026hierarchical,
+  author       = {Ert{\&quot;u}rk, Cemil},
+  title        = {Hierarchical Risk Parity (HRP) for Portfolio Optimization},
+  year         = {2026},
+  howpublished = {QuantMedia},
+  url          = {https://quantmedia.io/paper-hierarchical-risk-parity.html},
+  note         = {Accessed: &lt;date&gt;}
+}</pre>
+  </div>
+</div>
+
 <div class="qm-repro">
   <h3>Code &amp; Reproducibility</h3>
   <p>A runnable implementation of the allocator described above is published
@@ -432,13 +581,14 @@ python compare_mvo.py</pre>
       <a href="about.html">About QuantMedia</a>
       <a href="methodology.html">Methodology</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 QuantMedia. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
     <div style="display:flex;gap:8px">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">US Markets</span>
     </div>
   </div>
@@ -450,6 +600,27 @@ function toggleTheme(){
   document.documentElement.setAttribute('data-theme', t);
   try{localStorage.setItem('qm-theme', t);}catch(e){}
 }
+</script>
+
+<script>
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.qm-copy'); if(!b) return;
+  var pre=document.getElementById(b.dataset.target); if(!pre) return;
+  navigator.clipboard.writeText(pre.innerText).then(function(){
+    var o=b.textContent; b.textContent='Copied'; setTimeout(function(){b.textContent=o;},1400);
+  });
+});
+</script>
+
+<script>
+function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');
+ var open=m.classList.toggle('open');h.classList.toggle('open');
+ h.setAttribute('aria-expanded',open?'true':'false');document.body.style.overflow=open?'hidden':'';}
+document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){
+ document.getElementById('hamburger').classList.remove('open');
+ document.getElementById('mobileNav').classList.remove('open');
+ document.getElementById('hamburger').setAttribute('aria-expanded','false');
+ document.body.style.overflow='';});});
 </script>
 </body>
 </html>

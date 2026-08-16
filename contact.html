@@ -11,7 +11,7 @@
 <meta name="description" content="Contact QuantMedia for research collaboration, corrections, or feedback. Independent quantitative research platform covering market microstructure, algorithmic trading, and financial data.">
 <link rel="canonical" href="https://quantmedia.io/contact.html">
 <meta name="keywords" content="contact quantmedia, research inquiry, quantitative finance contact, financial research platform">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contact — QuantMedia">
 <meta property="og:description" content="Contact QuantMedia for research collaboration, corrections, or feedback. Independent quant research covering market microstructure and algorithmic trading.">
@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
@@ -79,6 +79,42 @@ a:hover{text-decoration:underline}
 @media(max-width:760px){.footer-inner{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column;gap:8px;text-align:center}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://quantmedia.io/contact.html","url":"https://quantmedia.io/contact.html","name":"Contact QuantMedia — Research Inquiries & Feedback","description":"Contact QuantMedia for research collaboration, corrections, or feedback. Independent quantitative research covering market microstructure and algorithmic trading.","isPartOf":{"@id":"https://quantmedia.io/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://quantmedia.io/contact.html"}]}]}</script>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+<style>
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav,.main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 <header class="site-header">
@@ -93,17 +129,31 @@ a:hover{text-decoration:underline}
       <a href="papers.html">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
-    <div class="header-right">
+    <div class="header-right"><button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
     </div>
   </div>
 </header>
 
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="/">Home</a>
+  <a href="/markets.html">Live Data</a>
+  <a href="/news.html">News</a>
+  <a href="/stocks.html">Equities</a>
+  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/papers.html">Papers</a>
+  <a href="/research.html">Microstructure</a>
+  <a href="/about.html">About</a>
+</div>
+
+
 <main>
 <div class="page-wrap">
   <h1>Contact</h1>
-  <p style="color:var(--dim);margin-bottom:24px">For research inquiries, corrections, feedback, or partnership questions.</p>
+  <p style="color:var(--dim);margin-bottom:24px">For research questions, corrections, feedback or citation enquiries.</p>
 
   <div class="contact-card">
     <div class="contact-row">
@@ -112,7 +162,7 @@ a:hover{text-decoration:underline}
     </div>
     <div class="contact-row">
       <span class="contact-label">Operator</span>
-      <span class="contact-val">QuantMedia Research</span>
+      <span class="contact-val"><a href="/author/cemil-erturk.html" style="color:inherit">Cemil Ertürk</a></span>
     </div>
     <div class="contact-row">
       <span class="contact-label">Site</span>
@@ -131,10 +181,17 @@ a:hover{text-decoration:underline}
     <li><strong>Feedback:</strong> Suggestions for improving the site or its content</li>
     <li><strong>Professional inquiries:</strong> Collaboration, citations, or media requests</li>
   </ul>
-  <p>We typically respond within 1&ndash;2 business days. For urgent matters, please note that in the subject line.</p>
+  <p>This is a one-person project, so replies are not guaranteed and may take a while. Corrections to published research are prioritised over everything else &mdash; see the <a href="/editorial-policy.html">editorial policy</a> for how they are handled.</p>
 
   <h2>About This Site</h2>
-  <p>QuantMedia is an independent research platform operated by QuantMedia Research. The site publishes quantitative research, market analysis, and educational tools related to US financial markets. All content is for informational and educational purposes only and does not constitute financial advice.</p>
+  <p>QuantMedia is an independent research platform written and operated by <a href="/author/cemil-erturk.html">Cemil Ertürk</a>. The site publishes quantitative research, market analysis, and educational tools related to US financial markets. All content is for informational and educational purposes only and does not constitute financial advice.</p>
+  <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;margin:26px 0 10px">Reporting an error</h2>
+  <p>Published research gets corrected in place and the change is recorded rather
+  than quietly overwritten. Two corrections have been published so far, both found
+  by executing the code rather than reading it. To report one, include the page URL,
+  the specific claim or number you believe is wrong, and &mdash; if you have it &mdash;
+  the source or calculation that shows why. A reproducible counter-example is the
+  fastest route to a fix.</p>
   <p>For more details about the site and its author, see the <a href="about.html">About</a> page. For data handling practices, see the <a href="privacy.html">Privacy Policy</a>.</p>
 </div>
 </main>
@@ -165,19 +222,31 @@ a:hover{text-decoration:underline}
       <a href="methodology.html">Methodology</a>
       <a href="contact.html">Contact</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 QuantMedia &middot; Independent quantitative research. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
     <div style="display:flex;gap:8px">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">US Markets</span>
     </div>
   </div>
 </footer>
 <script>
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
+</script>
+
+<script>
+function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');
+ var open=m.classList.toggle('open');h.classList.toggle('open');
+ h.setAttribute('aria-expanded',open?'true':'false');document.body.style.overflow=open?'hidden':'';}
+document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){
+ document.getElementById('hamburger').classList.remove('open');
+ document.getElementById('mobileNav').classList.remove('open');
+ document.getElementById('hamburger').setAttribute('aria-expanded','false');
+ document.body.style.overflow='';});});
 </script>
 </body>
 </html>

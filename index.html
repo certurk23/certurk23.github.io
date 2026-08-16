@@ -12,7 +12,7 @@
 <!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
 <script src="qm-data.js"></script>
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta name="keywords" content="quantitative finance, market microstructure, VPIN, order flow, financial intelligence, algorithmic trading, market data">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -37,8 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<noscript></noscript>
 <style>
 /* ============================================================
    QUANTMEDIA — DESIGN SYSTEM
@@ -729,6 +728,31 @@ button{cursor:pointer;font-family:inherit}
 .sr-sub{font-size:11px;color:var(--dim)}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 
@@ -781,6 +805,7 @@ button{cursor:pointer;font-family:inherit}
       <a href="papers.html">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -880,7 +905,7 @@ button{cursor:pointer;font-family:inherit}
 <!-- ABOUT QUANTMEDIA — static editorial, high visibility -->
 <div style="background:var(--bg2);border-bottom:1px solid var(--border)">
   <div style="max-width:1400px;margin:0 auto;padding:32px 20px">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px 56px;align-items:start">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px 56px;align-items:start">
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">About QuantMedia</h2>
         <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers with full Python implementations, a post-close signal dashboard scoring 180 liquid US equities daily, end-of-day market data across equities, forex, and commodities, and a categorised daily digest of market headlines from global newswires.</p>
@@ -1311,13 +1336,14 @@ button{cursor:pointer;font-family:inherit}
       <a href="methodology.html">Methodology</a>
       <a href="contact.html">Contact</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 QuantMedia. All rights reserved. <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy Policy</a></span>
     <div style="display:flex;gap:8px">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">US Markets</span>
     </div>
   </div>

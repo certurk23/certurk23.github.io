@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://quantmedia.io/about.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="keywords" content="quantmedia, quantitative research, market microstructure, algorithmic trading, HFT research, quant finance">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="About QuantMedia — Quantitative Research Lab">
 <meta property="og:description" content="QuantMedia is a quantitative research lab publishing open research on market microstructure, portfolio optimization, and algorithmic trading infrastructure.">
@@ -33,7 +33,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--ticker-h:36px;--nav-h:52px;--sub-h:40px;--mbar-h:40px}
 [data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
@@ -215,7 +215,79 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfilePage","@id":"https://quantmedia.io/about.html","url":"https://quantmedia.io/about.html","name":"About QuantMedia — Quantitative Research Lab | QuantMedia","description":"Quantitative researcher focused on market microstructure, algorithmic trading, and financial data infrastructure.","mainEntity":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html","jobTitle":"Quantitative Researcher","worksFor":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"}},"isPartOf":{"@id":"https://quantmedia.io/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},{"@type":"ListItem","position":2,"name":"About","item":"https://quantmedia.io/about.html"}]}]}</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "AboutPage",
+   "@id": "https://quantmedia.io/about.html",
+   "url": "https://quantmedia.io/about.html",
+   "name": "About QuantMedia — Quantitative Research Lab | QuantMedia",
+   "description": "Quantitative researcher focused on market microstructure, algorithmic trading, and financial data infrastructure.",
+   "mainEntity": {
+    "@type": "Organization",
+    "name": "QuantMedia",
+    "url": "https://quantmedia.io/",
+    "description": "Independent quantitative research platform covering market microstructure, portfolio construction and execution costs.",
+    "founder": {
+     "@type": "Person",
+     "name": "Cemil Ertürk",
+     "url": "https://quantmedia.io/author/cemil-erturk.html"
+    },
+    "sameAs": [
+     "https://github.com/certurk23",
+     "https://x.com/certurk23"
+    ]
+   },
+   "isPartOf": {
+    "@id": "https://quantmedia.io/"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://quantmedia.io/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "About",
+     "item": "https://quantmedia.io/about.html"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 
@@ -239,6 +311,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="papers.html">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html" class="active">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -285,15 +358,15 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div class="profile-hero-inner">
     <div class="avatar">QM</div>
     <div class="profile-info">
-      <div class="profile-eyebrow">Independent Researcher — Market Microstructure</div>
-      <h1 class="profile-name">QuantMedia Research</h1>
-      <div class="profile-title">Quantitative Infrastructure Engineer · HFT Research · Market Microstructure Analysis</div>
+      <div class="profile-eyebrow">Independent quantitative research &mdash; published with code</div>
+      <h1 class="profile-name">QuantMedia</h1>
+      <div class="profile-title">Written and operated by <a href="/author/cemil-erturk.html" style="color:var(--accent,#00a651)">Cemil Ertürk</a> &middot; market microstructure, portfolio construction and execution costs</div>
       <div class="profile-tags">
-        <span class="profile-tag">NASDAQ / NYSE Arca</span>
-        <span class="profile-tag">C++ / Systems Programming</span>
-        <span class="profile-tag">VPIN · OBI · Hurst</span>
-        <span class="profile-tag">Equinix NY4/NY5</span>
-        <span class="profile-tag">Kernel Bypass</span>
+        <span class="profile-tag">11 research papers</span>
+        <span class="profile-tag">2 daily proprietary indices</span>
+        <span class="profile-tag">Runnable code · 28 tests</span>
+        <span class="profile-tag">VPIN · HRP · PSR</span>
+        <span class="profile-tag">Not peer reviewed</span>
       </div>
       <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
         <a href="mailto:contact@quantmedia.io" style="display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:3px;border:1px solid var(--border2);color:var(--dim);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;text-decoration:none;transition:all .14s ease" onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--dim)'" onmouseout="this.style.color='var(--dim)';this.style.borderColor='var(--border2)'">
@@ -333,8 +406,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="research-card">
           <div class="rc-icon">📊</div>
           <div class="rc-title">Order Flow Toxicity</div>
-          <div class="rc-desc">Development and backtesting of VPIN-based toxicity metrics against the ITCH 5.0 message model, using historical and sampled data rather than a live co-located feed. Focus on regime detection and the statistical behaviour of the estimator.</div>
-          <div class="rc-tags"><span class="rc-tag">VPIN</span><span class="rc-tag">ITCH 5.0</span><span class="rc-tag">C++</span></div>
+          <div class="rc-desc">A <a href="/reproducibility.html">runnable VPIN estimator</a> covering equal-volume bucketing, bulk volume classification and the tick rule, with 15 tests. The example dataset shipped with it is synthetic and generated from a fixed seed; QuantMedia does not license a tick or quote feed, so no result here is computed on real message data. Focus is on the statistical behaviour of the estimator itself.</div>
+          <div class="rc-tags"><span class="rc-tag">VPIN</span><span class="rc-tag">Python</span><span class="rc-tag">15 tests</span></div>
         </div>
         <div class="research-card">
           <div class="rc-icon">🌑</div>
@@ -362,31 +435,31 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="article-card">
       <div class="timeline">
         <div class="tl-item">
-          <div class="tl-year">2026</div>
+          <div class="tl-year">Aug 2026</div>
           <div class="tl-content">
-            <div class="tl-title">Dark Pool Fragmentation Study — ATS Cross-Venue Latency Arbitrage</div>
-            <div class="tl-sub">Quantitative analysis of hidden liquidity discovery in US ATS venues. Implementation of cross-venue latency integral model for mid-point adverse selection measurement. Infrastructure deployed on Equinix NY4/NY5.</div>
+            <div class="tl-title">Reproducible implementations and proprietary indices published</div>
+            <div class="tl-sub">Runnable <a href="/reproducibility.html">VPIN and Hierarchical Risk Parity packages</a> released with example data, expected output and 28 tests. Two original daily metrics published with formulas, JSON and non-backfilled history: the <a href="/indices/signal-breadth.html">Signal Breadth Index</a> and <a href="/indices/sector-confluence.html">Sector Confluence Index</a>.</div>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-year">2025</div>
+          <div class="tl-year">Apr–Jun 2026</div>
           <div class="tl-content">
-            <div class="tl-title">VPIN Kernel Optimization — Sub-800 ns Processing Pipeline</div>
-            <div class="tl-sub">Full redesign of tick data processing pipeline. Migration from standard Linux networking to OpenOnload kernel bypass. Latency reduction from ~12 µs to 740 ns P99 on NASDAQ ITCH data streams.</div>
+            <div class="tl-title">Data pipeline outage — detected, disclosed and repaired</div>
+            <div class="tl-sub">The scheduled update job failed silently from 14 April and the automated schedule was disabled after 60 days of inactivity. The cause was a continuous-integration misconfiguration, not a data-source failure. The pipeline was rebuilt with per-source failure isolation, last-known-good preservation and a published freshness state at <a href="/data/status.json">/data/status.json</a>, so a future stall is visible rather than silent. Recorded here under the <a href="/editorial-policy.html">corrections policy</a>.</div>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-year">2024</div>
+          <div class="tl-year">Apr 2026</div>
           <div class="tl-content">
-            <div class="tl-title">Hurst Exponent & Long-Range Order Flow Dependence</div>
-            <div class="tl-sub">Empirical study of H &gt; 0.5 persistent order flow regimes in SPY and QQQ. Development of rolling R/S estimation with adaptive window sizing for real-time regime classification.</div>
+            <div class="tl-title">Signal methodology v2.0</div>
+            <div class="tl-sub">The current confluence engine took effect on 14 April 2026: 30 technical signals scored across a fixed 180-name liquid US universe, with a 22-of-30 agreement threshold. Parameters are published in <a href="/data/signal_config.json">signal_config.json</a> and the build fails when site copy stops matching them.</div>
           </div>
         </div>
         <div class="tl-item">
-          <div class="tl-year">2023</div>
+          <div class="tl-year">Jan–Mar 2026</div>
           <div class="tl-content">
-            <div class="tl-title">QuantMedia Research — Founded</div>
-            <div class="tl-sub">Initial focus on market microstructure theory and VPIN methodology. First co-location deployment at Equinix NY4. Core C++ infrastructure framework established.</div>
+            <div class="tl-title">Research library published</div>
+            <div class="tl-sub">Eleven <a href="/papers.html">research papers</a> covering order-flow toxicity, spread decomposition, portfolio construction, performance evaluation under multiple testing, and execution costs. Each carries primary references and an explicit limitations section.</div>
           </div>
         </div>
       </div>
@@ -397,22 +470,22 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="article-card">
       <div class="pub-item">
         <div class="pub-title">Probability of Informed Trading (VPIN) and Flow Toxicity on NASDAQ</div>
-        <div class="pub-meta">QuantMedia Research · 2026 · Research Note</div>
+        <div class="pub-meta">Cemil Ertürk · 2026 · Research Note</div>
         <div class="pub-tags"><span class="pub-tag">VPIN</span><span class="pub-tag">Market Microstructure</span><span class="pub-tag">NASDAQ</span></div>
       </div>
       <div class="pub-item">
         <div class="pub-title">Fragmented Liquidity: The Mechanics of Dark Pool Discovery</div>
-        <div class="pub-meta">QuantMedia Research · 2026 · Research Note</div>
+        <div class="pub-meta">Cemil Ertürk · 2026 · Research Note</div>
         <div class="pub-tags"><span class="pub-tag">Dark Pools</span><span class="pub-tag">ATS</span><span class="pub-tag">Adverse Selection</span></div>
       </div>
       <div class="pub-item">
         <div class="pub-title">Institutional Adverse Selection & Zero-Knowledge Telemetry Architecture</div>
-        <div class="pub-meta">QuantMedia Research · 2025 · Technical Report</div>
+        <div class="pub-meta">Cemil Ertürk · 2025 · Technical Report</div>
         <div class="pub-tags"><span class="pub-tag">Adverse Selection</span><span class="pub-tag">ZK Architecture</span><span class="pub-tag">AES-256-GCM</span></div>
       </div>
       <div class="pub-item">
         <div class="pub-title">HFT Infrastructure: Kernel Bypass, Hugepages & Sub-800 ns Latency Budget</div>
-        <div class="pub-meta">QuantMedia Research · 2025 · Technical Report</div>
+        <div class="pub-meta">Cemil Ertürk · 2025 · Technical Report</div>
         <div class="pub-tags"><span class="pub-tag">OpenOnload</span><span class="pub-tag">Hugepages</span><span class="pub-tag">Latency</span></div>
       </div>
     </div>
@@ -438,12 +511,18 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </div>
 
     <div class="widget">
-      <div class="widget-header"><span class="widget-title">Technical Skills</span></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">C++ (Systems)</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Market Microstructure</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Network / Kernel Bypass</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Statistical Finance</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Python / Data Analysis</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill" style="width:75%"></div></div></div>
+      <!-- Self-rated skill percentages were removed. They were unverifiable,
+           and they were inverted against the evidence: Python was rated lowest
+           while being the only language with published, tested code here, and
+           C++ was rated highest with none. Counts of published work are
+           checkable; a percentage is not. -->
+      <div class="widget-header"><span class="widget-title">Published on this site</span></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/papers.html">Research papers</a></span><span class="skill-pct">11</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/indices/signal-breadth.html">Daily proprietary indices</a></span><span class="skill-pct">2</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/reproducibility.html">Runnable implementations</a></span><span class="skill-pct">2</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/reproducibility.html">Tests covering them</a></span><span class="skill-pct">28</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/learn/what-is-vpin.html">Explainers</a></span><span class="skill-pct">7</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Signals scored each close</span><span class="skill-pct">180</span></div></div>
     </div>
 
     <div class="widget">
@@ -479,10 +558,18 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="infrastructure.html">Infrastructure</a>
     </div>
     <div class="ft-col">
+      <h4>Data &amp; Code</h4>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+    </div>
+    <div class="ft-col">
       <h4>Lab</h4>
       <a href="about.html">About QuantMedia</a>
       <a href="methodology.html">Methodology</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
       <a href="contact.html">Contact</a>
     </div>
   </div>
@@ -490,7 +577,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <span>© 2026 QuantMedia. All rights reserved.</span>
     <div class="footer-badges">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">US Markets</span>
     </div>
   </div>

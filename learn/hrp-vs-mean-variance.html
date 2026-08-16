@@ -10,7 +10,7 @@
 <title>HRP vs Mean-Variance Optimisation Compared | QuantMedia</title>
 <meta name="description" content="Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.">
 <link rel="canonical" href="https://quantmedia.io/learn/hrp-vs-mean-variance.html">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HRP vs Mean-Variance Optimisation Compared">
 <meta property="og:description" content="Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.">
@@ -30,7 +30,7 @@
   "@type":"Article",
   "headline":"HRP vs Mean-Variance Optimisation Compared",
   "description":"Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.",
-  "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "author":{"@type":"Person","name":"Cemil Ertürk","url":"https://quantmedia.io/author/cemil-erturk.html"},
   "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
   "datePublished":"2026-08-08",
   "dateModified":"2026-08-08",
@@ -48,7 +48,7 @@
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
@@ -193,6 +193,30 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .calc-out .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--accent);font-weight:600}
 </style>
 
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <header class="site-header">
   <div class="header-inner">
@@ -208,6 +232,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="/papers.html">Papers</a>
       <a href="/research.html">Microstructure</a>
       <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -360,10 +385,18 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="/infrastructure.html">Infrastructure</a>
     </div>
     <div class="ft-col">
+      <h4>Data &amp; Code</h4>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+    </div>
+    <div class="ft-col">
       <h4>Lab</h4>
       <a href="/about.html">About QuantMedia</a>
       <a href="/methodology.html">Methodology</a>
       <a href="/privacy.html">Privacy Policy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
       <a href="/contact.html">Contact</a>
     </div>
   </div>
@@ -371,7 +404,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <span>&copy; 2026 QuantMedia. All rights reserved.</span>
     <div class="footer-badges">
       <span class="fbadge g">Open Research</span>
-      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">Independent</span>
       <span class="fbadge">NASDAQ / NYSE Arca</span>
     </div>
   </div>

@@ -113,7 +113,45 @@ INDEX_LINKS = [
     ('/indices/sector-confluence.html', 'Sector Confluence'),
 ]
 
-stats = {'homepage': 0, 'nav': 0, 'markets': 0, 'lab': 0, 'dupes': 0}
+# ---------------------------------------------------------------------------
+# Second pass: the site has TWO footer structures, not one.
+#
+# 22 pages use `.ft-col` (the methodology.html shell, which build_pages.py
+# lifts for every generated page) and 19 use `.footer-col`. The first pass only
+# knew about `.footer-col`, so every generated page - including the learn
+# explainers and the reproducibility hub - still had no route to the indices.
+# Fixing the shell fixes all of them, but only if build_pages.py is re-run
+# afterwards, since it copies this footer at build time.
+# ---------------------------------------------------------------------------
+FTCOL_ANCHOR = '''    <div class="ft-col">
+      <h4>Lab</h4>'''
+
+FTCOL_NEW = '''    <div class="ft-col">
+      <h4>Data &amp; Code</h4>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+    </div>
+    <div class="ft-col">
+      <h4>Lab</h4>'''
+
+# Identity links belong in every footer variant, not just the homepage one.
+IDENTITY_LINKS = [
+    ('about.html', '<a href="/author/cemil-erturk.html">Author</a>'),
+    ('privacy.html', '<a href="/editorial-policy.html">Editorial Policy</a>'),
+]
+
+# "Non-Commercial" is not true of a site funded by AdSense, and it directly
+# contradicts the funding disclosure on /editorial-policy.html. A trust badge
+# that conflicts with the trust page is worse than no badge.
+BADGE_FIXES = [
+    ('<span class="fbadge">Non-Commercial</span>',
+     '<span class="fbadge">Independent</span>'),
+]
+
+stats = {'homepage': 0, 'nav': 0, 'markets': 0, 'lab': 0, 'dupes': 0,
+         'ftcol': 0, 'identity': 0, 'badge': 0}
 
 
 def rename_nav(block):
@@ -175,6 +213,27 @@ for f in sorted(ROOT.rglob('*.html')):
     if out != before:
         stats['lab'] += 1
 
+    # --- second footer variant ---
+    if 'Data &amp; Code' not in out and FTCOL_ANCHOR in out:
+        out = out.replace(FTCOL_ANCHOR, FTCOL_NEW, 1)
+        stats['ftcol'] += 1
+
+    before = out
+    for after_href, link in IDENTITY_LINKS:
+        if link in out:
+            continue
+        m = re.search(r'([ \t]*)<a href="/?' + re.escape(after_href) + r'"[^>]*>[^<]*</a>\n', out)
+        if m:
+            out = out[:m.end()] + m.group(1) + link + '\n' + out[m.end():]
+    if out != before:
+        stats['identity'] += 1
+
+    before = out
+    for old, new in BADGE_FIXES:
+        out = out.replace(old, new)
+    if out != before:
+        stats['badge'] += 1
+
     if out != src:
         f.write_text(out, encoding='utf-8')
 
@@ -186,7 +245,8 @@ print('\ninbound internal links:')
 failed = False
 for target in ('/indices/signal-breadth.html', '/indices/sector-confluence.html',
                '/reproducibility.html', '/tools/probabilistic-sharpe-ratio-calculator.html',
-               '/learn/what-is-vpin.html'):
+               '/learn/what-is-vpin.html', '/author/cemil-erturk.html',
+               '/editorial-policy.html'):
     n = sum(1 for f in ROOT.rglob('*.html')
             if '.git' not in f.parts and target in f.read_text(encoding='utf-8'))
     flag = 'ok ' if n else 'ORPHAN'

@@ -11,7 +11,7 @@
 <meta name="description" content="Quantitative guide to US sector rotation: how the economic cycle drives institutional capital flows between XLK, XLF, XLE, XLV, and XLY sector ETFs.">
 <link rel="canonical" href="https://quantmedia.io/sector-rotation-guide.html">
 <meta name="keywords" content="sector rotation, S&P 500 sectors, ETF rotation, XLK XLF XLE XLV, economic cycle investing, capital flows">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sector Rotation Strategy: How Institutional Capital Moves Through the S&P 500 | QuantMedia">
 <meta property="og:description" content="Quantitative guide to US sector rotation: how the economic cycle drives institutional capital flows between XLK, XLF, XLE, XLV, and XLY sector ETFs.">
@@ -28,21 +28,33 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
-<script type="application/ld+json">{
-  "@context":"https://schema.org",
-  "@type":"Article",
-  "headline":"Sector Rotation Strategy: How Institutional Capital Moves Through the S&P 500",
-  "description":"A quantitative guide to US sector rotation: how the economic cycle drives capital flows between XLK, XLF, XLE, XLV, and XLY sector ETFs.",
-  "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},
-  "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},
-  "datePublished":"2026-03-15",
-  "dateModified":"2026-08-07",
-  "mainEntityOfPage":{"@type":"WebPage","@id":"https://quantmedia.io/sector-rotation-guide.html"}
-}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sector Rotation Strategy: How Institutional Capital Moves Through the S&P 500",
+  "description": "A quantitative guide to US sector rotation: how the economic cycle drives capital flows between XLK, XLF, XLE, XLV, and XLY sector ETFs.",
+  "author": {
+    "@type": "Person",
+    "name": "Cemil Ertürk",
+    "url": "https://quantmedia.io/author/cemil-erturk.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "QuantMedia",
+    "url": "https://quantmedia.io/"
+  },
+  "datePublished": "2026-03-15",
+  "dateModified": "2026-08-07",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://quantmedia.io/sector-rotation-guide.html"
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<noscript></noscript>
 <style>
 :root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--text:#e8e8e8;--dim:#999;--dimmer:#666;--muted:#444;--accent:#00a651;--border:#242424;--border2:#2a2a2a}
 [data-theme="light"]{--bg:#f8f8f8;--bg2:#fff;--bg3:#f0f0f0;--text:#111;--dim:#555;--dimmer:#888;--muted:#bbb;--border:#e0e0e0;--border2:#d0d0d0}
@@ -100,6 +112,31 @@ a:hover{text-decoration:underline}
 .footer-bottom{max-width:1400px;margin:20px auto 0;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px}
 @media(max-width:700px){.footer-inner{grid-template-columns:1fr}.nav-links{display:none}.article-h1{font-size:26px}}
 </style>
+<style>
+/* --- mobile hardening ---------------------------------------------------
+   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
+   content's min-content width, so a single wide table pushed the whole grid
+   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
+   scroll inside their own box rather than scrolling the page. */
+@media(max-width:900px){
+  .page-grid{grid-template-columns:minmax(0,1fr)}
+  .article-content,.article-wrap,.page-wrap,main{min-width:0}
+  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
+  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  pre,code{max-width:100%;overflow-x:auto}
+  img,svg,iframe{max-width:100%;height:auto}
+  .sub-nav-inner{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sub-nav-inner::-webkit-scrollbar{display:none}
+  .article-byline{flex-wrap:wrap;row-gap:4px}
+}
+</style>
+
+
+
+
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
 
@@ -112,6 +149,7 @@ a:hover{text-decoration:underline}
     <a href="quantum-signals.html">Quantum</a>
     <a href="papers.html">Research</a>
     <a href="about.html">About</a>
+    <a href="/author/cemil-erturk.html">Author</a>
   </div>
   <button class="theme-btn" onclick="(function(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);try{localStorage.setItem('qm-theme',t);}catch(e){}})()">Theme</button>
 </nav>

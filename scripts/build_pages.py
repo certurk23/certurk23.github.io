@@ -25,6 +25,16 @@ import qm_config as C   # noqa: E402
 E = C.ENGINE
 SITE = 'https://quantmedia.io'
 
+# One canonical font request for the whole site. Barlow 300 is requested
+# nowhere in the CSS and Barlow Condensed 500 is used 21 times site-wide across
+# all families combined, so both are dropped: 12 font files becomes 10.
+# Loaded via preload+onload rather than a plain stylesheet link, because a
+# stylesheet link to fonts.googleapis.com blocks first paint on a third-party
+# round trip. The <noscript> copy keeps the fonts for scripting-disabled agents.
+FONT_HREF = ('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400'
+             '&family=Barlow+Condensed:wght@400;600;700'
+             '&family=JetBrains+Mono:wght@400;500&display=swap')
+
 
 # ---------------------------------------------------------------------------
 # Shared shell, lifted from methodology.html so styling cannot drift
@@ -104,7 +114,7 @@ def page(slug, title, description, h1, crumb, body,
   "@type":"{schema_type}",
   "headline":{title.split(" | ")[0]!r},
   "description":{description!r},
-  "author":{{"@type":"Organization","name":"QuantMedia","url":"{SITE}"}},
+  "author":{{"@type":"Person","name":"Cemil Ertürk","url":"{SITE}/author/cemil-erturk.html"}},
   "publisher":{{"@type":"Organization","name":"QuantMedia","url":"{SITE}"}},
   "datePublished":"{published}",
   "dateModified":"{modified}",
@@ -133,7 +143,7 @@ def page(slug, title, description, h1, crumb, body,
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{url}">
-<meta name="author" content="QuantMedia">
+<meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{title.split(' | ')[0]}">
 <meta property="og:description" content="{description}">
@@ -151,7 +161,8 @@ def page(slug, title, description, h1, crumb, body,
 {ld}{extra_schema}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="{FONT_HREF}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{FONT_HREF}"></noscript>
 {style}
 {EXTRA_CSS}
 </head>
@@ -181,6 +192,24 @@ def write(slug, html):
 
 
 import page_content as PC
+import page_content_identity as PCI   # noqa: E402
+
+# knowsAbout lists only subjects with published work behind them on this site.
+# No affiliation, credential, job title or award appears here, because none can
+# be verified - and an unverifiable claim in structured data is still a claim.
+PERSON_SCHEMA = '''
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Cemil Ertürk",
+  "url":"https://quantmedia.io/author/cemil-erturk.html",
+  "email":"mailto:contact@quantmedia.io",
+  "description":"Independent quantitative researcher and engineer. Writes the research and builds the data pipeline behind QuantMedia.",
+  "knowsAbout":["Market microstructure","Order flow toxicity","VPIN","Hierarchical Risk Parity","Portfolio construction","Probabilistic Sharpe Ratio","Backtest overfitting","Transaction cost analysis","Slippage modelling","Systematic trading signals"],
+  "sameAs":["https://github.com/certurk23","https://x.com/certurk23"],
+  "worksFor":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "mainEntityOfPage":"https://quantmedia.io/author/cemil-erturk.html"
+}</script>'''
 
 PAGES = [
     dict(slug='indices/signal-breadth.html',
@@ -284,6 +313,28 @@ PAGES = [
          h1='Probabilistic Sharpe Ratio calculator',
          crumb=('Tools', 'tools/probabilistic-sharpe-ratio-calculator.html'),
          body=PC.PSR_TOOL_BODY, schema_type='WebApplication'),
+
+    # The author page carries Person + ProfilePage rather than Article: it is
+    # an identity page, and mislabelling it as an article would be the same
+    # class of error as the ScholarlyArticle claim that was removed earlier.
+    dict(slug='author/cemil-erturk.html',
+         title='Cemil Ertürk - Quantitative Researcher | QuantMedia',
+         description=('Cemil Ertürk is the researcher behind QuantMedia, covering market '
+                      'microstructure, portfolio construction, execution costs and '
+                      'systematic signals. Independent research, published with code.'),
+         h1='Cemil Ertürk',
+         crumb=('About', 'about.html'),
+         body=PCI.AUTHOR_BODY, schema_type='ProfilePage',
+         extra_schema=PERSON_SCHEMA),
+
+    dict(slug='editorial-policy.html',
+         title='Editorial Policy, Corrections and Disclosures | QuantMedia',
+         description=('How QuantMedia research is produced, funded, versioned and '
+                      'corrected. Data sources, independence, AI-tool disclosure, '
+                      'corrections policy and what has not been validated.'),
+         h1='Editorial policy',
+         crumb=('About', 'about.html'),
+         body=PCI.EDITORIAL_BODY),
 ]
 
 

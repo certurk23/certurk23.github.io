@@ -165,6 +165,22 @@ a{text-decoration:none;color:inherit}
 .breadcrumb-inner .bc-sep{color:var(--dimmer);font-size:10px}
 .breadcrumb-inner .bc-current{color:var(--text)}
 </style>
+<style>
+.qm-repro{border:1px solid rgba(0,166,81,.32);background:rgba(0,166,81,.06);
+  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:18px 22px;margin:28px 0}
+.qm-repro h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.qm-repro p{font-size:13.5px;line-height:1.8;margin:0 0 12px}
+.qm-repro table{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 12px}
+.qm-repro th,.qm-repro td{padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.qm-repro th{color:var(--dim);font-weight:600;width:34%;white-space:nowrap}
+.qm-repro code{font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--bg3,#181818);border:1px solid var(--border2,#2e2e2e);padding:1px 5px;border-radius:2px}
+.qm-repro pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.75;
+  background:var(--bg3,#181818);border:1px solid var(--border2,#2e2e2e);border-radius:4px;
+  padding:12px 14px;overflow-x:auto;margin:0 0 12px}
+.qm-repro a{color:var(--accent);font-weight:600}
+</style>
 </head>
 <body>
 
@@ -387,6 +403,35 @@ a{text-decoration:none;color:inherit}
     <div style="font-size:12px;color:var(--dim,#888)">180 liquid US equities scored against 30 technical signals after each close. Free, rules-based, research use only.</div>
   </div>
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
+</div>
+
+
+<div class="qm-repro">
+  <h3>Code &amp; Reproducibility</h3>
+  <p>A runnable reference implementation of the method described above is
+  published alongside this paper. It follows the same three steps &mdash;
+  equal-volume bucketing, buy/sell classification, rolling VPIN &mdash; and is
+  covered by 15 tests.</p>
+  <table><tbody>
+    <tr><th>Implementation</th><td><code>quantmedia-research/vpin-order-flow-toxicity/vpin.py</code></td></tr>
+    <tr><th>Worked example</th><td><code>example.py</code> &mdash; synthetic tape, fixed seed <code>20260808</code></td></tr>
+    <tr><th>Example output</th><td><code>outputs/example_output.csv</code> (per-bucket buy/sell volume and VPIN)</td></tr>
+    <tr><th>Tests</th><td><code>tests/test_vpin.py</code> &mdash; 15 passing</td></tr>
+    <tr><th>Dependencies</th><td>numpy, pandas, scipy. No API key, no network access.</td></tr>
+    <tr><th>Reproduces</th><td>VPIN rising ~1.94x through a planted one-sided episode; BVC and tick-rule means differing 0.44 vs 0.18 on identical data</td></tr>
+  </tbody></table>
+  <pre>cd quantmedia-research/vpin-order-flow-toxicity
+pip install -r requirements.txt
+python example.py</pre>
+  <p><strong>The example data is synthetic</strong>, generated from a fixed
+  seed. It is not real market data and no conclusion about any real security
+  follows from it &mdash; it exists so the implementation can be verified
+  end-to-end without a tick-data subscription. QuantMedia does not publish a
+  live VPIN reading, because the production pipeline collects end-of-day bars
+  rather than order flow.</p>
+  <p><a href="/reproducibility.html">All research implementations</a> &middot;
+     <a href="/learn/what-is-vpin.html">Plain-language explainer</a> &middot;
+     <a href="/methodology.html">Methodology &amp; data sources</a></p>
 </div>
 
 <!-- NEWSLETTER CTA -->

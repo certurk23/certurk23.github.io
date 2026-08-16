@@ -34,6 +34,12 @@ ENGINE = {
     'cadence':          'Mon-Fri, 23:30 UTC (after the 16:00 ET US close)',
     'data_source':      'Yahoo Finance via yfinance (end-of-day OHLCV)',
 }
+# Methodology version. Bump this when the production engine changes so that
+# historical records stay attributable to the logic that produced them.
+# Historical papers keep their own methodology and are NOT rewritten.
+METHODOLOGY_VERSION = '2.0'
+METHODOLOGY_EFFECTIVE = '2026-04-14'   # date the 30-signal / 22-threshold engine went live
+
 ENGINE['agreement_pct'] = round(
     100.0 * ENGINE['confluence_min'] / ENGINE['n_signals'])   # 73
 
@@ -60,6 +66,8 @@ def signal_config():
         'update_cadence':          'post-close',
         'schedule_utc':            'Mon-Fri 23:30 UTC',
         'data_source':             ENGINE['data_source'],
+        'methodology_version':     METHODOLOGY_VERSION,
+        'methodology_effective':   METHODOLOGY_EFFECTIVE,
     }
 
 # ---------------------------------------------------------------------------
@@ -316,6 +324,7 @@ REQUIRED_FILES = {
     'llms.txt':                 800,
     'indices/signal-breadth.html':    12_000,
     'indices/sector-confluence.html': 12_000,
+    'reproducibility.html':     15_000,
     'data/signal_config.json':  200,
 }
 

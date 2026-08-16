@@ -820,6 +820,9 @@ def compute_quantum_signals():
 
     payload = {
         'updated': NOW_ISO,
+        # Stamps the output with the engine version that produced it, so a
+        # future methodology change cannot silently reinterpret old records.
+        'methodology_version': C.METHODOLOGY_VERSION,
         'market_date': market_date,
         'engine': {
             'universe': UNIVERSE_N,
@@ -1047,30 +1050,34 @@ def render_index_pages(breadth, sectors):
 HISTORY_CAP = 750        # ~3 years of sessions; keeps the file small
 
 
-def append_history(breadth):
-    """One compact row per market date. A machine-readable series beats
-    thousands of near-identical daily URLs."""
-    hist = read_json('data/breadth_history.json') or {'series': []}
+def append_history(rel, row, metric_name):
+    """Append one row per market date to a history series.
+
+    Rules, enforced here rather than trusted to the caller:
+      * exactly one entry per market_date - an existing row for the same date
+        is replaced, never duplicated
+      * the series is only ever extended from real production output; there is
+        NO backfill, because the scan was not run historically under this
+        methodology and inventing the values would be fabrication
+      * capped at HISTORY_CAP rows so the file stays small enough to serve
+    """
+    hist = read_json(rel) or {}
     series = [r for r in hist.get('series', [])
-              if r.get('market_date') != breadth['market_date']]
-    series.append({
-        'market_date':  breadth['market_date'],
-        'breadth_pct':  breadth['breadth_pct'],
-        'buy_signals':  breadth['buy_signals'],
-        'scored':       breadth['scored_stocks'],
-        'median_score': breadth['median_score'],
-        'mean_score':   breadth['mean_score'],
-    })
+              if r.get('market_date') != row['market_date']]
+    series.append(row)
     series.sort(key=lambda r: r['market_date'])
     return {
-        'metric':      'QuantMedia Signal Breadth - history',
-        'updated_at':  NOW_ISO,
-        'threshold':   CONFLUENCE_MIN,
-        'signal_count': N_SIGNALS,
-        'note':        ('History begins when this series was first published; '
-                        'it is not backfilled, because the scan was not run '
-                        'historically under the current methodology.'),
-        'series':      series[-HISTORY_CAP:],
+        'metric':          f'{metric_name} - history',
+        'methodology_version': C.METHODOLOGY_VERSION,
+        'updated_at':      NOW_ISO,
+        'threshold':       CONFLUENCE_MIN,
+        'signal_count':    N_SIGNALS,
+        'observations':    len(series[-HISTORY_CAP:]),
+        'note':            ('History begins when this series was first '
+                            'published and is not backfilled: the scan was not '
+                            'run historically under the current methodology, '
+                            'so earlier values do not exist.'),
+        'series':          series[-HISTORY_CAP:],
     }
 
 
@@ -1421,8 +1428,24 @@ def main():
             # Only extend the series when the scan is genuinely fresh, or a
             # preserved payload would re-append the same session every run.
             if signals:
-                write_json('data/breadth_history.json', append_history(breadth))
-                written.append('data/breadth_history.json')
+                write_json('data/breadth_history.json', append_history(
+                    'data/breadth_history.json',
+                    {'market_date': breadth['market_date'],
+                     'breadth_pct': breadth['breadth_pct'],
+                     'buy_signals': breadth['buy_signals'],
+                     'scored': breadth['scored_stocks'],
+                     'median_score': breadth['median_score'],
+                     'mean_score': breadth['mean_score']},
+                    'QuantMedia Signal Breadth'))
+                write_json('data/sector_confluence_history.json', append_history(
+                    'data/sector_confluence_history.json',
+                    {'market_date': sectors['market_date'],
+                     'sectors': [{'sector': s['sector'], 'mean_score': s['mean_score'],
+                                  'median_score': s['median_score'], 'buy_pct': s['breadth_pct'],
+                                  'rank': s['rank']} for s in sectors['sectors']]},
+                    'QuantMedia Sector Confluence'))
+                written += ['data/breadth_history.json',
+                            'data/sector_confluence_history.json']
             render_index_pages(breadth, sectors)
             print(f"  Metrics: breadth {breadth['breadth_pct']}% "
                   f"({breadth['buy_signals']}/{breadth['scored_stocks']}), "

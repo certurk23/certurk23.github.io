@@ -23,6 +23,66 @@ MINS = E['min_sessions']
 # ===========================================================================
 # /indices/ - proprietary metrics that originate on QuantMedia
 # ===========================================================================
+# Chart script kept OUT of the f-string: it is full of JS braces, which an
+# f-string would try to interpret as replacement fields.
+_BREADTH_CHART_JS = """
+  <script>
+  (function(){
+    var box=document.getElementById('qm-breadth-history');
+    if(!box) return;
+    fetch('/data/breadth_history.json',{cache:'no-cache'})
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(d){
+        var s=(d&&d.series)||[]; if(!s.length) throw 0;
+        var thr=d.threshold||22, n=s.length;
+        var rows=s.slice().reverse().map(function(r){
+          return '<tr><td class="qm-num">'+r.market_date+'</td>'+
+                 '<td class="qm-num">'+r.breadth_pct.toFixed(1)+'%</td>'+
+                 '<td class="qm-num">'+r.buy_signals+'/'+r.scored+'</td>'+
+                 '<td class="qm-num">'+r.median_score+'</td>'+
+                 '<td class="qm-num">'+(r.mean_score!=null?r.mean_score.toFixed(2):'--')+'</td></tr>';
+        }).join('');
+        var table='<div class="qm-tablewrap"><table class="qm-kv"><thead><tr>'+
+          '<th>Market date</th><th>Breadth</th><th>BUY / scored</th>'+
+          '<th>Median</th><th>Mean</th></tr></thead><tbody>'+rows+
+          '</tbody></table></div>';
+        var head='', chart='';
+        if(n<10){
+          head='<p class="qm-note"><strong>'+n+' observation'+(n===1?'':'s')+
+               ' so far.</strong> A chart appears once at least 10 sessions have '+
+               'accumulated; until then the table below is the complete series.</p>';
+        }else{
+          // Lightweight inline SVG - no charting library.
+          var W=720,H=200,P=32, vals=s.map(function(r){return r.breadth_pct;});
+          var lo=Math.max(0,Math.min.apply(null,vals)-5),
+              hi=Math.min(100,Math.max.apply(null,vals)+5);
+          var x=function(i){return P+i*(W-2*P)/Math.max(1,n-1);},
+              y=function(v){return H-P-(v-lo)*(H-2*P)/Math.max(1e-9,hi-lo);};
+          var pts=vals.map(function(v,i){return x(i).toFixed(1)+','+y(v).toFixed(1);}).join(' ');
+          chart='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="200" '+
+            'role="img" aria-label="QuantMedia Signal Breadth over the last '+n+
+            ' sessions. Values are listed in the table below.">'+
+            '<line x1="'+P+'" y1="'+y(50).toFixed(1)+'" x2="'+(W-P)+'" y2="'+y(50).toFixed(1)+
+            '" stroke="currentColor" stroke-opacity=".25" stroke-dasharray="4 4"/>'+
+            '<polyline fill="none" stroke="#00a651" stroke-width="2" points="'+pts+'"/>'+
+            '<text x="'+P+'" y="16" font-size="11" fill="currentColor" opacity=".65">'+
+            'Signal breadth %, last '+n+' sessions (dashed = 50%)</text></svg>';
+        }
+        box.innerHTML=head+chart+table+
+          '<p class="qm-note">Full series: '+
+          '<a href="/data/breadth_history.json">/data/breadth_history.json</a></p>';
+      })
+      .catch(function(){
+        box.innerHTML='<p class="qm-note">History is still accumulating &mdash; '+
+          'the first records publish with the next post-close scans. The series '+
+          'will be available at <a href="/data/breadth_history.json">'+
+          '/data/breadth_history.json</a>.</p>';
+      });
+  })();
+  </script>
+"""
+
+
 BREADTH_BODY = f"""
   <p class="qm-lede">Signal Breadth is a QuantMedia metric. It measures how much
   of the scan universe currently qualifies as a BUY, which is a different
@@ -92,9 +152,25 @@ where  BUY  &lt;=&gt;  confluence_score &gt;= {THR}
     small score shifts move breadth sharply.</li>
   </ul>
 
+  <h2>History</h2>
+  <p>One record per completed US trading session. The series starts on the day
+  it was first published and is <strong>not backfilled</strong> &mdash; the scan
+  was not run historically under this methodology, so earlier values do not
+  exist and inventing them would be fabrication. Duplicate dates are impossible
+  by construction: an existing record for a market date is replaced, never
+  appended alongside.</p>
+  <div id="qm-breadth-history">
+    <p class="qm-note">History loads from
+    <a href="/data/breadth_history.json">/data/breadth_history.json</a>. The
+    full series is always available there as JSON even when the table below is
+    still short.</p>
+  </div>
+""" + _BREADTH_CHART_JS + f"""
+
   <h2>Data and refresh</h2>
   <table class="qm-kv"><tbody>
     <tr><th>Source</th><td>QuantMedia post-close signal scan (end-of-day OHLCV via Yahoo Finance / yfinance)</td></tr>
+    <tr><th>Methodology version</th><td>2.0 (effective 2026-04-14) &mdash; stamped into every record</td></tr>
     <tr><th>Cadence</th><td>Every US trading day, published after 23:30 UTC</td></tr>
     <tr><th>Machine-readable</th><td><a href="/data/signal_breadth.json">/data/signal_breadth.json</a> &middot; <a href="/data/breadth_history.json">/data/breadth_history.json</a></td></tr>
     <tr><th>Methodology config</th><td><a href="/data/signal_config.json">/data/signal_config.json</a></td></tr>
@@ -373,23 +449,32 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   <code>sqrt(n-1)</code> and push PSR up.</p>
 
   <h2>Worked example</h2>
-  <p>Two years of monthly returns, n = 24, tested against SR* = 0:</p>
+  <p>Two years of monthly returns, n = 24, both strategies reporting the same
+  headline Sharpe of 1.50:</p>
   <table class="qm-kv">
     <thead><tr><th>Input</th><th>Strategy A</th><th>Strategy B</th></tr></thead>
     <tbody>
-      <tr><th>Observed Sharpe (annualised)</th><td class="qm-num">1.50</td><td class="qm-num">1.50</td></tr>
-      <tr><th>Skewness</th><td class="qm-num">0.00</td><td class="qm-num">-1.20</td></tr>
-      <tr><th>Kurtosis</th><td class="qm-num">3.0</td><td class="qm-num">7.0</td></tr>
-      <tr><th>Denominator</th><td class="qm-num">1.000</td><td class="qm-num">2.318</td></tr>
-      <tr><th>Test statistic</th><td class="qm-num">7.19</td><td class="qm-num">3.10</td></tr>
-      <tr><th>PSR</th><td class="qm-num">&gt; 0.999</td><td class="qm-num">0.999</td></tr>
+      <tr><th>Observed Sharpe</th><td class="qm-num">1.50</td><td class="qm-num">1.50</td></tr>
+      <tr><th>Skewness &gamma;&#8321;</th><td class="qm-num">0.00</td><td class="qm-num">&minus;1.20</td></tr>
+      <tr><th>Kurtosis &gamma;&#8322;</th><td class="qm-num">3.0</td><td class="qm-num">7.0</td></tr>
+      <tr><th>Denominator</th><td class="qm-num">1.4577</td><td class="qm-num">2.4850</td></tr>
+      <tr><th>z, against SR* = 0</th><td class="qm-num">4.935</td><td class="qm-num">2.895</td></tr>
+      <tr><th>PSR, against SR* = 0</th><td class="qm-num">1.0000</td><td class="qm-num">0.9981</td></tr>
+      <tr><th>z, against SR* = 1.0</th><td class="qm-num">1.645</td><td class="qm-num">0.965</td></tr>
+      <tr><th>PSR, against SR* = 1.0</th><td class="qm-num">0.9500</td><td class="qm-num">0.8327</td></tr>
     </tbody>
   </table>
-  <p>Both clear the bar against a zero benchmark, but B's statistic is less than
-  half A's on identical headline performance. Raise the benchmark to SR* = 1.0
-  and the gap becomes decisive: A stays comfortably above 0.99 while B falls to
-  roughly 0.85 &mdash; below the 0.95 level usually treated as adequate. The
-  headline Sharpe hid that entirely.</p>
+  <p>Working strategy A's denominator explicitly, because the kurtosis term
+  catches people out &mdash; it does <em>not</em> vanish at &gamma;&#8322; = 3:</p>
+  <div class="qm-formula">den = sqrt( 1 - 0.00*1.50 + ((3.0 - 1)/4)*1.50^2 )
+    = sqrt( 1 + 0.5*2.25 )
+    = sqrt( 2.125 )
+    = 1.4577</div>
+  <p>Against a zero benchmark both look fine. Raise the benchmark to a Sharpe
+  of 1.0 &mdash; the question an allocator with a passive alternative actually
+  asks &mdash; and they separate sharply: A lands exactly on the 0.95 bar,
+  while B falls to 0.83 and fails it. Identical headline Sharpe, materially
+  different evidence. That is the entire point of the measure.</p>
   <p>Note the annualisation trap in this example: if SR_hat is annualised, n
   must still be the number of <em>observations</em> (24 months), and SR_hat and
   SR* must be expressed at the same frequency. Mixing an annualised Sharpe with
@@ -889,6 +974,32 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   trustworthy &mdash; which is precisely the profile of strategies that look
   best on headline numbers.</p>
 
+  <h2>Example calculation</h2>
+  <p>The values the calculator loads by default, so you can verify it against
+  an independent implementation before trusting it on your own numbers:</p>
+  <table class="qm-kv">
+    <thead><tr><th>Input</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><th>Observed Sharpe SR&#770;</th><td class="qm-num">1.50</td></tr>
+      <tr><th>Benchmark SR*</th><td class="qm-num">0.00</td></tr>
+      <tr><th>Observations n</th><td class="qm-num">24</td></tr>
+      <tr><th>Skewness &gamma;&#8321;</th><td class="qm-num">&minus;1.20</td></tr>
+      <tr><th>Kurtosis &gamma;&#8322;</th><td class="qm-num">7.00</td></tr>
+    </tbody>
+  </table>
+  <div class="qm-formula">den = sqrt( 1 - (-1.20)(1.50) + ((7.00 - 1)/4)(1.50)^2 )
+    = sqrt( 1 + 1.80 + 1.5 * 2.25 )
+    = sqrt( 6.175 )
+    = 2.4850
+
+z   = (1.50 - 0.00) * sqrt(24 - 1) / 2.4850
+    = 1.50 * 4.7958 / 2.4850
+    = 2.8955
+
+PSR = Z(2.8955) = 0.9981  ->  99.81%</div>
+  <p>Change the benchmark to 1.00 and the same track record gives z = 0.965 and
+  PSR = 0.8327, which fails the 0.95 bar. Same strategy, different question.</p>
+
   <h2>Assumptions</h2>
   <ul>
     <li>Returns are independent and identically distributed. Serial correlation
@@ -964,4 +1075,131 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   calc();
 })();
 </script>
+"""
+
+
+# ===========================================================================
+# /reproducibility.html — index of implementations and tools
+# ===========================================================================
+REPRO_BODY = """
+  <p class="qm-lede">Every QuantMedia research claim that can reasonably be
+  reproduced should be. This page indexes the implementations, example data and
+  tools that back the research &mdash; and is equally explicit about which
+  papers are currently <em>research only</em>, with no runnable material behind
+  them.</p>
+
+  <div class="qm-answer">
+    <span class="qm-answer-label">Status definitions</span>
+    <p><strong>Reproducible</strong> &mdash; runnable code, example data,
+    expected output and tests exist, and the implementation follows the
+    methodology in the paper. <strong>Interactive tool</strong> &mdash; a
+    working calculator with a published formula. <strong>Research only</strong>
+    &mdash; the paper stands on its own; no code has been released yet. Nothing
+    is labelled reproducible on the strength of an intention.</p>
+  </div>
+
+  <h2>Available implementations</h2>
+
+  <h3>VPIN &mdash; order flow toxicity</h3>
+  <table class="qm-kv"><tbody>
+    <tr><th>Research question</th><td>Can order-flow toxicity be estimated from a trade tape without quote data, and how sensitive is the answer to the classification method?</td></tr>
+    <tr><th>Paper</th><td><a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; Order Flow Toxicity</a></td></tr>
+    <tr><th>Explainer</th><td><a href="/learn/what-is-vpin.html">What is VPIN?</a></td></tr>
+    <tr><th>Code</th><td><code>quantmedia-research/vpin-order-flow-toxicity/</code> &mdash; <code>vpin.py</code>, <code>example.py</code></td></tr>
+    <tr><th>Implements</th><td>Equal-volume bucketing with boundary splitting; Bulk Volume Classification (Student-t) and the tick rule; rolling VPIN</td></tr>
+    <tr><th>Example data</th><td>Synthetic tape, fixed seed <code>20260808</code>, with a planted one-sided episode</td></tr>
+    <tr><th>Expected output</th><td>VPIN rises ~1.94x through the planted episode; BVC and tick-rule means differ (0.44 vs 0.18) on identical data</td></tr>
+    <tr><th>Tests</th><td>15, covering bucket construction, volume conservation, both classifiers, bounds, degenerate tapes and validation</td></tr>
+    <tr><th>Status</th><td><strong>Reproducible</strong></td></tr>
+  </tbody></table>
+
+  <h3>Hierarchical Risk Parity</h3>
+  <table class="qm-kv"><tbody>
+    <tr><th>Research question</th><td>Does avoiding covariance-matrix inversion produce more stable out-of-sample allocations than mean-variance on correlated universes?</td></tr>
+    <tr><th>Paper</th><td><a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a></td></tr>
+    <tr><th>Explainer</th><td><a href="/learn/hrp-vs-mean-variance.html">HRP vs mean-variance</a></td></tr>
+    <tr><th>Code</th><td><code>quantmedia-research/hierarchical-risk-parity/</code> &mdash; <code>hrp.py</code>, <code>compare_mvo.py</code></td></tr>
+    <tr><th>Implements</th><td>Correlation distance, hierarchical linkage, quasi-diagonalisation, recursive bisection; min-variance and shrinkage baselines</td></tr>
+    <tr><th>Example data</th><td>Synthetic 20-asset block-correlated panel, fixed seed <code>20260808</code></td></tr>
+    <tr><th>Expected output</th><td>Out-of-sample volatility drift: HRP +1.3% vs MinVar +13.6%; shrinkage narrows it to +7.7%</td></tr>
+    <tr><th>Tests</th><td>13, including weights summing to 1, no negatives, a known 80/20 two-asset result and distance-metric properties</td></tr>
+    <tr><th>Status</th><td><strong>Reproducible</strong></td></tr>
+  </tbody></table>
+
+  <h3>Probabilistic Sharpe Ratio</h3>
+  <table class="qm-kv"><tbody>
+    <tr><th>Research question</th><td>Given a track record's length and return shape, how confident can you be that the true Sharpe beats a benchmark?</td></tr>
+    <tr><th>Paper</th><td><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a></td></tr>
+    <tr><th>Explainer</th><td><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a></td></tr>
+    <tr><th>Tool</th><td><a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a> &mdash; runs in the browser, no data leaves the page</td></tr>
+    <tr><th>Verification</th><td>Worked example published with every intermediate value, so the tool can be checked against an independent implementation</td></tr>
+    <tr><th>Status</th><td><strong>Interactive tool</strong></td></tr>
+  </tbody></table>
+
+  <h2>Research only</h2>
+  <p>These papers have no released implementation. They are listed so the
+  absence is explicit rather than inferred:</p>
+  <ul class="qm-related">
+    <li><a href="/paper-slippage-latency-modeling.html">Slippage &amp; Latency Modeling</a><span>Formulas and a worked example appear in <a href="/learn/how-to-model-slippage-in-backtests.html">the explainer</a>; no package yet</span></li>
+    <li><a href="/paper-bid-ask-spread-dynamics.html">Bid-Ask Spread Dynamics</a><span>Research only</span></li>
+    <li><a href="/paper-genetic-algorithm-alpha.html">Genetic Algorithm Alpha</a><span>Research only</span></li>
+    <li><a href="/paper-alternative-data-quant-finance.html">Alternative Data in Quantitative Finance</a><span>Research only</span></li>
+    <li><a href="/papers.html">Full research library</a><span>All 11 open-access papers</span></li>
+  </ul>
+
+  <h2>Running the code</h2>
+  <div class="qm-formula">cd quantmedia-research/vpin-order-flow-toxicity
+pip install -r requirements.txt
+python example.py
+
+cd ../hierarchical-risk-parity
+pip install -r requirements.txt
+python compare_mvo.py
+
+cd ..
+python tests/test_vpin.py     # 15 tests
+python tests/test_hrp.py      # 13 tests</div>
+  <p>Python 3.9 or later. Dependencies are numpy, pandas and scipy. No API key,
+  no network access and no paid data subscription is required to run any of it.</p>
+
+  <div class="qm-answer">
+    <span class="qm-answer-label">On the sample data</span>
+    <p>Both packages ship <strong>synthetic</strong> example data generated from
+    fixed seeds. It is not real market data and no conclusion about any real
+    security follows from it. It exists so the implementations can be run and
+    verified end-to-end without a tick-data subscription. Each package states
+    this in its README, its module docstring and its console output.</p>
+  </div>
+
+  <h2>Proprietary data</h2>
+  <p>Separately from the research code, QuantMedia publishes two metrics
+  computed from its own daily scan, with machine-readable history:</p>
+  <ul class="qm-related">
+    <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>Share of scored equities clearing the BUY threshold &middot; <a href="/data/signal_breadth.json">JSON</a> &middot; <a href="/data/breadth_history.json">history</a></span></li>
+    <li><a href="/indices/sector-confluence.html">QuantMedia Sector Confluence</a><span>Mean score and breadth per sector &middot; <a href="/data/sector_confluence.json">JSON</a> &middot; <a href="/data/sector_confluence_history.json">history</a></span></li>
+    <li><a href="/data/signal_config.json">Signal engine configuration</a><span>Canonical methodology parameters, version <strong>2.0</strong></span></li>
+  </ul>
+
+  <h2>Not implemented, and why</h2>
+  <p>Three things that would fit this site are deliberately absent:</p>
+  <ul>
+    <li><strong>Live VPIN / order-flow toxicity index.</strong> Requires tick or
+    quote data. The production pipeline collects end-of-day OHLCV only. The VPIN
+    code above is fully runnable, but there is no honest way to compute a live
+    reading from daily bars, so none is published.</li>
+    <li><strong>Slippage stress index.</strong> Same reason &mdash; it needs
+    spread and depth data the pipeline does not collect.</li>
+    <li><strong>Market regime score.</strong> Not implemented: insufficient
+    validated inputs. A composite of breadth and score dispersion would restate
+    numbers already on the Signal Breadth page while adding a label that implies
+    validation nobody has done.</li>
+  </ul>
+
+  <h2>Methodology versioning</h2>
+  <p>The signal engine carries a version number, currently <strong>2.0</strong>
+  (effective 2026-04-14), stamped into every scan output and history record.
+  When production logic changes the version increments; historical records keep
+  the version that produced them and are never retroactively rewritten. Papers
+  describing earlier methodology are preserved as published rather than edited
+  to match current production.</p>
 """

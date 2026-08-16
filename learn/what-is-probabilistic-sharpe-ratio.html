@@ -263,23 +263,32 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   <code>sqrt(n-1)</code> and push PSR up.</p>
 
   <h2>Worked example</h2>
-  <p>Two years of monthly returns, n = 24, tested against SR* = 0:</p>
+  <p>Two years of monthly returns, n = 24, both strategies reporting the same
+  headline Sharpe of 1.50:</p>
   <table class="qm-kv">
     <thead><tr><th>Input</th><th>Strategy A</th><th>Strategy B</th></tr></thead>
     <tbody>
-      <tr><th>Observed Sharpe (annualised)</th><td class="qm-num">1.50</td><td class="qm-num">1.50</td></tr>
-      <tr><th>Skewness</th><td class="qm-num">0.00</td><td class="qm-num">-1.20</td></tr>
-      <tr><th>Kurtosis</th><td class="qm-num">3.0</td><td class="qm-num">7.0</td></tr>
-      <tr><th>Denominator</th><td class="qm-num">1.000</td><td class="qm-num">2.318</td></tr>
-      <tr><th>Test statistic</th><td class="qm-num">7.19</td><td class="qm-num">3.10</td></tr>
-      <tr><th>PSR</th><td class="qm-num">&gt; 0.999</td><td class="qm-num">0.999</td></tr>
+      <tr><th>Observed Sharpe</th><td class="qm-num">1.50</td><td class="qm-num">1.50</td></tr>
+      <tr><th>Skewness &gamma;&#8321;</th><td class="qm-num">0.00</td><td class="qm-num">&minus;1.20</td></tr>
+      <tr><th>Kurtosis &gamma;&#8322;</th><td class="qm-num">3.0</td><td class="qm-num">7.0</td></tr>
+      <tr><th>Denominator</th><td class="qm-num">1.4577</td><td class="qm-num">2.4850</td></tr>
+      <tr><th>z, against SR* = 0</th><td class="qm-num">4.935</td><td class="qm-num">2.895</td></tr>
+      <tr><th>PSR, against SR* = 0</th><td class="qm-num">1.0000</td><td class="qm-num">0.9981</td></tr>
+      <tr><th>z, against SR* = 1.0</th><td class="qm-num">1.645</td><td class="qm-num">0.965</td></tr>
+      <tr><th>PSR, against SR* = 1.0</th><td class="qm-num">0.9500</td><td class="qm-num">0.8327</td></tr>
     </tbody>
   </table>
-  <p>Both clear the bar against a zero benchmark, but B's statistic is less than
-  half A's on identical headline performance. Raise the benchmark to SR* = 1.0
-  and the gap becomes decisive: A stays comfortably above 0.99 while B falls to
-  roughly 0.85 &mdash; below the 0.95 level usually treated as adequate. The
-  headline Sharpe hid that entirely.</p>
+  <p>Working strategy A's denominator explicitly, because the kurtosis term
+  catches people out &mdash; it does <em>not</em> vanish at &gamma;&#8322; = 3:</p>
+  <div class="qm-formula">den = sqrt( 1 - 0.00*1.50 + ((3.0 - 1)/4)*1.50^2 )
+    = sqrt( 1 + 0.5*2.25 )
+    = sqrt( 2.125 )
+    = 1.4577</div>
+  <p>Against a zero benchmark both look fine. Raise the benchmark to a Sharpe
+  of 1.0 &mdash; the question an allocator with a passive alternative actually
+  asks &mdash; and they separate sharply: A lands exactly on the 0.95 bar,
+  while B falls to 0.83 and fails it. Identical headline Sharpe, materially
+  different evidence. That is the entire point of the measure.</p>
   <p>Note the annualisation trap in this example: if SR_hat is annualised, n
   must still be the number of <em>observations</em> (24 months), and SR_hat and
   SR* must be expressed at the same frequency. Mixing an annualised Sharpe with

@@ -142,6 +142,22 @@ a{text-decoration:none;color:inherit}
 .breadcrumb-inner .bc-sep{color:var(--dimmer);font-size:10px}
 .breadcrumb-inner .bc-current{color:var(--text)}
 </style>
+<style>
+.qm-repro{border:1px solid rgba(0,166,81,.32);background:rgba(0,166,81,.06);
+  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:18px 22px;margin:28px 0}
+.qm-repro h3{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.qm-repro p{font-size:13.5px;line-height:1.8;margin:0 0 12px}
+.qm-repro table{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 12px}
+.qm-repro th,.qm-repro td{padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.qm-repro th{color:var(--dim);font-weight:600;width:34%;white-space:nowrap}
+.qm-repro code{font-family:'JetBrains Mono',monospace;font-size:12px;
+  background:var(--bg3,#181818);border:1px solid var(--border2,#2e2e2e);padding:1px 5px;border-radius:2px}
+.qm-repro pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.75;
+  background:var(--bg3,#181818);border:1px solid var(--border2,#2e2e2e);border-radius:4px;
+  padding:12px 14px;overflow-x:auto;margin:0 0 12px}
+.qm-repro a{color:var(--accent);font-weight:600}
+</style>
 </head>
 <body>
 
@@ -310,6 +326,24 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
     <div style="font-size:12px;color:var(--dim,#888)">180 liquid US equities scored against 30 technical signals after each close. Free, rules-based, research use only.</div>
   </div>
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
+</div>
+
+
+<div class="qm-repro">
+  <h3>Code &amp; Reproducibility</h3>
+  <p>The measure described above is implemented as an interactive calculator
+  that runs entirely in your browser &mdash; nothing is uploaded.</p>
+  <table><tbody>
+    <tr><th>Tool</th><td><a href="/tools/probabilistic-sharpe-ratio-calculator.html">Probabilistic Sharpe Ratio calculator</a></td></tr>
+    <tr><th>Inputs</th><td>Observed Sharpe, benchmark Sharpe, observations, skewness, kurtosis</td></tr>
+    <tr><th>Verification</th><td>A worked example is published with every intermediate value (denominator 2.4850, z = 2.8955, PSR = 0.9981) so the tool can be checked against an independent implementation</td></tr>
+    <tr><th>Explainer</th><td><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a></td></tr>
+  </tbody></table>
+  <p>No standalone Python package is published for PSR: the formula is a single
+  expression and the calculator already exposes every intermediate term. If you
+  are selecting the best of many backtests, PSR is the wrong tool &mdash; the
+  Deflated Sharpe Ratio adjusts for the number of trials.</p>
+  <p><a href="/reproducibility.html">All research implementations</a></p>
 </div>
 
 <!-- NEWSLETTER CTA -->

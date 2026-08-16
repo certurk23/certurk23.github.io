@@ -257,6 +257,16 @@ PAGES = [
          crumb=('Learn', 'learn/what-is-market-breadth.html'),
          body=PC.BREADTH_LEARN_BODY),
 
+    dict(slug='reproducibility.html',
+         title='Research Reproducibility: Code, Data and Tools | QuantMedia',
+         description=('Runnable implementations behind QuantMedia research: VPIN '
+                      'order-flow toxicity and Hierarchical Risk Parity, with '
+                      'example data, expected output and tests. Plus which papers '
+                      'are research-only.'),
+         h1='Research reproducibility',
+         crumb=('Research', 'papers.html'),
+         body=PC.REPRO_BODY),
+
     dict(slug='tools/probabilistic-sharpe-ratio-calculator.html',
          title='Probabilistic Sharpe Ratio Calculator | QuantMedia',
          description=('Free PSR calculator. Enter observed Sharpe, benchmark, '

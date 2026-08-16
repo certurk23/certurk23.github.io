@@ -32,7 +32,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
-  "@type":"ScholarlyArticle",
+  "@type":"Article","citation":[{"@type": "CreativeWork", "name": "Flow Toxicity and Liquidity in a High-Frequency World", "author": "Easley, D., López de Prado, M. & O'Hara, M.", "datePublished": "2012", "publication": "Review of Financial Studies 25(5), 1457–1493", "sameAs": "https://doi.org/10.1093/rfs/hhs053"}, {"@type": "CreativeWork", "name": "The Microstructure of the Flash Crash", "author": "Easley, D., López de Prado, M. & O'Hara, M.", "datePublished": "2011", "publication": "Journal of Portfolio Management 37(2), 118–128"}, {"@type": "CreativeWork", "name": "VPIN and the Flash Crash", "author": "Andersen, T. & Bondarenko, O.", "datePublished": "2014", "publication": "Journal of Financial Markets 17, 1–46", "sameAs": "https://doi.org/10.1016/j.finmar.2013.05.005"}, {"@type": "CreativeWork", "name": "Inferring Trade Direction from Intraday Data", "author": "Lee, C. & Ready, M.", "datePublished": "1991", "publication": "Journal of Finance 46(2), 733–746"}, {"@type": "CreativeWork", "name": "Liquidity, Information, and Infrequently Traded Stocks", "author": "Easley, D., Kiefer, N., O'Hara, M. & Paperman, J.", "datePublished": "1996", "publication": "Journal of Finance 51(4), 1405–1436"}],
   "headline":"VPIN Order Flow Toxicity: Python Implementation & Practical Guide",
   "description":"Volume-synchronized probability of informed trading (VPIN) as a practical signal for detecting adverse selection and order flow toxicity in fragmented equity markets.",
   "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
@@ -181,6 +181,21 @@ a{text-decoration:none;color:inherit}
   padding:12px 14px;overflow-x:auto;margin:0 0 12px}
 .qm-repro a{color:var(--accent);font-weight:600}
 </style>
+<style>
+.qm-sec{margin:34px 0 0}
+.qm-sec h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  color:var(--text);letter-spacing:-.2px;margin:0 0 14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border)}
+.qm-sec ul{margin:0 0 8px 20px;color:var(--text)}
+.qm-sec li{margin-bottom:10px;line-height:1.8;font-size:14.5px}
+.qm-sec li strong{color:var(--text)}
+.qm-refs-list{list-style:none;margin:0;padding:0}
+.qm-refs-list li{margin-bottom:12px;line-height:1.75;font-size:13.5px;color:var(--dim);
+  padding-left:20px;text-indent:-20px}
+.qm-refs-list a{color:var(--accent)}
+.qm-refnote{font-size:12.5px;color:var(--dim);line-height:1.75;margin:14px 0 0;
+  padding-top:12px;border-top:1px solid var(--border)}
+</style>
 </head>
 <body>
 
@@ -195,8 +210,8 @@ a{text-decoration:none;color:inherit}
       <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
-      <a href="papers.html" class="active">Analysis</a>
-      <a href="research.html">Research</a>
+      <a href="papers.html" class="active">Papers</a>
+      <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -406,6 +421,7 @@ a{text-decoration:none;color:inherit}
 </div>
 
 
+<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Contested empirical status.</strong> VPIN's role as a Flash Crash early-warning signal is actively disputed. Andersen and Bondarenko (2014) argue much of its apparent forecasting power reflects volume-volatility mechanics rather than information content. Treat VPIN as a descriptive microstructure statistic, not a validated predictor.</li><li><strong>Parameter sensitivity.</strong> Bucket size, window length, classification method and the Student-t degrees of freedom all move the level materially. Published VPIN values are not comparable across studies unless every one of those choices matches.</li><li><strong>Data requirements.</strong> VPIN needs trade-level or bar data. It cannot be computed from end-of-day OHLCV, which is why QuantMedia publishes no live VPIN reading: the production pipeline collects daily bars only.</li><li><strong>Directionally blind.</strong> The measure uses absolute imbalance, so heavy buying and heavy selling contribute identically. It describes one-sidedness, not direction.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Easley, D., López de Prado, M. &amp; O'Hara, M. (2012). &ldquo;Flow Toxicity and Liquidity in a High-Frequency World.&rdquo; <em>Review of Financial Studies 25(5), 1457–1493</em>. <a href="https://doi.org/10.1093/rfs/hhs053" target="_blank" rel="noopener">doi:10.1093/rfs/hhs053</a></li><li>Easley, D., López de Prado, M. &amp; O'Hara, M. (2011). &ldquo;The Microstructure of the Flash Crash.&rdquo; <em>Journal of Portfolio Management 37(2), 118–128</em>.</li><li>Andersen, T. &amp; Bondarenko, O. (2014). &ldquo;VPIN and the Flash Crash.&rdquo; <em>Journal of Financial Markets 17, 1–46</em>. <a href="https://doi.org/10.1016/j.finmar.2013.05.005" target="_blank" rel="noopener">doi:10.1016/j.finmar.2013.05.005</a></li><li>Lee, C. &amp; Ready, M. (1991). &ldquo;Inferring Trade Direction from Intraday Data.&rdquo; <em>Journal of Finance 46(2), 733–746</em>.</li><li>Easley, D., Kiefer, N., O'Hara, M. &amp; Paperman, J. (1996). &ldquo;Liquidity, Information, and Infrequently Traded Stocks.&rdquo; <em>Journal of Finance 51(4), 1405–1436</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-repro">
   <h3>Code &amp; Reproducibility</h3>
   <p>A runnable reference implementation of the method described above is
@@ -429,6 +445,7 @@ python example.py</pre>
   end-to-end without a tick-data subscription. QuantMedia does not publish a
   live VPIN reading, because the production pipeline collects end-of-day bars
   rather than order flow.</p>
+  <p><strong>On the code shown above.</strong> The snippet inside this paper is a condensed illustration. The package linked here is the canonical implementation, with boundary-splitting, both classification methods and the degenerate-tape handling that a readable excerpt has to omit. Where the two disagree, trust the package.</p>
   <p><a href="/reproducibility.html">All research implementations</a> &middot;
      <a href="/learn/what-is-vpin.html">Plain-language explainer</a> &middot;
      <a href="/methodology.html">Methodology &amp; data sources</a></p>
@@ -467,12 +484,15 @@ python example.py</pre>
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
       <a href="stocks.html">US Equities</a>
-      <a href="stocks.html">Sectors</a>
       <a href="news.html">Market News</a>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
     </div>
     <div class="footer-col">
       <h4>Lab</h4>
-      <a href="research.html">Research Home</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="research.html">Microstructure Research</a>
       <a href="infrastructure.html">Infrastructure</a>
       <a href="papers.html">All Papers</a>
       <a href="about.html">About QuantMedia</a>

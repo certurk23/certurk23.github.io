@@ -32,7 +32,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
-  "@type":"ScholarlyArticle",
+  "@type":"Article","citation":[{"@type": "CreativeWork", "name": "High Frequency Trading and the New Market Makers", "author": "Menkveld, A.", "datePublished": "2013", "publication": "Journal of Financial Markets 16(4), 712–740"}, {"@type": "CreativeWork", "name": "The High-Frequency Trading Arms Race: Frequent Batch Auctions as a Market Design Response", "author": "Budish, E., Cramton, P. & Shim, J.", "datePublished": "2015", "publication": "Quarterly Journal of Economics 130(4), 1547–1621"}, {"@type": "CreativeWork", "name": "Low-Latency Trading", "author": "Hasbrouck, J. & Saar, G.", "datePublished": "2013", "publication": "Journal of Financial Markets 16(4), 646–679"}],
   "headline":"RTX 5090 Trading Stack: GPU vs CPU Architecture for Low-Latency Finance",
   "description":"Why GPU-accelerated financial modeling still needs CPU-class hardware. Split-path architecture analysis for real low-latency trading systems.",
   "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
@@ -141,6 +141,21 @@ a{text-decoration:none;color:inherit}
 .breadcrumb-inner .bc-sep{color:var(--dimmer);font-size:10px}
 .breadcrumb-inner .bc-current{color:var(--text)}
 </style>
+<style>
+.qm-sec{margin:34px 0 0}
+.qm-sec h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  color:var(--text);letter-spacing:-.2px;margin:0 0 14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border)}
+.qm-sec ul{margin:0 0 8px 20px;color:var(--text)}
+.qm-sec li{margin-bottom:10px;line-height:1.8;font-size:14.5px}
+.qm-sec li strong{color:var(--text)}
+.qm-refs-list{list-style:none;margin:0;padding:0}
+.qm-refs-list li{margin-bottom:12px;line-height:1.75;font-size:13.5px;color:var(--dim);
+  padding-left:20px;text-indent:-20px}
+.qm-refs-list a{color:var(--accent)}
+.qm-refnote{font-size:12.5px;color:var(--dim);line-height:1.75;margin:14px 0 0;
+  padding-top:12px;border-top:1px solid var(--border)}
+</style>
 </head>
 <body>
 
@@ -155,8 +170,8 @@ a{text-decoration:none;color:inherit}
       <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
-      <a href="papers.html" class="active">Analysis</a>
-      <a href="research.html">Research</a>
+      <a href="papers.html" class="active">Papers</a>
+      <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -321,6 +336,7 @@ features = torch.randn(<span class="num">4096</span>, <span class="num">64</span
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
 </div>
 
+<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Reference architecture, not a measured system.</strong> Figures here are drawn from vendor documentation and published benchmarks to size a design. They are not measurements taken on QuantMedia hardware, which does not include a co-located feed handler.</li><li><strong>Workload dependence.</strong> GPU advantage depends entirely on the workload. Batched matrix operations parallelise; sequential order-book state machines and risk gates do not.</li><li><strong>Latency is a distribution.</strong> Median figures are close to meaningless for execution. Tail latency under load determines outcomes, and tails are dominated by queueing and jitter rather than raw compute.</li><li><strong>Hardware moves.</strong> Specific part numbers and their published figures date quickly. The decomposition is durable; the numbers are not.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Menkveld, A. (2013). &ldquo;High Frequency Trading and the New Market Makers.&rdquo; <em>Journal of Financial Markets 16(4), 712–740</em>.</li><li>Budish, E., Cramton, P. &amp; Shim, J. (2015). &ldquo;The High-Frequency Trading Arms Race: Frequent Batch Auctions as a Market Design Response.&rdquo; <em>Quarterly Journal of Economics 130(4), 1547–1621</em>.</li><li>Hasbrouck, J. &amp; Saar, G. (2013). &ldquo;Low-Latency Trading.&rdquo; <em>Journal of Financial Markets 16(4), 646–679</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <!-- NEWSLETTER CTA -->
 <div style="max-width:820px;margin:40px auto;padding:32px 24px;background:var(--bg2,#111);border:1px solid var(--border,#242424);border-radius:6px;text-align:center">
   <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text,#e8e8e8);margin-bottom:8px">Get Research Updates</div>
@@ -354,12 +370,15 @@ features = torch.randn(<span class="num">4096</span>, <span class="num">64</span
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
       <a href="stocks.html">US Equities</a>
-      <a href="stocks.html">Sectors</a>
       <a href="news.html">Market News</a>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
     </div>
     <div class="footer-col">
       <h4>Lab</h4>
-      <a href="research.html">Research Home</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="research.html">Microstructure Research</a>
       <a href="infrastructure.html">Infrastructure</a>
       <a href="papers.html">All Papers</a>
       <a href="about.html">About QuantMedia</a>

@@ -778,8 +778,8 @@ button{cursor:pointer;font-family:inherit}
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
       <a href="quantum-signals.html">Quantum</a>
-      <a href="papers.html">Analysis</a>
-      <a href="research.html">Research</a>
+      <a href="papers.html">Papers</a>
+      <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -822,8 +822,8 @@ button{cursor:pointer;font-family:inherit}
   <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
   <a href="quantum-signals.html">Quantum</a>
-  <a href="papers.html">Analysis</a>
-  <a href="research.html">Research</a>
+  <a href="papers.html">Papers</a>
+  <a href="research.html">Microstructure</a>
   <a href="about.html">About</a>
 </div>
 
@@ -936,6 +936,49 @@ button{cursor:pointer;font-family:inherit}
       </p>
     </div>
   </div><!-- /newsGrid -->
+</div>
+
+<!-- ORIGINAL WORK
+     Everything below originates on QuantMedia rather than being aggregated
+     from a data vendor. It sat unreachable from the homepage and the main nav
+     until this section existed, which meant the site's only real
+     differentiators were invisible to a first-time visitor. -->
+<div class="page-wrap" style="padding-bottom:0">
+  <div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:26px 26px 20px;margin-bottom:28px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:8px">What originates here</div>
+    <p style="font-size:14.5px;line-height:1.8;color:var(--text3);margin:0 0 20px;max-width:760px">
+      Most of what you can read about quantitative finance online is a summary of
+      someone else's paper. These four things are produced by QuantMedia: two
+      daily metrics computed from our own scan, research code you can run, and
+      calculators that show their working.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px">
+      <div>
+        <a href="/indices/signal-breadth.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">Signal Breadth Index &rarr;</a>
+        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">How much of a 180-stock US universe clears a 22-of-30 technical threshold, recomputed after every close. Formula, history and JSON published.</p>
+      </div>
+      <div>
+        <a href="/indices/sector-confluence.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">Sector Confluence &rarr;</a>
+        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">The same scan grouped by sector and ranked by mean score, so you can see where technical agreement is concentrated rather than only how much exists.</p>
+      </div>
+      <div>
+        <a href="/reproducibility.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">Reproducible code &rarr;</a>
+        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">Runnable VPIN and Hierarchical Risk Parity implementations with example data, expected output and 28 tests. Papers without code are labelled as such.</p>
+      </div>
+      <div>
+        <a href="/tools/probabilistic-sharpe-ratio-calculator.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">PSR calculator &rarr;</a>
+        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">Test whether a Sharpe ratio survives its own track-record length, skew and kurtosis. Every intermediate value is shown so you can check it.</p>
+      </div>
+    </div>
+    <p style="font-size:12.5px;line-height:1.7;color:var(--text3);margin:20px 0 0;padding-top:16px;border-top:1px solid var(--bd)">
+      Short explainers with worked examples:
+      <a href="/learn/what-is-vpin.html" style="color:var(--green)">VPIN</a> &middot;
+      <a href="/learn/hrp-vs-mean-variance.html" style="color:var(--green)">HRP vs mean-variance</a> &middot;
+      <a href="/learn/what-is-probabilistic-sharpe-ratio.html" style="color:var(--green)">Probabilistic Sharpe Ratio</a> &middot;
+      <a href="/learn/deflated-sharpe-ratio.html" style="color:var(--green)">Deflated Sharpe Ratio</a> &middot;
+      <a href="/learn/how-to-model-slippage-in-backtests.html" style="color:var(--green)">slippage modelling</a>
+    </p>
+  </div>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -1254,12 +1297,14 @@ button{cursor:pointer;font-family:inherit}
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
       <a href="stocks.html">US Equities</a>
-      <a href="stocks.html">Sectors</a>
-      <a href="stocks.html">World Markets</a>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
     </div>
     <div class="footer-col">
       <h4>Lab</h4>
-      <a href="research.html">Research Home</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="research.html">Microstructure Research</a>
       <a href="infrastructure.html">Infrastructure</a>
       <a href="papers.html">All Papers</a>
       <a href="about.html">About QuantMedia</a>

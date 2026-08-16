@@ -32,7 +32,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
-  "@type":"ScholarlyArticle",
+  "@type":"Article","citation":[{"@type": "CreativeWork", "name": "The Sharpe Ratio Efficient Frontier", "author": "Bailey, D. & López de Prado, M.", "datePublished": "2012", "publication": "Journal of Risk 15(2), 3–44"}, {"@type": "CreativeWork", "name": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality", "author": "Bailey, D. & López de Prado, M.", "datePublished": "2014", "publication": "Journal of Portfolio Management 40(5), 94–107"}, {"@type": "CreativeWork", "name": "The Statistics of Sharpe Ratios", "author": "Lo, A.", "datePublished": "2002", "publication": "Financial Analysts Journal 58(4), 36–52"}, {"@type": "CreativeWork", "name": "Backtesting", "author": "Harvey, C. & Liu, Y.", "datePublished": "2015", "publication": "Journal of Portfolio Management 42(1), 13–28"}],
   "headline":"Probabilistic Sharpe Ratio: Detect Backtest Overfitting in Python",
   "description":"A statistically rigorous alternative to raw Sharpe ratio that adjusts for non-normality, sample length, skewness, and kurtosis to detect backtest overfitting.",
   "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
@@ -158,6 +158,21 @@ a{text-decoration:none;color:inherit}
   padding:12px 14px;overflow-x:auto;margin:0 0 12px}
 .qm-repro a{color:var(--accent);font-weight:600}
 </style>
+<style>
+.qm-sec{margin:34px 0 0}
+.qm-sec h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  color:var(--text);letter-spacing:-.2px;margin:0 0 14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border)}
+.qm-sec ul{margin:0 0 8px 20px;color:var(--text)}
+.qm-sec li{margin-bottom:10px;line-height:1.8;font-size:14.5px}
+.qm-sec li strong{color:var(--text)}
+.qm-refs-list{list-style:none;margin:0;padding:0}
+.qm-refs-list li{margin-bottom:12px;line-height:1.75;font-size:13.5px;color:var(--dim);
+  padding-left:20px;text-indent:-20px}
+.qm-refs-list a{color:var(--accent)}
+.qm-refnote{font-size:12.5px;color:var(--dim);line-height:1.75;margin:14px 0 0;
+  padding-top:12px;border-top:1px solid var(--border)}
+</style>
 </head>
 <body>
 
@@ -172,8 +187,8 @@ a{text-decoration:none;color:inherit}
       <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
-      <a href="papers.html" class="active">Analysis</a>
-      <a href="research.html">Research</a>
+      <a href="papers.html" class="active">Papers</a>
+      <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -329,6 +344,7 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
 </div>
 
 
+<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Does not correct for selection bias.</strong> PSR evaluates one track record in isolation. If the strategy is the best of many tested, PSR overstates the evidence and the Deflated Sharpe Ratio should be used instead.</li><li><strong>Assumes IID returns.</strong> Serial correlation, common in illiquid or smoothed portfolios, inflates the observed Sharpe and is not handled by the standard formulation.</li><li><strong>Higher moments are themselves estimates.</strong> Skewness and kurtosis from short samples are noisy, and the correction is only as reliable as those estimates.</li><li><strong>Says nothing about economics.</strong> PSR is a statistical statement about a return series. It does not address costs, capacity, regime change, or whether the strategy was fitted to its sample.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Bailey, D. &amp; López de Prado, M. (2012). &ldquo;The Sharpe Ratio Efficient Frontier.&rdquo; <em>Journal of Risk 15(2), 3–44</em>.</li><li>Bailey, D. &amp; López de Prado, M. (2014). &ldquo;The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality.&rdquo; <em>Journal of Portfolio Management 40(5), 94–107</em>.</li><li>Lo, A. (2002). &ldquo;The Statistics of Sharpe Ratios.&rdquo; <em>Financial Analysts Journal 58(4), 36–52</em>.</li><li>Harvey, C. &amp; Liu, Y. (2015). &ldquo;Backtesting.&rdquo; <em>Journal of Portfolio Management 42(1), 13–28</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-repro">
   <h3>Code &amp; Reproducibility</h3>
   <p>The measure described above is implemented as an interactive calculator
@@ -379,12 +395,15 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
       <a href="stocks.html">US Equities</a>
-      <a href="stocks.html">Sectors</a>
       <a href="news.html">Market News</a>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
     </div>
     <div class="footer-col">
       <h4>Lab</h4>
-      <a href="research.html">Research Home</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="research.html">Microstructure Research</a>
       <a href="infrastructure.html">Infrastructure</a>
       <a href="papers.html">All Papers</a>
       <a href="about.html">About QuantMedia</a>

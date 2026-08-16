@@ -32,7 +32,7 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <script type="application/ld+json">{
   "@context":"https://schema.org",
-  "@type":"ScholarlyArticle",
+  "@type":"Article","citation":[{"@type": "CreativeWork", "name": "Using Genetic Algorithms to Find Technical Trading Rules", "author": "Allen, F. & Karjalainen, R.", "datePublished": "1999", "publication": "Journal of Financial Economics 51(2), 245–271"}, {"@type": "CreativeWork", "name": "Genetic Programming: On the Programming of Computers by Means of Natural Selection", "author": "Koza, J.", "datePublished": "1992", "publication": "MIT Press"}, {"@type": "CreativeWork", "name": "Adaptation in Natural and Artificial Systems", "author": "Holland, J.", "datePublished": "1975", "publication": "University of Michigan Press"}, {"@type": "CreativeWork", "name": "Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance", "author": "Bailey, D., Borwein, J., López de Prado, M. & Zhu, Q.", "datePublished": "2014", "publication": "Notices of the AMS 61(5), 458–471"}],
   "headline":"Alpha Discovery with Genetic Algorithms: Automated Trading Strategy Search",
   "description":"Evolutionary search as an alpha hypothesis generator. Fitness design, selection pressure, and rigorous out-of-sample validation for trading strategies.",
   "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
@@ -154,6 +154,21 @@ a{text-decoration:none;color:inherit}
 .breadcrumb-inner .bc-sep{color:var(--dimmer);font-size:10px}
 .breadcrumb-inner .bc-current{color:var(--text)}
 </style>
+<style>
+.qm-sec{margin:34px 0 0}
+.qm-sec h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;
+  color:var(--text);letter-spacing:-.2px;margin:0 0 14px;padding-bottom:8px;
+  border-bottom:1px solid var(--border)}
+.qm-sec ul{margin:0 0 8px 20px;color:var(--text)}
+.qm-sec li{margin-bottom:10px;line-height:1.8;font-size:14.5px}
+.qm-sec li strong{color:var(--text)}
+.qm-refs-list{list-style:none;margin:0;padding:0}
+.qm-refs-list li{margin-bottom:12px;line-height:1.75;font-size:13.5px;color:var(--dim);
+  padding-left:20px;text-indent:-20px}
+.qm-refs-list a{color:var(--accent)}
+.qm-refnote{font-size:12.5px;color:var(--dim);line-height:1.75;margin:14px 0 0;
+  padding-top:12px;border-top:1px solid var(--border)}
+</style>
 </head>
 <body>
 
@@ -168,8 +183,8 @@ a{text-decoration:none;color:inherit}
       <a href="markets.html">Live Data</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
-      <a href="papers.html" class="active">Analysis</a>
-      <a href="research.html">Research</a>
+      <a href="papers.html" class="active">Papers</a>
+      <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
     </nav>
     <div class="header-right">
@@ -301,6 +316,7 @@ a{text-decoration:none;color:inherit}
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
 </div>
 
+<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Severe overfitting risk.</strong> Evolutionary search evaluates an enormous number of candidate rules. The best result from a large search will look strong by chance alone, which is exactly the condition the Deflated Sharpe Ratio exists to correct.</li><li><strong>Trial count is rarely reported honestly.</strong> Meaningful statistical correction requires knowing how many specifications were evaluated, including abandoned runs. Without it, reported performance cannot be assessed.</li><li><strong>Non-stationarity.</strong> Rules evolved on one regime frequently fail in the next. Evolutionary fitness measured in-sample says little about durability.</li><li><strong>Interpretability.</strong> Evolved rules are often complex and post-hoc rationalised, which makes it hard to distinguish an economic mechanism from a fitted artefact.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Allen, F. &amp; Karjalainen, R. (1999). &ldquo;Using Genetic Algorithms to Find Technical Trading Rules.&rdquo; <em>Journal of Financial Economics 51(2), 245–271</em>.</li><li>Koza, J. (1992). &ldquo;Genetic Programming: On the Programming of Computers by Means of Natural Selection.&rdquo; <em>MIT Press</em>.</li><li>Holland, J. (1975). &ldquo;Adaptation in Natural and Artificial Systems.&rdquo; <em>University of Michigan Press</em>.</li><li>Bailey, D., Borwein, J., López de Prado, M. &amp; Zhu, Q. (2014). &ldquo;Pseudo-Mathematics and Financial Charlatanism: The Effects of Backtest Overfitting on Out-of-Sample Performance.&rdquo; <em>Notices of the AMS 61(5), 458–471</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <!-- NEWSLETTER CTA -->
 <div style="max-width:820px;margin:40px auto;padding:32px 24px;background:var(--bg2,#111);border:1px solid var(--border,#242424);border-radius:6px;text-align:center">
   <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text,#e8e8e8);margin-bottom:8px">Get Research Updates</div>
@@ -334,12 +350,15 @@ a{text-decoration:none;color:inherit}
       <h4>Markets</h4>
       <a href="markets.html">Overview</a>
       <a href="stocks.html">US Equities</a>
-      <a href="stocks.html">Sectors</a>
       <a href="news.html">Market News</a>
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
+      <a href="/indices/sector-confluence.html">Sector Confluence</a>
     </div>
     <div class="footer-col">
       <h4>Lab</h4>
-      <a href="research.html">Research Home</a>
+      <a href="/reproducibility.html">Reproducible Code</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="research.html">Microstructure Research</a>
       <a href="infrastructure.html">Infrastructure</a>
       <a href="papers.html">All Papers</a>
       <a href="about.html">About QuantMedia</a>

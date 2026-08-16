@@ -1,0 +1,695 @@
+{
+ "what_this_is": "Benchmark prompts for periodic manual visibility testing against ChatGPT, Gemini, Copilot and Perplexity. See docs/ai-visibility-testing.md for the procedure.",
+ "not_search_volume": "These are test prompts, not measured demand.",
+ "count": 86,
+ "questions": [
+  {
+   "question": "What is VPIN?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is order flow toxicity?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How is VPIN calculated?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is the VPIN formula?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What does a high VPIN mean?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What does a low VPIN mean?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How do volume buckets work in VPIN?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Why does VPIN use volume buckets instead of time?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How is buy/sell volume classified in VPIN?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is bulk volume classification?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Does VPIN predict market crashes?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "Evidence question - must present the criticism, not just the claim"
+  },
+  {
+   "question": "Is VPIN a reliable early warning indicator?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What are the limitations of VPIN?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "VPIN vs PIN: what is the difference?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Can VPIN be calculated from daily data?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "Common misconception; QuantMedia states plainly that it cannot"
+  },
+  {
+   "question": "How do I calculate VPIN in Python?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Is there an open-source VPIN implementation?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Does VPIN tell you market direction?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What bucket size should I use for VPIN?",
+   "topic": "VPIN",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-vpin.html",
+   "priority": "low",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is Hierarchical Risk Parity?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How does HRP work?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "HRP vs mean-variance optimization",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Is HRP better than mean-variance?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "Must resist the easy yes; the honest answer is conditional"
+  },
+  {
+   "question": "Why does HRP not require covariance matrix inversion?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is quasi-diagonalization?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is recursive bisection in HRP?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How do you calculate HRP weights?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What correlation distance does HRP use?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What are the limitations of HRP?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Does HRP produce negative weights?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How do I implement HRP in Python?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Why does mean-variance produce extreme weights?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Does shrinkage fix mean-variance optimization?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Which linkage method should I use for HRP?",
+   "topic": "HRP",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+   "priority": "low",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is the Probabilistic Sharpe Ratio?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How is PSR calculated?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Is my Sharpe ratio statistically significant?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How many observations do I need for a reliable Sharpe ratio?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Why do skewness and kurtosis affect Sharpe significance?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is a good PSR value?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How do I calculate PSR in Python?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Is there a Probabilistic Sharpe Ratio calculator?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What are the limitations of PSR?",
+   "topic": "PSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is the Deflated Sharpe Ratio?",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "GAP: DSR only mentioned in passing anywhere on the site"
+  },
+  {
+   "question": "Probabilistic Sharpe Ratio vs Deflated Sharpe Ratio",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "GAP"
+  },
+  {
+   "question": "How do I correct for testing many strategies?",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "GAP"
+  },
+  {
+   "question": "What is backtest overfitting?",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "GAP"
+  },
+  {
+   "question": "How is the Deflated Sharpe Ratio calculated?",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": "GAP"
+  },
+  {
+   "question": "Why is a Sharpe of 2 in a backtest not impressive?",
+   "topic": "DSR",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/deflated-sharpe-ratio.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": "GAP"
+  },
+  {
+   "question": "What is slippage in backtesting?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How should slippage be modeled in a backtest?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How much slippage should I assume?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is the square-root market impact law?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How does latency affect trading performance?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Why do backtests overestimate returns?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How do transaction costs affect high-turnover strategies?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Fixed slippage vs volume-based slippage",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is implementation shortfall?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "low",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What participation rate is safe in a backtest?",
+   "topic": "Slippage",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is signal confluence?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How does signal confluence work in stock screening?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How many technical signals does QuantMedia use?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What is the BUY threshold for QuantMedia signals?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "How does QuantMedia select BUY signals?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What does WATCH mean in QuantMedia signals?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "How many stocks does QuantMedia analyze?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Why does QuantMedia scan 180 stocks and not the S&P 500?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "When are QuantMedia signals updated?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Are technical indicators independent confirmations?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": "Honest caveat that most confluence marketing ignores"
+  },
+  {
+   "question": "What are the limitations of signal confluence?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+   "priority": "high",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "Does QuantMedia publish a track record for its signals?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/quantum-signals.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What is QuantMedia Signal Breadth?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "How is QuantMedia Signal Breadth calculated?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What is the latest QuantMedia Signal Breadth?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": "Answer must come from live pipeline output"
+  },
+  {
+   "question": "What percentage of US stocks currently qualify as BUY?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What is market breadth?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-market-breadth.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "How does Signal Breadth differ from advance/decline?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/learn/what-is-market-breadth.html",
+   "priority": "medium",
+   "primary_source": false,
+   "notes": null
+  },
+  {
+   "question": "What is QuantMedia Sector Confluence?",
+   "topic": "Sector Confluence",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/sector-confluence.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Which sector has the strongest signal confluence?",
+   "topic": "Sector Confluence",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/sector-confluence.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "How is Sector Confluence ranked?",
+   "topic": "Sector Confluence",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/sector-confluence.html",
+   "priority": "medium",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Is there historical data for QuantMedia Signal Breadth?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Does QuantMedia publish machine-readable data?",
+   "topic": "Signal Breadth",
+   "expected_quantmedia_url": "https://quantmedia.io/indices/signal-breadth.html",
+   "priority": "medium",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "What methodology version is the QuantMedia signal engine on?",
+   "topic": "Signals",
+   "expected_quantmedia_url": "https://quantmedia.io/methodology.html",
+   "priority": "medium",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Does QuantMedia publish reproducible research code?",
+   "topic": "Reproducibility",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Which QuantMedia papers have runnable code?",
+   "topic": "Reproducibility",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": null
+  },
+  {
+   "question": "Is the QuantMedia example data real market data?",
+   "topic": "Reproducibility",
+   "expected_quantmedia_url": "https://quantmedia.io/reproducibility.html",
+   "priority": "high",
+   "primary_source": true,
+   "notes": "Honesty question - the answer must be an unambiguous no"
+  }
+ ]
+}

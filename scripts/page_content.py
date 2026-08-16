@@ -497,7 +497,7 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   <ul>
     <li><strong>It does not correct for selection bias.</strong> PSR evaluates
     one track record. If you tested 200 strategies and are reporting the best,
-    PSR is the wrong tool &mdash; the Deflated Sharpe Ratio (DSR) extends it to
+    PSR is the wrong tool &mdash; the <a href="/learn/deflated-sharpe-ratio.html" style="color:var(--accent)">Deflated Sharpe Ratio</a> extends it to
     account for the number of trials.</li>
     <li><strong>It assumes IID returns.</strong> Serial correlation, common in
     illiquid or smoothed portfolios, inflates the apparent Sharpe and is not
@@ -524,6 +524,7 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
   <h2>Related</h2>
   <ul class="qm-related">
     <li><a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a><span>Compute PSR from your own inputs</span></li>
+    <li><a href="/learn/deflated-sharpe-ratio.html">What is the Deflated Sharpe Ratio?</a><span>The correction to use when the strategy is the best of many you tested</span></li>
     <li><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a><span>The full QuantMedia research paper</span></li>
     <li><a href="/learn/hrp-vs-mean-variance.html">HRP vs mean-variance</a><span>Another case where estimation error dominates</span></li>
   </ul>
@@ -558,7 +559,9 @@ HRP_BODY = """
 
   <h2>What HRP does instead</h2>
   <p>HRP, introduced by L&oacute;pez de Prado, replaces optimisation with three
-  deterministic steps:</p>
+  deterministic steps. It <strong>never inverts</strong> a matrix at any point,
+  and it requires no expected-return vector &mdash; which removes the two
+  inputs that cause most of the trouble above.</p>
   <div class="qm-formula">1. TREE CLUSTERING
    Convert the correlation matrix to a distance metric
        d(i,j) = sqrt( 0.5 * (1 - rho(i,j)) )
@@ -575,9 +578,19 @@ HRP_BODY = """
        alpha = 1 - Var(L) / ( Var(L) + Var(R) )
 
    Recurse until every leaf holds a single asset.</div>
-  <p>No matrix is inverted at any point. No expected-return vector is required
-  &mdash; HRP is a risk-allocation method, which sidesteps the hardest quantity
-  to estimate in finance.</p>
+  <p>The distance transform matters more than it looks. Raw <code>1 &minus;
+  rho</code> is not a metric &mdash; it violates the <strong>triangle
+  inequality</strong>, so clustering on it can produce trees that contradict
+  themselves. The square-root form above is a proper metric, which is what
+  makes the hierarchy well defined.</p>
+
+  <h3>Does HRP produce negative weights?</h3>
+  <p>No. HRP as specified is <strong>long-only</strong>: recursive bisection
+  multiplies positive fractions down the tree, so every weight is
+  <strong>positive</strong> and they sum to 1 by construction. There is no
+  short book to constrain away. Unconstrained mean-variance, by contrast,
+  routinely returns large offsetting long and short positions &mdash; in the
+  comparison below it produced an 11% short book on a long-only universe.</p>
 
   <h2>Direct comparison</h2>
   <table class="qm-kv">
@@ -1016,6 +1029,7 @@ PSR = Z(2.8955) = 0.9981  ->  99.81%</div>
   <h2>Related</h2>
   <ul class="qm-related">
     <li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a><span>Worked explanation with examples</span></li>
+    <li><a href="/learn/deflated-sharpe-ratio.html">What is the Deflated Sharpe Ratio?</a><span>The correction to use when the strategy is the best of many you tested</span></li>
     <li><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a><span>The full QuantMedia research paper</span></li>
     <li><a href="/learn/how-to-model-slippage-in-backtests.html">How to model slippage in backtests</a><span>The cost side of an apparent edge</span></li>
   </ul>
@@ -1202,4 +1216,145 @@ python tests/test_hrp.py      # 13 tests</div>
   the version that produced them and are never retroactively rewritten. Papers
   describing earlier methodology are preserved as published rather than edited
   to match current production.</p>
+"""
+
+
+# ===========================================================================
+# /learn/deflated-sharpe-ratio.html
+# ===========================================================================
+DSR_BODY = """
+  <div class="qm-answer">
+    <span class="qm-answer-label">Short answer</span>
+    <p>The Deflated Sharpe Ratio (DSR) is the Probabilistic Sharpe Ratio with
+    the benchmark raised to the Sharpe you would <em>expect to see by luck
+    alone</em> after testing many strategies. If you try enough variations, the
+    best one will look good whether or not it has any edge. DSR asks whether
+    your winner beats that luck threshold. A strategy with PSR near 1.00
+    against a zero benchmark can fall below 0.30 once 1,000 trials are
+    accounted for.</p>
+  </div>
+
+  <h2>What problem does it solve?</h2>
+  <p>The <a href="/learn/what-is-probabilistic-sharpe-ratio.html">Probabilistic
+  Sharpe Ratio</a> corrects for track-record length and return shape, but it
+  evaluates <strong>one</strong> track record in isolation. That is the wrong
+  question if the strategy in front of you is the survivor of a search.</p>
+  <p>Suppose you test 1,000 parameter combinations on the same data. Even if
+  none has genuine edge, the sample Sharpe ratios will scatter around zero, and
+  the best of the 1,000 will be well above zero purely from sampling variation.
+  Reporting that winner as though it were the only thing you tried is selection
+  bias, and it is the single most common way backtests mislead.</p>
+  <p>Statisticians call this the <strong>multiple testing</strong> problem, and
+  it is the same issue that produces false positives in clinical trials and
+  particle physics. Finance arrived at it late and still under-corrects for it.</p>
+  <p>Bailey and L&oacute;pez de Prado's fix is direct: instead of testing
+  against zero, test against the Sharpe you would <em>expect</em> the best of
+  N trials to produce under the null hypothesis of no skill.</p>
+
+  <h2>Formula</h2>
+  <p>DSR is PSR evaluated at a deflated benchmark:</p>
+  <div class="qm-formula">DSR = PSR(SR*_0)
+
+where the expected maximum Sharpe across N independent trials is
+
+                   [                                           1        ]
+SR*_0 = sd(SR) * [ (1 - g) * Z^-1( 1 - 1/N )  +  g * Z^-1( 1 - --- ) ]
+                   [                                          N*e       ]
+
+  sd(SR)  standard deviation of Sharpe ratios ACROSS the trials
+  N       number of independent trials actually performed
+  g       Euler-Mascheroni constant, 0.5772...
+  Z^-1    inverse standard normal CDF
+  e       Euler's number</div>
+  <p>Two inputs deserve attention because they are where the method is easiest
+  to abuse. <code>N</code> is the number of trials you <em>really</em> ran,
+  including the ones you abandoned early and the ones you would rather forget;
+  understating it inflates DSR. <code>sd(SR)</code> is the dispersion of Sharpe
+  ratios across those trials, which requires you to have kept them.</p>
+
+  <h2>Worked example</h2>
+  <p>A strategy with an observed Sharpe of 1.50 over 120 monthly observations,
+  skewness &minus;0.8 and kurtosis 6.0. Sharpe ratios across the trials had a
+  standard deviation of 0.50. The denominator term is the same as for PSR:</p>
+  <div class="qm-formula">den = sqrt( 1 - (-0.80)(1.50) + ((6.0 - 1)/4)(1.50)^2 )
+    = sqrt( 1 + 1.20 + 1.25 * 2.25 )
+    = sqrt( 5.0125 )
+    = 2.2389</div>
+  <p>Now watch what the trial count does to the same strategy:</p>
+  <table class="qm-kv">
+    <thead><tr><th>Trials (N)</th><th>Expected max Sharpe SR*&#8320;</th><th>DSR</th><th>Verdict at 0.95</th></tr></thead>
+    <tbody>
+      <tr><td class="qm-num">1</td><td class="qm-num">&mdash;</td><td class="qm-num">1.0000</td><td>Passes (no selection to correct)</td></tr>
+      <tr><td class="qm-num">10</td><td class="qm-num">0.7873</td><td class="qm-num">0.9997</td><td>Passes</td></tr>
+      <tr><td class="qm-num">100</td><td class="qm-num">1.2653</td><td class="qm-num">0.8736</td><td><strong>Fails</strong></td></tr>
+      <tr><td class="qm-num">1000</td><td class="qm-num">1.6276</td><td class="qm-num">0.2671</td><td><strong>Fails badly</strong></td></tr>
+    </tbody>
+  </table>
+  <p>Nothing about the strategy changed between those rows. Only the honesty of
+  the accounting did. Against a zero benchmark this track record gives a PSR of
+  essentially 1.0000 &mdash; which is why a naive PSR on a mined strategy is
+  close to meaningless.</p>
+  <p>The N = 1 row is a genuine degenerate case: with a single trial there is no
+  selection bias, the expected maximum is undefined, and DSR collapses back to
+  ordinary PSR. That is correct behaviour, not a gap.</p>
+
+  <h2>PSR vs DSR: which do I need?</h2>
+  <table class="qm-kv">
+    <thead><tr><th></th><th>PSR</th><th>DSR</th></tr></thead>
+    <tbody>
+      <tr><th>Question answered</th><td>Is this Sharpe distinguishable from the benchmark?</td><td>Is this Sharpe distinguishable from the best of N lucky tries?</td></tr>
+      <tr><th>Benchmark</th><td>Chosen by you (often 0)</td><td>Expected maximum under the null</td></tr>
+      <tr><th>Corrects for track length</th><td>Yes</td><td>Yes</td></tr>
+      <tr><th>Corrects for skew/kurtosis</th><td>Yes</td><td>Yes</td></tr>
+      <tr><th>Corrects for selection bias</th><td><strong>No</strong></td><td><strong>Yes</strong></td></tr>
+      <tr><th>Needs a trial count</th><td>No</td><td>Yes &mdash; and an honest one</td></tr>
+      <tr><th>Use when</th><td>You have one strategy, designed in advance</td><td>You searched, optimised or selected</td></tr>
+    </tbody>
+  </table>
+  <p>The practical rule: if you can honestly say you tested exactly one
+  specification and are reporting it whatever the result, PSR is enough.
+  The moment you swept a parameter, PSR overstates your evidence.</p>
+
+  <h2>Limitations</h2>
+  <ul>
+    <li><strong>N is self-reported and unverifiable.</strong> The correction is
+    only as honest as the trial count you feed it. There is no way for a reader
+    to audit it, which is why the number should be disclosed alongside the
+    result rather than folded silently into a score.</li>
+    <li><strong>Trials are assumed independent.</strong> Sweeping one parameter
+    produces highly correlated strategies, so the <em>effective</em> number of
+    independent trials is smaller than the raw count. Using the raw count is
+    conservative; treating correlated variants as independent overstates the
+    penalty.</li>
+    <li><strong>It inherits every PSR assumption.</strong> IID returns, known
+    higher moments, and no account of costs, capacity or regime change.</li>
+    <li><strong>It does not rescue a bad process.</strong> DSR quantifies the
+    damage from searching; it does not undo it. The stronger discipline is to
+    pre-register the specification.</li>
+  </ul>
+
+  <h2>References</h2>
+  <ul class="qm-refs">
+    <li>Bailey, D. &amp; L&oacute;pez de Prado, M. (2014). &ldquo;The Deflated
+    Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and
+    Non-Normality.&rdquo; <em>Journal of Portfolio Management</em> 40(5),
+    94&ndash;107.</li>
+    <li>Bailey, D. &amp; L&oacute;pez de Prado, M. (2012). &ldquo;The Sharpe
+    Ratio Efficient Frontier.&rdquo; <em>Journal of Risk</em> 15(2), 3&ndash;44.</li>
+    <li>Bailey, D., Borwein, J., L&oacute;pez de Prado, M. &amp; Zhu, Q. (2014).
+    &ldquo;Pseudo-Mathematics and Financial Charlatanism: The Effects of
+    Backtest Overfitting on Out-of-Sample Performance.&rdquo;
+    <em>Notices of the AMS</em> 61(5), 458&ndash;471.</li>
+    <li>Harvey, C. &amp; Liu, Y. (2015). &ldquo;Backtesting.&rdquo;
+    <em>Journal of Portfolio Management</em> 42(1), 13&ndash;28.</li>
+  </ul>
+
+  <h2>Related</h2>
+  <ul class="qm-related">
+    <li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a><span>The measure DSR extends</span></li>
+    <li><a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a><span>Enter SR*&#8320; as the benchmark to compute DSR directly</span></li>
+    <li><a href="/learn/deflated-sharpe-ratio.html">What is the Deflated Sharpe Ratio?</a><span>The correction to use when the strategy is the best of many you tested</span></li>
+    <li><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a><span>The full QuantMedia research paper</span></li>
+    <li><a href="/learn/how-to-model-slippage-in-backtests.html">How to model slippage in backtests</a><span>The other way backtests overstate results</span></li>
+  </ul>
 """

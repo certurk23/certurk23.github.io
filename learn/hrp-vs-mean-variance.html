@@ -249,7 +249,9 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
   <h2>What HRP does instead</h2>
   <p>HRP, introduced by L&oacute;pez de Prado, replaces optimisation with three
-  deterministic steps:</p>
+  deterministic steps. It <strong>never inverts</strong> a matrix at any point,
+  and it requires no expected-return vector &mdash; which removes the two
+  inputs that cause most of the trouble above.</p>
   <div class="qm-formula">1. TREE CLUSTERING
    Convert the correlation matrix to a distance metric
        d(i,j) = sqrt( 0.5 * (1 - rho(i,j)) )
@@ -266,9 +268,19 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
        alpha = 1 - Var(L) / ( Var(L) + Var(R) )
 
    Recurse until every leaf holds a single asset.</div>
-  <p>No matrix is inverted at any point. No expected-return vector is required
-  &mdash; HRP is a risk-allocation method, which sidesteps the hardest quantity
-  to estimate in finance.</p>
+  <p>The distance transform matters more than it looks. Raw <code>1 &minus;
+  rho</code> is not a metric &mdash; it violates the <strong>triangle
+  inequality</strong>, so clustering on it can produce trees that contradict
+  themselves. The square-root form above is a proper metric, which is what
+  makes the hierarchy well defined.</p>
+
+  <h3>Does HRP produce negative weights?</h3>
+  <p>No. HRP as specified is <strong>long-only</strong>: recursive bisection
+  multiplies positive fractions down the tree, so every weight is
+  <strong>positive</strong> and they sum to 1 by construction. There is no
+  short book to constrain away. Unconstrained mean-variance, by contrast,
+  routinely returns large offsetting long and short positions &mdash; in the
+  comparison below it produced an 11% short book on a long-only universe.</p>
 
   <h2>Direct comparison</h2>
   <table class="qm-kv">

@@ -238,6 +238,15 @@ PAGES = [
          crumb=('Learn', 'learn/how-to-model-slippage-in-backtests.html'),
          body=PC.SLIPPAGE_BODY),
 
+    dict(slug='learn/deflated-sharpe-ratio.html',
+         title='Deflated Sharpe Ratio: Correcting for Backtest Overfitting | QuantMedia',
+         description=('The Deflated Sharpe Ratio raises the benchmark to the Sharpe '
+                      'you would expect from luck alone after N trials. Formula, '
+                      'worked example, and how it differs from PSR.'),
+         h1='What is the Deflated Sharpe Ratio?',
+         crumb=('Learn', 'learn/deflated-sharpe-ratio.html'),
+         body=PC.DSR_BODY),
+
     dict(slug='learn/what-is-signal-confluence.html',
          title='What Is Signal Confluence in Stock Screening? | QuantMedia',
          description=('Signal confluence requires several technical conditions to agree '

@@ -325,6 +325,9 @@ REQUIRED_FILES = {
     'indices/signal-breadth.html':    12_000,
     'indices/sector-confluence.html': 12_000,
     'reproducibility.html':     15_000,
+    'learn/deflated-sharpe-ratio.html': 12_000,
+    'data/ai_query_intelligence.json':  10_000,
+    'data/ai_citation_benchmark.json':   8_000,
     'data/signal_config.json':  200,
 }
 

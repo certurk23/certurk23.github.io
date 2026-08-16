@@ -74,6 +74,12 @@ jobs:
           FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
         run: python scripts/daily_update.py
 
+      # Regenerates data/ai_query_intelligence.json and the benchmark set, and
+      # fails if a tracked question loses its answer. Coverage cannot silently
+      # regress when a page is edited.
+      - name: Audit AI question coverage
+        run: python scripts/audit_questions.py
+
       # THE CORRUPTION GATE. Non-zero here means nothing is committed and
       # nothing is deployed, so production keeps whatever it already had.
       #

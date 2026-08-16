@@ -443,6 +443,32 @@ def check_sitemap():
                 err(f'{rel}: {loc.text} lastmod {lm.text!r} is not a date')
 
 
+def check_no_visible_loading_placeholder():
+    """No page may serve a JS loading placeholder as its crawlable text.
+
+    news.html and quantum-signals.html each shipped an element whose contents
+    were only ever filled by JavaScript, so every crawler - and every reader
+    with JS blocked - saw "Loading latest snapshot..." under the H1 and
+    "loading..." where the session date belongs. Both now render server-side
+    from the pipeline; this stops them regressing to a placeholder.
+
+    Only text a crawler actually reads is inspected: <script>, <style> and
+    <template> contents are stripped first, so the JS that legitimately sets a
+    loading state at runtime is not flagged.
+    """
+    pat = re.compile(r'(?i)>[^<]{0,30}\b(loading|please wait|fetching\b|coming soon|'
+                     r'no data available)\b[^<]{0,30}<')
+    for rel in html_files():
+        try:
+            html = read(rel)
+        except Exception:
+            continue
+        visible = re.sub(r'(?is)<(script|style|template|noscript).*?</\1>', ' ', html)
+        for m in pat.findall(visible):
+            err(f'{rel}: serves a JavaScript placeholder ("{m}") as crawlable '
+                f'text - render it server-side instead')
+
+
 # ---------------------------------------------------------------------------
 def main():
     warn_only = '--warn-only' in sys.argv
@@ -462,6 +488,7 @@ def main():
         ('signal payload',          check_signals),
         ('status ledger',           check_status),
         ('sitemap',                 check_sitemap),
+        ('js-only placeholders',    check_no_visible_loading_placeholder),
     ]
     for label, fn in checks:
         before = len(ERRORS)

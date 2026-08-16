@@ -464,7 +464,8 @@ def _run_validator_on(mutate):
                    validate_site.check_html_structure,
                    validate_site.check_blank_data_regression,
                    validate_site.check_signals,
-                   validate_site.check_sitemap):
+                   validate_site.check_sitemap,
+                   validate_site.check_no_visible_loading_placeholder):
             try:
                 fn()
             except Exception as e:
@@ -613,6 +614,32 @@ def test_v14_catches_signal_config_drift():
     assert any('buy_threshold' in e for e in errs), errs
 
 
+def test_v17_catches_js_only_placeholder():
+    """A JS loading state must never be the crawlable text of a page.
+
+    news.html and quantum-signals.html both shipped one, so every crawler read
+    "Loading latest snapshot..." under the H1 of the news page.
+    """
+    def mutate(site):
+        t = _read(site, 'index.html')
+        _write(site, 'index.html',
+               t.replace('</body>', '<div id="s">Loading latest snapshot&hellip;</div></body>'))
+    errs = _run_validator_on(mutate)
+    assert any('placeholder' in e for e in errs), errs
+
+
+def test_v18_allows_loading_inside_script():
+    """The same word inside <script> is legitimate and must not be flagged."""
+    def mutate(site):
+        t = _read(site, 'index.html')
+        _write(site, 'index.html',
+               t.replace('</body>',
+                         '<script>var msg="Loading latest snapshot";'
+                         'el.textContent=msg;</script></body>'))
+    errs = _run_validator_on(mutate)
+    assert not any('placeholder' in e for e in errs), errs
+
+
 def test_v15_allows_linked_publisher_byline():
     """Regression: run #46 was blocked because the validator flagged the
     pipeline's own news snapshot, which carries genuine Reuters/CNBC bylines
@@ -699,6 +726,8 @@ def main():
         ('V12 catches dated macro calendar', test_v12_catches_dated_macro_calendar),
         ('V13 catches fake relative time',  test_v13_catches_fake_relative_timestamp),
         ('V14 catches signal config drift', test_v14_catches_signal_config_drift),
+        ('V17 catches js-only placeholder', test_v17_catches_js_only_placeholder),
+        ('V18 allows loading inside script', test_v18_allows_loading_inside_script),
     ]
     for name, fn in scenarios:
         check(name, fn)

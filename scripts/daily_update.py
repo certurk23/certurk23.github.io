@@ -610,6 +610,31 @@ def render_news_html(articles, fetched_iso):
             f'<div class="news-feed">{"".join(cards)}</div></div>')
 
 
+def update_signals_html():
+    """Server-render the scan date on quantum-signals.html.
+
+    The page was previously written entirely client-side, so the largest
+    content page on the site served the literal string "loading..." to every
+    crawler where the session date belongs. Reads the JSON already on disk -
+    including a preserved last-known-good one - so the date shown always
+    matches the signals actually being displayed.
+    """
+    sig = read_json('data/quantum_signals.json') or {}
+    md = sig.get('market_date')
+    if not md:
+        print("  quantum-signals.html PRESERVED (no market_date)")
+        return
+    try:
+        page = read_file('quantum-signals.html')
+        page = inject(page, 'SCAN_DATE',
+                      f'<span id="scanTime" style="color:var(--accent);'
+                      f'font-weight:600">{esc(md)}</span>')
+        write_file('quantum-signals.html', page)
+        print(f"  quantum-signals.html rendered (session {md})")
+    except Exception as e:
+        stage_error('quantum-signals.html write', e)
+
+
 def update_news_html(feed):
     if not feed or not feed.get('data'):
         print("  news.html PRESERVED (no fresh headlines)")
@@ -618,6 +643,21 @@ def update_news_html(feed):
         html = read_file('news.html')
         html = inject(html, 'NEWS_SNAP',
                       render_news_html(feed['data'], feed['fetched_utc']))
+        # The status line used to be filled only by JavaScript, so every
+        # crawler - and every reader with JS blocked - saw the literal string
+        # "Loading latest snapshot..." directly under the H1.
+        #
+        # What is rendered here is a TIMESTAMP FACT, not a freshness claim.
+        # "Headline snapshot: <when>" stays true forever; "Live" would become a
+        # lie the moment the pipeline stalls, and static HTML cannot know how
+        # long it has been sitting there. QM.stamp() upgrades this to the
+        # derived freshness state on load, so JS users still see live/paused.
+        html = inject(html, 'NEWS_STATUS',
+                      f'<div id="newsStatus" class="qm-fresh" style="font-size:11px;'
+                      f'font-family:\'Barlow Condensed\',sans-serif;font-weight:600;'
+                      f'letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">'
+                      f'Headline snapshot: {disp(feed["fetched_utc"])} &middot; '
+                      f'{len(feed["data"])} headlines captured</div>')
         write_file('news.html', html)
         print(f"  news.html rendered (snapshot {disp(feed['fetched_utc'])})")
     except Exception as e:
@@ -1410,6 +1450,7 @@ def main():
 
     update_markets_html(fx, cx)
     update_news_html(nx)
+    update_signals_html()
 
     # Republish the methodology config so the site copy, the validator and any
     # external reader all resolve to the same numbers.

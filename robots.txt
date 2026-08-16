@@ -1,7 +1,43 @@
+# QuantMedia — https://quantmedia.io
+# Everything published here is intended to be readable by search engines and
+# by AI assistants answering questions about quantitative finance.
+
 User-agent: *
 Allow: /
 
+# Search discovery
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI assistant search/discovery crawlers.
+# These fetch pages to answer user questions and attribute the source. They
+# are listed separately from model-training crawlers on purpose: search
+# discovery is welcome, and training permission is a distinct decision.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Nothing here is secret, but these paths hold no reader-facing content.
+User-agent: *
 Disallow: /.claude/
+Disallow: /.github/
 Disallow: /_*.py
 
 Sitemap: https://quantmedia.io/sitemap.xml

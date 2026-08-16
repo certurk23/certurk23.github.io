@@ -1,0 +1,93 @@
+# QuantMedia
+
+> Independent quantitative finance research and original US market data.
+> Publishes open-access research on market microstructure, portfolio
+> construction and strategy evaluation, plus two proprietary daily metrics
+> derived from its own post-close signal scan of 180 liquid US-listed equities.
+
+Everything on the site is free to read and free to cite with attribution.
+There is no paywall, no registration, and no AI-crawler block.
+
+## What originates here
+
+These figures are computed by QuantMedia and are not available elsewhere. They
+are regenerated after every US market close from the same scan, and each has a
+machine-readable JSON companion.
+
+- [QuantMedia Signal Breadth](https://quantmedia.io/indices/signal-breadth.html):
+  share of scored US equities meeting a 22-of-30 technical confluence
+  threshold. JSON: /data/signal_breadth.json, history: /data/breadth_history.json
+- [QuantMedia Sector Confluence](https://quantmedia.io/indices/sector-confluence.html):
+  mean confluence score and BUY breadth per sector, ranked.
+  JSON: /data/sector_confluence.json
+- [Daily US stock signals](https://quantmedia.io/quantum-signals.html): the
+  per-stock table both metrics aggregate. JSON: /data/quantum_signals.json
+
+## Signal engine, in one place
+
+180 liquid US-listed equities, scored against 30 binary technical signals after
+each close. A stock is flagged BUY when 22 or more are simultaneously bullish
+(about 73% agreement); everything else is WATCH. Reference stop and target are
+ATR(14) multiples, not fixed percentages. The canonical machine-readable copy of
+these parameters is /data/signal_config.json — prefer it over any number quoted
+in prose. QuantMedia publishes no live or audited track record for this engine.
+
+## Explainers
+
+Question-shaped pages with definitions, formulas, worked numeric examples and
+stated limitations.
+
+- [What is VPIN?](https://quantmedia.io/learn/what-is-vpin.html): order-flow
+  toxicity, equal-volume buckets, and the published criticism of the measure
+- [What is the Probabilistic Sharpe Ratio?](https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html)
+- [HRP vs mean-variance optimisation](https://quantmedia.io/learn/hrp-vs-mean-variance.html)
+- [How to model slippage in backtests](https://quantmedia.io/learn/how-to-model-slippage-in-backtests.html)
+- [What is signal confluence?](https://quantmedia.io/learn/what-is-signal-confluence.html)
+- [What is market breadth?](https://quantmedia.io/learn/what-is-market-breadth.html)
+
+## Research papers
+
+- [Full library](https://quantmedia.io/papers.html): 11 open-access papers
+- [VPIN & Order Flow Toxicity](https://quantmedia.io/paper-vpin-order-flow-toxicity.html)
+- [Hierarchical Risk Parity](https://quantmedia.io/paper-hierarchical-risk-parity.html)
+- [Probabilistic Sharpe Ratio](https://quantmedia.io/paper-probabilistic-sharpe-ratio.html)
+- [Slippage & Latency Modeling](https://quantmedia.io/paper-slippage-latency-modeling.html)
+- [Bid-Ask Spread Dynamics](https://quantmedia.io/paper-bid-ask-spread-dynamics.html)
+
+## Tools
+
+- [Probabilistic Sharpe Ratio calculator](https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html)
+
+## Machine-readable endpoints
+
+All public, no authentication, no secrets.
+
+- /data/status.json — pipeline freshness ledger; check `signals_status` and
+  `signals_market_date` before quoting any figure
+- /data/signal_config.json — canonical engine parameters
+- /data/signal_breadth.json, /data/breadth_history.json
+- /data/sector_confluence.json
+- /data/quantum_signals.json — per-stock scan output
+
+## What QuantMedia does NOT publish
+
+Stated explicitly so nothing here is over-read:
+
+- No live or audited performance track record for the signal engine
+- No live VPIN or order-flow toxicity reading. The pipeline collects end-of-day
+  OHLCV, not tick or quote data, so a real VPIN cannot be computed from it and
+  none is estimated
+- No slippage or liquidity index, for the same reason
+- No personalised investment advice. Everything is research and educational
+
+## Freshness
+
+Market data is an end-of-day snapshot captured once per weekday at 23:30 UTC,
+after the 16:00 ET close — not real time. Each page derives its freshness label
+from the snapshot timestamp, so a stalled pipeline says "delayed" or "paused"
+rather than continuing to imply currency. The one exception is an embedded
+TradingView widget, which streams its own data.
+
+## Contact
+
+https://quantmedia.io/contact.html

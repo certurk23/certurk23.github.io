@@ -63,6 +63,65 @@ def signal_config():
     }
 
 # ---------------------------------------------------------------------------
+# Sector grouping for the scan universe.
+#
+# Deliberately called a "QuantMedia sector grouping", not GICS. It approximates
+# the GICS sectors but is hand-maintained, and a handful of names (notably the
+# solar/clean-energy cohort, which GICS splits across Information Technology,
+# Industrials and Utilities) are grouped by how they actually trade rather than
+# by official classification. Saying "GICS" would be claiming an accuracy this
+# map does not have. Every ticker in TICKERS must appear here exactly once -
+# test_pipeline.py enforces that.
+# ---------------------------------------------------------------------------
+SECTOR_MAP = {
+    'Technology': [
+        'AAPL', 'MSFT', 'NVDA', 'AVGO', 'ORCL', 'CRM', 'AMD', 'CSCO', 'ACN',
+        'IBM', 'ADBE', 'INTC', 'QCOM', 'INTU', 'TXN', 'ADI', 'MU', 'MRVL',
+        'PANW', 'SNPS', 'CDNS', 'KLAC', 'LRCX', 'AMAT', 'NOW', 'APH', 'ON',
+        'WOLF', 'ZS', 'OKTA', 'CRWD', 'S', 'DDOG', 'SNOW', 'PLTR', 'AI',
+        'GTLB', 'CFLT', 'NET', 'MDB',
+    ],
+    'Communication Services': ['GOOGL', 'GOOG', 'META', 'NFLX', 'T', 'VZ'],
+    'Consumer Discretionary': [
+        'AMZN', 'TSLA', 'HD', 'MCD', 'NKE', 'LOW', 'SBUX', 'TJX', 'BKNG',
+        'GM', 'F',
+    ],
+    'Consumer Staples': ['PG', 'KO', 'PEP', 'WMT', 'COST', 'CL', 'MO', 'TGT'],
+    'Health Care': [
+        'LLY', 'UNH', 'JNJ', 'MRK', 'ABBV', 'TMO', 'ABT', 'DHR', 'SYK',
+        'AMGN', 'PFE', 'MDT', 'GILD', 'ELV', 'CI', 'HUM', 'CVS', 'MCK',
+        'ZTS', 'REGN', 'ISRG', 'VRTX',
+    ],
+    'Financials': [
+        'BRK-B', 'JPM', 'V', 'MA', 'BAC', 'MS', 'WFC', 'GS', 'BLK', 'AXP',
+        'CB', 'C', 'USB', 'AON', 'PNC', 'AIG', 'SPGI', 'CME', 'PYPL', 'COIN',
+        'HOOD', 'SOFI', 'NU', 'AFRM', 'UPST', 'BX', 'KKR', 'APO', 'ARES',
+        'CG', 'BAM', 'TPG', 'HLNE',
+    ],
+    'Energy': [
+        'XOM', 'CVX', 'OXY', 'PSX', 'VLO', 'MPC', 'HAL', 'SLB', 'BKR',
+        'DVN', 'FANG',
+    ],
+    'Industrials': [
+        'UPS', 'CAT', 'LMT', 'RTX', 'HON', 'DE', 'FDX', 'GE', 'ETN', 'BA',
+        'LHX', 'GD', 'NOC', 'HII', 'TDG', 'HEI', 'TXT', 'AXON', 'EMR', 'ROK',
+        'PH', 'IR', 'AME', 'ROP', 'FTV', 'OTIS', 'CARR', 'ITW', 'MMM', 'NSC',
+    ],
+    'Materials': [
+        'APD', 'SHW', 'ECL', 'FCX', 'NEM', 'GOLD', 'AEM', 'WPM', 'KGC', 'AGI',
+    ],
+    'Utilities': ['NEE', 'DUK', 'SO'],
+    'Clean Energy': ['ENPH', 'FSLR', 'SEDG', 'CSIQ', 'ARRY', 'RUN'],
+}
+
+# Flattened ticker -> sector lookup.
+SECTOR_OF = {t: sec for sec, names in SECTOR_MAP.items() for t in names}
+
+# A sector needs enough constituents for an average to mean anything.
+MIN_SECTOR_SIZE = 3
+
+
+# ---------------------------------------------------------------------------
 # Per-source validation thresholds. A fetch that cannot clear these is treated
 # as a failure and the previous good snapshot is preserved instead.
 # ---------------------------------------------------------------------------
@@ -254,6 +313,9 @@ REQUIRED_FILES = {
     'sitemap.xml':            1_000,
     'robots.txt':                50,
     'qm-data.js':             1_000,
+    'llms.txt':                 800,
+    'indices/signal-breadth.html':    12_000,
+    'indices/sector-confluence.html': 12_000,
     'data/signal_config.json':  200,
 }
 

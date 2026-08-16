@@ -53,8 +53,14 @@ def read(rel):
 
 
 def html_files():
-    return sorted(f for f in os.listdir(ROOT)
-                  if f.endswith('.html') and not f.startswith('google'))
+    """Root pages plus the generated /indices/, /learn/ and /tools/ trees."""
+    out = [f for f in os.listdir(ROOT)
+           if f.endswith('.html') and not f.startswith('google')]
+    for sub in ('indices', 'learn', 'tools'):
+        d = os.path.join(ROOT, sub)
+        if os.path.isdir(d):
+            out += [f'{sub}/{f}' for f in os.listdir(d) if f.endswith('.html')]
+    return sorted(out)
 
 
 # ---------------------------------------------------------------------------

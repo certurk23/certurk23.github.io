@@ -846,6 +846,234 @@ def compute_quantum_signals():
     return payload
 
 
+# ---- 5c. Proprietary metrics ------------------------------------------------
+# Derived entirely from the scan the pipeline just produced. These are the only
+# figures on the site that originate here rather than being sourced from a data
+# vendor, so they are computed once, published as JSON, and rendered into the
+# index pages as static HTML.
+#
+# Deliberately NOT built: an order-flow toxicity (VPIN) index and a slippage
+# stress index. Both need tick/quote data the pipeline does not collect. There
+# is no defensible way to compute them from end-of-day OHLCV, so they are
+# absent rather than approximated.
+
+# Descriptive bands on breadth. This is a restatement of one number, not a
+# forecast and not a validated regime model - the labels exist so a reader has
+# a consistent vocabulary, and the thresholds are published so anyone can
+# disagree with them.
+BREADTH_BANDS = [
+    (60.0, 'Broad participation',
+     'A majority of the universe clears the threshold. Trend-following '
+     'signals are least selective in this state.'),
+    (40.0, 'Mixed participation',
+     'Roughly half the universe qualifies. Signal count discriminates less '
+     'than usual; the score column matters more than the BUY flag.'),
+    (20.0, 'Narrow participation',
+     'A minority qualifies. Setups are concentrated in fewer names and '
+     'sectors.'),
+    (0.0,  'Few qualifying setups',
+     'Very little of the universe clears the threshold. The engine is '
+     'designed to go quiet here rather than force low-conviction output.'),
+]
+
+
+def _band(breadth_pct):
+    for floor, label, note in BREADTH_BANDS:
+        if breadth_pct >= floor:
+            return {'label': label, 'note': note, 'floor_pct': floor}
+    return {'label': 'unknown', 'note': '', 'floor_pct': 0.0}
+
+
+def compute_breadth(sig):
+    """QuantMedia Signal Breadth Index.
+
+        breadth = BUY decisions / successfully scored stocks
+
+    Everything here comes from the scan payload; nothing is estimated.
+    """
+    rows = sig['signals']
+    scores = sorted(r['sc'] for r in rows)
+    n = len(scores)
+    buys = sum(1 for r in rows if r['d'] == 'BUY')
+    breadth = round(100.0 * buys / n, 1) if n else 0.0
+    mean = sum(scores) / n if n else 0.0
+    var = sum((x - mean) ** 2 for x in scores) / n if n else 0.0
+
+    dist = []
+    for lo in range(0, N_SIGNALS + 1, 5):
+        hi = min(lo + 4, N_SIGNALS)
+        dist.append({'band': f'{lo}-{hi}',
+                     'n': sum(1 for s in scores if lo <= s <= hi)})
+
+    return {
+        'metric':          'QuantMedia Signal Breadth',
+        'market_date':     sig['market_date'],
+        'updated_at':      NOW_ISO,
+        'eligible_stocks': sig['engine']['universe'],
+        'scored_stocks':   n,
+        'buy_signals':     buys,
+        'breadth_pct':     breadth,
+        'median_score':    scores[n // 2] if n else 0,
+        'mean_score':      round(mean, 2),
+        'score_stdev':     round(var ** 0.5, 2),
+        'min_score':       scores[0] if n else 0,
+        'max_score':       scores[-1] if n else 0,
+        'threshold':       CONFLUENCE_MIN,
+        'signal_count':    N_SIGNALS,
+        'distribution':    dist,
+        'regime_band':     _band(breadth),
+        'definition':      ('Share of successfully scored equities whose '
+                            'confluence score reached the BUY threshold on '
+                            'the stated market date.'),
+    }
+
+
+def compute_sector_confluence(sig):
+    """QuantMedia Sector Confluence Index - the same scan, grouped by sector."""
+    by_sector = {}
+    for r in sig['signals']:
+        sec = C.SECTOR_OF.get(r['s'])
+        if sec:
+            by_sector.setdefault(sec, []).append(r)
+
+    out = []
+    for sec, rows in by_sector.items():
+        if len(rows) < C.MIN_SECTOR_SIZE:
+            continue                      # too few names for an average
+        scores = sorted(r['sc'] for r in rows)
+        n = len(scores)
+        buys = sum(1 for r in rows if r['d'] == 'BUY')
+        out.append({
+            'sector':        sec,
+            'constituents':  len(C.SECTOR_MAP[sec]),
+            'scored':        n,
+            'buy_signals':   buys,
+            'breadth_pct':   round(100.0 * buys / n, 1),
+            'mean_score':    round(sum(scores) / n, 2),
+            'median_score':  scores[n // 2],
+            'top_symbol':    max(rows, key=lambda r: r['sc'])['s'],
+            'top_score':     max(r['sc'] for r in rows),
+        })
+
+    # Rank on mean score; breadth breaks ties.
+    out.sort(key=lambda s: (-s['mean_score'], -s['breadth_pct']))
+    for i, s in enumerate(out, 1):
+        s['rank'] = i
+
+    return {
+        'metric':      'QuantMedia Sector Confluence',
+        'market_date': sig['market_date'],
+        'updated_at':  NOW_ISO,
+        'threshold':   CONFLUENCE_MIN,
+        'signal_count': N_SIGNALS,
+        'sector_basis': ('Hand-maintained QuantMedia sector grouping, '
+                         'approximating GICS. Not an official classification.'),
+        'definition':  ('Mean confluence score and BUY breadth per sector, '
+                        'computed from the same post-close scan.'),
+        'sectors':     out,
+    }
+
+
+def render_index_pages(breadth, sectors):
+    """Write the current readings into the index pages as STATIC HTML.
+
+    This is the point of the whole exercise: a crawler or an assistant that
+    fetches the page must see the numbers in the markup, not a spinner that
+    resolves after JavaScript. The QM: anchors keep the surrounding editorial
+    content untouched.
+    """
+    b = breadth
+    band = b['regime_band']
+    rows = ''.join(
+        f'<tr><td class="qm-rank">{s["rank"]}</td>'
+        f'<td class="qm-sector">{esc(s["sector"])}</td>'
+        f'<td class="qm-num">{s["mean_score"]:.2f}</td>'
+        f'<td class="qm-num">{s["median_score"]}</td>'
+        f'<td class="qm-num">{s["buy_signals"]}/{s["scored"]}</td>'
+        f'<td class="qm-num">{s["breadth_pct"]:.1f}%</td>'
+        f'<td class="qm-num">{esc(s["top_symbol"])} ({s["top_score"]})</td></tr>'
+        for s in sectors['sectors'])
+
+    dist = ''.join(
+        f'<tr><td class="qm-num">{esc(d["band"])}</td>'
+        f'<td class="qm-num">{d["n"]}</td></tr>'
+        for d in b['distribution'] if d['n'])
+
+    breadth_html = (
+        f'<p class="qm-reading"><strong>{b["buy_signals"]} of '
+        f'{b["scored_stocks"]}</strong> successfully scored equities reached '
+        f'the {b["threshold"]}/{b["signal_count"]} threshold on '
+        f'<strong>{b["market_date"]}</strong>.</p>'
+        f'<table class="qm-kv"><tbody>'
+        f'<tr><th>Signal breadth</th><td><strong>{b["breadth_pct"]:.1f}%</strong></td></tr>'
+        f'<tr><th>Median score</th><td>{b["median_score"]}/{b["signal_count"]}</td></tr>'
+        f'<tr><th>Mean score</th><td>{b["mean_score"]:.2f}</td></tr>'
+        f'<tr><th>Score dispersion (SD)</th><td>{b["score_stdev"]:.2f}</td></tr>'
+        f'<tr><th>Score range</th><td>{b["min_score"]}&ndash;{b["max_score"]}</td></tr>'
+        f'<tr><th>Universe / scored</th><td>{b["eligible_stocks"]} / {b["scored_stocks"]}</td></tr>'
+        f'<tr><th>Reading</th><td>{esc(band["label"])}</td></tr>'
+        f'<tr><th>Market date</th><td>{b["market_date"]}</td></tr>'
+        f'<tr><th>Generated</th><td>{b["updated_at"]}</td></tr>'
+        f'</tbody></table>'
+        f'<p class="qm-note">{esc(band["note"])}</p>'
+        f'<h3>Score distribution</h3>'
+        f'<table class="qm-kv"><thead><tr><th>Signals active</th>'
+        f'<th>Stocks</th></tr></thead><tbody>{dist}</tbody></table>')
+
+    sector_html = (
+        f'<p class="qm-reading">Sector readings for '
+        f'<strong>{sectors["market_date"]}</strong>, ranked by mean confluence '
+        f'score across {sum(s["scored"] for s in sectors["sectors"])} scored '
+        f'equities.</p>'
+        f'<div class="qm-tablewrap"><table class="qm-kv"><thead><tr>'
+        f'<th>#</th><th>Sector</th><th>Mean</th><th>Median</th>'
+        f'<th>BUY</th><th>Breadth</th><th>Strongest</th></tr></thead>'
+        f'<tbody>{rows}</tbody></table></div>'
+        f'<p class="qm-note">Generated {sectors["updated_at"]}. '
+        f'{esc(sectors["sector_basis"])}</p>')
+
+    for rel, marker, html in (
+            ('indices/signal-breadth.html', 'BREADTH', breadth_html),
+            ('indices/sector-confluence.html', 'SECTORS', sector_html)):
+        try:
+            page = read_file(rel)
+        except FileNotFoundError:
+            print(f"  WARNING: {rel} missing - skipped")
+            continue
+        write_file(rel, inject(page, marker, html))
+        print(f"  {rel} rendered")
+
+
+HISTORY_CAP = 750        # ~3 years of sessions; keeps the file small
+
+
+def append_history(breadth):
+    """One compact row per market date. A machine-readable series beats
+    thousands of near-identical daily URLs."""
+    hist = read_json('data/breadth_history.json') or {'series': []}
+    series = [r for r in hist.get('series', [])
+              if r.get('market_date') != breadth['market_date']]
+    series.append({
+        'market_date':  breadth['market_date'],
+        'breadth_pct':  breadth['breadth_pct'],
+        'buy_signals':  breadth['buy_signals'],
+        'scored':       breadth['scored_stocks'],
+        'median_score': breadth['median_score'],
+        'mean_score':   breadth['mean_score'],
+    })
+    series.sort(key=lambda r: r['market_date'])
+    return {
+        'metric':      'QuantMedia Signal Breadth - history',
+        'updated_at':  NOW_ISO,
+        'threshold':   CONFLUENCE_MIN,
+        'signal_count': N_SIGNALS,
+        'note':        ('History begins when this series was first published; '
+                        'it is not backfilled, because the scan was not run '
+                        'historically under the current methodology.'),
+        'series':      series[-HISTORY_CAP:],
+    }
+
+
 # ---- 5b. Market bar ---------------------------------------------------------
 # Sourced from yfinance so the values are the real instruments. The previous
 # client-side version proxied gold with the PAX-Gold token and WTI with a
@@ -1180,6 +1408,27 @@ def main():
     # external reader all resolve to the same numbers.
     write_json('data/signal_config.json', C.signal_config())
     written.append('data/signal_config.json')
+
+    # Proprietary metrics, derived from the scan on disk (fresh or preserved).
+    sig_now = read_json('data/quantum_signals.json')
+    if sig_now and sig_now.get('signals'):
+        try:
+            breadth = compute_breadth(sig_now)
+            sectors = compute_sector_confluence(sig_now)
+            write_json('data/signal_breadth.json', breadth)
+            write_json('data/sector_confluence.json', sectors)
+            written += ['data/signal_breadth.json', 'data/sector_confluence.json']
+            # Only extend the series when the scan is genuinely fresh, or a
+            # preserved payload would re-append the same session every run.
+            if signals:
+                write_json('data/breadth_history.json', append_history(breadth))
+                written.append('data/breadth_history.json')
+            render_index_pages(breadth, sectors)
+            print(f"  Metrics: breadth {breadth['breadth_pct']}% "
+                  f"({breadth['buy_signals']}/{breadth['scored_stocks']}), "
+                  f"{len(sectors['sectors'])} sectors ranked")
+        except Exception as e:
+            stage_error('metrics', f'{type(e).__name__}: {e}')
 
     sig_on_disk = read_json('data/quantum_signals.json') or {}
     status = build_status(fx, cx, nx, bar, sig_on_disk, signals is not None)

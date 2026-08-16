@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-7635577322319251">
+<meta name="theme-color" content="#00a651">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probabilistic Sharpe Ratio Calculator | QuantMedia</title>
+<meta name="description" content="Free PSR calculator. Enter observed Sharpe, benchmark, observations, skewness and kurtosis to get the probability the true Sharpe exceeds your benchmark. Runs in your browser.">
+<link rel="canonical" href="https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html">
+<meta name="author" content="QuantMedia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Probabilistic Sharpe Ratio Calculator">
+<meta property="og:description" content="Free PSR calculator. Enter observed Sharpe, benchmark, observations, skewness and kurtosis to get the probability the true Sharpe exceeds your benchmark. Runs in your browser.">
+<meta property="og:url" content="https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html">
+<meta property="og:site_name" content="QuantMedia">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Probabilistic Sharpe Ratio Calculator">
+<meta name="twitter:description" content="Free PSR calculator. Enter observed Sharpe, benchmark, observations, skewness and kurtosis to get the probability the true Sharpe exceeds your benchmark. Runs in your browser.">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "headline":"Probabilistic Sharpe Ratio Calculator",
+  "description":"Free PSR calculator. Enter observed Sharpe, benchmark, observations, skewness and kurtosis to get the probability the true Sharpe exceeds your benchmark. Runs in your browser.",
+  "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "datePublished":"2026-08-08",
+  "dateModified":"2026-08-08",
+  "mainEntityOfPage":"https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html",
+  "isAccessibleForFree":true
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Tools","item":"https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html"},
+    {"@type":"ListItem","position":3,"name":"Probabilistic Sharpe Ratio calculator","item":"https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html"}
+  ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
+  --border:#242424;--border2:#2e2e2e;
+  --text:#e8e8e8;--dim:#888;--dimmer:#444;
+  --accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;
+  --nav-h:52px;
+}
+[data-theme="light"]{
+  --bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;
+  --border:#dcdcda;--border2:#d0d0ce;
+  --text:#111111;--dim:#555555;--dimmer:#888888;
+  --accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
+a{text-decoration:none;color:inherit}
+
+/* UNIFIED SITE HEADER */
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .24s ease}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.site-header .main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.site-header .main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.site-header .main-nav a:hover,.site-header .main-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:var(--accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
+.btn-subscribe:hover{opacity:.86}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] footer{background:var(--bg3)}
+[data-theme="light"] .section-header h2{color:var(--text)!important}
+[data-theme="light"] .article-card strong{color:var(--text)!important}
+
+/* PAGE */
+.page-wrap{max-width:900px;margin:0 auto;padding:40px 20px}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;border-left:3px solid var(--accent);padding-left:10px;margin-bottom:16px;margin-top:36px}
+.section-header:first-of-type{margin-top:0}
+.section-header h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
+
+/* ARTICLE CARD */
+.article-card{border:1px solid var(--border);border-radius:3px;background:var(--bg2);padding:20px;margin-bottom:2px}
+.article-card p{font-size:14px;color:#bbb;line-height:1.75;margin-bottom:14px}
+.article-card p:last-child{margin-bottom:0}
+.article-card strong{color:var(--text);font-weight:600}
+.article-card code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);border:1px solid var(--border2);padding:1px 6px;border-radius:2px;color:#6ab0f5}
+.article-card ul{margin:0 0 14px 20px;color:#bbb;font-size:14px;line-height:1.75}
+.article-card li{margin-bottom:6px}
+
+/* INSIGHT BOX */
+.insight-box{background:rgba(0,166,81,.06);border:1px solid rgba(0,166,81,.25);border-left:3px solid var(--accent);border-radius:0 3px 3px 0;padding:16px 20px;margin:18px 0}
+.insight-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.insight-box p{font-size:13px;color:#bbb;line-height:1.75;margin-bottom:0!important}
+.insight-box strong{color:var(--text)}
+
+/* DATA TABLE */
+.data-tbl{width:100%;border-collapse:collapse;border:1px solid var(--border);margin:14px 0}
+.data-tbl th{background:var(--bg3);border-bottom:1px solid var(--border);padding:9px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);text-align:left}
+.data-tbl td{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg2);font-size:13px;color:#bbb}
+.data-tbl tr:last-child td{border-bottom:none}
+.data-tbl tr:hover td{background:rgba(255,255,255,.02)}
+
+/* FOOTER */
+footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
+.footer-top{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.ft-brand{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
+.ft-brand span{color:var(--accent)}
+.ft-desc{font-size:12px;color:var(--dim);line-height:1.8}
+.ft-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.ft-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color .15s}
+.ft-col a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding:14px 20px;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.footer-badges{display:flex;gap:8px}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border2);border-radius:2px;color:var(--dimmer);text-transform:uppercase}
+.fbadge.g{border-color:rgba(0,166,81,.4);color:var(--accent)}
+
+/* MOBILE NAV */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}.footer-top{grid-template-columns:1fr}}
+</style>
+
+<style>
+.qm-lede{font-size:15px;line-height:1.85;color:var(--text);margin:0 0 20px}
+.qm-answer{background:rgba(0,166,81,.07);border:1px solid rgba(0,166,81,.28);
+  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:16px 20px;margin:0 0 24px}
+.qm-answer p{margin:0;font-size:14.5px;line-height:1.8;color:var(--text)}
+.qm-answer .qm-answer-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:8px}
+.qm-def{border:1px solid var(--border);background:var(--bg2);border-radius:4px;
+  padding:16px 20px;margin:20px 0}
+.qm-def dt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.qm-def dd{margin:0 0 14px;font-size:14px;line-height:1.8;color:var(--text)}
+.qm-def dd:last-child{margin-bottom:0}
+.qm-formula{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;
+  background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+  padding:14px 16px;margin:16px 0;overflow-x:auto;white-space:pre;color:var(--text)}
+.qm-kv{width:100%;border-collapse:collapse;border:1px solid var(--border);margin:14px 0;font-size:13.5px}
+.qm-kv th,.qm-kv td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.qm-kv thead th{background:var(--bg3);font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)}
+.qm-kv th{color:var(--dim);font-weight:600;width:38%}
+.qm-kv td{color:var(--text)}
+.qm-num{font-family:'JetBrains Mono',monospace}
+.qm-rank{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;width:36px}
+.qm-sector{font-weight:600}
+.qm-tablewrap{overflow-x:auto}
+.qm-reading{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--text)}
+.qm-note{font-size:12.5px;line-height:1.75;color:var(--dim);margin:10px 0 0}
+.qm-refs{font-size:13px;line-height:1.85;color:var(--dim);margin:0;padding-left:18px}
+.qm-refs li{margin-bottom:8px}
+.qm-crumb{font-size:11px;color:var(--dim);margin-bottom:14px;
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.6px;text-transform:uppercase}
+.qm-crumb a{color:var(--accent)}
+.qm-related{list-style:none;padding:0;margin:0}
+.qm-related li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.qm-related a{color:var(--accent);font-weight:600}
+.qm-related span{color:var(--dim);display:block;font-size:12.5px;margin-top:3px}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
+.calc-field label{display:block;font-size:11px;font-family:'Barlow Condensed',sans-serif;
+  letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.calc-field input{width:100%;padding:9px 11px;background:var(--bg);color:var(--text);
+  border:1px solid var(--border2);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:13px}
+.calc-out{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+  padding:16px 18px;margin-top:14px}
+.calc-out .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--accent);font-weight:600}
+</style>
+
+</head>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <img src="/logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block">
+    </a>
+    <nav class="main-nav">
+      <a href="/">Home</a>
+      <a href="/markets.html">Live Data</a>
+      <a href="/news.html">News</a>
+      <a href="/stocks.html">Equities</a>
+      <a href="/quantum-signals.html">Quantum</a>
+      <a href="/papers.html">Analysis</a>
+      <a href="/research.html">Research</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-subscribe">Subscribe</button>
+    </div>
+  </div>
+</header>
+<main>
+<div class="page-wrap">
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/tools/probabilistic-sharpe-ratio-calculator.html">Tools</a> &rsaquo; Probabilistic Sharpe Ratio calculator</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Probabilistic Sharpe Ratio calculator</h1>
+
+  <p class="qm-lede">This calculator returns the Probabilistic Sharpe Ratio: the
+  probability that a strategy's true Sharpe ratio exceeds a chosen benchmark,
+  given the observed Sharpe, the track-record length, and the skewness and
+  kurtosis of the returns. It runs entirely in your browser &mdash; nothing is
+  uploaded or stored.</p>
+
+  <div class="qm-answer">
+    <span class="qm-answer-label">What it answers</span>
+    <p>A Sharpe ratio is an estimate from a sample. PSR asks the question that
+    actually matters to an allocator: <em>given this much data and this return
+    shape, how confident can I be that the true Sharpe beats my benchmark?</em>
+    A PSR of 0.95 is the conventional bar &mdash; below it, the record does not
+    support the claim at 95% confidence.</p>
+  </div>
+
+  <h2>Calculator</h2>
+  <div class="calc-grid">
+    <div class="calc-field">
+      <label for="psr-sr">Observed Sharpe (SR&#770;)</label>
+      <input type="number" id="psr-sr" value="1.5" step="0.01">
+    </div>
+    <div class="calc-field">
+      <label for="psr-bm">Benchmark Sharpe (SR*)</label>
+      <input type="number" id="psr-bm" value="0" step="0.01">
+    </div>
+    <div class="calc-field">
+      <label for="psr-n">Observations (n)</label>
+      <input type="number" id="psr-n" value="24" step="1" min="2">
+    </div>
+    <div class="calc-field">
+      <label for="psr-skew">Skewness (&gamma;&#8321;)</label>
+      <input type="number" id="psr-skew" value="-1.2" step="0.1">
+    </div>
+    <div class="calc-field">
+      <label for="psr-kurt">Kurtosis (&gamma;&#8322;, normal = 3)</label>
+      <input type="number" id="psr-kurt" value="7" step="0.1">
+    </div>
+  </div>
+  <div class="calc-out">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);margin-bottom:6px">Probabilistic Sharpe Ratio</div>
+    <div class="big" id="psr-value">&mdash;</div>
+    <div id="psr-verdict" style="font-size:13.5px;line-height:1.7;color:var(--text);margin-top:8px"></div>
+    <div id="psr-detail" style="font-size:12px;line-height:1.7;color:var(--dim);margin-top:8px;font-family:'JetBrains Mono',monospace"></div>
+  </div>
+  <p class="qm-note"><strong>Frequency consistency matters.</strong> SR&#770;,
+  SR* and n must describe the same sampling frequency. If you enter an
+  annualised Sharpe, n is still the number of observations (24 monthly returns
+  = 24, not 2). Mixing them is the most common error with this formula.</p>
+
+  <h2>Formula</h2>
+  <div class="qm-formula">                  ( SR_hat - SR* ) * sqrt( n - 1 )
+PSR(SR*) = Z [ ---------------------------------------------------- ]
+                sqrt( 1 - g1*SR_hat + ((g2 - 1)/4)*SR_hat^2 )
+
+  Z   standard normal CDF      g1  skewness
+  n   number of observations   g2  kurtosis (normal = 3)</div>
+  <p>Negative skew makes <code>-g1*SR_hat</code> positive, enlarging the
+  denominator and lowering PSR. Excess kurtosis does the same. Both encode the
+  fact that fat-tailed, negatively skewed returns make a Sharpe estimate less
+  trustworthy &mdash; which is precisely the profile of strategies that look
+  best on headline numbers.</p>
+
+  <h2>Assumptions</h2>
+  <ul>
+    <li>Returns are independent and identically distributed. Serial correlation
+    &mdash; common in illiquid or smoothed portfolios &mdash; inflates the
+    apparent Sharpe and is not corrected here.</li>
+    <li>Skewness and kurtosis are known. In practice they are estimated from the
+    same short sample, so they carry their own error.</li>
+    <li>The test evaluates <em>one</em> track record. If it is the best of many
+    strategies you tested, use the Deflated Sharpe Ratio instead, which adjusts
+    for the number of trials.</li>
+    <li>Nothing here accounts for costs, capacity or backtest overfitting.</li>
+  </ul>
+
+  <h2>Related</h2>
+  <ul class="qm-related">
+    <li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a><span>Worked explanation with examples</span></li>
+    <li><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a><span>The full QuantMedia research paper</span></li>
+    <li><a href="/learn/how-to-model-slippage-in-backtests.html">How to model slippage in backtests</a><span>The cost side of an apparent edge</span></li>
+  </ul>
+
+<script>
+(function(){
+  var ids=['psr-sr','psr-bm','psr-n','psr-skew','psr-kurt'];
+  // Abramowitz & Stegun 7.1.26 error-function approximation; |error| < 1.5e-7.
+  function erf(x){
+    var s=x<0?-1:1; x=Math.abs(x);
+    var a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+    var t=1/(1+p*x);
+    var y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+    return s*y;
+  }
+  var ncdf=function(z){return 0.5*(1+erf(z/Math.SQRT2));};
+
+  function calc(){
+    var sr=parseFloat(document.getElementById('psr-sr').value);
+    var bm=parseFloat(document.getElementById('psr-bm').value);
+    var n=parseFloat(document.getElementById('psr-n').value);
+    var g1=parseFloat(document.getElementById('psr-skew').value);
+    var g2=parseFloat(document.getElementById('psr-kurt').value);
+    var out=document.getElementById('psr-value');
+    var verdict=document.getElementById('psr-verdict');
+    var detail=document.getElementById('psr-detail');
+
+    if([sr,bm,n,g1,g2].some(function(v){return isNaN(v);})||n<2){
+      out.textContent='—';
+      verdict.textContent='Enter all five inputs. Observations must be at least 2.';
+      detail.textContent='';
+      return;
+    }
+    var denomSq=1-g1*sr+((g2-1)/4)*sr*sr;
+    if(denomSq<=0){
+      out.textContent='—';
+      verdict.textContent='These moments give a non-positive variance term, so PSR is undefined. Check the skewness and kurtosis inputs.';
+      detail.textContent='1 - g1*SR + ((g2-1)/4)*SR^2 = '+denomSq.toFixed(4);
+      return;
+    }
+    var z=((sr-bm)*Math.sqrt(n-1))/Math.sqrt(denomSq);
+    var psr=ncdf(z);
+    out.textContent=(psr*100).toFixed(2)+'%';
+    detail.textContent='denominator = '+Math.sqrt(denomSq).toFixed(4)+'   z = '+z.toFixed(3);
+    if(psr>=0.95){
+      verdict.innerHTML='<strong style="color:var(--accent)">Clears the 95% bar.</strong> The record supports a true Sharpe above '+bm+' at conventional confidence.';
+    }else if(psr>=0.90){
+      verdict.innerHTML='<strong style="color:var(--gold)">Short of 95%.</strong> Suggestive but not conclusive at the usual threshold — more observations would settle it.';
+    }else{
+      verdict.innerHTML='<strong style="color:var(--red)">Does not support the claim.</strong> Given this track length and return shape, the evidence for a true Sharpe above '+bm+' is weak.';
+    }
+  }
+  ids.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.addEventListener('input',calc);}
+  });
+  calc();
+})();
+</script>
+
+</div>
+</main>
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="ft-brand">QuantMedia</div>
+      <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
+    </div>
+    <div class="ft-col">
+      <h4>Research</h4>
+      <a href="/research.html#vpin">VPIN Methodology</a>
+      <a href="/research.html#darkpool">Dark Pool Mechanics</a>
+      <a href="/research.html#adverse">Adverse Selection</a>
+      <a href="/infrastructure.html">Infrastructure</a>
+    </div>
+    <div class="ft-col">
+      <h4>Lab</h4>
+      <a href="/about.html">About QuantMedia</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 QuantMedia. All rights reserved.</span>
+    <div class="footer-badges">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">NASDAQ / NYSE Arca</span>
+    </div>
+  </div>
+</footer>
+<script>
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('qm-theme',n);}catch(e){}}
+</script>
+</body>
+</html>

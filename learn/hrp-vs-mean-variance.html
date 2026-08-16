@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>try{var _t=localStorage.getItem('qm-theme');if(_t)document.documentElement.setAttribute('data-theme',_t);}catch(e){}</script>
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-7635577322319251">
+<meta name="theme-color" content="#00a651">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRP vs Mean-Variance Optimisation Compared | QuantMedia</title>
+<meta name="description" content="Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.">
+<link rel="canonical" href="https://quantmedia.io/learn/hrp-vs-mean-variance.html">
+<meta name="author" content="QuantMedia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HRP vs Mean-Variance Optimisation Compared">
+<meta property="og:description" content="Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.">
+<meta property="og:url" content="https://quantmedia.io/learn/hrp-vs-mean-variance.html">
+<meta property="og:site_name" content="QuantMedia">
+<meta property="og:image" content="https://quantmedia.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HRP vs Mean-Variance Optimisation Compared">
+<meta name="twitter:description" content="Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.">
+<meta name="twitter:image" content="https://quantmedia.io/og-card.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"HRP vs Mean-Variance Optimisation Compared",
+  "description":"Hierarchical Risk Parity avoids inverting the covariance matrix; mean-variance does not. Side-by-side comparison of stability, concentration, turnover and out-of-sample behaviour.",
+  "author":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
+  "datePublished":"2026-08-08",
+  "dateModified":"2026-08-08",
+  "mainEntityOfPage":"https://quantmedia.io/learn/hrp-vs-mean-variance.html",
+  "isAccessibleForFree":true
+}</script>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://quantmedia.io/"},
+    {"@type":"ListItem","position":2,"name":"Learn","item":"https://quantmedia.io/learn/hrp-vs-mean-variance.html"},
+    {"@type":"ListItem","position":3,"name":"HRP vs mean-variance optimisation","item":"https://quantmedia.io/learn/hrp-vs-mean-variance.html"}
+  ]
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
+  --border:#242424;--border2:#2e2e2e;
+  --text:#e8e8e8;--dim:#888;--dimmer:#444;
+  --accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;
+  --nav-h:52px;
+}
+[data-theme="light"]{
+  --bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;
+  --border:#dcdcda;--border2:#d0d0ce;
+  --text:#111111;--dim:#555555;--dimmer:#888888;
+  --accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .24s ease,color .24s ease}
+a{text-decoration:none;color:inherit}
+
+/* UNIFIED SITE HEADER */
+.site-header{height:var(--nav-h);background:rgba(10,10,10,.94);border-bottom:2px solid var(--accent);display:flex;align-items:center;position:sticky;top:0;z-index:150;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .24s ease}
+.header-inner{max-width:1400px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center}
+.site-logo{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;padding-right:24px;border-right:1px solid var(--border2);margin-right:4px;flex-shrink:0;display:flex;flex-direction:column;line-height:1.1;text-decoration:none}
+.logo-slash{color:var(--accent)}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;color:var(--dimmer);letter-spacing:.3px}
+.site-header .main-nav{display:flex;height:var(--nav-h);flex:1;overflow:hidden}
+.site-header .main-nav a{display:flex;align-items:center;padding:0 13px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .14s,border-color .14s;white-space:nowrap}
+.site-header .main-nav a:hover,.site-header .main-nav a.active{color:var(--text);border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
+.btn-icon:hover{color:var(--text);background:var(--bg3)}
+.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:var(--accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
+.btn-subscribe:hover{opacity:.86}
+[data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
+[data-theme="light"] .site-logo{color:var(--text)}
+[data-theme="light"] footer{background:var(--bg3)}
+[data-theme="light"] .section-header h2{color:var(--text)!important}
+[data-theme="light"] .article-card strong{color:var(--text)!important}
+
+/* PAGE */
+.page-wrap{max-width:900px;margin:0 auto;padding:40px 20px}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;border-left:3px solid var(--accent);padding-left:10px;margin-bottom:16px;margin-top:36px}
+.section-header:first-of-type{margin-top:0}
+.section-header h2{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#fff}
+
+/* ARTICLE CARD */
+.article-card{border:1px solid var(--border);border-radius:3px;background:var(--bg2);padding:20px;margin-bottom:2px}
+.article-card p{font-size:14px;color:#bbb;line-height:1.75;margin-bottom:14px}
+.article-card p:last-child{margin-bottom:0}
+.article-card strong{color:var(--text);font-weight:600}
+.article-card code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);border:1px solid var(--border2);padding:1px 6px;border-radius:2px;color:#6ab0f5}
+.article-card ul{margin:0 0 14px 20px;color:#bbb;font-size:14px;line-height:1.75}
+.article-card li{margin-bottom:6px}
+
+/* INSIGHT BOX */
+.insight-box{background:rgba(0,166,81,.06);border:1px solid rgba(0,166,81,.25);border-left:3px solid var(--accent);border-radius:0 3px 3px 0;padding:16px 20px;margin:18px 0}
+.insight-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.insight-box p{font-size:13px;color:#bbb;line-height:1.75;margin-bottom:0!important}
+.insight-box strong{color:var(--text)}
+
+/* DATA TABLE */
+.data-tbl{width:100%;border-collapse:collapse;border:1px solid var(--border);margin:14px 0}
+.data-tbl th{background:var(--bg3);border-bottom:1px solid var(--border);padding:9px 14px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);text-align:left}
+.data-tbl td{padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg2);font-size:13px;color:#bbb}
+.data-tbl tr:last-child td{border-bottom:none}
+.data-tbl tr:hover td{background:rgba(255,255,255,.02)}
+
+/* FOOTER */
+footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
+.footer-top{max-width:1400px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.ft-brand{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
+.ft-brand span{color:var(--accent)}
+.ft-desc{font-size:12px;color:var(--dim);line-height:1.8}
+.ft-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.ft-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color .15s}
+.ft-col a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding:14px 20px;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
+.footer-badges{display:flex;gap:8px}
+.fbadge{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 8px;border:1px solid var(--border2);border-radius:2px;color:var(--dimmer);text-transform:uppercase}
+.fbadge.g{border-color:rgba(0,166,81,.4);color:var(--accent)}
+
+/* MOBILE NAV */
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:transparent;border:1px solid var(--border2);border-radius:4px;padding:7px;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;height:1.5px;background:var(--text);border-radius:2px;transition:all .2s ease;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--accent);z-index:148;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.mobile-nav.open{display:block}
+.mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
+.mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
+@media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}.footer-top{grid-template-columns:1fr}}
+</style>
+
+<style>
+.qm-lede{font-size:15px;line-height:1.85;color:var(--text);margin:0 0 20px}
+.qm-answer{background:rgba(0,166,81,.07);border:1px solid rgba(0,166,81,.28);
+  border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:16px 20px;margin:0 0 24px}
+.qm-answer p{margin:0;font-size:14.5px;line-height:1.8;color:var(--text)}
+.qm-answer .qm-answer-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;
+  font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);
+  display:block;margin-bottom:8px}
+.qm-def{border:1px solid var(--border);background:var(--bg2);border-radius:4px;
+  padding:16px 20px;margin:20px 0}
+.qm-def dt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.qm-def dd{margin:0 0 14px;font-size:14px;line-height:1.8;color:var(--text)}
+.qm-def dd:last-child{margin-bottom:0}
+.qm-formula{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;
+  background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+  padding:14px 16px;margin:16px 0;overflow-x:auto;white-space:pre;color:var(--text)}
+.qm-kv{width:100%;border-collapse:collapse;border:1px solid var(--border);margin:14px 0;font-size:13.5px}
+.qm-kv th,.qm-kv td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+.qm-kv thead th{background:var(--bg3);font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent)}
+.qm-kv th{color:var(--dim);font-weight:600;width:38%}
+.qm-kv td{color:var(--text)}
+.qm-num{font-family:'JetBrains Mono',monospace}
+.qm-rank{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;width:36px}
+.qm-sector{font-weight:600}
+.qm-tablewrap{overflow-x:auto}
+.qm-reading{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--text)}
+.qm-note{font-size:12.5px;line-height:1.75;color:var(--dim);margin:10px 0 0}
+.qm-refs{font-size:13px;line-height:1.85;color:var(--dim);margin:0;padding-left:18px}
+.qm-refs li{margin-bottom:8px}
+.qm-crumb{font-size:11px;color:var(--dim);margin-bottom:14px;
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:.6px;text-transform:uppercase}
+.qm-crumb a{color:var(--accent)}
+.qm-related{list-style:none;padding:0;margin:0}
+.qm-related li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.qm-related a{color:var(--accent);font-weight:600}
+.qm-related span{color:var(--dim);display:block;font-size:12.5px;margin-top:3px}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
+.calc-field label{display:block;font-size:11px;font-family:'Barlow Condensed',sans-serif;
+  letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.calc-field input{width:100%;padding:9px 11px;background:var(--bg);color:var(--text);
+  border:1px solid var(--border2);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:13px}
+.calc-out{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+  padding:16px 18px;margin-top:14px}
+.calc-out .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--accent);font-weight:600}
+</style>
+
+</head>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo">
+      <img src="/logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block">
+    </a>
+    <nav class="main-nav">
+      <a href="/">Home</a>
+      <a href="/markets.html">Live Data</a>
+      <a href="/news.html">News</a>
+      <a href="/stocks.html">Equities</a>
+      <a href="/quantum-signals.html">Quantum</a>
+      <a href="/papers.html">Analysis</a>
+      <a href="/research.html">Research</a>
+      <a href="/about.html">About</a>
+    </nav>
+    <div class="header-right">
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
+      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-subscribe">Subscribe</button>
+    </div>
+  </div>
+</header>
+<main>
+<div class="page-wrap">
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/hrp-vs-mean-variance.html">Learn</a> &rsaquo; HRP vs mean-variance optimisation</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">HRP vs mean-variance optimisation</h1>
+
+  <div class="qm-answer">
+    <span class="qm-answer-label">Short answer</span>
+    <p>Mean-variance optimisation finds mathematically optimal weights for the
+    inputs you give it, but it requires inverting a covariance matrix, which
+    makes it extremely sensitive to estimation error &mdash; small changes in
+    expected returns produce wildly different, highly concentrated portfolios.
+    Hierarchical Risk Parity (HRP) avoids matrix inversion entirely: it clusters
+    assets by correlation, then allocates risk down the resulting tree. HRP is
+    usually more stable out of sample; mean-variance is usually better in
+    sample. Neither is universally better.</p>
+  </div>
+
+  <h2>Why mean-variance misbehaves</h2>
+  <p>Markowitz optimisation solves for weights using the inverse covariance
+  matrix. That inversion is the problem. Covariance matrices estimated from
+  finite samples are close to singular when assets are highly correlated &mdash;
+  which they are, especially in stress &mdash; and inverting a near-singular
+  matrix amplifies estimation noise enormously.</p>
+  <p>The practical symptoms are well documented: extreme long-short weights,
+  concentration in a handful of assets, and instability where re-estimating on
+  one extra month of data reshuffles the whole portfolio. Michaud's description
+  of the optimiser as an &ldquo;error maximiser&rdquo; captures it: the assets
+  with the most overstated returns and understated risk get the largest weights,
+  precisely because their estimates are wrong.</p>
+
+  <h2>What HRP does instead</h2>
+  <p>HRP, introduced by L&oacute;pez de Prado, replaces optimisation with three
+  deterministic steps:</p>
+  <div class="qm-formula">1. TREE CLUSTERING
+   Convert the correlation matrix to a distance metric
+       d(i,j) = sqrt( 0.5 * (1 - rho(i,j)) )
+   and build a hierarchical clustering tree.
+
+2. QUASI-DIAGONALISATION
+   Reorder the covariance matrix so that similar assets sit adjacent.
+   Large values move toward the diagonal; the structure becomes visible.
+
+3. RECURSIVE BISECTION
+   Walk the tree top-down. At each split, allocate between the two
+   sub-clusters inversely to their variance:
+
+       alpha = 1 - Var(L) / ( Var(L) + Var(R) )
+
+   Recurse until every leaf holds a single asset.</div>
+  <p>No matrix is inverted at any point. No expected-return vector is required
+  &mdash; HRP is a risk-allocation method, which sidesteps the hardest quantity
+  to estimate in finance.</p>
+
+  <h2>Direct comparison</h2>
+  <table class="qm-kv">
+    <thead><tr><th></th><th>Mean-variance</th><th>HRP</th></tr></thead>
+    <tbody>
+      <tr><th>Requires expected returns</th><td>Yes</td><td>No</td></tr>
+      <tr><th>Inverts covariance matrix</th><td>Yes</td><td>No</td></tr>
+      <tr><th>Behaviour with correlated assets</th><td>Degrades sharply</td><td>Handles via clustering</td></tr>
+      <tr><th>Typical concentration</th><td>High</td><td>Lower</td></tr>
+      <tr><th>Turnover on re-estimation</th><td>High</td><td>Lower</td></tr>
+      <tr><th>In-sample efficiency</th><td>Optimal by construction</td><td>Sub-optimal by construction</td></tr>
+      <tr><th>Out-of-sample variance</th><td>Often worse</td><td>Often better</td></tr>
+      <tr><th>Guaranteed better live?</th><td colspan="2">No. Depends on the universe, estimation window and rebalancing rule.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>So is HRP better?</h2>
+  <p>Not unconditionally, and claims that it is should be treated sceptically.
+  What the evidence supports is narrower and more useful: HRP tends to produce
+  <em>lower out-of-sample variance and lower turnover</em> than unconstrained
+  mean-variance on correlated, realistically sized universes. That advantage
+  comes from not needing the inputs that are hardest to estimate, not from any
+  claim to superior returns.</p>
+  <p>Two honest caveats. First, much of mean-variance's practical failure is
+  addressed by constraints, shrinkage estimators such as Ledoit-Wolf, or
+  resampling &mdash; a well-regularised mean-variance portfolio is a much
+  stronger opponent than the textbook version. Second, HRP has free parameters
+  of its own: the linkage method and distance metric change the tree, and
+  therefore the weights.</p>
+
+  <h2>Limitations</h2>
+  <ul>
+    <li><strong>No return objective.</strong> HRP allocates risk. If you have
+    genuine return forecasts, discarding them is a real cost.</li>
+    <li><strong>Clustering is a modelling choice.</strong> Single, average and
+    ward linkage give different trees and different portfolios.</li>
+    <li><strong>Correlation instability.</strong> Correlations converge in
+    crises, which flattens the tree exactly when diversification matters most.</li>
+    <li><strong>Sub-optimal in sample, always.</strong> Any comparison run in
+    sample will favour mean-variance by construction. Only out-of-sample
+    comparisons are informative.</li>
+  </ul>
+
+  <h2>References</h2>
+  <ul class="qm-refs">
+    <li>L&oacute;pez de Prado, M. (2016). &ldquo;Building Diversified Portfolios
+    that Outperform Out of Sample.&rdquo; <em>Journal of Portfolio Management</em>
+    42(4), 59&ndash;69.</li>
+    <li>Markowitz, H. (1952). &ldquo;Portfolio Selection.&rdquo;
+    <em>Journal of Finance</em> 7(1), 77&ndash;91.</li>
+    <li>Michaud, R. (1989). &ldquo;The Markowitz Optimization Enigma: Is
+    Optimized Optimal?&rdquo; <em>Financial Analysts Journal</em> 45(1), 31&ndash;42.</li>
+    <li>Ledoit, O. &amp; Wolf, M. (2004). &ldquo;A Well-Conditioned Estimator for
+    Large-Dimensional Covariance Matrices.&rdquo; <em>Journal of Multivariate
+    Analysis</em> 88(2), 365&ndash;411.</li>
+  </ul>
+
+  <h2>Related</h2>
+  <ul class="qm-related">
+    <li><a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a><span>The full QuantMedia research paper</span></li>
+    <li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">What is the Probabilistic Sharpe Ratio?</a><span>Judging whether a performance difference is real</span></li>
+  </ul>
+
+</div>
+</main>
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="ft-brand">QuantMedia</div>
+      <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
+    </div>
+    <div class="ft-col">
+      <h4>Research</h4>
+      <a href="/research.html#vpin">VPIN Methodology</a>
+      <a href="/research.html#darkpool">Dark Pool Mechanics</a>
+      <a href="/research.html#adverse">Adverse Selection</a>
+      <a href="/infrastructure.html">Infrastructure</a>
+    </div>
+    <div class="ft-col">
+      <h4>Lab</h4>
+      <a href="/about.html">About QuantMedia</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 QuantMedia. All rights reserved.</span>
+    <div class="footer-badges">
+      <span class="fbadge g">Open Research</span>
+      <span class="fbadge">Non-Commercial</span>
+      <span class="fbadge">NASDAQ / NYSE Arca</span>
+    </div>
+  </div>
+</footer>
+<script>
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('qm-theme',n);}catch(e){}}
+</script>
+</body>
+</html>

@@ -715,3 +715,42 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
+
+def test_sector_map_covers_universe():
+    """Every scanned ticker must map to exactly one sector, or the Sector
+    Confluence index silently drops names."""
+    uni, mapped = set(P.TICKERS), set(C.SECTOR_OF)
+    assert not uni - mapped, f'unmapped tickers: {sorted(uni - mapped)}'
+    assert not mapped - uni, f'mapped but not scanned: {sorted(mapped - uni)}'
+    dupes = [t for t in mapped
+             if sum(t in v for v in C.SECTOR_MAP.values()) > 1]
+    assert not dupes, f'ticker in two sectors: {dupes}'
+
+
+def test_breadth_metric_is_consistent():
+    """Breadth must equal BUY/scored exactly, and never exceed 100%."""
+    sig = {
+        'market_date': '2026-08-07',
+        'engine': {'universe': C.ENGINE['universe_count']},
+        'signals': [{'s': 'AAPL', 'sc': 25, 'd': 'BUY'},
+                    {'s': 'MSFT', 'sc': 22, 'd': 'BUY'},
+                    {'s': 'INTC', 'sc': 10, 'd': 'WATCH'},
+                    {'s': 'F',    'sc': 8,  'd': 'WATCH'}],
+    }
+    b = P.compute_breadth(sig)
+    assert b['buy_signals'] == 2 and b['scored_stocks'] == 4
+    assert b['breadth_pct'] == 50.0, b['breadth_pct']
+    assert 0 <= b['breadth_pct'] <= 100
+    assert b['min_score'] == 8 and b['max_score'] == 25
+    assert sum(d['n'] for d in b['distribution']) == 4, 'distribution must total'
+    assert b['regime_band']['label'] == 'Mixed participation'
+
+
+def test_sector_confluence_drops_tiny_sectors():
+    """A sector below the minimum size must be omitted, not averaged on 1 name."""
+    sig = {'market_date': '2026-08-07',
+           'engine': {'universe': C.ENGINE['universe_count']},
+           'signals': [{'s': 'NEE', 'sc': 20, 'd': 'WATCH'}]}
+    out = P.compute_sector_confluence(sig)
+    assert out['sectors'] == [], 'a 1-name sector must not be reported'

@@ -12,7 +12,6 @@
 <meta name="description" content="US equity screener covering large-cap stocks and sector ETFs, plus a reference guide to reading gainers, losers, sector rotation and factor returns.">
 <link rel="canonical" href="https://quantmedia.io/stocks.html">
 <!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
-<script src="qm-data.js"></script>
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="keywords" content="US stocks, S&P 500 screener, equity analysis, sector ETFs, stock screener, large cap equities">
 <meta name="author" content="Cemil Ertürk">
@@ -300,7 +299,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px 48px">
     <div>
       <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">What This Screener Covers</h3>
-      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">S&amp;P 500 equities across Technology, Financials, Healthcare, Consumer Discretionary, Energy, and Industrials. Each row shows real-time price, daily percentage change, volume, and market cap. The sector ETF panel tracks XLK, XLF, XLV, XLE, XLY, and XLI for cross-sector rotation signals. Mega-cap stocks — Apple (AAPL), Microsoft (MSFT), NVIDIA (NVDA), Amazon (AMZN), Alphabet (GOOGL), Meta (META), Tesla (TSLA) — collectively account for over 30% of S&amp;P 500 market capitalization and drive a disproportionate share of index-level price movement on any given day.</p>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">S&amp;P 500 equities across Technology, Financials, Healthcare, Consumer Discretionary, Energy, and Industrials. Each row shows real-time price, daily percentage change, volume, and market cap. The sector ETF panel tracks XLK, XLF, XLV, XLE, XLY, and XLI for cross-sector rotation signals. Mega-cap stocks — Apple (AAPL), Microsoft (MSFT), NVIDIA (NVDA), Amazon (AMZN), Alphabet (GOOGL), Meta (META), Tesla (TSLA) — have together accounted for roughly a third of S&amp;P 500 market capitalisation in recent years, and drive a disproportionate share of index-level movement on any given day. Constituent weights change continuously; the current figures are published by <a href="https://www.spglobal.com/spdji/en/indices/equity/sp-500/" rel="nofollow noopener" target="_blank">S&amp;P Dow Jones Indices</a>.</p>
     </div>
     <div>
       <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Understanding Sector Rotation</h3>
@@ -316,7 +315,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </div>
     <div>
       <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">S&amp;P 500 Index Concentration</h3>
-      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">The S&amp;P 500 is a market-cap-weighted benchmark: the largest companies by market value have the most influence on index-level returns. As of 2026, the top 10 constituents account for approximately 35% of total index weight, creating meaningful concentration risk. NVIDIA's ascent to a $3+ trillion valuation reflects the AI infrastructure buildout cycle and semiconductor demand surge. Apple and Microsoft maintain dominant positions through ecosystem lock-in and cloud infrastructure. Understanding this concentration is fundamental: a 3% rally in NVIDIA alone can add 30+ basis points to the S&amp;P 500 on a single trading day.</p>
+      <p style="font-size:14px;color:var(--dim);line-height:1.8;margin:0">The S&amp;P 500 is a market-cap-weighted benchmark: the largest companies by market value have the most influence on index-level returns. Top-ten concentration has run near a third of index weight in recent years — historically high — which is a real concentration risk. The authoritative current number is in the index factsheet from <a href="https://www.spglobal.com/spdji/en/indices/equity/sp-500/" rel="nofollow noopener" target="_blank">S&amp;P Dow Jones Indices</a> rather than estimated here. NVIDIA's ascent to a $3+ trillion valuation reflects the AI infrastructure buildout cycle and semiconductor demand surge. Apple and Microsoft maintain dominant positions through ecosystem lock-in and cloud infrastructure. Understanding this concentration is fundamental: a 3% rally in NVIDIA alone can add 30+ basis points to the S&amp;P 500 on a single trading day.</p>
     </div>
     <div>
       <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 8px">Risk-Adjusted Interpretation</h3>

@@ -262,6 +262,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
@@ -359,7 +360,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
       <div class="insight-box">
         <div class="insight-label">Key Finding</div>
-        <p>Analysis of NASDAQ TAQ data (2010–2024) demonstrates VPIN values exceeding <strong>0.50</strong> preceded <strong>71% of high-volatility episodes</strong> within a 90-minute window — providing liquidity providers with actionable early warning to adjust inventory and widen spreads ahead of informed flow surges.</p>
+        <p>Easley, López de Prado and O’Hara (2012) report that VPIN rises ahead of toxicity-induced volatility and document its behaviour around the 6 May 2010 Flash Crash. That result is theirs, on trade-level data, and is the reason the measure is worth attention.</p><p><strong>QuantMedia has not replicated it.</strong> Doing so needs trade-and-quote data; this site collects end-of-day bars, as the <a href="/editorial-policy.html">editorial policy</a> sets out. No threshold, hit rate or lead time is claimed here, and any figure of that kind you see attributed to us elsewhere is wrong.</p><p>What is demonstrated here instead is that the estimator behaves as specified when the answer is known in advance: on a synthetic tape with a planted informed episode, the <a href="/reproducibility.html">published implementation</a> gives mean VPIN of 0.3292 in the balanced segment against 0.6376 in the informed segment, a ratio of 1.94×. Andersen and Bondarenko (2014) argue the forecasting power largely reflects volume and volatility clustering rather than informed trading; that objection is unresolved and is discussed in the <a href="/paper-vpin-order-flow-toxicity.html">full paper</a>.</p>
       </div>
 
       <p>Discretizing continuous trade flow into <code>n</code> equal-volume buckets eliminates temporal noise. The divergence in buy/sell volume within each synchronized bucket defines the toxicity metric:</p>

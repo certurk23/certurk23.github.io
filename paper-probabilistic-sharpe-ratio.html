@@ -458,7 +458,47 @@ rets = np.random.normal(<span class="num">0.0005</span>, <span class="num">0.01<
 </div>
 
 
-<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Does not correct for selection bias.</strong> PSR evaluates one track record in isolation. If the strategy is the best of many tested, PSR overstates the evidence and the Deflated Sharpe Ratio should be used instead.</li><li><strong>Assumes IID returns.</strong> Serial correlation, common in illiquid or smoothed portfolios, inflates the observed Sharpe and is not handled by the standard formulation.</li><li><strong>Higher moments are themselves estimates.</strong> Skewness and kurtosis from short samples are noisy, and the correction is only as reliable as those estimates.</li><li><strong>Says nothing about economics.</strong> PSR is a statistical statement about a return series. It does not address costs, capacity, regime change, or whether the strategy was fitted to its sample.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Bailey, D. &amp; López de Prado, M. (2012). &ldquo;The Sharpe Ratio Efficient Frontier.&rdquo; <em>Journal of Risk 15(2), 3–44</em>.</li><li>Bailey, D. &amp; López de Prado, M. (2014). &ldquo;The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality.&rdquo; <em>Journal of Portfolio Management 40(5), 94–107</em>.</li><li>Lo, A. (2002). &ldquo;The Statistics of Sharpe Ratios.&rdquo; <em>Financial Analysts Journal 58(4), 36–52</em>.</li><li>Harvey, C. &amp; Liu, Y. (2015). &ldquo;Backtesting.&rdquo; <em>Journal of Portfolio Management 42(1), 13–28</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
+<div class="qm-sec qm-deepen" id="assumptions"><h2>Assumptions</h2>
+<ul>
+<li><strong>Returns are independent.</strong> PSR corrects for skewness and
+kurtosis but assumes serial independence. Autocorrelated returns &mdash; which
+is what smoothed or illiquid marks produce &mdash; understate the true standard
+error and inflate PSR.</li>
+<li><strong>The benchmark is chosen before looking.</strong> PSR asks whether
+the true Sharpe exceeds SR*. Setting SR* to zero after seeing the result is the
+most common way the statistic is abused.</li>
+<li><strong>The track record is the whole track record.</strong> The formula
+takes <em>n</em> at face value. If the sample begins after a bad year was
+dropped, no correction can recover it.</li>
+<li><strong>One strategy, one test.</strong> PSR says nothing about how many
+variants were tried. That is what the
+<a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a>
+addresses.</li>
+</ul></div><div class="qm-sec qm-deepen" id="robustness"><h2>Robustness: what would change the conclusion</h2>
+<p><strong>Trial count dominates everything else.</strong> The same Sharpe of
+1.50 gives PSR 1.0000 against a zero benchmark, DSR 0.8736 after 100 trials,
+and DSR 0.2671 after 1,000. Nothing about the strategy changes between those
+numbers &mdash; only the honesty of the accounting. A PSR quoted without a
+trial count is close to meaningless.</p>
+<p><strong>Kurtosis matters more than intuition suggests.</strong> The kurtosis
+term does not vanish at the normal value of 3. A published worked example on
+this page previously got that wrong, giving denominators of 1.000 and 2.318
+against the correct 1.4577 and 2.4850; the correction is disclosed rather than
+silently patched. Every intermediate value is now shown so the arithmetic can
+be checked by hand or against <code>scipy</code>.</p>
+<p><strong>Short records cannot be rescued.</strong> The
+<span class="qm-num">&radic;(n&minus;1)</span> factor means a high Sharpe over
+a few dozen observations stays statistically weak no matter how attractive the
+point estimate is.</p></div><div class="qm-sec qm-deepen" id="costs"><h2>Gross versus net Sharpe</h2>
+<p>PSR is a statement about the return series you feed it, and nothing more. A
+gross-of-cost series produces a gross-of-cost PSR, and the gap between the two
+widens with turnover: a high-frequency strategy can carry a comfortable gross
+PSR and a negative net Sharpe.</p>
+<p>Before computing PSR, subtract realistic costs &mdash; spread, market impact
+and delay &mdash; using something like the
+<a href="/paper-slippage-latency-modeling.html">square-root impact model</a>.
+Applying a statistical significance test to a return stream that could not have
+been captured is precision applied to the wrong quantity.</p></div><div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Does not correct for selection bias.</strong> PSR evaluates one track record in isolation. If the strategy is the best of many tested, PSR overstates the evidence and the Deflated Sharpe Ratio should be used instead.</li><li><strong>Assumes IID returns.</strong> Serial correlation, common in illiquid or smoothed portfolios, inflates the observed Sharpe and is not handled by the standard formulation.</li><li><strong>Higher moments are themselves estimates.</strong> Skewness and kurtosis from short samples are noisy, and the correction is only as reliable as those estimates.</li><li><strong>Says nothing about economics.</strong> PSR is a statistical statement about a return series. It does not address costs, capacity, regime change, or whether the strategy was fitted to its sample.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Bailey, D. &amp; López de Prado, M. (2012). &ldquo;The Sharpe Ratio Efficient Frontier.&rdquo; <em>Journal of Risk 15(2), 3–44</em>.</li><li>Bailey, D. &amp; López de Prado, M. (2014). &ldquo;The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality.&rdquo; <em>Journal of Portfolio Management 40(5), 94–107</em>.</li><li>Lo, A. (2002). &ldquo;The Statistics of Sharpe Ratios.&rdquo; <em>Financial Analysts Journal 58(4), 36–52</em>.</li><li>Harvey, C. &amp; Liu, Y. (2015). &ldquo;Backtesting.&rdquo; <em>Journal of Portfolio Management 42(1), 13–28</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-sec qm-record" id="research-record">
   <h3>Research record</h3>
   <dl>

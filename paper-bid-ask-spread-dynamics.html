@@ -445,7 +445,34 @@ a{text-decoration:none;color:inherit}
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
 </div>
 
-<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Decomposition is model-dependent.</strong> Splitting the spread into order-processing, inventory and adverse-selection components requires a structural model. Different models attribute the same observed spread differently.</li><li><strong>Quoted is not effective.</strong> Quoted spreads overstate the cost actually paid when trades execute inside the quotes, and understate it when orders walk the book.</li><li><strong>Fragmentation.</strong> US equities trade across many venues and dark pools. A spread measured on one venue is not the consolidated cost of liquidity.</li><li><strong>Intraday non-stationarity.</strong> Spreads follow a strong intraday pattern and widen around events. Daily averages conceal most of what matters for execution.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Roll, R. (1984). &ldquo;A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market.&rdquo; <em>Journal of Finance 39(4), 1127–1139</em>.</li><li>Glosten, L. &amp; Milgrom, P. (1985). &ldquo;Bid, Ask and Transaction Prices in a Specialist Market with Heterogeneously Informed Traders.&rdquo; <em>Journal of Financial Economics 14(1), 71–100</em>.</li><li>Amihud, Y. &amp; Mendelson, H. (1986). &ldquo;Asset Pricing and the Bid-Ask Spread.&rdquo; <em>Journal of Financial Economics 17(2), 223–249</em>.</li><li>Huang, R. &amp; Stoll, H. (1997). &ldquo;The Components of the Bid-Ask Spread: A General Approach.&rdquo; <em>Review of Financial Studies 10(4), 995–1034</em>.</li><li>Corwin, S. &amp; Schultz, P. (2012). &ldquo;A Simple Way to Estimate Bid-Ask Spreads from Daily High and Low Prices.&rdquo; <em>Journal of Finance 67(2), 719–760</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
+<div class="qm-sec qm-deepen" id="assumptions"><h2>Assumptions</h2>
+<ul>
+<li><strong>The Roll estimator assumes an efficient price plus bid-ask
+bounce.</strong> Serial covariance of price changes is negative only because
+trades alternate between bid and ask. Any genuine short-horizon momentum or
+mean reversion in the efficient price contaminates the estimate.</li>
+<li><strong>Trades are equally likely at bid and ask.</strong> Systematically
+one-sided flow breaks the symmetry the estimator depends on.</li>
+<li><strong>The spread is constant over the estimation window.</strong> It is
+not, particularly around the open, the close and scheduled news.</li>
+<li><strong>Quoted is not effective.</strong> Quoted spread is an upper bound;
+executions inside the quote make the effective spread smaller, and the gap
+between them is itself informative.</li>
+</ul></div><div class="qm-sec qm-deepen" id="robustness"><h2>Robustness: what would change the conclusion</h2>
+<p><strong>The estimator fails loudly and often.</strong> When the sample
+covariance of consecutive price changes is positive, the Roll formula requires
+the square root of a negative number and returns nothing. Published
+implementations differ in how they handle it &mdash; discarding the window,
+flooring at zero, or substituting a different estimator &mdash; and the choice
+materially changes any average computed across many windows.</p>
+<p><strong>Decomposition is model-dependent.</strong> Splitting the spread into
+order-processing, inventory-holding and adverse-selection components requires a
+structural model. Different models attribute the same observed spread quite
+differently, so component shares should be read as model output, not
+measurement.</p>
+<p><strong>Tick-size regimes are not comparable.</strong> Spread series that
+straddle a tick-size change, a decimalisation event or a venue-structure change
+are measuring different things before and after.</p></div><div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Decomposition is model-dependent.</strong> Splitting the spread into order-processing, inventory and adverse-selection components requires a structural model. Different models attribute the same observed spread differently.</li><li><strong>Quoted is not effective.</strong> Quoted spreads overstate the cost actually paid when trades execute inside the quotes, and understate it when orders walk the book.</li><li><strong>Fragmentation.</strong> US equities trade across many venues and dark pools. A spread measured on one venue is not the consolidated cost of liquidity.</li><li><strong>Intraday non-stationarity.</strong> Spreads follow a strong intraday pattern and widen around events. Daily averages conceal most of what matters for execution.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Roll, R. (1984). &ldquo;A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market.&rdquo; <em>Journal of Finance 39(4), 1127–1139</em>.</li><li>Glosten, L. &amp; Milgrom, P. (1985). &ldquo;Bid, Ask and Transaction Prices in a Specialist Market with Heterogeneously Informed Traders.&rdquo; <em>Journal of Financial Economics 14(1), 71–100</em>.</li><li>Amihud, Y. &amp; Mendelson, H. (1986). &ldquo;Asset Pricing and the Bid-Ask Spread.&rdquo; <em>Journal of Financial Economics 17(2), 223–249</em>.</li><li>Huang, R. &amp; Stoll, H. (1997). &ldquo;The Components of the Bid-Ask Spread: A General Approach.&rdquo; <em>Review of Financial Studies 10(4), 995–1034</em>.</li><li>Corwin, S. &amp; Schultz, P. (2012). &ldquo;A Simple Way to Estimate Bid-Ask Spreads from Daily High and Low Prices.&rdquo; <em>Journal of Finance 67(2), 719–760</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-sec qm-record" id="research-record">
   <h3>Research record</h3>
   <dl>

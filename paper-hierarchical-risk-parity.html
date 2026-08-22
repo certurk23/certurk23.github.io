@@ -479,7 +479,70 @@ a{text-decoration:none;color:inherit}
 </div>
 
 
-<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Sub-optimal in sample by construction.</strong> Mean-variance solves for minimum in-sample variance, so any in-sample comparison favours it automatically. HRP's case rests entirely on out-of-sample behaviour, and only out-of-sample tests are informative.</li><li><strong>No return objective.</strong> HRP allocates risk and ignores expected returns. Where genuine return forecasts exist, discarding them is a real cost rather than a free simplification.</li><li><strong>Linkage is a free parameter.</strong> Single, average and Ward linkage produce different trees and therefore different weights. The choice is a modelling decision that should be disclosed, not a detail.</li><li><strong>Correlation instability.</strong> Correlations converge during stress, flattening the cluster tree exactly when diversification matters most. The hierarchy is estimated from the same noisy data it is meant to protect against.</li><li><strong>Regularised mean-variance is a stronger baseline.</strong> Much of textbook mean-variance's instability is addressed by shrinkage estimators, constraints or resampling. Comparisons against an unconstrained optimiser overstate HRP's advantage.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>López de Prado, M. (2016). &ldquo;Building Diversified Portfolios that Outperform Out of Sample.&rdquo; <em>Journal of Portfolio Management 42(4), 59–69</em>.</li><li>Markowitz, H. (1952). &ldquo;Portfolio Selection.&rdquo; <em>Journal of Finance 7(1), 77–91</em>.</li><li>Michaud, R. (1989). &ldquo;The Markowitz Optimization Enigma: Is Optimized Optimal?.&rdquo; <em>Financial Analysts Journal 45(1), 31–42</em>.</li><li>Ledoit, O. &amp; Wolf, M. (2004). &ldquo;A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices.&rdquo; <em>Journal of Multivariate Analysis 88(2), 365–411</em>.</li><li>DeMiguel, V., Garlappi, L. &amp; Uppal, R. (2009). &ldquo;Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?.&rdquo; <em>Review of Financial Studies 22(5), 1915–1953</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
+<div class="qm-sec qm-deepen" id="assumptions"><h2>Assumptions</h2>
+<ul>
+<li><strong>Correlation carries the structure worth using.</strong> HRP builds
+its tree from a correlation distance and never estimates expected returns. If
+you hold genuine return forecasts, discarding them is a real cost, not a free
+simplification.</li>
+<li><strong>The hierarchy is stable enough to be worth respecting.</strong> The
+tree is estimated from the same noisy sample it is meant to protect against.</li>
+<li><strong>Weights are held fixed out of sample.</strong> The comparison below
+fits weights in sample and does not rebalance, which isolates estimation error
+from rebalancing effects.</li>
+<li><strong>Long-only by construction.</strong> Recursive bisection splits a
+positive budget, so HRP cannot short. Mean-variance can, and does.</li>
+</ul></div><div class="qm-sec qm-deepen" id="results"><h2>Measured out-of-sample behaviour</h2>
+<p>Output of <code>compare_mvo.py</code> in the published package: 20 assets,
+120 in-sample periods, 400 out-of-sample periods, synthetic data from a fixed
+seed. Mean absolute correlation 0.240; covariance condition number 43, high
+enough that inversion is visibly unstable.</p>
+<div class="qm-tablewrap"><table class="qm-kv">
+<thead><tr><th>Allocator</th><th>Vol in</th><th>Vol out</th><th>Drift %</th>
+<th>Max weight</th><th>Short</th><th>Effective N</th></tr></thead>
+<tbody>
+<tr><td>HRP (single)</td><td class="qm-num">0.1401</td><td class="qm-num">0.1419</td><td class="qm-num">+1.3</td><td class="qm-num">0.106</td><td class="qm-num">0.000</td><td class="qm-num">16.29</td></tr>
+<tr><td>HRP (ward)</td><td class="qm-num">0.1419</td><td class="qm-num">0.1425</td><td class="qm-num">+0.4</td><td class="qm-num">0.110</td><td class="qm-num">0.000</td><td class="qm-num">16.73</td></tr>
+<tr><td>MinVar</td><td class="qm-num">0.1311</td><td class="qm-num">0.1489</td><td class="qm-num">+13.6</td><td class="qm-num">0.229</td><td class="qm-num">-0.112</td><td class="qm-num">7.37</td></tr>
+<tr><td>MinVar long-only</td><td class="qm-num">0.1325</td><td class="qm-num">0.1460</td><td class="qm-num">+10.2</td><td class="qm-num">0.206</td><td class="qm-num">0.000</td><td class="qm-num">9.54</td></tr>
+<tr><td>MinVar shrunk 0.3</td><td class="qm-num">0.1330</td><td class="qm-num">0.1432</td><td class="qm-num">+7.7</td><td class="qm-num">0.169</td><td class="qm-num">-0.019</td><td class="qm-num">11.78</td></tr>
+<tr><td>Equal weight</td><td class="qm-num">0.1474</td><td class="qm-num">0.1443</td><td class="qm-num">-2.1</td><td class="qm-num">0.050</td><td class="qm-num">0.000</td><td class="qm-num">20.00</td></tr>
+</tbody></table></div>
+<p>The finding is <em>drift</em>, not outperformance. Minimum variance achieves
+the lowest in-sample volatility &mdash; it is solving for exactly that &mdash;
+and then gives most of it back: +13.6% out of sample against HRP's +1.3%. The
+in-sample number is a promise the out-of-sample number does not keep.</p>
+<p class="qm-note">One synthetic panel, one seed. Out-of-sample Sharpe was
+negative for every allocator on this panel, which is why none is quoted as a
+performance result. This illustrates an estimation-error mechanism; it is not
+evidence that HRP beats mean-variance in general.</p></div><div class="qm-sec qm-deepen" id="robustness"><h2>Robustness: what would change the conclusion</h2>
+<p><strong>Shrinkage closes most of the gap.</strong> A Ledoit-Wolf-style
+shrunk covariance takes minimum variance from +13.6% drift to +7.7%. Comparing
+HRP against an unconstrained, unshrunk optimiser overstates its advantage, and
+the shrunk row is included here for exactly that reason.</p>
+<p><strong>Equal weight is not embarrassed.</strong> The 1/N portfolio drifts
+<em>-2.1%</em> and is the most diversified allocator in the table. DeMiguel,
+Garlappi and Uppal (2009) is the standing warning that sophistication has to
+earn its place against it.</p>
+<p><strong>Linkage is a modelling choice.</strong> Single and Ward linkage
+produce different trees and different weights (+1.3% vs +0.4% here). The choice
+should be disclosed with the result.</p>
+<p><strong>One seed is one seed.</strong> These numbers come from a single
+synthetic panel. Change the seed, the asset count or the correlation structure
+and the magnitudes move; the direction is the part supported by the wider
+literature, not this table.</p></div><div class="qm-sec qm-deepen" id="costs"><h2>Turnover and transaction costs</h2>
+<p>Concentration is a cost story as much as a risk story. Minimum variance puts
+22.9% in a single asset and holds &minus;11.2% short, with an effective breadth
+of 7.4 names out of 20; HRP holds a 10.6% maximum, no shorts, and an effective
+16.3 names. A concentrated, unstable weight vector is the one that generates
+large rebalancing trades exactly when correlations move.</p>
+<p>The comparison above deliberately holds weights fixed out of sample, so
+<strong>no rebalancing cost is included in any figure in this paper</strong>.
+That flatters every allocator, and it flatters the least stable one most. A
+realistic assessment would apply the
+<a href="/paper-slippage-latency-modeling.html">spread plus square-root impact
+model</a> to the turnover each method generates &mdash; work this package does
+not yet do, and the reason no net-of-cost claim appears here.</p></div><div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>Sub-optimal in sample by construction.</strong> Mean-variance solves for minimum in-sample variance, so any in-sample comparison favours it automatically. HRP's case rests entirely on out-of-sample behaviour, and only out-of-sample tests are informative.</li><li><strong>No return objective.</strong> HRP allocates risk and ignores expected returns. Where genuine return forecasts exist, discarding them is a real cost rather than a free simplification.</li><li><strong>Linkage is a free parameter.</strong> Single, average and Ward linkage produce different trees and therefore different weights. The choice is a modelling decision that should be disclosed, not a detail.</li><li><strong>Correlation instability.</strong> Correlations converge during stress, flattening the cluster tree exactly when diversification matters most. The hierarchy is estimated from the same noisy data it is meant to protect against.</li><li><strong>Regularised mean-variance is a stronger baseline.</strong> Much of textbook mean-variance's instability is addressed by shrinkage estimators, constraints or resampling. Comparisons against an unconstrained optimiser overstate HRP's advantage.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>López de Prado, M. (2016). &ldquo;Building Diversified Portfolios that Outperform Out of Sample.&rdquo; <em>Journal of Portfolio Management 42(4), 59–69</em>.</li><li>Markowitz, H. (1952). &ldquo;Portfolio Selection.&rdquo; <em>Journal of Finance 7(1), 77–91</em>.</li><li>Michaud, R. (1989). &ldquo;The Markowitz Optimization Enigma: Is Optimized Optimal?.&rdquo; <em>Financial Analysts Journal 45(1), 31–42</em>.</li><li>Ledoit, O. &amp; Wolf, M. (2004). &ldquo;A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices.&rdquo; <em>Journal of Multivariate Analysis 88(2), 365–411</em>.</li><li>DeMiguel, V., Garlappi, L. &amp; Uppal, R. (2009). &ldquo;Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy?.&rdquo; <em>Review of Financial Studies 22(5), 1915–1953</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-sec qm-record" id="research-record">
   <h3>Research record</h3>
   <dl>

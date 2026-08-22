@@ -461,7 +461,39 @@ a{text-decoration:none;color:inherit}
   <a href="quantum-signals.html" style="padding:8px 20px;background:var(--accent,#00a651);color:#fff;border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap">View Signals &rarr;</a>
 </div>
 
-<div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>The square-root law is empirical, not physical.</strong> The impact coefficient varies by asset, venue, participation rate and regime. Treat it as a calibration target with a sensitivity range, not a constant.</li><li><strong>Calibrated on normal conditions.</strong> Impact estimates derived from typical trading understate stress. In dislocations, depth vanishes and realised cost can exceed the model by multiples.</li><li><strong>Omits several real costs.</strong> The decomposition here covers spread, impact and delay. Commissions, exchange fees, borrow costs, taxes and opportunity cost from unfilled orders are strategy-specific and excluded.</li><li><strong>Fill assumptions remain optimistic.</strong> Assuming complete fills at the signal price is generous precisely in the conditions where signals tend to fire.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Almgren, R. &amp; Chriss, N. (2001). &ldquo;Optimal Execution of Portfolio Transactions.&rdquo; <em>Journal of Risk 3(2), 5–40</em>.</li><li>Almgren, R., Thum, C., Hauptmann, E. &amp; Li, H. (2005). &ldquo;Direct Estimation of Equity Market Impact.&rdquo; <em>Risk 18(7), 58–62</em>.</li><li>Kyle, A. (1985). &ldquo;Continuous Auctions and Insider Trading.&rdquo; <em>Econometrica 53(6), 1315–1335</em>.</li><li>Perold, A. (1988). &ldquo;The Implementation Shortfall: Paper versus Reality.&rdquo; <em>Journal of Portfolio Management 14(3), 4–9</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
+<div class="qm-sec qm-deepen" id="assumptions"><h2>Assumptions</h2>
+<ul>
+<li><strong>Impact scales with the square root of participation.</strong> The
+model treats impact as proportional to volatility times the square root of
+order size over daily volume. It is an empirical regularity across venues and
+decades, not a law, and it fits large institutional orders better than small
+ones.</li>
+<li><strong>Volume is forecastable enough to plan against.</strong>
+Participation rate is computed against expected daily volume. On a news day the
+denominator is wrong in the direction that flatters the estimate.</li>
+<li><strong>Spread is paid on entry and exit.</strong> Half-spread each way is
+the floor for a liquidity-taking strategy, before any impact.</li>
+<li><strong>Delay cost is proportional to signal decay.</strong> The cost of
+waiting is only estimable if you know how fast the alpha decays, which most
+backtests never measure.</li>
+</ul></div><div class="qm-sec qm-deepen" id="robustness"><h2>Robustness: what would change the conclusion</h2>
+<p><strong>A single flat cost assumption is the most consequential modelling
+error in most backtests.</strong> Using a fixed number of basis points makes
+cost independent of size, volatility and liquidity &mdash; the three things it
+actually depends on &mdash; and the error grows with turnover, so it punishes
+exactly the strategies that look best gross.</p>
+<p><strong>Impact coefficients are regime-dependent.</strong> The constant in
+front of the square-root term is fitted, not universal. It widens in stress and
+differs by venue, sector and market-cap band.</p>
+<p><strong>Adverse selection sits outside this model.</strong> Spread plus
+impact plus delay does not capture the cost of being filled by better-informed
+flow. That component is what
+<a href="/paper-vpin-order-flow-toxicity.html">VPIN</a> attempts to measure, and
+ignoring it biases cost estimates downward for passive strategies specifically.</p>
+<p><strong>QuantMedia has not validated these coefficients on its own
+executions.</strong> This site runs no execution and holds no fill data, so
+nothing here is calibrated against realised trading. The model is presented as
+the standard framework with its parameters exposed, not as a fitted result.</p></div><div class="qm-sec" id="limitations"><h2>Limitations</h2><ul><li><strong>The square-root law is empirical, not physical.</strong> The impact coefficient varies by asset, venue, participation rate and regime. Treat it as a calibration target with a sensitivity range, not a constant.</li><li><strong>Calibrated on normal conditions.</strong> Impact estimates derived from typical trading understate stress. In dislocations, depth vanishes and realised cost can exceed the model by multiples.</li><li><strong>Omits several real costs.</strong> The decomposition here covers spread, impact and delay. Commissions, exchange fees, borrow costs, taxes and opportunity cost from unfilled orders are strategy-specific and excluded.</li><li><strong>Fill assumptions remain optimistic.</strong> Assuming complete fills at the signal price is generous precisely in the conditions where signals tend to fire.</li></ul></div><div class="qm-sec" id="references"><h2>References</h2><ul class="qm-refs-list"><li>Almgren, R. &amp; Chriss, N. (2001). &ldquo;Optimal Execution of Portfolio Transactions.&rdquo; <em>Journal of Risk 3(2), 5–40</em>.</li><li>Almgren, R., Thum, C., Hauptmann, E. &amp; Li, H. (2005). &ldquo;Direct Estimation of Equity Market Impact.&rdquo; <em>Risk 18(7), 58–62</em>.</li><li>Kyle, A. (1985). &ldquo;Continuous Auctions and Insider Trading.&rdquo; <em>Econometrica 53(6), 1315–1335</em>.</li><li>Perold, A. (1988). &ldquo;The Implementation Shortfall: Paper versus Reality.&rdquo; <em>Journal of Portfolio Management 14(3), 4–9</em>.</li></ul><p class="qm-refnote">QuantMedia research is independent and not peer reviewed. These references are the primary sources the analysis draws on; readers are encouraged to consult them directly rather than relying on this summary.</p></div>
 <div class="qm-sec qm-record" id="research-record">
   <h3>Research record</h3>
   <dl>

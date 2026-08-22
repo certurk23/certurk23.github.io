@@ -350,7 +350,7 @@ a{text-decoration:none;color:inherit}
     <h2 id="what-is">What Is Claude AI Trading?</h2>
     <p>Claude AI trading refers to the use of Anthropic's Claude large language model (LLM) in financial market operations — from autonomous trading agents and portfolio screening to risk analysis and compliance automation. Unlike traditional algorithmic trading which relies on hand-coded rules or statistical models, LLM-based trading systems can process unstructured data (news, filings, earnings calls) alongside structured market data to generate trading signals.</p>
 
-    <p>The fundamental shift is from <strong>rule-based systems</strong> to <strong>agentic AI systems</strong> that can reason, plan, and execute multi-step financial workflows. In 2026, 82% of midsize companies and 95% of PE firms have either begun or plan to implement agentic AI in their operations.</p>
+    <p>The fundamental shift is from <strong>rule-based systems</strong> to <strong>agentic AI systems</strong> that can reason, plan, and execute multi-step financial workflows. Adoption is widely reported to be accelerating across asset managers and private-market firms, though published survey figures vary enough by sample and definition that no single percentage is quoted here.</p>
 
     <div class="callout">
       <div class="callout-title">Key Distinction</div>
@@ -492,7 +492,7 @@ analysis = research_agent(
       $$IC(h) = IC_0 \cdot e^{-\lambda h}$$
     </div>
 
-    <p>LLM-derived sentiment signals tend to have faster decay (\(\lambda\) larger) than fundamental signals because they are correlated with information that markets process quickly. The half-life of a Claude-generated news sentiment signal is typically 2-8 hours for large-cap US equities.</p>
+    <p>LLM-derived sentiment signals tend to have faster decay (\(\lambda\) larger) than fundamental signals because they are correlated with information that markets process quickly. A plausible working range for news-sentiment decay in large-cap US equities is a few hours rather than days, which is the assumption used in the worked example below. QuantMedia has not measured it — doing so requires intraday returns this site does not collect — so treat the number as an input to be estimated on your own data, not as a result.</p>
 
     <div class="callout warn">
       <div class="callout-title">Research Warning</div>
@@ -568,7 +568,7 @@ analysis = research_agent(
       <div style="font-size:12px;color:var(--dim);line-height:1.8">
         <div><span style="color:var(--accent);font-weight:700">$14,216</span> Claude Polymarket return</div>
         <div><span style="color:var(--red);font-weight:700">−26%</span> Software sector YTD</div>
-        <div><span style="color:var(--text);font-weight:700">82%</span> Companies adopting agentic AI</div>
+        <div><span style="color:var(--text);font-weight:700">—</span> Adoption rate: no verifiable figure</div>
         <div><span style="color:var(--text);font-weight:700">$2T+</span> Norway fund using Claude</div>
       </div>
     </div>

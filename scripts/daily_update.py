@@ -610,6 +610,181 @@ def render_news_html(articles, fetched_iso):
             f'<div class="news-feed">{"".join(cards)}</div></div>')
 
 
+def _fmt(v, d=2):
+    return "--" if v is None else f"{v:,.{d}f}"
+
+
+def _stat(label, value, color="var(--text)"):
+    return (
+        f'<div><div style="font-size:10px;letter-spacing:.9px;text-transform:uppercase;'
+        f'color:var(--dimmer);margin-bottom:4px">{label}</div>'
+        f'<div style="font-family:JetBrains Mono,monospace;font-size:22px;color:{color};font-weight:600">{value}</div></div>')
+
+
+def render_signals_page():
+    """Server-render the BUY table, its summary, and the no-BUY notice.
+
+    Before this existed, quantum-signals.html was entirely client-rendered:
+    <tbody id="signalBody"> shipped empty, and a hidden #noBuyMsg carried the
+    sentence "No BUY signals today". Crawlers read text regardless of
+    display:none, so on a session with 67 BUY-qualified stocks the page told
+    every crawler there were none - while /indices/signal-breadth.html, built
+    from the same JSON, correctly reported 67 of 179.
+
+    Both pages now render from one file, so they cannot disagree.
+    """
+    sig = read_json("data/quantum_signals.json") or {}
+    rows = sig.get("signals") or []
+    if not rows:
+        print("  quantum-signals.html PRESERVED (no signal rows)")
+        return
+
+    buys = [r for r in rows if str(r.get("d", "")).upper() == "BUY"]
+    n_buy = len(buys)
+    scored = sig.get("total_count") or len(rows)
+    median = sig.get("median_score")
+    md = sig.get("market_date") or ""
+    thr = C.ENGINE["confluence_min"]
+    nsig = C.ENGINE["n_signals"]
+
+    buys.sort(key=lambda r: (-(r.get("sc") or 0), r.get("s") or ""))
+    tr = []
+    for r in buys:
+        rsi = r.get("r")
+        rsi_cls = " bullish" if isinstance(rsi, (int, float)) and 30 <= rsi <= 70 else ""
+        r22 = r.get("r22")
+        num = isinstance(r22, (int, float))
+        col = "var(--accent)" if num and r22 > 0 else ("var(--red)" if num and r22 < 0 else "inherit")
+        sign = "+" if num and r22 > 0 else ""
+        tr.append(
+            "<tr>"
+            + '<td class="sig-buy">BUY</td>'
+            + f'<td class="sig-sym">{esc(r.get("s", ""))}</td>'
+            + f'<td class="sig-price">${_fmt(r.get("p"))}</td>'
+            + f'<td class="sig-cnt"><strong>{r.get("sc")}</strong>/{nsig}</td>'
+            + f'<td class="sig-rsi{rsi_cls}">{_fmt(rsi, 1)}</td>'
+            + f'<td class="sig-cnt" style="color:{col}">{sign}{_fmt(r22, 1)}%</td>'
+            + f'<td class="sig-price" style="color:var(--red)">${_fmt(r.get("sl"))}</td>'
+            + f'<td class="sig-price" style="color:var(--accent)">${_fmt(r.get("tp"))}</td>'
+            + f'<td class="sig-cnt">{_fmt(r.get("up20"), 1)}%</td>'
+            + "</tr>")
+
+    pct = (100.0 * n_buy / scored) if scored else 0.0
+    summary = (
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));'
+        'gap:14px;margin:0 0 18px;padding:16px 18px;border:1px solid var(--border);'
+        'border-radius:4px;background:var(--bg2)">'
+        + _stat("BUY signals", n_buy, "var(--accent)")
+        + _stat("Scored", scored)
+        + _stat("Median score", f"{median}/{nsig}")
+        + _stat("Session", esc(md))
+        + "</div>"
+        + f'<p style="font-size:13px;color:var(--dim);line-height:1.75;margin:0 0 16px">'
+          f'<strong>{n_buy}</strong> of <strong>{scored}</strong> scored equities '
+          f'({pct:.1f}%) reached the {thr}-of-{nsig} confluence threshold on '
+          f'<strong>{esc(md)}</strong>. The same scan drives the '
+          f'<a href="/indices/signal-breadth.html" style="color:var(--accent)">Signal '
+          f'Breadth Index</a> and <a href="/indices/sector-confluence.html" '
+          f'style="color:var(--accent)">Sector Confluence</a>, and is published as '
+          f'<a href="/data/quantum_signals.json" style="color:var(--accent)">JSON</a>.</p>')
+
+    try:
+        page = read_file("quantum-signals.html")
+        page = inject(page, "SIGNALS_SUMMARY", summary)
+        page = inject(page, "SIGNALS_ROWS", "".join(tr))
+        # Static display state must match the data, or a reader without
+        # JavaScript sees a hidden table or a false "no signals" notice.
+        show_table = "block" if n_buy else "none"
+        show_none = "none" if n_buy else "block"
+        page = re.sub(r'(id="signalTableWrap" style="display:)(?:none|block)',
+                      lambda m: m.group(1) + show_table, page)
+        for eid in ("noBuyMsg", "noBuyContext"):
+            page = re.sub(r'(id="' + eid + r'" style="display:)(?:none|block)',
+                          lambda m: m.group(1) + show_none, page)
+        write_file("quantum-signals.html", page)
+        print(f"  quantum-signals.html rendered ({n_buy} BUY of {scored}, {md})")
+    except Exception as e:
+        stage_error("quantum-signals.html render", e)
+
+
+def render_home_snapshot(bar):
+    """Server-render the market bar and session summary on the homepage.
+
+    index.html had no QM: anchors at all - every index level was written by
+    JavaScript, so a crawler saw only "Market data snapshots - Captured after
+    each US close" where S&P 500, Nasdaq and VIX belong.
+
+    Falls back to the last-known-good bar on disk, so a failed fetch degrades
+    to an older stamped snapshot rather than to nothing.
+    """
+    feed = bar if (bar and bar.get("data")) else read_json("data/markets_bar.json")
+    rows = (feed or {}).get("data") or []
+    sig = read_json("data/quantum_signals.json") or {}
+    if not rows and not sig:
+        print("  index.html PRESERVED (no snapshot available)")
+        return
+
+    by = {r.get("s"): r for r in rows if isinstance(r, dict)}
+    items = []
+    for sym, label in (("^GSPC", "S&P 500"), ("^IXIC", "Nasdaq"), ("^DJI", "Dow"),
+                       ("^VIX", "VIX"), ("GC=F", "Gold"), ("BTC-USD", "BTC")):
+        r = by.get(sym)
+        if not r:
+            continue
+        chg = r.get("c")
+        num = isinstance(chg, (int, float))
+        cls = "up" if num and chg >= 0 else "down"
+        sign = "+" if num and chg >= 0 else ""
+        items.append(
+            f'<div class="mbar-item"><span class="mbar-sym">{esc(label)}</span>'
+            f'<span class="mbar-val">{_fmt(r.get("p"))}</span>'
+            f'<span class="mbar-chg {cls}">{sign}{_fmt(chg, 2)}%</span></div>')
+    bar_html = "".join(items) or (
+        '<div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">'
+        'Market data snapshots &middot; Captured after each US close</span></div>')
+
+    n_buy = sig.get("buy_count")
+    scored = sig.get("total_count")
+    median = sig.get("median_score")
+    md = sig.get("market_date") or ""
+    stamp = (feed or {}).get("fetched_utc")
+
+    session = ""
+    if n_buy is not None and scored:
+        session = (
+            f'<p style="font-size:13.5px;line-height:1.8;color:var(--text3);margin:0">'
+            f'On the <strong>{esc(md)}</strong> session, <strong>{n_buy}</strong> of '
+            f'<strong>{scored}</strong> scored US equities met the '
+            f'{C.ENGINE["confluence_min"]}-of-{C.ENGINE["n_signals"]} confluence '
+            f'threshold; the median stock scored <strong>{median}</strong>. '
+            f'<a href="/quantum-signals.html" style="color:var(--green)">See the '
+            f'signals</a> &middot; <a href="/indices/signal-breadth.html" '
+            f'style="color:var(--green)">Signal Breadth Index</a></p>')
+
+    stamp_html = ""
+    if stamp:
+        stamp_html = (f'<p style="font-size:12px;color:var(--text3);margin:10px 0 0">'
+                      f'Market snapshot captured {disp(stamp)}.</p>')
+
+    block = (
+        '<div class="page-wrap" style="padding-bottom:0">'
+        '<div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);'
+        'padding:20px 24px;margin-bottom:22px">'
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;'
+        'text-transform:uppercase;color:var(--green);margin-bottom:10px">'
+        'Latest session snapshot</div>'
+        + session + stamp_html + "</div></div>")
+
+    try:
+        page = read_file("index.html")
+        page = inject(page, "HOME_BAR", bar_html)
+        page = inject(page, "HOME_SESSION", block)
+        write_file("index.html", page)
+        print(f"  index.html rendered ({len(items)} bar items, session {md})")
+    except Exception as e:
+        stage_error("index.html render", e)
+
+
 def update_signals_html():
     """Server-render the scan date on quantum-signals.html.
 
@@ -1451,6 +1626,8 @@ def main():
     update_markets_html(fx, cx)
     update_news_html(nx)
     update_signals_html()
+    render_signals_page()
+    render_home_snapshot(bar)
 
     # Republish the methodology config so the site copy, the validator and any
     # external reader all resolve to the same numbers.

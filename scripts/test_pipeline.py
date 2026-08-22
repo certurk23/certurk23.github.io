@@ -465,7 +465,8 @@ def _run_validator_on(mutate):
                    validate_site.check_blank_data_regression,
                    validate_site.check_signals,
                    validate_site.check_sitemap,
-                   validate_site.check_no_visible_loading_placeholder):
+                   validate_site.check_no_visible_loading_placeholder,
+                   validate_site.check_signal_consistency):
             try:
                 fn()
             except Exception as e:
@@ -640,6 +641,34 @@ def test_v18_allows_loading_inside_script():
     assert not any('placeholder' in e for e in errs), errs
 
 
+def test_v19_catches_no_buy_contradiction():
+    """The site must never claim zero BUY signals while the payload has some.
+
+    This is the real defect: buy_count was 67, Signal Breadth said "67 of 179",
+    and quantum-signals.html shipped "No BUY signals today" in static markup.
+    """
+    def mutate(site):
+        f = os.path.join(site, 'quantum-signals.html')
+        t = open(f, encoding='utf-8').read()
+        t = t.replace('id="noBuyMsg" style="display:none',
+                      'id="noBuyMsg" style="display:block')
+        open(f, 'w', encoding='utf-8').write(t)
+    errs = _run_validator_on(mutate)
+    assert any('No BUY signals' in e for e in errs), errs
+
+
+def test_v20_catches_signal_row_drift():
+    """The rendered BUY table must match the payload row for row."""
+    def mutate(site):
+        f = os.path.join(site, 'quantum-signals.html')
+        t = open(f, encoding='utf-8').read()
+        a, b = "<!-- QM:SIGNALS_ROWS:START -->", "<!-- QM:SIGNALS_ROWS:END -->"
+        t = t[:t.index(a) + len(a)] + "<tr><td>only one</td></tr>" + t[t.index(b):]
+        open(f, 'w', encoding='utf-8').write(t)
+    errs = _run_validator_on(mutate)
+    assert any('BUY rows' in e for e in errs), errs
+
+
 def test_v15_allows_linked_publisher_byline():
     """Regression: run #46 was blocked because the validator flagged the
     pipeline's own news snapshot, which carries genuine Reuters/CNBC bylines
@@ -728,6 +757,8 @@ def main():
         ('V14 catches signal config drift', test_v14_catches_signal_config_drift),
         ('V17 catches js-only placeholder', test_v17_catches_js_only_placeholder),
         ('V18 allows loading inside script', test_v18_allows_loading_inside_script),
+        ('V19 catches no-BUY contradiction', test_v19_catches_no_buy_contradiction),
+        ('V20 catches signal row drift',  test_v20_catches_signal_row_drift),
     ]
     for name, fn in scenarios:
         check(name, fn)

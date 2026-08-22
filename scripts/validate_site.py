@@ -552,6 +552,96 @@ def check_profilepage_schema():
                         'datetime - a bare date is reported as invalid')
 
 
+def check_signal_consistency():
+    """One scan, one set of numbers, everywhere it is published.
+
+    data/quantum_signals.json is the source of truth. Before this existed the
+    site actively contradicted itself: with buy_count = 67, the Signal Breadth
+    index correctly said "67 of 179 reached the 22/30 threshold" while
+    quantum-signals.html shipped the sentence "No BUY signals today" in its
+    static markup. Crawlers read hidden text, so the site's core product page
+    told every crawler the opposite of the truth.
+
+    Checks, in order of how badly each would mislead a reader:
+      1. no page states there are no BUY signals when there are
+      2. the BUY table actually contains the rows the JSON claims
+      3. the breadth index quotes the same two numbers
+      4. the homepage quotes the same two numbers
+    """
+    rel = 'data/quantum_signals.json'
+    if not os.path.exists(os.path.join(ROOT, rel)):
+        return
+    try:
+        sig = json.loads(read(rel))
+    except Exception as e:
+        err(rel + ': does not parse (' + str(e) + ')')
+        return
+
+    rows = sig.get('signals') or []
+    if not rows:
+        return
+    actual_buys = sum(1 for r in rows
+                      if str(r.get('d', '')).upper() == 'BUY')
+    claimed = sig.get('buy_count')
+    scored = sig.get('total_count') or len(rows)
+    md = sig.get('market_date') or ''
+
+    if claimed is not None and claimed != actual_buys:
+        err(rel + ': buy_count=' + str(claimed) + ' but ' + str(actual_buys)
+            + ' rows are marked BUY - the payload contradicts itself')
+
+    n_buy = actual_buys
+    qs = 'quantum-signals.html'
+    if os.path.exists(os.path.join(ROOT, qs)):
+        text = read(qs)
+
+        # 1. The false-negative that started this. Crawlers read hidden text,
+        #    so display:none is no defence - the notice must be absent.
+        m = re.search(r'id="noBuyMsg" style="display:(\w+)', text)
+        if n_buy and m and m.group(1) != 'none':
+            err(qs + ': the "No BUY signals today" notice is displayed while '
+                + str(n_buy) + ' BUY signals exist')
+        m = re.search(r'id="signalTableWrap" style="display:(\w+)', text)
+        if n_buy and m and m.group(1) != 'block':
+            err(qs + ': the BUY table is hidden while ' + str(n_buy)
+                + ' BUY signals exist')
+
+        # 2. The rendered table must carry the rows, not a spinner.
+        m = re.search(r'<!-- QM:SIGNALS_ROWS:START -->(.*?)'
+                      r'<!-- QM:SIGNALS_ROWS:END -->', text, re.DOTALL)
+        if not m:
+            err(qs + ': QM:SIGNALS_ROWS anchor missing - the BUY table cannot '
+                'be server-rendered and crawlers will see an empty table')
+        else:
+            rendered = m.group(1).count('<tr>')
+            if rendered != n_buy:
+                err(qs + ': renders ' + str(rendered) + ' BUY rows but the '
+                    'payload has ' + str(n_buy))
+
+        # 3. The summary must quote the payload, not a stale copy.
+        m = re.search(r'<!-- QM:SIGNALS_SUMMARY:START -->(.*?)'
+                      r'<!-- QM:SIGNALS_SUMMARY:END -->', text, re.DOTALL)
+        if m and md and md not in m.group(1):
+            err(qs + ': summary does not state the payload market_date ' + md)
+
+    # 4. Signal Breadth and the homepage must agree with the same payload.
+    pair = str(n_buy) + ' of ' + str(scored)
+    for other in ('indices/signal-breadth.html', 'index.html'):
+        path = os.path.join(ROOT, other)
+        if not os.path.exists(path):
+            continue
+        text = read(other)
+        inner = ''.join(m.group(1) for m in re.finditer(
+            r'<!-- QM:[A-Z_]+:START -->(.*?)<!-- QM:[A-Z_]+:END -->',
+            text, re.DOTALL))
+        if not inner:
+            continue
+        flat = ' '.join(re.sub(r'<[^>]+>', ' ', inner).split())
+        if pair not in flat:
+            err(other + ': server-rendered region does not state "' + pair
+                + '" - it has drifted from data/quantum_signals.json')
+
+
 # ---------------------------------------------------------------------------
 def main():
     warn_only = '--warn-only' in sys.argv
@@ -573,6 +663,7 @@ def main():
         ('sitemap',                 check_sitemap),
         ('js-only placeholders',    check_no_visible_loading_placeholder),
         ('profilepage schema',      check_profilepage_schema),
+        ('signal consistency',      check_signal_consistency),
     ]
     for label, fn in checks:
         before = len(ERRORS)

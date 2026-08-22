@@ -855,9 +855,9 @@ button{cursor:pointer;font-family:inherit}
 <!-- MARKET BAR -->
 <div class="market-bar">
   <div class="mbar-label"><span class="live-dot"></span>Markets</div>
-  <div class="mbar-items" id="marketBar">
-    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted)">Market data snapshots &middot; Captured after each US close</span></div>
-  </div>
+  <div class="mbar-items" id="marketBar"><!-- QM:HOME_BAR:START -->
+<div class="mbar-item"><span class="mbar-sym">S&amp;P 500</span><span class="mbar-val">7,674.37</span><span class="mbar-chg up">+0.43%</span></div><div class="mbar-item"><span class="mbar-sym">Nasdaq</span><span class="mbar-val">26,180.46</span><span class="mbar-chg up">+0.43%</span></div><div class="mbar-item"><span class="mbar-sym">Dow</span><span class="mbar-val">53,277.01</span><span class="mbar-chg up">+0.98%</span></div><div class="mbar-item"><span class="mbar-sym">VIX</span><span class="mbar-val">15.13</span><span class="mbar-chg down">-5.50%</span></div><div class="mbar-item"><span class="mbar-sym">Gold</span><span class="mbar-val">4,661.60</span><span class="mbar-chg up">+3.22%</span></div><div class="mbar-item"><span class="mbar-sym">BTC</span><span class="mbar-val">78,350.14</span><span class="mbar-chg up">+7.28%</span></div>
+<!-- QM:HOME_BAR:END --></div>
 </div>
 
 <main>
@@ -962,6 +962,10 @@ button{cursor:pointer;font-family:inherit}
     </div>
   </div><!-- /newsGrid -->
 </div>
+
+<!-- QM:HOME_SESSION:START -->
+<div class="page-wrap" style="padding-bottom:0"><div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:20px 24px;margin-bottom:22px"><div style="font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:10px">Latest session snapshot</div><p style="font-size:13.5px;line-height:1.8;color:var(--text3);margin:0">On the <strong>2026-08-21</strong> session, <strong>67</strong> of <strong>179</strong> scored US equities met the 22-of-30 confluence threshold; the median stock scored <strong>18</strong>. <a href="/quantum-signals.html" style="color:var(--green)">See the signals</a> &middot; <a href="/indices/signal-breadth.html" style="color:var(--green)">Signal Breadth Index</a></p><p style="font-size:12px;color:var(--text3);margin:10px 0 0">Market snapshot captured Aug 21 2026, 23:45 UTC.</p></div></div>
+<!-- QM:HOME_SESSION:END -->
 
 <!-- ORIGINAL WORK
      Everything below originates on QuantMedia rather than being aggregated

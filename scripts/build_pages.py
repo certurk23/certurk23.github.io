@@ -13,6 +13,7 @@ static HTML: the whole point of these pages is that a crawler or an assistant
 sees the content in the markup without executing JavaScript.
 """
 
+import json
 import os
 import re
 import sys
@@ -109,27 +110,80 @@ def page(slug, title, description, h1, crumb, body,
          extra_schema=''):
     style, header, footer = shell_parts()
     url = f'{SITE}/{slug}'
-    ld = f'''<script type="application/ld+json">{{
-  "@context":"https://schema.org",
-  "@type":"{schema_type}",
-  "headline":{title.split(" | ")[0]!r},
-  "description":{description!r},
-  "author":{{"@type":"Person","name":"Cemil Ertürk","url":"{SITE}/author/cemil-erturk.html"}},
-  "publisher":{{"@type":"Organization","name":"QuantMedia","url":"{SITE}"}},
-  "datePublished":"{published}",
-  "dateModified":"{modified}",
-  "mainEntityOfPage":"{url}",
-  "isAccessibleForFree":true
-}}</script>
-<script type="application/ld+json">{{
-  "@context":"https://schema.org",
-  "@type":"BreadcrumbList",
-  "itemListElement":[
-    {{"@type":"ListItem","position":1,"name":"Home","item":"{SITE}/"}},
-    {{"@type":"ListItem","position":2,"name":{crumb[0]!r},"item":"{SITE}/{crumb[1]}"}},
-    {{"@type":"ListItem","position":3,"name":{h1!r},"item":"{url}"}}
-  ]
-}}</script>'''.replace("'", '"')
+    headline = title.split(' | ')[0]
+
+    # Google's ProfilePage spec is NOT the Article spec. It recognises
+    # mainEntity (required), dateCreated and dateModified - and ignores
+    # author, publisher, headline and mainEntityOfPage. Emitting the
+    # Article shape here is what produced the three Search Console warnings
+    # on /author/cemil-erturk.html:
+    #   "dateModified" invalid datetime  -> a bare date; the profile spec
+    #                                       wants a full ISO 8601 datetime
+    #   "mainEntityOfPage" unrecognised  -> not in the profile spec
+    #   "author" unrecognised            -> the person belongs in mainEntity,
+    #                                       which was missing entirely
+    if schema_type == 'ProfilePage':
+        main = {
+            '@context': 'https://schema.org',
+            '@type': 'ProfilePage',
+            'dateCreated': f'{published}T00:00:00+00:00',
+            'dateModified': f'{modified}T00:00:00+00:00',
+            'mainEntity': PERSON,
+        }
+    elif schema_type == 'WebApplication':
+        # A WebApplication is named, not headlined.
+        main = {
+            '@context': 'https://schema.org',
+            '@type': 'WebApplication',
+            'name': headline,
+            'description': description,
+            'url': url,
+            'applicationCategory': 'FinanceApplication',
+            'operatingSystem': 'Any modern browser',
+            'browserRequirements': 'Requires JavaScript',
+            'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'},
+            'author': AUTHOR_REF,
+            'publisher': PUBLISHER,
+            'datePublished': published,
+            'dateModified': modified,
+            'isAccessibleForFree': True,
+        }
+    else:
+        main = {
+            '@context': 'https://schema.org',
+            '@type': schema_type,
+            'headline': headline,
+            'description': description,
+            'author': AUTHOR_REF,
+            'publisher': PUBLISHER,
+            'datePublished': published,
+            'dateModified': modified,
+            'mainEntityOfPage': url,
+            'isAccessibleForFree': True,
+        }
+
+    crumbs = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Home',
+             'item': f'{SITE}/'},
+            {'@type': 'ListItem', 'position': 2, 'name': crumb[0],
+             'item': f'{SITE}/{crumb[1]}'},
+            {'@type': 'ListItem', 'position': 3, 'name': h1, 'item': url},
+        ],
+    }
+
+    # json.dumps, not a quote-swapped f-string. The previous version built the
+    # JSON by hand and then ran .replace("'", '"') over it, which would have
+    # produced invalid JSON the first time any title or description contained
+    # an apostrophe.
+    def _ld(obj):
+        return ('<script type="application/ld+json">'
+                + json.dumps(obj, ensure_ascii=False, indent=2)
+                + '</script>')
+
+    ld = _ld(main) + '\n' + _ld(crumbs)
 
     return f'''<!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -183,12 +237,47 @@ function toggleTheme(){{var c=document.documentElement.getAttribute('data-theme'
 '''
 
 
+QM_ANCHOR = re.compile(
+    r'<!-- QM:([A-Z_]+):START -->(.*?)<!-- QM:[A-Z_]+:END -->', re.DOTALL)
+
+
 def write(slug, html):
+    """Write a generated page, PRESERVING any pipeline-injected content.
+
+    The index pages carry live readings inside QM: anchors, written after each
+    close by daily_update.py. This generator only knows the empty template, so
+    a plain overwrite silently replaced a real reading - "67 of 179 equities
+    reached the 22/30 threshold on 2026-08-21" - with the placeholder "The
+    current reading publishes after the next post-close scan."
+
+    That is the exact failure the whole pipeline design forbids: a rebuild must
+    never leave production worse than it was. Carrying the existing anchor
+    contents across means regenerating the chrome is now safe at any time, not
+    only in the minutes after a scan.
+    """
     path = os.path.join(ROOT, slug)
     os.makedirs(os.path.dirname(path), exist_ok=True)
+
+    kept = {}
+    if os.path.exists(path):
+        with open(path, encoding='utf-8') as f:
+            for name, inner in QM_ANCHOR.findall(f.read()):
+                if inner.strip():
+                    kept[name] = inner
+
+    if kept:
+        def restore(m):
+            name = m.group(1)
+            if name not in kept:
+                return m.group(0)
+            return (f'<!-- QM:{name}:START -->{kept[name]}'
+                    f'<!-- QM:{name}:END -->')
+        html, n = QM_ANCHOR.subn(restore, html)
+
     with open(path, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f'  wrote {slug}  ({len(html):,} bytes)')
+    note = f'  (preserved {", ".join(sorted(kept))})' if kept else ''
+    print(f'  wrote {slug}  ({len(html):,} bytes){note}')
 
 
 import page_content as PC
@@ -197,19 +286,33 @@ import page_content_identity as PCI   # noqa: E402
 # knowsAbout lists only subjects with published work behind them on this site.
 # No affiliation, credential, job title or award appears here, because none can
 # be verified - and an unverifiable claim in structured data is still a claim.
-PERSON_SCHEMA = '''
-<script type="application/ld+json">{
-  "@context":"https://schema.org",
-  "@type":"Person",
-  "name":"Cemil Ertürk",
-  "url":"https://quantmedia.io/author/cemil-erturk.html",
-  "email":"mailto:contact@quantmedia.io",
-  "description":"Independent quantitative researcher and engineer. Writes the research and builds the data pipeline behind QuantMedia.",
-  "knowsAbout":["Market microstructure","Order flow toxicity","VPIN","Hierarchical Risk Parity","Portfolio construction","Probabilistic Sharpe Ratio","Backtest overfitting","Transaction cost analysis","Slippage modelling","Systematic trading signals"],
-  "sameAs":["https://github.com/certurk23","https://x.com/certurk23"],
-  "worksFor":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io"},
-  "mainEntityOfPage":"https://quantmedia.io/author/cemil-erturk.html"
-}</script>'''
+#
+# This is the ProfilePage's mainEntity, not a separate node. Emitting it twice
+# would describe two Persons rather than one.
+PERSON = {
+    '@type': 'Person',
+    'name': 'Cemil Ertürk',
+    'identifier': 'cemil-erturk',
+    'url': 'https://quantmedia.io/author/cemil-erturk.html',
+    'email': 'mailto:contact@quantmedia.io',
+    'description': ('Independent quantitative researcher and engineer. Writes the '
+                    'research and builds the data pipeline behind QuantMedia.'),
+    'knowsAbout': ['Market microstructure', 'Order flow toxicity', 'VPIN',
+                   'Hierarchical Risk Parity', 'Portfolio construction',
+                   'Probabilistic Sharpe Ratio', 'Backtest overfitting',
+                   'Transaction cost analysis', 'Slippage modelling',
+                   'Systematic trading signals'],
+    'sameAs': ['https://github.com/certurk23', 'https://x.com/certurk23'],
+    'worksFor': {'@type': 'Organization', 'name': 'QuantMedia',
+                 'url': 'https://quantmedia.io'},
+}
+
+# Article/WebApplication nodes reference the person by URL rather than
+# restating the whole profile on every page.
+AUTHOR_REF = {'@type': 'Person', 'name': 'Cemil Ertürk',
+              'url': 'https://quantmedia.io/author/cemil-erturk.html'}
+PUBLISHER = {'@type': 'Organization', 'name': 'QuantMedia',
+             'url': 'https://quantmedia.io'}
 
 PAGES = [
     dict(slug='indices/signal-breadth.html',
@@ -325,7 +428,7 @@ PAGES = [
          h1='Cemil Ertürk',
          crumb=('About', 'about.html'),
          body=PCI.AUTHOR_BODY, schema_type='ProfilePage',
-         extra_schema=PERSON_SCHEMA),
+         published='2026-08-16', modified='2026-08-16'),
 
     dict(slug='editorial-policy.html',
          title='Editorial Policy, Corrections and Disclosures | QuantMedia',
@@ -334,7 +437,8 @@ PAGES = [
                       'corrections policy and what has not been validated.'),
          h1='Editorial policy',
          crumb=('About', 'about.html'),
-         body=PCI.EDITORIAL_BODY),
+         body=PCI.EDITORIAL_BODY,
+         published='2026-08-16', modified='2026-08-16'),
 ]
 
 

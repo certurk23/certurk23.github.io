@@ -52,14 +52,30 @@ def read(rel):
         return f.read()
 
 
+# Directories that hold build inputs or vendored code, not published pages.
+NON_PAGE_DIRS = {'.git', '.github', 'node_modules', 'scripts', 'data',
+                 'docs', 'quantmedia-research', '__pycache__'}
+
+
 def html_files():
-    """Root pages plus the generated /indices/, /learn/ and /tools/ trees."""
-    out = [f for f in os.listdir(ROOT)
-           if f.endswith('.html') and not f.startswith('google')]
-    for sub in ('indices', 'learn', 'tools'):
-        d = os.path.join(ROOT, sub)
-        if os.path.isdir(d):
-            out += [f'{sub}/{f}' for f in os.listdir(d) if f.endswith('.html')]
+    """Every published page, discovered rather than listed.
+
+    This used to hard-code ('indices', 'learn', 'tools'). When /author/ was
+    added it was silently excluded, so EVERY check in this file - forbidden
+    strings, fabricated attribution, placeholder text, schema shape - skipped
+    the author page entirely. The bug was invisible because the validator kept
+    printing "ok". Walking the tree and excluding known non-page directories
+    fails safe in the other direction: a new directory is checked by default.
+    """
+    out = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in NON_PAGE_DIRS]
+        rel_dir = os.path.relpath(dirpath, ROOT)
+        for f in filenames:
+            if not f.endswith('.html') or f.startswith('google'):
+                continue
+            rel = f if rel_dir == '.' else os.path.join(rel_dir, f).replace(os.sep, '/')
+            out.append(rel)
     return sorted(out)
 
 
@@ -259,6 +275,27 @@ def check_blank_data_regression():
             if text.count(f'<!-- QM:{marker}:START -->') != 1 or \
                text.count(f'<!-- QM:{marker}:END -->') != 1:
                 err(f'{name}: QM:{marker} injection anchors missing/duplicated')
+
+    # The index pages are the most original content on the site, and until this
+    # existed nothing checked them. Re-running build_pages.py overwrote a real
+    # reading with the empty template and the validator still said PASSED,
+    # because this function only ever looked at markets.html and news.html.
+    for rel, marker in (('indices/signal-breadth.html', 'BREADTH'),
+                        ('indices/sector-confluence.html', 'SECTORS')):
+        if not os.path.exists(os.path.join(ROOT, rel)):
+            continue
+        text = read(rel)
+        m = re.search(r'<!-- QM:' + marker + r':START -->(.*?)<!-- QM:'
+                      + marker + r':END -->', text, re.DOTALL)
+        if not m:
+            err(rel + ': QM:' + marker + ' injection anchor missing - the '
+                'pipeline cannot publish a reading into this page')
+            continue
+        # A real reading is a rendered table; the placeholder is one sentence.
+        if '<table' not in m.group(1):
+            err(rel + ': QM:' + marker + ' contains no rendered reading ('
+                + str(len(m.group(1).strip())) + ' bytes) - a rebuild has '
+                'blanked a page that had live data. Do not ship it.')
 
 
 # ---------------------------------------------------------------------------
@@ -469,6 +506,52 @@ def check_no_visible_loading_placeholder():
                 f'text - render it server-side instead')
 
 
+def check_profilepage_schema():
+    """ProfilePage must follow Google's profile spec, not the Article spec.
+
+    Search Console raised three warnings on /author/cemil-erturk.html because
+    page() emitted the same Article-shaped node for every schema type:
+
+        "dateModified" invalid datetime  - a bare date; the profile spec wants
+                                           a full ISO 8601 datetime
+        "mainEntityOfPage" unrecognised  - not part of the profile spec
+        "author" unrecognised            - the person belongs in mainEntity,
+                                           which was missing entirely
+
+    All three are the same root cause, so this checks the shape rather than the
+    three symptoms.
+    """
+    iso_dt = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}([+-]\d{2}:\d{2}|Z)$')
+    for rel in html_files():
+        try:
+            html = read(rel)
+        except Exception:
+            continue
+        for raw in re.findall(
+                r'(?s)<script type="application/ld\+json">(.*?)</script>', html):
+            try:
+                node = json.loads(raw)
+            except Exception:
+                err(f'{rel}: JSON-LD block does not parse')
+                continue
+            if not isinstance(node, dict) or node.get('@type') != 'ProfilePage':
+                continue
+            me = node.get('mainEntity')
+            if not isinstance(me, dict) or not me.get('name'):
+                err(f'{rel}: ProfilePage is missing mainEntity with a name '
+                    '- that is the one property the profile spec requires')
+            for field in ('author', 'mainEntityOfPage', 'headline', 'publisher'):
+                if field in node:
+                    err(f'{rel}: ProfilePage carries "{field}", which the '
+                        'Google profile spec does not recognise - describe the '
+                        'person in mainEntity instead')
+            for field in ('dateCreated', 'dateModified'):
+                v = node.get(field)
+                if v and not iso_dt.match(str(v)):
+                    err(f'{rel}: ProfilePage {field}={v!r} is not a full ISO 8601 '
+                        'datetime - a bare date is reported as invalid')
+
+
 # ---------------------------------------------------------------------------
 def main():
     warn_only = '--warn-only' in sys.argv
@@ -489,6 +572,7 @@ def main():
         ('status ledger',           check_status),
         ('sitemap',                 check_sitemap),
         ('js-only placeholders',    check_no_visible_loading_placeholder),
+        ('profilepage schema',      check_profilepage_schema),
     ]
     for label, fn in checks:
         before = len(ERRORS)

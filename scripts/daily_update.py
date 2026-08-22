@@ -701,6 +701,13 @@ def render_signals_page():
         for eid in ("noBuyMsg", "noBuyContext"):
             page = re.sub(r'(id="' + eid + r'" style="display:)(?:none|block)',
                           lambda m: m.group(1) + show_none, page)
+        # Hiding the no-BUY copy is not enough: crawlers read hidden text, so
+        # on a day with BUY signals the sentence "No BUY signals today" must
+        # not be in the markup at all. The copy lives in no_buy_copy.py and is
+        # written back only when the session genuinely has none.
+        import no_buy_copy as NB
+        page = inject(page, 'NO_BUY_MSG', '' if n_buy else NB.NO_BUY_MSG)
+        page = inject(page, 'NO_BUY_CTX', '' if n_buy else NB.NO_BUY_CTX)
         write_file("quantum-signals.html", page)
         print(f"  quantum-signals.html rendered ({n_buy} BUY of {scored}, {md})")
     except Exception as e:

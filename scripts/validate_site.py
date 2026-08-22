@@ -601,6 +601,14 @@ def check_signal_consistency():
         if n_buy and m and m.group(1) != 'none':
             err(qs + ': the "No BUY signals today" notice is displayed while '
                 + str(n_buy) + ' BUY signals exist')
+        # display:none is not enough. Crawlers and language models read hidden
+        # text, which is how the original contradiction reached production in
+        # the first place, so the words must be absent from the markup.
+        visible = re.sub(r'(?is)<script.*?</script>|<style.*?</style>', ' ', text)
+        if n_buy and re.search(r'(?i)no BUY signals', visible):
+            err(qs + ': the phrase "no BUY signals" is in the crawlable markup '
+                'while ' + str(n_buy) + ' BUY signals exist - hiding it with '
+                'display:none does not stop a crawler reading it')
         m = re.search(r'id="signalTableWrap" style="display:(\w+)', text)
         if n_buy and m and m.group(1) != 'block':
             err(qs + ': the BUY table is hidden while ' + str(n_buy)

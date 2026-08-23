@@ -650,6 +650,31 @@ def check_signal_consistency():
                 + '" - it has drifted from data/quantum_signals.json')
 
 
+def check_sitemap_noindex():
+    """A URL cannot be in the sitemap and carry noindex.
+
+    Search Console reported privacy.html as "excluded by noindex tag" while the
+    sitemap listed it, which is the site telling Google two opposite things
+    about the same URL. Whichever answer is right, giving both is a defect.
+    """
+    rel = 'sitemap.xml'
+    try:
+        root = ET.fromstring(read(rel))
+    except Exception:
+        return
+    for loc in [e.text for e in root.iter() if e.tag.endswith('loc')]:
+        path = loc.replace('https://quantmedia.io/', '') or 'index.html'
+        f = os.path.join(ROOT, path)
+        if not os.path.exists(f):
+            continue
+        text = read(path)
+        m = re.search(r'<meta name="robots" content="([^"]*)"', text)
+        if m and 'noindex' in m.group(1).lower():
+            err(path + ': listed in sitemap.xml but carries '
+                'robots="' + m.group(1) + '" - remove it from the sitemap or '
+                'drop the noindex, but do not tell Google both')
+
+
 # ---------------------------------------------------------------------------
 def main():
     warn_only = '--warn-only' in sys.argv
@@ -672,6 +697,7 @@ def main():
         ('js-only placeholders',    check_no_visible_loading_placeholder),
         ('profilepage schema',      check_profilepage_schema),
         ('signal consistency',      check_signal_consistency),
+        ('sitemap vs noindex',      check_sitemap_noindex),
     ]
     for label, fn in checks:
         before = len(ERRORS)

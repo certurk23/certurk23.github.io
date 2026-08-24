@@ -281,7 +281,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="./">Home</a>
-      <a href="markets.html">Live Data</a>
+      <a href="markets.html">Markets</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
       <a href="quantum-signals.html">Quantum</a>
@@ -302,7 +302,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="./">Home</a>
-  <a href="markets.html">Live Data</a>
+  <a href="markets.html">Markets</a>
   <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
   <a href="quantum-signals.html">Quantum</a>
@@ -332,8 +332,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- BREAKING -->
 <div class="breaking-bar">
-  <span class="breaking-label">Research Note</span>
-  <span class="breaking-text">VPIN on NASDAQ Composite crosses 0.31 threshold — elevated toxicity regime detected in AAPL, NVDA order flow</span>
+  <span class="breaking-label">Research</span>
+  <span class="breaking-text">Order-flow toxicity, adverse selection and venue fragmentation &mdash; methodology, published code and stated limitations</span>
 </div>
 
 <!-- MAIN -->
@@ -343,12 +343,16 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text);margin:0 0 20px">VPIN &amp; Market Microstructure Research</h1>
 
     <!-- Market strip -->
-    <div class="market-strip">
-      <div class="mkt-cell"><div class="label">VPIN (AAPL)</div><div class="val">0.312</div><div class="chg up">▲ +0.024</div></div>
-      <div class="mkt-cell"><div class="label">OBI Score</div><div class="val">−0.041</div><div class="chg dn">▼ −0.007</div></div>
-      <div class="mkt-cell"><div class="label">Hurst (SPY)</div><div class="val">0.587</div><div class="chg up">▲ +0.012</div></div>
-      <div class="mkt-cell"><div class="label">Latency P99</div><div class="val">740 ns</div><div class="chg up">▼ −18 ns</div></div>
-      <div class="mkt-cell"><div class="label">Toxicity</div><div class="val" style="color:var(--gold)">MODERATE</div><div class="chg" style="color:var(--gold)">● Active</div></div>
+    <div class="qm-note" style="margin:0 0 22px">
+      <strong>What this page is.</strong> A written review of the microstructure
+      literature QuantMedia works from &mdash; order-flow toxicity, adverse
+      selection and venue fragmentation. It reports no live measurement of any
+      security. VPIN requires trade-and-quote data; this site collects
+      end-of-day bars, as the
+      <a href="/editorial-policy.html">editorial policy</a> states. The metrics
+      QuantMedia does compute daily are the
+      <a href="/indices/signal-breadth.html">Signal Breadth Index</a> and
+      <a href="/indices/sector-confluence.html">Sector Confluence Index</a>.
     </div>
 
     <div class="section-header" id="vpin">
@@ -457,33 +461,38 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <aside class="sidebar">
     <div class="widget">
       <div class="widget-header">
-        <span class="widget-title">Live Metrics</span>
-        <span style="font-size:10px;color:var(--dim);font-family:'Barlow Condensed',sans-serif">UPDATED 14:32:07</span>
+        <span class="widget-title">What QuantMedia measures</span>
+        <span style="font-size:10px;color:var(--dim);font-family:'Barlow Condensed',sans-serif">DAILY, POST-CLOSE</span>
       </div>
       <div class="status-grid">
-        <div class="status-cell"><div class="sc-label">VPIN</div><div class="sc-val up">0.312</div><div class="sc-sub">AAPL / ▲ +0.024</div></div>
-        <div class="status-cell"><div class="sc-label">OBI Score</div><div class="sc-val dn">−0.041</div><div class="sc-sub">▼ −0.007</div></div>
-        <div class="status-cell"><div class="sc-label">Hurst</div><div class="sc-val" style="color:var(--blue)">0.587</div><div class="sc-sub">SPY / Persistent</div></div>
-        <div class="status-cell"><div class="sc-label">Latency P99</div><div class="sc-val">740 ns</div><div class="sc-sub">NY4 co-lo</div></div>
+        <div class="status-cell"><div class="sc-label">Universe</div><div class="sc-val">180</div><div class="sc-sub">Liquid US equities</div></div>
+        <div class="status-cell"><div class="sc-label">Signals</div><div class="sc-val">30</div><div class="sc-sub">Per stock, per close</div></div>
+        <div class="status-cell"><div class="sc-label">Threshold</div><div class="sc-val">22/30</div><div class="sc-sub">BUY qualification</div></div>
+        <div class="status-cell"><div class="sc-label">Published</div><div class="sc-val">2</div><div class="sc-sub">Daily indices</div></div>
       </div>
       <div class="stack-row" style="border-top:1px solid var(--border)">
-        <span class="stack-key">Toxicity Regime</span>
-        <span class="stack-val" style="color:var(--gold)">MODERATE</span>
+        <span class="stack-key">Live toxicity index</span>
+        <span class="stack-val" style="color:var(--dim)">not published</span>
       </div>
     </div>
 
     <div class="widget">
-      <div class="widget-header"><span class="widget-title">VPIN Snapshot</span></div>
+      <div class="widget-header"><span class="widget-title">VPIN, measured</span></div>
       <table class="data-table">
-        <thead><tr><th>Symbol</th><th>VPIN</th><th>Δ</th></tr></thead>
+        <thead><tr><th>Synthetic tape</th><th>Mean VPIN</th></tr></thead>
         <tbody>
-          <tr><td class="tname">AAPL</td><td>0.312</td><td class="up">+0.024</td></tr>
-          <tr><td class="tname">NVDA</td><td>0.389</td><td class="dn">−0.011</td></tr>
-          <tr><td class="tname">SPY</td><td>0.198</td><td class="up">+0.003</td></tr>
-          <tr><td class="tname">QQQ</td><td>0.224</td><td class="up">+0.008</td></tr>
-          <tr><td class="tname">MSFT</td><td>0.271</td><td class="dn">−0.005</td></tr>
+          <tr><td class="tname">Balanced segment</td><td>0.3292</td></tr>
+          <tr><td class="tname">Informed segment</td><td>0.6376</td></tr>
+          <tr><td class="tname">Ratio</td><td>1.94&times;</td></tr>
+          <tr><td class="tname">BVC vs tick rule</td><td>0.4410 / 0.1779</td></tr>
         </tbody>
       </table>
+      <p style="font-size:11.5px;color:var(--dim);line-height:1.7;padding:10px 14px;margin:0">
+        Output of the <a href="/reproducibility.html">published implementation</a>
+        on a synthetic tape with a planted informed episode, from a fixed seed.
+        Synthetic because the ground truth is knowable; not a reading on any real
+        security.
+      </p>
     </div>
 
     <div class="widget">
@@ -539,15 +548,16 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </footer>
 
 <script>
+/* The ticker previously scrolled invented VPIN readings for AAPL, NVDA, SPY,
+   QQQ and MSFT. Those cannot be computed from end-of-day bars. It now carries
+   the engine's published, checkable parameters instead. */
 const ticks=[
-  {name:'VPIN AAPL',val:'0.312',chg:'+0.024',up:true},
-  {name:'OBI SPY',val:'−0.041',chg:'−0.007',up:false},
-  {name:'HURST SPY',val:'0.587',chg:'+0.012',up:true},
-  {name:'LATENCY',val:'740 ns',chg:'−18 ns',up:true},
-  {name:'NVDA VPIN',val:'0.389',chg:'−0.011',up:false},
-  {name:'QQQ VPIN',val:'0.224',chg:'+0.008',up:true},
-  {name:'MSFT VPIN',val:'0.271',chg:'−0.005',up:false},
-  {name:'TOXICITY',val:'MODERATE',chg:'●',up:true},
+  {name:'UNIVERSE',val:'180',chg:'US equities',up:true},
+  {name:'SIGNALS',val:'30',chg:'per stock',up:true},
+  {name:'THRESHOLD',val:'22/30',chg:'BUY',up:true},
+  {name:'CADENCE',val:'POST-CLOSE',chg:'Mon-Fri',up:true},
+  {name:'METHODOLOGY',val:'v2.0',chg:'published',up:true},
+  {name:'TESTS',val:'28',chg:'research code',up:true},
 ];
 const t=document.getElementById('ticker');
 const d=[...ticks,...ticks];

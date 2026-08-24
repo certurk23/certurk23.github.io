@@ -261,7 +261,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="./">Home</a>
-      <a href="markets.html">Live Data</a>
+      <a href="markets.html">Markets</a>
       <a href="news.html">News</a>
       <a href="stocks.html">Equities</a>
       <a href="quantum-signals.html">Quantum</a>
@@ -282,7 +282,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="./">Home</a>
-  <a href="markets.html">Live Data</a>
+  <a href="markets.html">Markets</a>
   <a href="news.html">News</a>
   <a href="stocks.html">Equities</a>
   <a href="quantum-signals.html">Quantum</a>
@@ -315,7 +315,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div class="page-hero-inner">
     <div class="page-eyebrow">QuantMedia — Technical Documentation</div>
     <h1 class="page-title">HFT Infrastructure Architecture</h1>
-    <div class="page-desc">A reference architecture for sub-microsecond order flow analysis: how the hardware, kernel, and network stack of a co-located trading system fit together, and where each nanosecond of the latency budget actually goes. This is a design study compiled from vendor specifications and published benchmarks &mdash; QuantMedia does not operate co-located trading infrastructure.</div>
+    <div class="page-desc"><strong>A design study, not a system in operation.</strong> QuantMedia runs no co-located hardware, holds no exchange feed and has taken no latency measurement; every figure below is a design target or a published vendor number, and the site's actual data pipeline is described in the <a href="/editorial-policy.html" style="color:var(--accent)">editorial policy</a>. With that said &mdash; a reference architecture for sub-microsecond order flow analysis: how the hardware, kernel, and network stack of a co-located trading system fit together, and where each nanosecond of the latency budget actually goes. This is a design study compiled from vendor specifications and published benchmarks &mdash; QuantMedia does not operate co-located trading infrastructure.</div>
   </div>
 </div>
 
@@ -541,15 +541,20 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <aside class="sidebar">
     <div class="widget">
       <div class="widget-header">
-        <span class="widget-title">System Status</span>
-        <span style="font-size:10px;color:var(--dim);font-family:'Barlow Condensed',sans-serif">NY4 / LIVE</span>
+        <span class="widget-title">Design Budget</span>
+        <span style="font-size:10px;color:var(--dim);font-family:'Barlow Condensed',sans-serif">TARGET, NOT MEASURED</span>
       </div>
       <div class="status-grid">
-        <div class="status-cell"><div class="sc-label">Latency P99</div><div class="sc-val up">740 ns</div><div class="sc-sub">Within budget</div></div>
-        <div class="status-cell"><div class="sc-label">Latency P50</div><div class="sc-val up">720 ns</div><div class="sc-sub">Target &lt;800 ns</div></div>
-        <div class="status-cell"><div class="sc-label">NIC Queue</div><div class="sc-val up">0.0%</div><div class="sc-sub">Drop rate</div></div>
-        <div class="status-cell"><div class="sc-label">TLB Misses</div><div class="sc-val up">0.04%</div><div class="sc-sub">2MB hugepages</div></div>
+        <div class="status-cell"><div class="sc-label">Latency P99</div><div class="sc-val">&lt;800 ns</div><div class="sc-sub">Design target</div></div>
+        <div class="status-cell"><div class="sc-label">DMA stage</div><div class="sc-val">120 ns</div><div class="sc-sub">Budget allocation</div></div>
+        <div class="status-cell"><div class="sc-label">Cross-NUMA</div><div class="sc-val">~80 ns</div><div class="sc-sub">Published penalty</div></div>
+        <div class="status-cell"><div class="sc-label">TLB miss</div><div class="sc-val">~100 ns</div><div class="sc-sub">Page-table walk</div></div>
       </div>
+      <p style="font-size:11px;color:var(--dim);line-height:1.65;padding:10px 14px;margin:0;border-top:1px solid var(--border)">
+        Budget allocations for the architecture described here, drawn from
+        vendor and published figures. QuantMedia operates no co-located
+        hardware and has measured none of this.
+      </p>
     </div>
 
     <div class="widget">

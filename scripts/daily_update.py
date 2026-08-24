@@ -530,6 +530,62 @@ CAT_RULES = [
 CAT_RULES = [(name, re.compile(pat, re.I)) for name, pat in CAT_RULES]
 
 
+# ---------------------------------------------------------------------------
+# Finance relevance gate
+# ---------------------------------------------------------------------------
+# categorize() falls through to "Markets", so anything the category rules did
+# not recognise was published under a markets heading regardless of subject.
+# That put "Turkey to seek Interpol notice for Netanyahu in Gaza flotilla case"
+# and "Across Tehran, billboards threaten Trump, Israel" into a financial
+# digest with no market connection at all.
+#
+# The gate is deliberately ONE-SIDED: an item is dropped only when it contains
+# no finance signal whatsoever. Nothing is dropped for looking off-topic, so a
+# genuine market story with unusual vocabulary survives. Geopolitics is kept
+# wherever it touches the things that actually move prices - oil, chokepoints,
+# sanctions, tariffs, central banks - which is why Hormuz and sanctions are in
+# the vocabulary and a flotilla court case is not.
+FINANCE_RX = re.compile(r"""(?ix)
+    \b(
+      # markets and instruments
+      stock|stocks|share|shares|equit|bond|yield|treasur|credit|spread|
+      index|indices|etf|futures|option|derivativ|commodit|currenc|forex|
+      dollar|euro|yen|yuan|sterling|rand|peso|lira|
+      # venues and benchmarks
+      wall\s?st|nasdaq|nyse|s&p|dow|russell|ftse|dax|nikkei|hang\s?seng|
+      # corporate
+      earnings|revenue|profit|guidance|dividend|buyback|ipo|merger|acquisition|
+      valuation|ceo|cfo|shareholder|quarterly|
+      # macro and policy
+      fed|federal\s+reserve|fomc|ecb|boj|central\s+bank|rate\s?cut|
+      rate\s?hike|interest\s+rate|inflation|cpi|ppi|deflation|recession|
+      gdp|payroll|unemploy|jobless|jobs\s+report|tariff|sanction|
+      stimulus|deficit|debt|budget|fiscal|monetary|
+      # energy and commodities
+      oil|crude|brent|wti|opec|gas|lng|pipeline|refiner|hormuz|
+      gold|silver|copper|wheat|
+      # crypto
+      crypto|bitcoin|ethereum|blockchain|stablecoin|token|
+      # institutions and flows
+      hedge\s+fund|private\s+equity|asset\s+manager|pension|fund|
+      investor|trading|trader|portfolio|sector|return|rally|selloff|sell-off|bull|bear|analyst|outlook|
+      # technology as a market sector
+      semiconductor|chip|data\s?cent|cloud|ai\s+(?:stock|chip|infrastructure|
+      capex|data)|artificial\s+intelligence
+    )   # no trailing : prefix match, so plurals and compounds hit
+""")
+
+
+def is_finance_relevant(headline, summary=''):
+    """True unless the item carries no financial signal at all.
+
+    Conservative by design: when in doubt, keep. A financial digest that
+    silently drops real market news is worse than one that occasionally
+    carries a marginal story.
+    """
+    return bool(FINANCE_RX.search(f'{headline} {summary}'))
+
+
 def categorize(headline, summary=''):
     """Word-boundary matching. Substring matching mis-filed 'gain'/'against'
     as Tech-AI because they contain the letters 'ai'."""
@@ -552,7 +608,7 @@ def fetch_news():
         raise FetchError('zero articles returned')
 
     cutoff = (NOW_UTC - datetime.timedelta(days=7)).timestamp()
-    seen, clean = set(), []
+    seen, clean, dropped = set(), [], []
     for a in raw:
         if not isinstance(a, dict):
             continue
@@ -573,6 +629,13 @@ def fetch_news():
         if ts and ts < cutoff:
             continue
 
+        # Relevance gate. Applied after de-duplication so the counters below
+        # reflect what is actually published.
+        summ = (a.get('summary') or '').strip()
+        if not is_finance_relevant(h, summ):
+            dropped.append(h)
+            continue
+
         clean.append({
             'headline': h,
             'summary':  (a.get('summary') or '').strip()[:220],
@@ -587,13 +650,20 @@ def fetch_news():
     floor = C.EXPECTED['news']['min_items']
     if len(clean) < floor:
         raise FetchError(f'only {len(clean)} usable headlines (need >= {floor})')
-    print(f"  News: {len(clean)} headlines after de-duplication")
+    if dropped:
+        print(f"  News: {len(dropped)} item(s) dropped as not finance-relevant")
+        for d in dropped[:5]:
+            print(f"    - {d[:88]}")
+    print(f"  News: {len(clean)} headlines after de-duplication and filtering")
     return clean
+
+
+NEWS_CARD_CAP = 12
 
 
 def render_news_html(articles, fetched_iso):
     cards = []
-    for a in articles[:12]:
+    for a in articles[:NEWS_CARD_CAP]:
         sm = a['summary']
         sm = (sm[:130] + '…') if len(sm) > 130 else sm
         summary_html = f'<div class="nc-summary">{esc(sm)}</div>' if sm else ''
@@ -677,6 +747,7 @@ def render_signals_page():
         + _stat("BUY signals", n_buy, "var(--accent)")
         + _stat("Scored", scored)
         + _stat("Median score", f"{median}/{nsig}")
+        + _stat("Threshold", f"{thr}/{nsig}")
         + _stat("Session", esc(md))
         + "</div>"
         + f'<p style="font-size:13px;color:var(--dim);line-height:1.75;margin:0 0 16px">'
@@ -834,12 +905,13 @@ def update_news_html(feed):
         # lie the moment the pipeline stalls, and static HTML cannot know how
         # long it has been sitting there. QM.stamp() upgrades this to the
         # derived freshness state on load, so JS users still see live/paused.
+        shown = min(len(feed['data']), NEWS_CARD_CAP)
         html = inject(html, 'NEWS_STATUS',
                       f'<div id="newsStatus" class="qm-fresh" style="font-size:11px;'
                       f'font-family:\'Barlow Condensed\',sans-serif;font-weight:600;'
                       f'letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">'
                       f'Headline snapshot: {disp(feed["fetched_utc"])} &middot; '
-                      f'{len(feed["data"])} headlines captured</div>')
+                      f'{shown} headlines</div>')
         write_file('news.html', html)
         print(f"  news.html rendered (snapshot {disp(feed['fetched_utc'])})")
     except Exception as e:

@@ -669,6 +669,35 @@ def test_v20_catches_signal_row_drift():
     assert any('BUY rows' in e for e in errs), errs
 
 
+def test_n1_news_relevance_gate():
+    """Finance-relevant items survive; items with no market signal do not."""
+    keep = [
+        "Wall St rises on the day but falls for the week; bond yields in focus",
+        "Iran says Tehran must overcome unjust sanctions as US ramps up pressure",
+        "NATO members discuss Strait of Hormuz options",
+        "This sleepy sector could offer big returns, says Mike Khouw",
+        "Nvidia key earnings loom as AI data center stocks slide",
+        "Bitcoin slips as ETF outflows continue",
+    ]
+    drop = [
+        "Turkey to seek Interpol notice for Netanyahu in Gaza flotilla case",
+        "Across Tehran, billboards threaten Trump, Israel",
+        "Local school board approves new playground equipment",
+    ]
+    for h in keep:
+        assert P.is_finance_relevant(h), f'wrongly dropped: {h}'
+    for h in drop:
+        assert not P.is_finance_relevant(h), f'wrongly kept: {h}'
+
+
+def test_n2_relevance_matches_plurals():
+    """The first version anchored a trailing word boundary, so "sanction" did
+    not match "sanctions" and "chip" did not match "chipmaker"."""
+    for h in ("New sanctions announced", "Chipmakers rally", "Tariffs widened",
+              "Hedge funds cut exposure"):
+        assert P.is_finance_relevant(h), h
+
+
 def test_v15_allows_linked_publisher_byline():
     """Regression: run #46 was blocked because the validator flagged the
     pipeline's own news snapshot, which carries genuine Reuters/CNBC bylines
@@ -759,6 +788,8 @@ def main():
         ('V18 allows loading inside script', test_v18_allows_loading_inside_script),
         ('V19 catches no-BUY contradiction', test_v19_catches_no_buy_contradiction),
         ('V20 catches signal row drift',  test_v20_catches_signal_row_drift),
+        ('N1 news relevance gate',        test_n1_news_relevance_gate),
+        ('N2 relevance matches plurals',  test_n2_relevance_matches_plurals),
     ]
     for name, fn in scenarios:
         check(name, fn)

@@ -43,7 +43,10 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-MARKER = 'What originates here'
+# The marker is the block's HTML comment, not its visible heading: the heading
+# was later renamed ("Verified here"), and a visible-text marker made this
+# script re-insert the whole block on the next run.
+MARKER = '<!-- ORIGINAL WORK'
 
 HOMEPAGE_SECTION = """<!-- ORIGINAL WORK
      Everything below originates on QuantMedia rather than being aggregated
@@ -219,10 +222,14 @@ for f in sorted(ROOT.rglob('*.html')):
         stats['ftcol'] += 1
 
     before = out
+    # Only ever insert inside <footer>. Matching the first about.html anchor
+    # anywhere on the page once put "Author" into the desktop nav as a seventh
+    # item, on every page whose footer happened to lack the link.
+    foot = out.find('<footer')
     for after_href, link in IDENTITY_LINKS:
-        if link in out:
+        if link in out or foot == -1:
             continue
-        m = re.search(r'([ \t]*)<a href="/?' + re.escape(after_href) + r'"[^>]*>[^<]*</a>\n', out)
+        m = re.compile(r'([ \t]*)<a href="/?' + re.escape(after_href) + r'"[^>]*>[^<]*</a>\n').search(out, foot)
         if m:
             out = out[:m.end()] + m.group(1) + link + '\n' + out[m.end():]
     if out != before:

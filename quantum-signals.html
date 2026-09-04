@@ -232,15 +232,12 @@ a{text-decoration:none;color:inherit}
   <div class="header-inner">
     <a href="./" class="site-logo"><img src="logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block"></a>
     <nav class="main-nav">
-      <a href="./">Home</a>
-      <a href="markets.html">Markets</a>
-      <a href="news.html">News</a>
-      <a href="stocks.html">Equities</a>
-      <a href="quantum-signals.html" class="active">Quantum</a>
-      <a href="papers.html">Papers</a>
-      <a href="research.html">Microstructure</a>
-      <a href="about.html">About</a>
-      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/">Home</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
+      <a href="/papers.html">Papers</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/about.html">About</a>
     </nav>
     <div class="header-right"><button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
@@ -251,12 +248,10 @@ a{text-decoration:none;color:inherit}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="/">Home</a>
-  <a href="/markets.html">Markets</a>
-  <a href="/news.html">News</a>
-  <a href="/stocks.html">Equities</a>
-  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
   <a href="/papers.html">Papers</a>
-  <a href="/research.html">Microstructure</a>
+  <a href="/methodology.html">Methodology</a>
   <a href="/about.html">About</a>
 </div>
 
@@ -508,13 +503,13 @@ a{text-decoration:none;color:inherit}
       <li><a href="/indices/sector-confluence.html" style="color:var(--accent)">QuantMedia Sector Confluence</a> &mdash; Where technical agreement is concentrated by sector</li>
       <li><a href="/learn/what-is-signal-confluence.html" style="color:var(--accent)">What is signal confluence?</a> &mdash; How the 30-signal score is built and why the threshold is 22</li>
       <li><a href="methodology.html#signal-engine" style="color:var(--accent)">Signal engine methodology</a> &mdash; The same parameters documented alongside every other data source on the site</li>
-      <li><a href="stocks.html" style="color:var(--accent)">US equities screener</a> &mdash; Sector rotation and factor context for the names in the table above</li>
-      <li><a href="sector-rotation-guide.html" style="color:var(--accent)">Sector rotation guide</a> &mdash; Why several BUY signals clustering in one sector is worth more than any single name</li>
-      <li><a href="markets.html" style="color:var(--accent)">Market data dashboard</a> &mdash; Index, forex and crypto snapshots for macro context</li>
+      <li> &mdash; Sector rotation and factor context for the names in the table above</li>
+      <li> &mdash; Why several BUY signals clustering in one sector is worth more than any single name</li>
+      <li> &mdash; Index, forex and crypto snapshots for macro context</li>
       <li><a href="paper-vpin-order-flow-toxicity.html" style="color:var(--accent)">VPIN &amp; Order Flow Toxicity</a> &mdash; Microstructure signals that complement technical analysis</li>
       <li><a href="paper-probabilistic-sharpe-ratio.html" style="color:var(--accent)">Probabilistic Sharpe Ratio</a> &mdash; Statistical framework for evaluating signal engine performance</li>
       <li><a href="paper-slippage-latency-modeling.html" style="color:var(--accent)">Slippage &amp; Latency Modeling</a> &mdash; Understanding execution costs for signal-based strategies</li>
-      <li><a href="paper-genetic-algorithm-alpha.html" style="color:var(--accent)">Genetic Algorithm Alpha</a> &mdash; Evolutionary optimization in signal generation</li>
+      <li> &mdash; Evolutionary optimization in signal generation</li>
       <li><a href="paper-bid-ask-spread-dynamics.html" style="color:var(--accent)">Bid-Ask Spread Dynamics</a> &mdash; How spreads affect entry and exit quality</li>
       <li><a href="papers.html" style="color:var(--accent)">All Research Papers</a> &mdash; Full library of quantitative research</li>
     </ul>
@@ -569,32 +564,34 @@ a{text-decoration:none;color:inherit}
       <div class="footer-desc">Independent quantitative research platform. Market analysis, technical signals, and educational content for US financial markets. Independent quantitative research platform. Not financial advice.</div>
     </div>
     <div class="footer-col">
-      <h4>Analysis</h4>
-      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
-      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
-      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
-      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
-      <a href="claude-ai-trading.html">Claude AI Trading</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="footer-col">
-      <h4>Markets</h4>
-      <a href="markets.html">Overview</a>
-      <a href="stocks.html">US Equities</a>
-      <a href="quantum-signals.html">Quantum Signals</a>
-      <a href="news.html">Market News</a>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="footer-col">
-      <h4>Lab</h4>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
-      <a href="research.html">Microstructure Research</a>
-      <a href="infrastructure.html">Infrastructure</a>
-      <a href="papers.html">All Papers</a>
-      <a href="about.html">About QuantMedia</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="privacy.html">Privacy Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
       <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>

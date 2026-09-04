@@ -180,15 +180,12 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <img src="logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block">
     </a>
     <nav class="main-nav">
-      <a href="./">Home</a>
-      <a href="markets.html">Markets</a>
-      <a href="news.html">News</a>
-      <a href="stocks.html">Equities</a>
-      <a href="quantum-signals.html">Quantum</a>
-      <a href="papers.html" class="active">Papers</a>
-      <a href="research.html">Microstructure</a>
-      <a href="about.html">About</a>
-      <a href="/reproducibility.html">Tools &amp; Code</a>
+      <a href="/">Home</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
+      <a href="/papers.html" class="active">Papers</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/about.html">About</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -200,16 +197,12 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="/reproducibility.html">Free Tools &amp; Code</a>
-  <a href="/reports/">Worked Examples</a>
-  <a href="./">Home</a>
-  <a href="markets.html">Markets</a>
-  <a href="news.html">News</a>
-  <a href="stocks.html">Equities</a>
-  <a href="quantum-signals.html">Quantum</a>
-  <a href="papers.html" class="active">Papers</a>
-  <a href="research.html">Microstructure</a>
-  <a href="about.html">About</a>
+  <a href="/">Home</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
+  <a href="/papers.html" class="active">Papers</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/about.html">About</a>
 </div>
 
 <!-- HERO -->
@@ -219,7 +212,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <h1 class="hero-title">Quantitative Finance Research Papers</h1>
     <div class="hero-desc">Independent, open-access research covering market microstructure, portfolio construction, execution analytics, GPU trading infrastructure, and machine learning in finance. Each paper includes a full written analysis and Python implementation examples — written for practitioners and researchers who want rigorous, reproducible methodology rather than surface-level summaries.</div>
     <div style="font-size:13px;color:var(--dim);line-height:1.75;max-width:680px;margin:12px 0 0">Topics span VPIN order flow toxicity, Hierarchical Risk Parity, the Probabilistic Sharpe Ratio, slippage and latency modeling, genetic algorithm alpha discovery, alternative data integration, sovereign AI for investment research, and high-frequency analytical operations. All research is non-commercial and provided for educational purposes.</div>
-    <div style="font-size:13px;color:var(--dim);line-height:1.75;max-width:680px;margin:12px 0 0">Applied companions to this library: the <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> dashboard puts multi-factor confluence to work on 180 liquid US equities, the <a href="sector-rotation-guide.html" style="color:var(--accent)">sector rotation guide</a> covers how capital moves between S&amp;P 500 sectors, and <a href="methodology.html" style="color:var(--accent)">methodology &amp; data sources</a> documents every input behind both.</div>
+    <div style="font-size:13px;color:var(--dim);line-height:1.75;max-width:680px;margin:12px 0 0">Applied companions to this library: the <a href="quantum-signals.html" style="color:var(--accent)">daily US stock signals</a> dashboard puts multi-factor confluence to work on 180 liquid US equities, the  covers how capital moves between S&amp;P 500 sectors, and <a href="methodology.html" style="color:var(--accent)">methodology &amp; data sources</a> documents every input behind both.</div>
     <div style="font-size:13px;color:var(--dim);line-height:1.75;max-width:680px;margin:12px 0 0">Shorter explainers with worked numeric examples: <a href="/learn/what-is-vpin.html" style="color:var(--accent)">what is VPIN</a> &middot; <a href="/learn/what-is-probabilistic-sharpe-ratio.html" style="color:var(--accent)">the Probabilistic Sharpe Ratio</a> &middot; <a href="/learn/hrp-vs-mean-variance.html" style="color:var(--accent)">HRP vs mean-variance</a> &middot; <a href="/learn/how-to-model-slippage-in-backtests.html" style="color:var(--accent)">modelling slippage</a>. Original daily data: <a href="/indices/signal-breadth.html" style="color:var(--accent)">Signal Breadth</a> and <a href="/indices/sector-confluence.html" style="color:var(--accent)">Sector Confluence</a>. Interactive: <a href="/tools/probabilistic-sharpe-ratio-calculator.html" style="color:var(--accent)">PSR calculator</a>. Runnable code behind the VPIN and HRP papers: <a href="/reproducibility.html" style="color:var(--accent)">research reproducibility</a>.</div>
     <div class="hero-stats">
       <div><div class="hero-stat-val">11</div><div class="hero-stat-label">Papers</div></div>
@@ -247,20 +240,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         <div class="paper-card-abstract">Volume-synchronized probability of informed trading as a practical signal for detecting adverse selection in fragmented equity markets. Includes Python implementation, volume bucketing, and trade classification methods.</div>
         <div class="paper-card-bottom">
           <div class="art-tags"><span class="art-tag green">VPIN</span><span class="art-tag">Microstructure</span><span class="art-tag">Order Flow</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
-
-      <!-- Paper 02: GPU/CPU -->
-      <a href="paper-gpu-cpu-trading-infrastructure.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 02</span>
-          <span class="paper-date">Feb 2026</span>
-        </div>
-        <div class="paper-card-title">Building a Low-Latency Trading Stack with RTX 5090: Why GPU-Accelerated Financial Modeling Still Needs Core Ultra 9-Class CPUs</div>
-        <div class="paper-card-abstract">Why GPU-accelerated financial modeling still requires CPU-class hardware. A split-path architecture analysis for real trading systems with latency decomposition and PyTorch inference examples.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag blue">Infrastructure</span><span class="art-tag">Latency</span><span class="art-tag">GPU</span></div>
           <span class="read-link">Read →</span>
         </div>
       </a>
@@ -307,34 +286,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
         </div>
       </a>
 
-      <!-- Paper 07: Sovereign AI -->
-      <a href="paper-sovereign-ai-local-llms.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 07</span>
-          <span class="paper-date">Feb 2026</span>
-        </div>
-        <div class="paper-card-title">Sovereign AI: Why Local LLMs Are the Future of Quant Research</div>
-        <div class="paper-card-abstract">Why self-hosted language models are structurally superior for investment research. The Bastion philosophy — data minimization, auditability, latency predictability, and customization.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag blue">Sovereign AI</span><span class="art-tag">LLM</span><span class="art-tag">Privacy</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
-
-      <!-- Paper 08: Genetic -->
-      <a href="paper-genetic-algorithm-alpha.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 08</span>
-          <span class="paper-date">Feb 2026</span>
-        </div>
-        <div class="paper-card-title">Automating Alpha Discovery with Genetic Algorithms</div>
-        <div class="paper-card-abstract">Evolutionary search as an alpha hypothesis generator. Fitness design, selection pressure, and rigorous out-of-sample validation for non-convex trading strategy spaces.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag gold">Alpha</span><span class="art-tag">Optimization</span><span class="art-tag">GA</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
-
       <!-- Paper 09: Slippage -->
       <a href="paper-slippage-latency-modeling.html" class="paper-card">
         <div class="paper-card-top">
@@ -348,71 +299,19 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
           <span class="read-link">Read →</span>
         </div>
       </a>
-
-      <!-- Paper 10: Alt Data -->
-      <a href="paper-alternative-data-quant-finance.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 10</span>
-          <span class="paper-date">Feb 2026</span>
-        </div>
-        <div class="paper-card-title">The Role of Alternate Data in Quantitative Finance</div>
-        <div class="paper-card-abstract">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals. Data governance, timestamp integrity, and ML pipeline design for alternative data sources.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag blue">Alt Data</span><span class="art-tag">ML</span><span class="art-tag">Nowcasting</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
-
-      <!-- Paper 11: Vectorization -->
-      <a href="paper-hf-analytical-operations.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 11</span>
-          <span class="paper-date">Mar 2026</span>
-        </div>
-        <div class="paper-card-title">Optimization of High-Frequency Analytical Operations: From Vectorization to Predictive Modeling</div>
-        <div class="paper-card-abstract">Rolling-window mathematics, GPU-accelerated analytics, and feature engineering for quantitative trading systems. From raw market data to predictive feature matrices.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag green">Analytics</span><span class="art-tag">GPU</span><span class="art-tag">Vectorization</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
     </div>
 
     <!-- FRONTIER / INTERNATIONAL -->
     <h2 class="section-label gold">Frontier / International Research</h2>
 
     <div class="paper-grid">
-      <!-- Paper 06: BIST -->
-      <a href="paper-bist-sentiment-analysis.html" class="paper-card">
-        <div class="paper-card-top">
-          <span class="paper-num">Paper 06</span>
-          <span class="paper-date">Mar 2026</span>
-        </div>
-        <div class="paper-card-title">Sentiment Analysis in the Turkish Stock Market (BIST): Generating Signals from Financial News with Qwen and Llama</div>
-        <div class="paper-card-abstract">Building a time-aware, Turkish-native NLP pipeline using Qwen and Llama for financial news signal extraction on Borsa İstanbul. Local inference, label design, and critical pitfalls.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag blue">NLP</span><span class="art-tag">LLM</span><span class="art-tag green">BIST</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
     </div>
 
     <!-- FEATURED: Claude AI Trading -->
     <h2 class="section-label" style="border-left-color:var(--blue)">Featured Analysis</h2>
 
     <div class="paper-grid" style="margin-bottom:0">
-      <a href="claude-ai-trading.html" class="paper-card" style="border-left:3px solid var(--blue)">
-        <div class="paper-card-top">
-          <span class="paper-num" style="color:var(--blue)">Featured</span>
-          <span class="paper-date">Mar 2026 · Updated regularly</span>
-        </div>
-        <div class="paper-card-title">Claude AI in Trading: How Large Language Models Are Reshaping Financial Markets</div>
-        <div class="paper-card-abstract">From a $14,000 Polymarket return to Goldman Sachs automation and a trillion-dollar tech selloff — quantitative analysis of how Claude AI has become the most disruptive force in financial markets since algorithmic trading.</div>
-        <div class="paper-card-bottom">
-          <div class="art-tags"><span class="art-tag blue">AI Trading</span><span class="art-tag">Claude</span><span class="art-tag">Wall Street</span></div>
-          <span class="read-link">Read →</span>
-        </div>
-      </a>
+      
     </div>
 
   </main>
@@ -422,16 +321,16 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="widget">
       <div class="widget-header"><span class="widget-title">Papers</span></div>
       <a href="paper-vpin-order-flow-toxicity.html" class="toc-item"><span class="toc-num">01</span>VPIN &amp; Order Flow Toxicity</a>
-      <a href="paper-gpu-cpu-trading-infrastructure.html" class="toc-item"><span class="toc-num">02</span>Low-Latency Stack: RTX 5090 &amp; CPU</a>
+      
       <a href="paper-hierarchical-risk-parity.html" class="toc-item"><span class="toc-num">03</span>Hierarchical Risk Parity</a>
       <a href="paper-probabilistic-sharpe-ratio.html" class="toc-item"><span class="toc-num">04</span>Probabilistic Sharpe Ratio</a>
       <a href="paper-bid-ask-spread-dynamics.html" class="toc-item"><span class="toc-num">05</span>Bid-Ask Spread Dynamics</a>
-      <a href="paper-bist-sentiment-analysis.html" class="toc-item" style="border-top:1px solid var(--gold)"><span class="toc-num" style="color:var(--gold)">06</span>BIST Sentiment (Qwen / Llama)</a>
-      <a href="paper-sovereign-ai-local-llms.html" class="toc-item"><span class="toc-num">07</span>Sovereign AI &amp; Local LLMs</a>
-      <a href="paper-genetic-algorithm-alpha.html" class="toc-item"><span class="toc-num">08</span>Genetic Algorithm Alpha Discovery</a>
+      
+      
+      
       <a href="paper-slippage-latency-modeling.html" class="toc-item"><span class="toc-num">09</span>Slippage &amp; Latency Modeling</a>
-      <a href="paper-alternative-data-quant-finance.html" class="toc-item"><span class="toc-num">10</span>Alternate Data in Quant Finance</a>
-      <a href="paper-hf-analytical-operations.html" class="toc-item"><span class="toc-num">11</span>HF Analytical Optimization</a>
+      
+      
     </div>
 
     <div class="widget">
@@ -446,10 +345,10 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
     <div class="widget">
       <div class="widget-header"><span class="widget-title">Quick Links</span></div>
-      <a href="research.html" class="toc-item"><span class="toc-num">→</span>Research Home</a>
-      <a href="infrastructure.html" class="toc-item"><span class="toc-num">→</span>Infrastructure Docs</a>
-      <a href="claude-ai-trading.html" class="toc-item"><span class="toc-num">→</span>Claude AI Trading</a>
-      <a href="markets.html" class="toc-item"><span class="toc-num">→</span>Markets</a>
+      
+      
+      
+      
       <a href="about.html" class="toc-item"><span class="toc-num">→</span>About</a>
     </div>
 
@@ -471,28 +370,35 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
-      <h4>Papers</h4>
-      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
-      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
-      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
-      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
-      <a href="claude-ai-trading.html">Claude AI Trading</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="ft-col">
-      <h4>Data &amp; Code</h4>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="ft-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="ft-col">
-      <h4>Lab</h4>
-      <a href="about.html">About QuantMedia</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="privacy.html">Privacy Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
       <a href="/editorial-policy.html">Editorial Policy</a>
-      <a href="markets.html">Markets</a>
-      <a href="infrastructure.html">Infrastructure</a>
     </div>
   </div>
   <div class="footer-bottom">

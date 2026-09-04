@@ -294,6 +294,10 @@ def _num(v):
     return float(v)
 
 
+def has_anchor(html, marker):
+    return f"<!-- QM:{marker}:START -->" in html
+
+
 def inject(html, marker, inner_html):
     """Replace content between QM:MARKER comment anchors."""
     pat = rf'(<!-- QM:{re.escape(marker)}:START -->).*?(<!-- QM:{re.escape(marker)}:END -->)'
@@ -480,6 +484,9 @@ def update_markets_html(fx_feed, cx_feed):
     """Inject whichever feeds we have. A stale feed keeps its own timestamp."""
     try:
         html = read_file('markets.html')
+        if not has_anchor(html, 'FOREX'):
+            print('  markets.html retired - no render')
+            return
     except Exception as e:
         stage_error('markets.html read', e)
         return
@@ -855,7 +862,8 @@ def render_home_snapshot(bar):
 
     try:
         page = read_file("index.html")
-        page = inject(page, "HOME_BAR", bar_html)
+        if has_anchor(page, "HOME_BAR"):
+            page = inject(page, "HOME_BAR", bar_html)
         page = inject(page, "HOME_SESSION", block)
         write_file("index.html", page)
         print(f"  index.html rendered ({len(items)} bar items, session {md})")
@@ -894,6 +902,9 @@ def update_news_html(feed):
         return
     try:
         html = read_file('news.html')
+        if not has_anchor(html, 'NEWS_SNAP'):
+            print('  news.html retired - no render')
+            return
         html = inject(html, 'NEWS_SNAP',
                       render_news_html(feed['data'], feed['fetched_utc']))
         # The status line used to be filled only by JavaScript, so every

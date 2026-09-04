@@ -7,18 +7,18 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Quantitative Finance Worked Examples | QuantMedia</title>
+<title>Verification Reports: Quant Finance Code Checked Against Ground Truth | QuantMedia</title>
 <meta name="description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
 <link rel="canonical" href="https://quantmedia.io/reports/">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Free Quantitative Finance Worked Examples">
+<meta property="og:title" content="Verification Reports: Quant Finance Code Checked Against Ground Truth">
 <meta property="og:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
 <meta property="og:url" content="https://quantmedia.io/reports/">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free Quantitative Finance Worked Examples">
+<meta name="twitter:title" content="Verification Reports: Quant Finance Code Checked Against Ground Truth">
 <meta name="twitter:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
@@ -28,7 +28,7 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Free Quantitative Finance Worked Examples",
+  "headline": "Verification Reports: Quant Finance Code Checked Against Ground Truth",
   "description": "Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.",
   "author": {
     "@type": "Person",
@@ -64,7 +64,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Free Quantitative Finance Worked Examples",
+      "name": "Verification Reports: Quant Finance Code Checked Against Ground Truth",
       "item": "https://quantmedia.io/reports/"
     }
   ]
@@ -227,14 +227,11 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="/">Home</a>
-      <a href="/markets.html">Markets</a>
-      <a href="/news.html">News</a>
-      <a href="/stocks.html">Equities</a>
-      <a href="/quantum-signals.html">Quantum</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
       <a href="/papers.html">Papers</a>
-      <a href="/research.html">Microstructure</a>
+      <a href="/methodology.html" class="active">Methodology</a>
       <a href="/about.html">About</a>
-      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -245,50 +242,77 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
 </header>
 <div class="mobile-nav" id="mobileNav">
-  <a href="/reproducibility.html">Free Tools &amp; Code</a>
-  <a href="/reports/">Worked Examples</a>
   <a href="/">Home</a>
-  <a href="/markets.html">Markets</a>
-  <a href="/news.html">News</a>
-  <a href="/stocks.html">Equities</a>
-  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
   <a href="/papers.html">Papers</a>
-  <a href="/research.html">Microstructure</a>
+  <a href="/methodology.html" class="active">Methodology</a>
   <a href="/about.html">About</a>
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Research</a> &rsaquo; Free Quantitative Finance Worked Examples</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Free Quantitative Finance Worked Examples</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Research</a> &rsaquo; Verification Reports: Quant Finance Code Checked Against Ground Truth</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Verification Reports: Quant Finance Code Checked Against Ground Truth</h1>
 
-<p class="qm-lede">Follow a quantitative result from its inputs to its output.
-These free examples pair the explanation with runnable code, expected results
-and the limitations that matter when interpreting them.</p>
-<div class="qm-answer"><span class="qm-answer-label">Choose a question</span>
-<p>Use PSR to examine a Sharpe estimate, VPIN to explore trade classification,
-or HRP to compare portfolio allocations. The examples require no account or
-paid data feed.</p></div>
-<ul class="qm-related">
-<li><a href="/reports/psr-worked-example.html">PSR: check every step of the calculation</a>
-<span>Why skewness, kurtosis and the benchmark change the answer. Try the same inputs in the free calculator.</span></li>
-<li><a href="/reports/vpin-example.html">VPIN: one tape, two different readings</a>
-<span>Bulk volume classification and the tick rule on the same 20,000 synthetic trades. Includes 15 tests.</span></li>
-<li><a href="/reports/hrp-example.html">HRP: compare six allocation methods</a>
-<span>In-sample and out-of-sample volatility on a 20-asset synthetic panel. Includes 13 tests.</span></li>
+<p class="qm-lede">A verification report is evidence that an implementation of
+a quantitative method does what the paper says &mdash; produced by running the
+code against inputs whose correct answer is known in advance, and recording
+what it got right, what it got wrong, and what was fixed.</p>
+
+<div class="qm-answer"><span class="qm-answer-label">Why this exists</span>
+<p>Language models now produce a plausible implementation of almost any finance
+paper in seconds. What they cannot do is tell you whether it is correct. The
+first report below documents a VPIN implementation that returned <em>zero</em>
+toxicity for a perfectly one-sided tape &mdash; the opposite of the right
+answer &mdash; and looked fine until it was tested. As generating code becomes
+free, proving it correct is the part that keeps its value.</p></div>
+
+<h2>Reports</h2>
+<div class="qm-tablewrap"><table class="qm-kv">
+<thead><tr><th>Method</th><th>Record</th><th>Verdict</th><th>Defects found</th></tr></thead>
+<tbody>
+<tr><td><a href="/reports/vpin-example.html">VPIN &mdash; order-flow toxicity</a></td>
+    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Passes after one fix</td><td class="qm-num">1 &mdash; degenerate tape</td></tr>
+<tr><td><a href="/reports/hrp-example.html">Hierarchical Risk Parity</a></td>
+    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Passes after two fixes</td><td class="qm-num">2 &mdash; pandas 3 view; symmetry</td></tr>
+<tr><td><a href="/reports/psr-worked-example.html">Probabilistic Sharpe Ratio</a></td>
+    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Published example was wrong; corrected</td><td class="qm-num">1 &mdash; kurtosis term</td></tr>
+</tbody></table></div>
+
+<h2>What a report contains</h2>
+<ul>
+<li><strong>Ground truth.</strong> How an input with a known correct answer was
+constructed &mdash; usually synthetic, from a fixed seed, because real market
+data never tells you what the right answer was.</li>
+<li><strong>What was run.</strong> The exact commands, versions and seed.</li>
+<li><strong>Results.</strong> The numbers the code produced, unedited.</li>
+<li><strong>Defects.</strong> What was wrong, how it was detected, how it was
+fixed, and the regression test that now guards it.</li>
+<li><strong>Limitations.</strong> What the verification does <em>not</em>
+establish. Passing on synthetic data proves the mechanism, not the market.</li>
+<li><strong>Reproduce.</strong> Enough to get the same output on your machine.</li>
 </ul>
-<h2>Run the examples</h2>
-<p>The <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">GitHub research directory</a>
-contains the code, sample data and expected CSV output. Start with the
-<a href="/reproducibility.html">installation instructions and implementation index</a>.
-After installing the dependencies, the Python examples run offline.</p>
-<h2>What these checks establish</h2>
-<p>Known inputs help expose implementation errors: lost volume in a bucket,
-weights that fail to sum to one, or a missing term in a formula. A passing test
-supports the behavior it checks. It does not establish that a method predicts
-future prices, survives transaction costs or generalizes beyond the example.</p>
-<p>All examples and tools are freely accessible. For background, browse the
-<a href="/papers.html">research library</a>; for data coverage and corrections,
-read the <a href="/editorial-policy.html">editorial policy</a>.</p>
+
+<h2>Check it yourself, in one command</h2>
+<p><code>python quantmedia-research/verify_examples.py</code> re-runs both
+packages in a clean temporary directory and asserts that every shipped output
+file matches to nine decimal places. If it passes on your machine, you hold the
+same evidence this page describes. The runner and both packages are in the
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research" rel="noopener" target="_blank">public repository</a>.</p>
+
+<h2>Verify your own implementation</h2>
+<p>If you have written or generated your own VPIN, HRP or PSR code, point it at
+the synthetic inputs described in each report and compare. If you would like a
+report written against <em>your</em> implementation &mdash; the same ground
+truth, the same discipline, a dated document you can cite &mdash;
+<a href="/contact.html">get in touch</a>. That is the service this site is being
+built around.</p>
+
+<div class="qm-related">
+  <a href="/reproducibility.html">Implementations &amp; tests</a>
+  <a href="/editorial-policy.html">Corrections policy</a>
+  <a href="/author/cemil-erturk.html">Who verifies</a>
+</div>
 
 </div>
 </main>
@@ -299,27 +323,35 @@ read the <a href="/editorial-policy.html">editorial policy</a>.</p>
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
-      <h4>Research</h4>
-      <a href="/reports/">Worked Examples</a>
-      <a href="/research.html#vpin">VPIN Methodology</a>
-      <a href="/research.html#darkpool">Dark Pool Mechanics</a>
-      <a href="/research.html#adverse">Adverse Selection</a>
-      <a href="/infrastructure.html">Infrastructure</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="ft-col">
-      <h4>Data &amp; Code</h4>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="ft-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="ft-col">
-      <h4>Lab</h4>
-      <a href="/about.html">About QuantMedia</a>
-      <a href="/methodology.html">Methodology</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/editorial-policy.html">Editorial Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
       <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">

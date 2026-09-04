@@ -5,11 +5,11 @@
 <meta charset="UTF-8">
 <meta name="google-adsense-account" content="ca-pub-7635577322319251">
 <meta name="theme-color" content="#00a651">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex,follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude AI in Trading — Quantitative Applications | QuantMedia</title>
 <meta name="description" content="How Claude AI is transforming trading and finance. From Polymarket to Goldman Sachs automation — a quantitative analysis of LLMs disrupting Wall Street.">
-<link rel="canonical" href="https://quantmedia.io/claude-ai-trading.html">
+<link rel="canonical" href="https://quantmedia.io/reproducibility.html">
 <meta name="google-site-verification" content="HKyAQdTztuG3RsSI5kEpSMn0exLBXqjfR7t">
 <meta name="author" content="Cemil Ertürk">
 <meta name="keywords" content="claude ai trading, ai trading bot, claude financial analysis, ai stock market, agentic ai finance, llm trading, claude opus trading, ai market prediction, claude polymarket, ai quantitative finance, goldman sachs ai, anthropic claude finance">
@@ -214,10 +214,14 @@ a{text-decoration:none;color:inherit}
 
 
 
+<!-- qm-retired -->
+<meta http-equiv="refresh" content="0;url=/reproducibility.html">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
 <body>
+<div style="background:#1a1a1a;color:#e8e8e8;border-bottom:2px solid #00a651;padding:12px 20px;font:14px/1.6 sans-serif;text-align:center">This page has been retired as part of QuantMedia's refocus on verified quantitative methods. <a href="/reproducibility.html" style="color:#00a651">Continue to the current page &rarr;</a></div>
+
 
 <!-- HEADER -->
 <header class="site-header">
@@ -226,15 +230,12 @@ a{text-decoration:none;color:inherit}
       <img src="logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block">
     </a>
     <nav class="main-nav">
-      <a href="./">Home</a>
-      <a href="markets.html">Markets</a>
-      <a href="news.html">News</a>
-      <a href="stocks.html">Equities</a>
-      <a href="quantum-signals.html">Quantum</a>
-      <a href="papers.html">Papers</a>
-      <a href="research.html">Microstructure</a>
-      <a href="about.html">About</a>
-      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/">Home</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
+      <a href="/papers.html">Papers</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/about.html">About</a>
     </nav>
     <div class="header-right"><button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
@@ -253,12 +254,10 @@ a{text-decoration:none;color:inherit}
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="/">Home</a>
-  <a href="/markets.html">Markets</a>
-  <a href="/news.html">News</a>
-  <a href="/stocks.html">Equities</a>
-  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
   <a href="/papers.html">Papers</a>
-  <a href="/research.html">Microstructure</a>
+  <a href="/methodology.html">Methodology</a>
   <a href="/about.html">About</a>
 </div>
 
@@ -608,31 +607,34 @@ analysis = research_agent(
       <div class="footer-desc">Independent quantitative research platform. Market analysis, technical signals, and educational content for US financial markets. Independent quantitative research platform. Not financial advice.</div>
     </div>
     <div class="footer-col">
-      <h4>Analysis</h4>
-      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
-      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
-      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
-      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
-      <a href="claude-ai-trading.html">Claude AI Trading</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="footer-col">
-      <h4>Markets</h4>
-      <a href="markets.html">Overview</a>
-      <a href="stocks.html">US Equities</a>
-      <a href="news.html">Market News</a>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="footer-col">
-      <h4>Lab</h4>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
-      <a href="research.html">Microstructure Research</a>
-      <a href="infrastructure.html">Infrastructure</a>
-      <a href="papers.html">All Papers</a>
-      <a href="about.html">About QuantMedia</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="privacy.html">Privacy Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
       <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>

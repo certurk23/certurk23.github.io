@@ -313,9 +313,7 @@ FORBIDDEN = [
 REQUIRED_FILES = {
     'index.html':            60_000,
     'quantum-signals.html':  40_000,
-    'markets.html':          25_000,
-    'news.html':             25_000,
-    'stocks.html':           25_000,
+    'reports/index.html':    12_000,
     'papers.html':           25_000,
     'methodology.html':      15_000,
     'sitemap.xml':            1_000,

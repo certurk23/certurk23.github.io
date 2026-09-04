@@ -264,9 +264,7 @@ sectors with fewer than {C.MIN_SECTOR_SIZE} scored members are omitted</div>
   <h2>Related</h2>
   <ul class="qm-related">
     <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>The aggregate this metric decomposes</span></li>
-    <li><a href="/sector-rotation-guide.html">Sector rotation guide</a><span>How capital moves between S&amp;P 500 sectors</span></li>
     <li><a href="/learn/what-is-signal-confluence.html">What is signal confluence?</a><span>The score being averaged here</span></li>
-    <li><a href="/stocks.html">US equities screener</a><span>Sector ETF context</span></li>
   </ul>
 """
 
@@ -919,7 +917,6 @@ BREADTH_LEARN_BODY = f"""
     <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>Current reading, formula and history</span></li>
     <li><a href="/indices/sector-confluence.html">QuantMedia Sector Confluence</a><span>Breadth decomposed by sector</span></li>
     <li><a href="/learn/what-is-signal-confluence.html">What is signal confluence?</a><span>The underlying per-stock score</span></li>
-    <li><a href="/sector-rotation-guide.html">Sector rotation guide</a><span>Reading participation across sectors</span></li>
   </ul>
 """
 
@@ -1164,8 +1161,6 @@ REPRO_BODY = """
   <ul class="qm-related">
     <li><a href="/paper-slippage-latency-modeling.html">Slippage &amp; Latency Modeling</a><span>Formulas and a worked example appear in <a href="/learn/how-to-model-slippage-in-backtests.html">the explainer</a>; no package yet</span></li>
     <li><a href="/paper-bid-ask-spread-dynamics.html">Bid-Ask Spread Dynamics</a><span>Research only</span></li>
-    <li><a href="/paper-genetic-algorithm-alpha.html">Genetic Algorithm Alpha</a><span>Research only</span></li>
-    <li><a href="/paper-alternative-data-quant-finance.html">Alternative Data in Quantitative Finance</a><span>Research only</span></li>
     <li><a href="/papers.html">Full research library</a><span>All 11 open-access papers</span></li>
   </ul>
 

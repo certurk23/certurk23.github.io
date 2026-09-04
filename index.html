@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuantMedia — Free Quant Finance Tools &amp; Research</title>
-<meta name="description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
+<title>QuantMedia — Verified Quantitative Finance Code, Free</title>
+<meta name="description" content="Verified implementations of VPIN, Hierarchical Risk Parity and the Probabilistic Sharpe Ratio: runnable code, synthetic ground truth, dated reports of defects found and fixed, and a free PSR calculator.">
 <link rel="canonical" href="https://quantmedia.io/">
 <!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
 <script src="qm-data.js"></script>
@@ -33,7 +33,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — Free Quant Finance Tools & Research","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-09-04"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"Cemil Ertürk","url":"https://quantmedia.io/author/cemil-erturk.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — Free Quant Finance Tools & Research","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-09-04"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
@@ -777,16 +777,10 @@ button{cursor:pointer;font-family:inherit}
 <li><a href="paper-vpin-order-flow-toxicity.html">VPIN and Order Flow Toxicity</a></li>
 <li><a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity (HRP)</a></li>
 <li><a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a></li>
-<li><a href="paper-gpu-cpu-trading-infrastructure.html">Low-Latency Trading Stack: RTX 5090</a></li>
 <li><a href="paper-bid-ask-spread-dynamics.html">Bid-Ask Spread Dynamics</a></li>
-<li><a href="paper-hf-analytical-operations.html">HF Analytical Operations</a></li>
 </ul>
 <p style="font-size:18px;font-weight:700;margin-top:20px">Pages</p>
 <ul>
-<li><a href="markets.html">Post-close Market Data</a></li>
-<li><a href="news.html">Financial News</a></li>
-<li><a href="stocks.html">US Equities</a></li>
-<li><a href="research.html">Research</a></li>
 <li><a href="about.html">About</a></li>
 </ul>
 </div>
@@ -809,15 +803,12 @@ button{cursor:pointer;font-family:inherit}
       <img src="logo.png" alt="QuantMedia" width="57" height="38" fetchpriority="high" style="display:block">
     </a>
     <nav class="main-nav">
-      <a href="./" class="active">Home</a>
-      <a href="markets.html">Markets</a>
-      <a href="news.html">News</a>
-      <a href="stocks.html">Equities</a>
-      <a href="quantum-signals.html">Quantum</a>
-      <a href="papers.html">Papers</a>
-      <a href="research.html">Microstructure</a>
-      <a href="about.html">About</a>
-      <a href="/reproducibility.html">Tools &amp; Code</a>
+      <a href="/" class="active">Home</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
+      <a href="/papers.html">Papers</a>
+      <a href="/methodology.html">Methodology</a>
+      <a href="/about.html">About</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -854,25 +845,14 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="/reproducibility.html">Free Tools &amp; Code</a>
-  <a href="/reports/">Worked Examples</a>
-  <a href="./" class="active">Home</a>
-  <a href="markets.html">Markets</a>
-  <a href="news.html">News</a>
-  <a href="stocks.html">Equities</a>
-  <a href="quantum-signals.html">Quantum</a>
-  <a href="papers.html">Papers</a>
-  <a href="research.html">Microstructure</a>
-  <a href="about.html">About</a>
+  <a href="/" class="active">Home</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
+  <a href="/papers.html">Papers</a>
+  <a href="/methodology.html">Methodology</a>
+  <a href="/about.html">About</a>
 </div>
 
-<!-- MARKET BAR -->
-<div class="market-bar">
-  <div class="mbar-label">Last close</div>
-  <div class="mbar-items" id="marketBar"><!-- QM:HOME_BAR:START -->
-<div class="mbar-item"><span class="mbar-sym">S&amp;P 500</span><span class="mbar-val">7,747.71</span><span class="mbar-chg up">+1.06%</span></div><div class="mbar-item"><span class="mbar-sym">Nasdaq</span><span class="mbar-val">26,584.06</span><span class="mbar-chg up">+1.40%</span></div><div class="mbar-item"><span class="mbar-sym">Dow</span><span class="mbar-val">53,686.11</span><span class="mbar-chg up">+1.18%</span></div><div class="mbar-item"><span class="mbar-sym">VIX</span><span class="mbar-val">14.32</span><span class="mbar-chg down">-5.79%</span></div><div class="mbar-item"><span class="mbar-sym">Gold</span><span class="mbar-val">4,531.90</span><span class="mbar-chg up">+3.79%</span></div><div class="mbar-item"><span class="mbar-sym">BTC</span><span class="mbar-val">81,082.76</span><span class="mbar-chg up">+4.89%</span></div>
-<!-- QM:HOME_BAR:END --></div>
-</div>
 
 <main>
 
@@ -903,45 +883,6 @@ button{cursor:pointer;font-family:inherit}
 </section>
 
 <!-- HERO: Market Pulse -->
-<section class="hero-section">
-  <div class="hero-inner" style="grid-template-columns:1fr" id="heroSection">
-    <div class="hero-main" style="border-right:none">
-      <div class="hero-bg"></div>
-      <div class="hero-content" id="heroContent">
-        <div class="hero-eyebrow">
-          <span class="badge badge-green">Market Pulse</span>
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)" id="heroTime">Post-close</span>
-        </div>
-        <h2 class="hero-h1" id="heroH1">US Markets &mdash; Daily Quantitative Research &amp; Signal Analysis</h2>
-        <div id="heroBullets" style="margin-bottom:16px">
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
-            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Post-close signal dashboard scoring 180 liquid US equities daily</li>
-            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Quantitative research papers on microstructure and portfolio theory</li>
-            <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Market data snapshots, sector analysis, and financial news</li>
-          </ul>
-        </div>
-        <div id="heroImpact" style="display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap">
-          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">S&amp;P 500</div>
-            <div id="heroSPY" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
-          </div>
-          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">NASDAQ 100</div>
-            <div id="heroQQQ" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
-          </div>
-          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:10px 16px;min-width:110px">
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:5px">VIX</div>
-            <div id="heroVIX" style="font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:#fff">—</div>
-          </div>
-        </div>
-        <div class="hero-meta">
-          <span class="hero-meta-item"><strong>QuantMedia</strong> Research</span>
-          <span class="hero-meta-item" id="heroDate">Updated each weekday after the US close</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ABOUT QUANTMEDIA — static editorial, high visibility -->
 <div style="background:var(--bg2);border-bottom:1px solid var(--border)">
@@ -957,7 +898,7 @@ button{cursor:pointer;font-family:inherit}
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">Platform Tools</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The <a href="stocks.html" style="color:var(--accent)">US equities screener</a> presents US stocks, sector ETFs, and index rotation using post-close snapshots. The <a href="markets.html" style="color:var(--accent)">global markets dashboard</a> monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The  presents US stocks, sector ETFs, and index rotation using post-close snapshots. The  monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
         <p style="font-size:11px;color:var(--muted);margin:0">All content is for educational and informational purposes only. Not financial advice.</p>
       </div>
     </div>
@@ -971,7 +912,7 @@ button{cursor:pointer;font-family:inherit}
       <span class="sec-label">Market News</span>
       <span class="sec-sub" id="newsDate">Latest Coverage</span>
     </div>
-    <a href="news.html" class="sec-link">All News &rarr;</a>
+    
   </div>
 
   <div id="newsGrid">
@@ -996,7 +937,7 @@ button{cursor:pointer;font-family:inherit}
       </p>
       <p style="font-size:13.5px;line-height:1.8;color:var(--muted,#888);margin:0">
         In the meantime:
-        <a href="news.html" style="color:var(--green,#00a651)">how to read financial market news</a> &middot;
+        
         <a href="quantum-signals.html" style="color:var(--green,#00a651)">daily US stock signals</a> &middot;
         <a href="papers.html" style="color:var(--green,#00a651)">quantitative research library</a>
       </p>
@@ -1005,7 +946,7 @@ button{cursor:pointer;font-family:inherit}
 </div>
 
 <!-- QM:HOME_SESSION:START -->
-<div class="page-wrap" style="padding-bottom:0"><div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:20px 24px;margin-bottom:22px"><div style="font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:10px">Latest session snapshot</div><p style="font-size:13.5px;line-height:1.8;color:var(--text3);margin:0">On the <strong>2026-09-03</strong> session, <strong>48</strong> of <strong>179</strong> scored US equities met the 22-of-30 confluence threshold; the median stock scored <strong>17</strong>. <a href="/quantum-signals.html" style="color:var(--green)">See the signals</a> &middot; <a href="/indices/signal-breadth.html" style="color:var(--green)">Signal Breadth Index</a></p><p style="font-size:12px;color:var(--text3);margin:10px 0 0">Market snapshot captured Sep 04 2026, 01:07 UTC.</p></div></div>
+<div class="page-wrap" style="padding-bottom:0"><div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:20px 24px;margin-bottom:22px"><div style="font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:10px">Live pipeline &mdash; today&rsquo;s scan, server-rendered</div><p style="font-size:13.5px;line-height:1.8;color:var(--text3);margin:0">On the <strong>2026-09-03</strong> session, <strong>48</strong> of <strong>179</strong> scored US equities met the 22-of-30 confluence threshold; the median stock scored <strong>17</strong>. <a href="/quantum-signals.html" style="color:var(--green)">See the signals</a> &middot; <a href="/indices/signal-breadth.html" style="color:var(--green)">Signal Breadth Index</a></p><p style="font-size:12px;color:var(--text3);margin:10px 0 0">Market snapshot captured Sep 04 2026, 01:07 UTC.</p></div></div>
 <!-- QM:HOME_SESSION:END -->
 
 <!-- ORIGINAL WORK
@@ -1015,12 +956,13 @@ button{cursor:pointer;font-family:inherit}
      differentiators were invisible to a first-time visitor. -->
 <div class="page-wrap" style="padding-bottom:0">
   <div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:26px 26px 20px;margin-bottom:28px">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:8px">What originates here</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:8px">Verified here</div>
     <p style="font-size:14.5px;line-height:1.8;color:var(--text3);margin:0 0 20px;max-width:760px">
-      Most of what you can read about quantitative finance online is a summary of
-      someone else's paper. These four things are produced by QuantMedia: two
-      daily metrics computed from our own scan, research code you can run, and
-      calculators that show their working.
+      QuantMedia verifies quantitative finance code. Each method here has a
+      runnable implementation, a synthetic input whose correct answer is known
+      in advance, a dated report of what the code got right and wrong, and
+      tests that guard the fixes. Two daily metrics are computed from the same
+      pipeline discipline and published with their freshness state.
     </p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px">
       <div>
@@ -1032,8 +974,8 @@ button{cursor:pointer;font-family:inherit}
         <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">The same scan grouped by sector and ranked by mean score, so you can see where technical agreement is concentrated rather than only how much exists.</p>
       </div>
       <div>
-        <a href="/reproducibility.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">Reproducible code &rarr;</a>
-        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">Runnable VPIN and Hierarchical Risk Parity implementations with example data, expected output and 28 tests. Papers without code are labelled as such.</p>
+        <a href="/reports/" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">Verification reports &rarr;</a>
+        <p style="font-size:13px;line-height:1.7;color:var(--text3);margin:6px 0 0">VPIN, HRP and PSR run against known ground truth. Three defects found by testing, all documented and fixed; one command reproduces every published number.</p>
       </div>
       <div>
         <a href="/tools/probabilistic-sharpe-ratio-calculator.html" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--green);letter-spacing:.2px">PSR calculator &rarr;</a>
@@ -1118,16 +1060,7 @@ button{cursor:pointer;font-family:inherit}
             </div>
           </a>
 
-          <a href="paper-gpu-cpu-trading-infrastructure.html" class="sc">
-            <div class="thumb thumb-infra"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-blue">Infrastructure</span></div>
-            <div class="sc-title">Building a Low-Latency Trading Stack with RTX 5090</div>
-            <div class="sc-excerpt">Why GPU-accelerated financial modeling still requires CPU-class hardware. A split-path architecture analysis for real trading systems.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QuantMedia · 11 min</span>
-              <span class="sc-read">Read &rarr;</span>
-            </div>
-          </a>
+          
 
           <a href="paper-hierarchical-risk-parity.html" class="sc">
             <div class="thumb thumb-portfolio"></div>
@@ -1162,16 +1095,7 @@ button{cursor:pointer;font-family:inherit}
             </div>
           </a>
 
-          <a href="claude-ai-trading.html" class="sc">
-            <div class="thumb thumb-altdata" style="background:linear-gradient(135deg,#0a1a0f,#0a0f0a)"></div>
-            <div style="margin-bottom:10px"><span class="badge badge-purple">AI Trading</span></div>
-            <div class="sc-title">Claude AI in Trading: How LLMs Are Reshaping Financial Markets</div>
-            <div class="sc-excerpt">From the $14K Polymarket trade to Goldman Sachs automation — how Claude is disrupting Wall Street.</div>
-            <div class="sc-footer">
-              <span class="sc-meta">QuantMedia · 14 min</span>
-              <span class="sc-read">Read &rarr;</span>
-            </div>
-          </a>
+          
 
         </div>
       </div>
@@ -1197,15 +1121,7 @@ button{cursor:pointer;font-family:inherit}
             <span class="badge badge-green" style="flex-shrink:0;height:fit-content;white-space:nowrap">Micro</span>
           </a>
 
-          <a href="paper-gpu-cpu-trading-infrastructure.html" class="dc">
-            <div class="dc-num">02</div>
-            <div class="dc-body">
-              <div class="dc-title">Low-Latency Stack: RTX 5090 &amp; Core Ultra 9</div>
-              <div class="dc-excerpt">Split-path CPU/GPU architecture analysis for real-world trading systems and batched ML inference.</div>
-              <div class="dc-tags"><span class="dc-tag">Infrastructure</span><span class="dc-tag">Latency</span><span class="dc-tag">GPU</span></div>
-            </div>
-            <span class="badge badge-blue" style="flex-shrink:0;height:fit-content;white-space:nowrap">Infra</span>
-          </a>
+          
 
           <a href="paper-hierarchical-risk-parity.html" class="dc">
             <div class="dc-num">03</div>
@@ -1237,35 +1153,11 @@ button{cursor:pointer;font-family:inherit}
             <span class="badge badge-green" style="flex-shrink:0;height:fit-content;white-space:nowrap">Micro</span>
           </a>
 
-          <a href="paper-bist-sentiment-analysis.html" class="dc">
-            <div class="dc-num">06</div>
-            <div class="dc-body">
-              <div class="dc-title">Sentiment Analysis with Qwen &amp; Llama</div>
-              <div class="dc-excerpt">Building a time-aware, language-native NLP pipeline for financial news signal extraction with open-weight LLMs.</div>
-              <div class="dc-tags"><span class="dc-tag">NLP</span><span class="dc-tag">LLM</span><span class="dc-tag">Sentiment</span></div>
-            </div>
-            <span class="badge badge-purple" style="flex-shrink:0;height:fit-content;white-space:nowrap">AI</span>
-          </a>
+          
 
-          <a href="paper-sovereign-ai-local-llms.html" class="dc">
-            <div class="dc-num">07</div>
-            <div class="dc-body">
-              <div class="dc-title">Sovereign AI: Local LLMs for Quant Research</div>
-              <div class="dc-excerpt">Self-hosted language models as the structural future of investment research and data governance.</div>
-              <div class="dc-tags"><span class="dc-tag">Sovereign AI</span><span class="dc-tag">LLM</span><span class="dc-tag">Privacy</span></div>
-            </div>
-            <span class="badge badge-purple" style="flex-shrink:0;height:fit-content;white-space:nowrap">AI</span>
-          </a>
+          
 
-          <a href="paper-genetic-algorithm-alpha.html" class="dc">
-            <div class="dc-num">08</div>
-            <div class="dc-body">
-              <div class="dc-title">Alpha Discovery with Genetic Algorithms</div>
-              <div class="dc-excerpt">Evolutionary search as an automated alpha hypothesis generator with fitness design and rigorous validation.</div>
-              <div class="dc-tags"><span class="dc-tag">GA</span><span class="dc-tag">Alpha</span><span class="dc-tag">Optimization</span></div>
-            </div>
-            <span class="badge badge-gold" style="flex-shrink:0;height:fit-content;white-space:nowrap">Alpha</span>
-          </a>
+          
 
           <a href="paper-slippage-latency-modeling.html" class="dc">
             <div class="dc-num">09</div>
@@ -1277,35 +1169,11 @@ button{cursor:pointer;font-family:inherit}
             <span class="badge badge-red" style="flex-shrink:0;height:fit-content;white-space:nowrap">Exec</span>
           </a>
 
-          <a href="paper-alternative-data-quant-finance.html" class="dc">
-            <div class="dc-num">10</div>
-            <div class="dc-body">
-              <div class="dc-title">The Role of Alternate Data in Quant Finance</div>
-              <div class="dc-excerpt">Satellite imagery, transaction panels, and e-commerce data as nowcasting signals with proper governance.</div>
-              <div class="dc-tags"><span class="dc-tag">Alt Data</span><span class="dc-tag">ML</span><span class="dc-tag">Nowcasting</span></div>
-            </div>
-            <span class="badge badge-cyan" style="flex-shrink:0;height:fit-content;white-space:nowrap">Data</span>
-          </a>
+          
 
-          <a href="paper-hf-analytical-operations.html" class="dc">
-            <div class="dc-num">11</div>
-            <div class="dc-body">
-              <div class="dc-title">Optimization of HF Analytical Operations</div>
-              <div class="dc-excerpt">From vectorization to predictive modeling. Rolling-window math, GPU analytics, and feature engineering.</div>
-              <div class="dc-tags"><span class="dc-tag">Vectorization</span><span class="dc-tag">GPU</span><span class="dc-tag">Analytics</span></div>
-            </div>
-            <span class="badge badge-green" style="flex-shrink:0;height:fit-content;white-space:nowrap">Eng</span>
-          </a>
+          
 
-          <a href="claude-ai-trading.html" class="dc" style="border-left:2px solid var(--accent);background:rgba(0,166,81,.03)">
-            <div class="dc-num" style="color:var(--accent)">&#9733;</div>
-            <div class="dc-body">
-              <div class="dc-title">Claude AI in Trading: How LLMs Are Reshaping Markets</div>
-              <div class="dc-excerpt">$14K Polymarket return, Goldman Sachs automation, trillion-dollar selloff — quantitative analysis of AI in finance.</div>
-              <div class="dc-tags"><span class="dc-tag">Claude</span><span class="dc-tag">AI Trading</span><span class="dc-tag">Agentic AI</span></div>
-            </div>
-            <span class="badge badge-purple" style="flex-shrink:0;height:fit-content;white-space:nowrap">Special</span>
-          </a>
+          
 
         </div>
       </div>
@@ -1356,31 +1224,34 @@ button{cursor:pointer;font-family:inherit}
       <div class="footer-desc">Independent quantitative research platform covering market microstructure, US equities, and algorithmic systems. For educational purposes only — not financial advice.</div>
     </div>
     <div class="footer-col">
-      <h4>Analysis</h4>
-      <a href="paper-vpin-order-flow-toxicity.html">VPIN &amp; Flow Toxicity</a>
-      <a href="paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
-      <a href="paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
-      <a href="paper-slippage-latency-modeling.html">Slippage Modeling</a>
-      <a href="paper-alternative-data-quant-finance.html">Alternate Data</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="footer-col">
-      <h4>Markets</h4>
-      <a href="markets.html">Overview</a>
-      <a href="stocks.html">US Equities</a>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="footer-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="footer-col">
-      <h4>Lab</h4>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
-      <a href="research.html">Microstructure Research</a>
-      <a href="infrastructure.html">Infrastructure</a>
-      <a href="papers.html">All Papers</a>
-      <a href="about.html">About QuantMedia</a>
-      <a href="methodology.html">Methodology</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
       <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>

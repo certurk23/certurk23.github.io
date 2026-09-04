@@ -7,18 +7,18 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HRP Example: Compare Six Portfolio Allocators | QuantMedia</title>
+<title>HRP Verification Report: Six Allocators, Two Defects Fixed | QuantMedia</title>
 <meta name="description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
 <link rel="canonical" href="https://quantmedia.io/reports/hrp-example.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HRP Example: Compare Six Portfolio Allocators">
+<meta property="og:title" content="HRP Verification Report: Six Allocators, Two Defects Fixed">
 <meta property="og:description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
 <meta property="og:url" content="https://quantmedia.io/reports/hrp-example.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HRP Example: Compare Six Portfolio Allocators">
+<meta name="twitter:title" content="HRP Verification Report: Six Allocators, Two Defects Fixed">
 <meta name="twitter:description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
@@ -28,7 +28,7 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "HRP Example: Compare Six Portfolio Allocators",
+  "headline": "HRP Verification Report: Six Allocators, Two Defects Fixed",
   "description": "Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.",
   "author": {
     "@type": "Person",
@@ -64,7 +64,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "HRP Example: Compare Six Portfolio Allocators",
+      "name": "HRP Verification Report: Six Allocators, Two Defects Fixed",
       "item": "https://quantmedia.io/reports/hrp-example.html"
     }
   ]
@@ -227,14 +227,11 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="/">Home</a>
-      <a href="/markets.html">Markets</a>
-      <a href="/news.html">News</a>
-      <a href="/stocks.html">Equities</a>
-      <a href="/quantum-signals.html">Quantum</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
       <a href="/papers.html">Papers</a>
-      <a href="/research.html">Microstructure</a>
+      <a href="/methodology.html" class="active">Methodology</a>
       <a href="/about.html">About</a>
-      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -245,21 +242,31 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
 </header>
 <div class="mobile-nav" id="mobileNav">
-  <a href="/reproducibility.html">Free Tools &amp; Code</a>
-  <a href="/reports/">Worked Examples</a>
   <a href="/">Home</a>
-  <a href="/markets.html">Markets</a>
-  <a href="/news.html">News</a>
-  <a href="/stocks.html">Equities</a>
-  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
   <a href="/papers.html">Papers</a>
-  <a href="/research.html">Microstructure</a>
+  <a href="/methodology.html" class="active">Methodology</a>
   <a href="/about.html">About</a>
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; HRP Example: Compare Six Portfolio Allocators</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">HRP Example: Compare Six Portfolio Allocators</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; HRP Verification Report: Six Allocators, Two Defects Fixed</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">HRP Verification Report: Six Allocators, Two Defects Fixed</h1>
+
+<div class="qm-answer"><span class="qm-answer-label">Verdict</span>
+<p>The allocator produces weights that sum to one, contain no shorts, and drift
+far less out of sample than an unconstrained minimum-variance optimiser on the
+same panel (+1.3% against +13.6%). Two defects were found and fixed before it
+did, and one over-specified test was corrected rather than the code.</p></div>
+
+<div class="qm-def"><dl>
+<dt>Verification record</dt><dd>v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026</dd>
+<dt>Implementation under test</dt><dd><code>quantmedia-research/hierarchical-risk-parity/hrp.py</code>, in the public repository</dd>
+<dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
+<dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
+<dt>Status</dt><dd>Independent. Not peer reviewed. Synthetic data only; no claim about any real security.</dd>
+</dl></div>
 
 <p class="qm-lede">On this synthetic panel, HRP with single linkage has
 out-of-sample volatility of 0.1419, compared with 0.1489 for unconstrained
@@ -323,6 +330,38 @@ how much each method depends on its covariance estimate.</p>
 <li><a href="/reports/">All worked examples</a></li>
 </ul>
 
+<h2>Defects found during verification</h2>
+<div class="qm-answer"><span class="qm-answer-label">1. Read-only array under pandas 3</span>
+<p>The distance matrix was built by calling <code>np.fill_diagonal</code> on
+<code>DataFrame.values</code>. pandas 3 returns a read-only view, so the call
+raised. <strong>Fix:</strong> copy first. This is the kind of defect a
+&ldquo;works on my machine&rdquo; implementation carries for years.</p></div>
+<div class="qm-answer"><span class="qm-answer-label">2. Asymmetric distance matrix</span>
+<p>Floating-point noise left the correlation-distance matrix very slightly
+asymmetric, and <code>scipy.spatial.distance.squareform</code> rejects that.
+<strong>Fix:</strong> symmetrise explicitly with <code>0.5&middot;(D + D&#x1D40;)</code>.</p></div>
+<p>A third item was a test, not the code: an assertion that linkage methods
+must differ was over-specified for one unlucky seed, on which single and Ward
+linkage happened to agree. The methods were confirmed to differ on other seeds,
+and the test was fixed rather than the implementation. Adjusting a bad test is
+legitimate; adjusting a test to hide a real gap is not.</p>
+
+<h2>What this verification does not establish</h2>
+<ul>
+<li>One synthetic panel, one seed. It illustrates the estimation-error
+mechanism; it is not evidence that HRP beats mean-variance in general.</li>
+<li>No transaction costs anywhere in the comparison. Weights are held fixed,
+which flatters every allocator and the least stable one most.</li>
+<li>Out-of-sample Sharpe was negative for every allocator on this panel, which
+is why none is reported as a performance figure.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<p><code>python quantmedia-research/verify_examples.py</code> asserts
+<code>outputs/comparison.csv</code> and <code>outputs/weights.csv</code> match
+the committed files. Then <code>python tests/test_hrp.py</code>: expected 13
+passed.</p>
+
 </div>
 </main>
 <footer>
@@ -332,27 +371,35 @@ how much each method depends on its covariance estimate.</p>
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
-      <h4>Research</h4>
-      <a href="/reports/">Worked Examples</a>
-      <a href="/research.html#vpin">VPIN Methodology</a>
-      <a href="/research.html#darkpool">Dark Pool Mechanics</a>
-      <a href="/research.html#adverse">Adverse Selection</a>
-      <a href="/infrastructure.html">Infrastructure</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="ft-col">
-      <h4>Data &amp; Code</h4>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="ft-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="ft-col">
-      <h4>Lab</h4>
-      <a href="/about.html">About QuantMedia</a>
-      <a href="/methodology.html">Methodology</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/editorial-policy.html">Editorial Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
       <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">

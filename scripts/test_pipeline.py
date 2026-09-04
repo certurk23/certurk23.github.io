@@ -504,7 +504,9 @@ def test_v1_catches_legacy_methodology():
 
 
 def test_v2_catches_truncated_file():
-    errs = _run_validator_on(lambda s: _write(s, 'markets.html', '<html></html>'))
+    # markets.html is retired and no longer a required file; truncate a page
+    # that still is, so the size floor is what trips.
+    errs = _run_validator_on(lambda s: _write(s, 'quantum-signals.html', '<html></html>'))
     assert any('truncated' in e or 'MISSING' in e for e in errs), errs
 
 
@@ -540,8 +542,11 @@ def test_v5_catches_threshold_mismatch():
 def test_v6_catches_unbalanced_script_tag():
     """The exact bug that shipped: a missing opening <script> tag."""
     def mutate(site):
-        t = _read(site, 'markets.html')
-        _write(site, 'markets.html', t.replace('<script src="qm-data.js">', '', 1))
+        # markets.html is retired (noindex + refresh) and skipped by content
+        # checks, so the defect is planted on a live page that loads the same
+        # script.
+        t = _read(site, 'index.html')
+        _write(site, 'index.html', t.replace('<script src="qm-data.js">', '', 1))
     errs = _run_validator_on(mutate)
     assert any('unbalanced script' in e for e in errs), errs
 
@@ -549,12 +554,16 @@ def test_v6_catches_unbalanced_script_tag():
 def test_v7_catches_blank_grid_regression():
     """The historical failure: every price cell rendered as an em-dash."""
     def mutate(site):
-        t = _read(site, 'markets.html')
-        rows = ('<div class="dmono" style="color:var(--dimmer)">&mdash;</div>'
-                '<div></div>') * 8
-        _write(site, 'markets.html', t.replace('</footer>', '</footer>' + rows))
+        # The blank-data check now guards the index pages (markets.html is
+        # retired). Blank the live reading and expect the check to refuse it.
+        t = _read(site, 'indices/signal-breadth.html')
+        t = re.sub(r'(<!-- QM:BREADTH:START -->).*?(<!-- QM:BREADTH:END -->)',
+                   lambda m: m.group(1) + '<p>The current reading publishes after the next scan.</p>' + m.group(2),
+                   t, flags=re.S)
+        _write(site, 'indices/signal-breadth.html', t)
     errs = _run_validator_on(mutate)
-    assert any('blank-grid' in e or 'placeholder' in e for e in errs), errs
+    assert any('blank-grid' in e or 'placeholder' in e or 'rendered reading' in e
+               for e in errs), errs
 
 
 def test_v8_catches_hardcoded_api_key():
@@ -569,10 +578,11 @@ def test_v8_catches_hardcoded_api_key():
 
 def test_v9_catches_missing_injection_anchor():
     def mutate(site):
-        t = _read(site, 'markets.html')
-        _write(site, 'markets.html', t.replace('<!-- QM:FOREX:START -->', ''))
+        # Planted on a live index page; markets.html is retired and skipped.
+        t = _read(site, 'indices/signal-breadth.html')
+        _write(site, 'indices/signal-breadth.html', t.replace('<!-- QM:BREADTH:START -->', ''))
     errs = _run_validator_on(mutate)
-    assert any('anchors' in e for e in errs), errs
+    assert any('anchor' in e for e in errs), errs
 
 
 def test_v11_catches_fabricated_publisher_byline():

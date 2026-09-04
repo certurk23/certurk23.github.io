@@ -57,6 +57,19 @@ NON_PAGE_DIRS = {'.git', '.github', 'node_modules', 'scripts', 'data',
                  'docs', 'quantmedia-research', '__pycache__'}
 
 
+RETIRED_MARK = '<!-- qm-retired -->'
+
+
+def is_retired(rel):
+    """A retired page keeps its file (noindex + refresh to a live page) but is
+    no longer a product. Content checks skip it; the sitemap check still
+    guarantees it is not listed."""
+    try:
+        return RETIRED_MARK in read(rel)
+    except Exception:
+        return False
+
+
 def html_files():
     """Every published page, discovered rather than listed.
 
@@ -75,6 +88,8 @@ def html_files():
             if not f.endswith('.html') or f.startswith('google'):
                 continue
             rel = f if rel_dir == '.' else os.path.join(rel_dir, f).replace(os.sep, '/')
+            if is_retired(rel):
+                continue
             out.append(rel)
     return sorted(out)
 
@@ -261,7 +276,7 @@ DASH_ROW = re.compile(r'<div class="dmono"[^>]*>\s*(?:&mdash;|—|--)\s*</div>')
 def check_blank_data_regression():
     for name in ('markets.html', 'news.html'):
         path = os.path.join(ROOT, name)
-        if not os.path.exists(path):
+        if not os.path.exists(path) or is_retired(name):
             continue
         text = read(name)
         dashes = len(DASH_ROW.findall(text))

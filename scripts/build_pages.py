@@ -299,6 +299,7 @@ def write(slug, html):
 
 
 import page_content_examples as PCE
+import page_content_reports as PCR   # verification layer, composed below
 import page_content as PC
 import page_content_identity as PCI   # noqa: E402
 
@@ -465,11 +466,18 @@ for existing in PAGES:
     if existing['slug'] in ('reproducibility.html', 'tools/probabilistic-sharpe-ratio-calculator.html'):
         existing['modified'] = '2026-09-04'
 
+# Compose: verdict + dated record on top, worked example in the middle,
+# defects / limitations / reproduce at the end. Same URLs as before.
+PCE.INDEX_BODY = PCR.INDEX_BODY
+PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
+PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION
+PCE.PSR_BODY = PCR.PSR_VERDICT + PCE.PSR_BODY + PCR.PSR_VERIFICATION
+
 for slug, title, description, body in [
-    ('index.html', 'Free Quantitative Finance Worked Examples', 'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.', PCE.INDEX_BODY),
-    ('vpin-example.html', 'VPIN Example: One Tape, Two Classifiers', 'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.', PCE.VPIN_BODY),
-    ('hrp-example.html', 'HRP Example: Compare Six Portfolio Allocators', 'Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.', PCE.HRP_BODY),
-    ('psr-worked-example.html', 'Probabilistic Sharpe Ratio: A Worked Calculation', 'Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.', PCE.PSR_BODY),
+    ('index.html', 'Verification Reports: Quant Finance Code Checked Against Ground Truth', 'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.', PCE.INDEX_BODY),
+    ('vpin-example.html', 'VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed', 'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.', PCE.VPIN_BODY),
+    ('hrp-example.html', 'HRP Verification Report: Six Allocators, Two Defects Fixed', 'Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.', PCE.HRP_BODY),
+    ('psr-worked-example.html', 'PSR Verification Report: A Published Example, Corrected', 'Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.', PCE.PSR_BODY),
 ]:
     PAGES.append(dict(slug='reports/' + slug, title=title + ' | QuantMedia',
                       description=description, h1=title,

@@ -7,18 +7,18 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Probabilistic Sharpe Ratio: A Worked Calculation | QuantMedia</title>
+<title>PSR Verification Report: A Published Example, Corrected | QuantMedia</title>
 <meta name="description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
 <link rel="canonical" href="https://quantmedia.io/reports/psr-worked-example.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Probabilistic Sharpe Ratio: A Worked Calculation">
+<meta property="og:title" content="PSR Verification Report: A Published Example, Corrected">
 <meta property="og:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
 <meta property="og:url" content="https://quantmedia.io/reports/psr-worked-example.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Probabilistic Sharpe Ratio: A Worked Calculation">
+<meta name="twitter:title" content="PSR Verification Report: A Published Example, Corrected">
 <meta name="twitter:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
@@ -28,7 +28,7 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Probabilistic Sharpe Ratio: A Worked Calculation",
+  "headline": "PSR Verification Report: A Published Example, Corrected",
   "description": "Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.",
   "author": {
     "@type": "Person",
@@ -64,7 +64,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Probabilistic Sharpe Ratio: A Worked Calculation",
+      "name": "PSR Verification Report: A Published Example, Corrected",
       "item": "https://quantmedia.io/reports/psr-worked-example.html"
     }
   ]
@@ -227,14 +227,11 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </a>
     <nav class="main-nav">
       <a href="/">Home</a>
-      <a href="/markets.html">Markets</a>
-      <a href="/news.html">News</a>
-      <a href="/stocks.html">Equities</a>
-      <a href="/quantum-signals.html">Quantum</a>
+      <a href="/reproducibility.html">Verified Methods</a>
+      <a href="/reports/">Reports</a>
       <a href="/papers.html">Papers</a>
-      <a href="/research.html">Microstructure</a>
+      <a href="/methodology.html" class="active">Methodology</a>
       <a href="/about.html">About</a>
-      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -245,21 +242,31 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
 </header>
 <div class="mobile-nav" id="mobileNav">
-  <a href="/reproducibility.html">Free Tools &amp; Code</a>
-  <a href="/reports/">Worked Examples</a>
   <a href="/">Home</a>
-  <a href="/markets.html">Markets</a>
-  <a href="/news.html">News</a>
-  <a href="/stocks.html">Equities</a>
-  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/reproducibility.html">Verified Methods</a>
+  <a href="/reports/">Reports</a>
   <a href="/papers.html">Papers</a>
-  <a href="/research.html">Microstructure</a>
+  <a href="/methodology.html" class="active">Methodology</a>
   <a href="/about.html">About</a>
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; Probabilistic Sharpe Ratio: A Worked Calculation</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Probabilistic Sharpe Ratio: A Worked Calculation</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; PSR Verification Report: A Published Example, Corrected</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">PSR Verification Report: A Published Example, Corrected</h1>
+
+<div class="qm-answer"><span class="qm-answer-label">Verdict</span>
+<p>The worked example previously published on this site was arithmetically
+wrong, for months. It was found by computing it rather than reading it,
+corrected against <code>scipy</code>, and every intermediate value is now
+shown so it can be checked by hand.</p></div>
+
+<div class="qm-def"><dl>
+<dt>Verification record</dt><dd>v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026</dd>
+<dt>Implementation under test</dt><dd><code>tools/probabilistic-sharpe-ratio-calculator.html and the worked example on the paper</code>, in the public repository</dd>
+<dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
+<dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
+<dt>Status</dt><dd>Independent. Not peer reviewed. Synthetic data only; no claim about any real security.</dd>
+</dl></div>
 
 <p class="qm-lede">With an observed Sharpe of 1.50, 24 observations, skewness
 of &minus;1.20 and kurtosis of 7.00, the Probabilistic Sharpe Ratio against
@@ -327,6 +334,49 @@ example printed z = 2.8955; the correct value rounded to four decimals is
 <li><a href="/reports/">All worked examples</a></li>
 </ul>
 
+<h2>Defect found during verification</h2>
+<div class="qm-tablewrap"><table class="qm-kv">
+<thead><tr><th>Quantity (SR 1.50, SR* 0, n 24)</th><th>As originally published</th><th>Correct</th></tr></thead>
+<tbody>
+<tr><td>Denominator, &gamma;&#8321; = 0, &gamma;&#8322; = 3</td><td class="qm-num">1.000</td><td class="qm-num">1.4577</td></tr>
+<tr><td>Denominator, &gamma;&#8321; = &minus;1.20, &gamma;&#8322; = 7.00</td><td class="qm-num">2.318</td><td class="qm-num">2.4850</td></tr>
+<tr><td>z-statistic (skewed, fat-tailed case)</td><td class="qm-num">&mdash;</td><td class="qm-num">2.8955</td></tr>
+<tr><td>PSR (skewed, fat-tailed case)</td><td class="qm-num">&mdash;</td><td class="qm-num">0.9981</td></tr>
+</tbody></table></div>
+<div class="qm-answer"><span class="qm-answer-label">The kurtosis term does not vanish at &gamma;&#8322; = 3</span>
+<p>The original example treated the &ldquo;normal&rdquo; case as having a
+denominator of exactly 1, as though zero excess kurtosis removed the term. It
+does not: the formula uses (&gamma;&#8322; &minus; 1)/4, which at
+&gamma;&#8322; = 3 is 0.5, so the denominator is
+&radic;(1 + 0.5&middot;1.5&sup2;) = &radic;2.125 = <strong>1.4577</strong>. The same
+slip propagated to the skewed case: &radic;(1 + 1.80 + 1.5&middot;2.25) =
+&radic;6.175 = <strong>2.4850</strong>, not 2.318.</p>
+<p><strong>Detection:</strong> evaluating the formula in <code>scipy</code>
+instead of trusting the prose. <strong>Fix:</strong> paper, explainer and
+calculator now agree and show every intermediate. <strong>Guard:</strong> the
+calculator computes rather than quotes, and <code>scripts/test_psr.js</code>
+exercises it.</p></div>
+
+<h2>Why it matters</h2>
+<p>PSR is a test people use to decide whether a backtest is trustworthy. An
+implementation that understates the denominator overstates the z-statistic and
+reports more confidence than the data supports &mdash; in the direction that
+makes bad strategies look good.</p>
+
+<h2>What this verification does not establish</h2>
+<ul>
+<li>This verifies arithmetic, not statistical assumptions. PSR assumes
+serially independent returns; on smoothed or illiquid marks it over-reports.</li>
+<li>It says nothing about how many strategy variants were tried &mdash; that is
+the <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a>&rsquo;s job.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<p><code>from scipy.stats import norm; norm.cdf(1.5*23**0.5/2.4850)</code>
+&rarr; 0.9981. Or open the
+<a href="/tools/probabilistic-sharpe-ratio-calculator.html">calculator</a> with
+SR 1.50, SR* 0, n 24, skew &minus;1.20, kurtosis 7.00.</p>
+
 </div>
 </main>
 <footer>
@@ -336,27 +386,35 @@ example printed z = 2.8955; the correct value rounded to four decimals is
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
-      <h4>Research</h4>
-      <a href="/reports/">Worked Examples</a>
-      <a href="/research.html#vpin">VPIN Methodology</a>
-      <a href="/research.html#darkpool">Dark Pool Mechanics</a>
-      <a href="/research.html#adverse">Adverse Selection</a>
-      <a href="/infrastructure.html">Infrastructure</a>
+      <h4>Verified methods</h4>
+      <a href="/reproducibility.html">Implementations &amp; tests</a>
+      <a href="/reports/">Verification reports</a>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
+      <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="ft-col">
-      <h4>Data &amp; Code</h4>
+      <h4>Research</h4>
+      <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
+      <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
+      <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
+      <a href="/paper-slippage-latency-modeling.html">Slippage modelling</a>
+      <a href="/papers.html">All papers</a>
+    </div>
+    <div class="ft-col">
+      <h4>Live pipeline</h4>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
-      <a href="/reproducibility.html">Reproducible Code</a>
-      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR Calculator</a>
+      <a href="/quantum-signals.html">Daily scan (demo)</a>
+      <a href="/methodology.html">Methodology</a>
     </div>
     <div class="ft-col">
-      <h4>Lab</h4>
-      <a href="/about.html">About QuantMedia</a>
-      <a href="/methodology.html">Methodology</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/editorial-policy.html">Editorial Policy</a>
+      <h4>QuantMedia</h4>
+      <a href="/about.html">About</a>
+      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
       <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">

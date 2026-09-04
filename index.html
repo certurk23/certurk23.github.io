@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuantMedia — US Financial Intelligence & Quantitative Research</title>
-<meta name="description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
+<title>QuantMedia — Free Quant Finance Tools &amp; Research</title>
+<meta name="description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
 <link rel="canonical" href="https://quantmedia.io/">
 <!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
 <script src="qm-data.js"></script>
@@ -16,15 +16,15 @@
 <meta name="keywords" content="quantitative finance, market microstructure, VPIN, order flow, financial intelligence, algorithmic trading, market data">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="QuantMedia — US Financial Intelligence & Quantitative Research">
-<meta property="og:description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
+<meta property="og:title" content="QuantMedia — Free Quant Finance Tools &amp; Research">
+<meta property="og:description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
 <meta property="og:url" content="https://quantmedia.io/">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="QuantMedia — US Financial Intelligence & Quantitative Research">
-<meta name="twitter:description" content="Daily US stock signals from a 30-signal confluence engine, 11 open-access quant finance papers, and end-of-day market data. Free, rules-based, research use only.">
+<meta name="twitter:title" content="QuantMedia — Free Quant Finance Tools &amp; Research">
+<meta name="twitter:description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <!-- Favicon -->
@@ -33,7 +33,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QX7WEBS0LK"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{'analytics_storage':'granted','ad_storage':'granted'});gtag('js',new Date());gtag('config','G-QX7WEBS0LK');</script>
 <script>if(/Googlebot|bingbot|AhrefsBot|SemrushBot|DotBot/i.test(navigator.userAgent)){window['ga-disable-G-QX7WEBS0LK']=true;}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Independent US financial research: a post-close stock signal engine, open-access quantitative finance papers, and end-of-day market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — US Financial Intelligence & Quantitative Research","description":"Independent US financial research: a post-close stock signal engine, open-access quantitative finance papers, and end-of-day market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-08-07"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://quantmedia.io/","name":"QuantMedia","url":"https://quantmedia.io/","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","publisher":{"@type":"Organization","name":"QuantMedia","url":"https://quantmedia.io/"},"author":{"@type":"Person","name":"QuantMedia Research","url":"https://quantmedia.io/about.html"}},{"@type":"WebPage","@id":"https://quantmedia.io/#webpage","url":"https://quantmedia.io/","name":"QuantMedia — Free Quant Finance Tools & Research","description":"Free quantitative finance tools, reproducible Python examples, research papers, and post-close US market data.","isPartOf":{"@id":"https://quantmedia.io/"},"dateModified":"2026-09-04"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="image" href="logo.png" fetchpriority="high">
@@ -726,6 +726,18 @@ button{cursor:pointer;font-family:inherit}
 .sr-tag.paper{color:var(--gold);background:rgba(245,166,35,.1)}
 .sr-title{font-size:13px;color:var(--text)}
 .sr-sub{font-size:11px;color:var(--dim)}
+
+/* Free research entry points */
+.start-here{max-width:1400px;margin:0 auto;padding:36px 20px}
+.start-here h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(30px,4vw,48px);line-height:1.1;margin:8px 0 12px;color:var(--text)}
+.start-intro{color:var(--dim);font-size:16px;line-height:1.7;max-width:750px;margin:0 0 22px}
+.start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:16px}
+.start-card{display:flex;flex-direction:column;align-items:flex-start;padding:22px;border:1px solid var(--bd);border-radius:4px;background:var(--bg2)}
+.start-card h2{font-size:20px;color:var(--text);margin:8px 0}
+.start-card p{font-size:14px;line-height:1.65;color:var(--dim);margin:0 0 20px}
+.start-card a{margin-top:auto;color:var(--green);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+.start-card a:focus-visible{outline:2px solid var(--green);outline-offset:5px}
+.start-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--green)}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <style>
@@ -771,7 +783,7 @@ button{cursor:pointer;font-family:inherit}
 </ul>
 <p style="font-size:18px;font-weight:700;margin-top:20px">Pages</p>
 <ul>
-<li><a href="markets.html">Live Market Data</a></li>
+<li><a href="markets.html">Post-close Market Data</a></li>
 <li><a href="news.html">Financial News</a></li>
 <li><a href="stocks.html">US Equities</a></li>
 <li><a href="research.html">Research</a></li>
@@ -782,8 +794,8 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- BREAKING ALERT -->
 <div class="breaking-bar" id="breakingBar" onclick="this.style.display='none'">
-  <span class="breaking-pill">Breaking</span>
-  <span class="breaking-text">Research: How VPIN order flow toxicity signals institutional positioning ahead of directional moves — read the full paper</span>
+  <span class="breaking-pill">Research</span>
+  <span class="breaking-text">Research: Explore how VPIN changes under different trade-classification methods in the free worked example</span>
   <span class="breaking-close">&times;</span>
 </div>
 
@@ -805,7 +817,7 @@ button{cursor:pointer;font-family:inherit}
       <a href="papers.html">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
-      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
@@ -842,6 +854,8 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
+  <a href="/reproducibility.html">Free Tools &amp; Code</a>
+  <a href="/reports/">Worked Examples</a>
   <a href="./" class="active">Home</a>
   <a href="markets.html">Markets</a>
   <a href="news.html">News</a>
@@ -861,6 +875,33 @@ button{cursor:pointer;font-family:inherit}
 </div>
 
 <main>
+
+<section class="start-here" aria-labelledby="start-title">
+  <span class="start-label">Free tools &amp; reproducible research</span>
+  <h1 id="start-title">Understand the method. Run the numbers.</h1>
+  <p class="start-intro">Explore quantitative finance with a free calculator, worked examples and Python code you can run yourself. Start with a question, check the assumptions, and inspect the result.</p>
+  <div class="start-grid">
+    <article class="start-card">
+      <span class="start-label">Calculate</span>
+      <h2>How convincing is your Sharpe ratio?</h2>
+      <p>Change the sample length, skewness and kurtosis to see how they affect the Probabilistic Sharpe Ratio. No sign-up required.</p>
+      <a href="/tools/probabilistic-sharpe-ratio-calculator.html">Open the free PSR calculator &rarr;</a>
+    </article>
+    <article class="start-card">
+      <span class="start-label">Learn &amp; verify</span>
+      <h2>Follow a result from input to output.</h2>
+      <p>Read the VPIN and HRP examples, see their synthetic-data results, and check exactly what each experiment can establish.</p>
+      <a href="/reports/">Read the worked examples &rarr;</a>
+    </article>
+    <article class="start-card">
+      <span class="start-label">Run it yourself</span>
+      <h2>Take the research to GitHub.</h2>
+      <p>Two Python implementations include fixed-seed examples and 28 tests. Run them without a paid market-data feed.</p>
+      <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">Get the code on GitHub &rarr;</a>
+    </article>
+  </div>
+</section>
+
 <!-- HERO: Market Pulse -->
 <section class="hero-section">
   <div class="hero-inner" style="grid-template-columns:1fr" id="heroSection">
@@ -871,7 +912,7 @@ button{cursor:pointer;font-family:inherit}
           <span class="badge badge-green">Market Pulse</span>
           <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.6)" id="heroTime">Post-close</span>
         </div>
-        <h1 class="hero-h1" id="heroH1">US Markets &mdash; Daily Quantitative Research &amp; Signal Analysis</h1>
+        <h2 class="hero-h1" id="heroH1">US Markets &mdash; Daily Quantitative Research &amp; Signal Analysis</h2>
         <div id="heroBullets" style="margin-bottom:16px">
           <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
             <li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">Post-close signal dashboard scoring 180 liquid US equities daily</li>
@@ -908,15 +949,15 @@ button{cursor:pointer;font-family:inherit}
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px 56px;align-items:start">
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">About QuantMedia</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers with full Python implementations, a post-close signal dashboard scoring 180 liquid US equities daily, end-of-day market data across equities, forex, and commodities, and a categorised daily digest of market headlines from global newswires.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers, two runnable Python implementations and a free PSR calculator, a post-close signal dashboard scoring 180 liquid US equities daily, end-of-day market data across equities, forex, and commodities, and a categorised daily digest of market headlines from global newswires.</p>
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">What We Research</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">Research topics span VPIN order flow toxicity, Hierarchical Risk Parity portfolio construction, the Probabilistic Sharpe Ratio for backtest validation, GPU-accelerated trading infrastructure, bid-ask spread microstructure, slippage and latency modeling, genetic algorithm alpha discovery, and alternative data integration. All research is independent, non-commercial, and provided for educational purposes.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">Research topics span VPIN order flow toxicity, Hierarchical Risk Parity portfolio construction, the Probabilistic Sharpe Ratio for backtest validation, GPU-accelerated trading infrastructure, bid-ask spread microstructure, slippage and latency modeling, genetic algorithm alpha discovery, and alternative data integration. Research, examples and tools are freely accessible for educational use. Advertising is the intended funding model; see our <a href="/editorial-policy.html" style="color:var(--accent)">editorial policy</a>.</p>
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">Platform Tools</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The <a href="stocks.html" style="color:var(--accent)">US equities screener</a> tracks S&amp;P 500 stocks, sector ETFs, and index rotation in real time. The <a href="markets.html" style="color:var(--accent)">global markets dashboard</a> monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The <a href="stocks.html" style="color:var(--accent)">US equities screener</a> presents US stocks, sector ETFs, and index rotation using post-close snapshots. The <a href="markets.html" style="color:var(--accent)">global markets dashboard</a> monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
         <p style="font-size:11px;color:var(--muted);margin:0">All content is for educational and informational purposes only. Not financial advice.</p>
       </div>
     </div>
@@ -1285,20 +1326,20 @@ button{cursor:pointer;font-family:inherit}
 
       <!-- Newsletter -->
       <div class="widget" id="newsletter">
-        <div class="widget-hdr"><span class="widget-title">Morning Intelligence</span></div>
+        <div class="widget-hdr"><span class="widget-title">Research Updates</span></div>
         <div class="nl-pad">
-          <div class="nl-title">Start each day with signal, not noise.</div>
-          <div class="nl-desc">Daily pre-open briefing — key data, research-driven commentary, and market structure analysis.</div>
+          <div class="nl-title">Hear about new tools and examples.</div>
+          <div class="nl-desc">Request occasional updates about new QuantMedia research. Requests are handled manually; there is no daily briefing schedule.</div>
           <form action="https://formsubmit.co/contact@quantmedia.io" method="POST" id="nlForm" onsubmit="nlSubmit(event)">
-            <input type="hidden" name="_subject" value="New QuantMedia Subscriber!">
+            <input type="hidden" name="_subject" value="QuantMedia research update request">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_next" value="https://quantmedia.io/?subscribed=1">
-            <input type="email" name="email" class="nl-input" placeholder="your@email.com" required>
-            <button type="submit" class="nl-btn" id="nlBtn">Subscribe Free</button>
+            <input type="email" name="email" class="nl-input" placeholder="your@email.com" aria-label="Email address for research updates" required>
+            <button type="submit" class="nl-btn" id="nlBtn">Request Updates</button>
           </form>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px">Your email is used only for this newsletter. No spam. See our <a href="privacy.html" style="color:var(--text3)">Privacy Policy</a>.</div>
-          <div id="nlSuccess" style="display:none;padding:10px 0;font-size:12px;color:var(--green);font-weight:600;">Subscribed! Check your inbox.</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">Your email is used to handle this request and research updates you confirm. No spam. See our <a href="privacy.html" style="color:var(--text3)">Privacy Policy</a>.</div>
+          <div id="nlSuccess" style="display:none;padding:10px 0;font-size:12px;color:var(--green);font-weight:600;">Request sent. We will confirm by email before adding you to updates.</div>
         </div>
       </div>
 
@@ -1693,6 +1734,9 @@ loadHero();
    SITE SEARCH
    ============================================================ */
 const SEARCH_INDEX = [
+  {t:'page', title:'Free PSR Calculator', sub:'Calculate the Probabilistic Sharpe Ratio', url:'tools/probabilistic-sharpe-ratio-calculator.html', kw:'psr calculator sharpe tool hesaplayıcı'},
+  {t:'page', title:'Tools & Code', sub:'Runnable Python examples and GitHub source', url:'reproducibility.html', kw:'github code python tools vpin hrp'},
+  {t:'page', title:'Worked Examples', sub:'VPIN, HRP and PSR results with reproduction steps', url:'reports/', kw:'examples reports verification vpin hrp psr'},
   {t:'page', title:'Home', sub:'Homepage — market data, news, analysis', url:'index.html', kw:'home homepage ana sayfa'},
   {t:'page', title:'Live Data', sub:'US market data: indices, forex and crypto snapshots', url:'markets.html', kw:'markets live data piyasa veri indices forex commodities crypto'},
   {t:'page', title:'News', sub:'Financial news feed with category filters', url:'news.html', kw:'news haber haberler fed tech energy crypto earnings'},
@@ -1723,6 +1767,7 @@ const SEARCH_INDEX = [
 ];
 
 let _searchActive = -1;
+if(new URLSearchParams(location.search).has('search')) openSearch();
 function openSearch(){
   document.getElementById('searchOverlay').classList.add('open');
   const inp = document.getElementById('searchInput');

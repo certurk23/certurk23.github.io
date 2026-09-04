@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Is Signal Confluence in Stock Screening? | QuantMedia</title>
-<meta name="description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<link rel="canonical" href="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<title>HRP Example: Compare Six Portfolio Allocators | QuantMedia</title>
+<meta name="description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
+<link rel="canonical" href="https://quantmedia.io/reports/hrp-example.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="What Is Signal Confluence in Stock Screening?">
-<meta property="og:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<meta property="og:url" content="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<meta property="og:title" content="HRP Example: Compare Six Portfolio Allocators">
+<meta property="og:description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
+<meta property="og:url" content="https://quantmedia.io/reports/hrp-example.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="What Is Signal Confluence in Stock Screening?">
-<meta name="twitter:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
+<meta name="twitter:title" content="HRP Example: Compare Six Portfolio Allocators">
+<meta name="twitter:description" content="Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "What Is Signal Confluence in Stock Screening?",
-  "description": "Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.",
+  "headline": "HRP Example: Compare Six Portfolio Allocators",
+  "description": "Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-08-08",
-  "dateModified": "2026-08-08",
-  "mainEntityOfPage": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+  "datePublished": "2026-09-04",
+  "dateModified": "2026-09-04",
+  "mainEntityOfPage": "https://quantmedia.io/reports/hrp-example.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Learn",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "Worked examples",
+      "item": "https://quantmedia.io/reports/"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "What is signal confluence?",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "HRP Example: Compare Six Portfolio Allocators",
+      "item": "https://quantmedia.io/reports/hrp-example.html"
     }
   ]
 }</script>
@@ -258,90 +258,70 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/what-is-signal-confluence.html">Learn</a> &rsaquo; What is signal confluence?</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">What is signal confluence?</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; HRP Example: Compare Six Portfolio Allocators</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">HRP Example: Compare Six Portfolio Allocators</h1>
 
-  <div class="qm-answer">
-    <span class="qm-answer-label">Short answer</span>
-    <p>Signal confluence means requiring several independent technical
-    conditions to agree before acting, instead of trusting any one indicator.
-    QuantMedia's engine scores each stock against 30 binary checks &mdash;
-    trend, momentum, volume, volatility and 52-week position &mdash; and flags
-    a BUY only when at least 22 are simultaneously bullish, roughly
-    73% agreement. The purpose is to filter noise, and the
-    cost is that confluence systems are structurally late at turning points.</p>
-  </div>
+<p class="qm-lede">On this synthetic panel, HRP with single linkage has
+out-of-sample volatility of 0.1419, compared with 0.1489 for unconstrained
+minimum variance. Other baselines narrow that difference. The comparison is
+useful precisely because all six results are visible.</p>
 
-  <h2>The reasoning</h2>
-  <p>Any single technical indicator produces frequent false positives. RSI drops
-  below 30 often in a downtrend that continues; moving-average crossovers whipsaw
-  in ranges. Requiring agreement across indicator <em>families</em> that respond
-  to different market properties raises the bar for a signal to fire.</p>
-  <p>The important caveat is that confluence is not statistical independence.
-  Technical indicators computed from the same price series are heavily
-  correlated: if price is above its 5-, 10-, 20- and 50-day averages, those four
-  checks pass together almost by construction. So a score of 22 out of 30
-  does <strong>not</strong> represent 22 independent confirmations. It
-  represents broad agreement among overlapping measurements &mdash; useful, but
-  a weaker claim than the raw count suggests.</p>
-
-  <h2>How the score is built</h2>
-  <table class="qm-kv">
-    <thead><tr><th>Family</th><th>Checks</th><th>What it tests</th></tr></thead>
-    <tbody>
-      <tr><td>Trend / moving averages</td><td class="qm-num">10</td><td>Price vs SMA(5/10/20/50), MA ordering, EMA(12) vs EMA(26), MACD level and signal cross</td></tr>
-      <tr><td>Momentum oscillators</td><td class="qm-num">4</td><td>RSI(14) in the neutral band, RSI(7) vs RSI(14), RSI(21) level, RSI recovery cross</td></tr>
-      <tr><td>Rate of change</td><td class="qm-num">4</td><td>5/10/20-day returns, plus a check that short-term momentum is not overextended</td></tr>
-      <tr><td>Bollinger Bands</td><td class="qm-num">3</td><td>Position inside the bands and a bounce off the lower band</td></tr>
-      <tr><td>Volume</td><td class="qm-num">3</td><td>Current vs 20-day average, 5-day vs 20-day, up-volume vs down-volume</td></tr>
-      <tr><td>Stochastic</td><td class="qm-num">2</td><td>%K level and %K vs %D</td></tr>
-      <tr><td>52-week position</td><td class="qm-num">2</td><td>Position within the 52-week range</td></tr>
-      <tr><td>Volatility regime</td><td class="qm-num">2</td><td>ATR as a share of price, inside a workable band</td></tr>
-      <tr><th>Total</th><th class="qm-num">30</th><th>BUY at &ge; 22</th></tr>
-    </tbody>
-  </table>
-  <p>Each check returns 1 or 0. There is no weighting, no optimisation of the
-  threshold against past returns, and no discretionary override. That keeps the
-  system un-fitted to any particular period &mdash; and equally means the
-  threshold carries no claim of being optimal.</p>
-
-  <h2>Why 22, and what that choice costs</h2>
-  <p>22 of 30 is about 73% agreement. Requiring roughly
-  three-quarters of checks to align means a stock generally has to be in a
-  broad, confirmed uptrend to qualify. The direct consequences are worth stating
-  plainly:</p>
-  <ul>
-    <li>Signals cluster in rising markets and thin out in falling ones. That is
-    the design working, not a malfunction.</li>
-    <li>The engine is structurally late at inflections. It cannot flag a bottom,
-    because at a bottom almost no trend check passes.</li>
-    <li>When the median score sits near 22, the BUY flag stops discriminating
-    &mdash; half the universe qualifies. On those days the score itself carries
-    more information than the flag. <a href="/indices/signal-breadth.html">Signal
-    Breadth</a> exists to make that visible.</li>
-  </ul>
-
-  <h2>Limitations</h2>
-  <ul>
-    <li><strong>Correlated inputs.</strong> As above, 22 checks are not 22
-    independent pieces of evidence.</li>
-    <li><strong>Purely technical.</strong> No earnings, guidance, litigation or
-    index-change awareness. A stock can score 30/30 the day before a
-    profit warning.</li>
-    <li><strong>No published track record.</strong> QuantMedia does not publish
-    live or audited performance for this engine, because no verified
-    out-of-sample record exists to report.</li>
-    <li><strong>End-of-day only.</strong> Signals reflect the prior close and can
-    be invalidated by overnight news or a gap.</li>
-  </ul>
-
-  <h2>Related</h2>
-  <ul class="qm-related">
-    <li><a href="/quantum-signals.html">Daily US stock signals</a><span>The live dashboard this describes</span></li>
-    <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>How much of the universe currently qualifies</span></li>
-    <li><a href="/indices/sector-confluence.html">QuantMedia Sector Confluence</a><span>Where the agreement is concentrated</span></li>
-    <li><a href="/methodology.html#signal-engine">Signal engine methodology</a><span>Full parameter table</span></li>
-  </ul>
+<div class="qm-def"><dl>
+<dt>Reproduction record</dt><dd>Checked 4 September 2026. Seed: <code>20260808</code>.</dd>
+<dt>Source</dt><dd><a href="https://github.com/certurk23/certurk23.github.io/tree/70ae45c/quantmedia-research/hierarchical-risk-parity">hierarchical-risk-parity</a> at revision <code>70ae45c</code>.</dd>
+<dt>Environment used</dt><dd>Python 3.11.9, NumPy 2.4.6, pandas 3.0.5, SciPy 1.17.1.</dd>
+<dt>Data</dt><dd>Synthetic. These examples test the implementation and illustrate the method; they do not measure trading performance on real securities.</dd>
+</dl></div>
+<h2>Set up the experiment</h2>
+<p>The panel contains 20 assets. The first 120 periods fit the weights; the
+next 400 evaluate them without refitting. The in-sample mean absolute correlation
+is 0.240 and the covariance condition number is about 43.</p>
+<div class="qm-formula">cd quantmedia-research/hierarchical-risk-parity
+python compare_mvo.py</div>
+<h2>Compare the output</h2>
+<p>Volatility is annualized in the example using 252 periods per year. Drift is
+100 &times; (out-of-sample volatility / in-sample volatility &minus; 1), calculated
+before the displayed volatility figures are rounded.</p>
+<div class="qm-tablewrap"><table class="qm-kv">
+<thead><tr><th>Allocator</th><th>Volatility in</th><th>Volatility out</th><th>Drift</th></tr></thead>
+<tbody>
+<tr><td>HRP (single)</td><td>0.1401</td><td>0.1419</td><td>+1.3%</td></tr>
+<tr><td>HRP (Ward)</td><td>0.1419</td><td>0.1425</td><td>+0.4%</td></tr>
+<tr><td>Minimum variance</td><td>0.1311</td><td>0.1489</td><td>+13.6%</td></tr>
+<tr><td>Minimum variance, clipped to long-only</td><td>0.1325</td><td>0.1460</td><td>+10.2%</td></tr>
+<tr><td>Minimum variance, shrinkage 0.3</td><td>0.1330</td><td>0.1432</td><td>+7.7%</td></tr>
+<tr><td>Equal weight</td><td>0.1474</td><td>0.1443</td><td>&minus;2.1%</td></tr>
+</tbody></table></div>
+<p>The long-only baseline clips negative weights and renormalizes the result.
+It is a simple comparison, <strong>not a constrained optimization solver</strong>.
+The full <a href="https://github.com/certurk23/certurk23.github.io/blob/main/quantmedia-research/hierarchical-risk-parity/outputs/comparison.csv">comparison CSV</a>
+also includes concentration, short exposure, drawdown and Sharpe. Out-of-sample
+Sharpe is negative for every allocator in this example.</p>
+<h2>Read the result carefully</h2>
+<p>Minimum variance has the lowest fitted volatility and the largest increase
+outside the fitted sample. Shrinkage reduces that increase. Equal weight has a
+small decrease; a negative drift is possible and is not an implementation error.</p>
+<p>A small drift means the two volatility estimates are similar. It does not
+by itself imply the highest return, the lowest risk or the best portfolio.
+HRP single and Ward illustrate that even the linkage choice changes the result.</p>
+<h2>Check the implementation</h2>
+<p>The 13 tests include weights summing to one, nonnegative HRP weights,
+distance-matrix properties, and a two-asset case with a known 80/20 allocation.
+The implementation copies the correlation array before modifying it and
+symmetrizes the distance matrix to handle floating-point noise.</p>
+<div class="qm-formula"># From the repository root:
+python quantmedia-research/tests/test_hrp.py
+# Expected: 13 passed</div>
+<h2>Limits and a useful next experiment</h2>
+<p>This is one fixed-seed panel with no transaction costs and no weight refitting.
+It does not establish which allocator wins across assets or market regimes.
+Vary the training length while retaining a separate evaluation sample to explore
+how much each method depends on its covariance estimate.</p>
+<ul class="qm-related">
+<li><a href="/learn/hrp-vs-mean-variance.html">HRP vs mean-variance</a><span>How the allocation methods differ</span></li>
+<li><a href="/paper-hierarchical-risk-parity.html">HRP research note</a><span>Algorithm, references and assumptions</span></li>
+<li><a href="/reports/">All worked examples</a></li>
+</ul>
 
 </div>
 </main>

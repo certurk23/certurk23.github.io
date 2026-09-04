@@ -1,0 +1,4 @@
+# Environment used for the published September 2026 worked examples (Python 3.11).
+numpy==2.4.6
+pandas==3.0.5
+scipy==1.17.1

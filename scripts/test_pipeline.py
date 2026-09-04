@@ -465,6 +465,7 @@ def _run_validator_on(mutate):
                    validate_site.check_blank_data_regression,
                    validate_site.check_signals,
                    validate_site.check_sitemap,
+                   validate_site.check_sitemap_noindex,
                    validate_site.check_no_visible_loading_placeholder,
                    validate_site.check_signal_consistency):
             try:
@@ -788,6 +789,10 @@ def main():
         ('V18 allows loading inside script', test_v18_allows_loading_inside_script),
         ('V19 catches no-BUY contradiction', test_v19_catches_no_buy_contradiction),
         ('V20 catches signal row drift',  test_v20_catches_signal_row_drift),
+        ('-- directory URL noindex detected', test_directory_url_noindex),
+        ('-- sector map covers universe', test_sector_map_covers_universe),
+        ('-- breadth metric consistency', test_breadth_metric_is_consistent),
+        ('-- tiny sectors omitted', test_sector_confluence_drops_tiny_sectors),
         ('N1 news relevance gate',        test_n1_news_relevance_gate),
         ('N2 relevance matches plurals',  test_n2_relevance_matches_plurals),
     ]
@@ -804,8 +809,6 @@ def main():
     return 0
 
 
-if __name__ == '__main__':
-    sys.exit(main())
 
 
 def test_sector_map_covers_universe():
@@ -845,3 +848,18 @@ def test_sector_confluence_drops_tiny_sectors():
            'signals': [{'s': 'NEE', 'sc': 20, 'd': 'WATCH'}]}
     out = P.compute_sector_confluence(sig)
     assert out['sectors'] == [], 'a 1-name sector must not be reported'
+
+
+
+def test_directory_url_noindex():
+    def mutate(site):
+        text = _read(site, 'reports/index.html')
+        text = re.sub(r'<meta name="robots" content="[^"]*">',
+                      '<meta name="robots" content="noindex">', text)
+        _write(site, 'reports/index.html', text)
+    errs = _run_validator_on(mutate)
+    assert any('reports/index.html' in e and 'noindex' in e for e in errs), errs
+
+
+if __name__ == '__main__':
+    sys.exit(main())

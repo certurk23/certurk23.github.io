@@ -1,0 +1,45 @@
+name: Research and Site Checks
+
+on:
+  push:
+    paths:
+      - 'quantmedia-research/**'
+      - 'scripts/**'
+      - '**.html'
+      - 'sitemap.xml'
+      - '.github/workflows/research-checks.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: quantmedia-research/requirements-verified.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate generated pages and calculator
+        run: |
+          python scripts/build_pages.py
+          git diff --exit-code -- '*.html'
+          python scripts/validate_site.py
+          node scripts/test_psr.js
+      - name: Verify pipeline safeguards
+        run: python scripts/test_pipeline.py
+      - name: Install the research reproduction environment
+        run: python -m pip install -r quantmedia-research/requirements-verified.txt
+      - name: Test research implementations and reproduce all CSV output
+        run: |
+          python quantmedia-research/tests/test_vpin.py
+          python quantmedia-research/tests/test_hrp.py
+          python quantmedia-research/verify_examples.py

@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Is Signal Confluence in Stock Screening? | QuantMedia</title>
-<meta name="description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<link rel="canonical" href="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<title>Probabilistic Sharpe Ratio: A Worked Calculation | QuantMedia</title>
+<meta name="description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
+<link rel="canonical" href="https://quantmedia.io/reports/psr-worked-example.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="What Is Signal Confluence in Stock Screening?">
-<meta property="og:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<meta property="og:url" content="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<meta property="og:title" content="Probabilistic Sharpe Ratio: A Worked Calculation">
+<meta property="og:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
+<meta property="og:url" content="https://quantmedia.io/reports/psr-worked-example.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="What Is Signal Confluence in Stock Screening?">
-<meta name="twitter:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
+<meta name="twitter:title" content="Probabilistic Sharpe Ratio: A Worked Calculation">
+<meta name="twitter:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "What Is Signal Confluence in Stock Screening?",
-  "description": "Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.",
+  "headline": "Probabilistic Sharpe Ratio: A Worked Calculation",
+  "description": "Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-08-08",
-  "dateModified": "2026-08-08",
-  "mainEntityOfPage": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+  "datePublished": "2026-09-04",
+  "dateModified": "2026-09-04",
+  "mainEntityOfPage": "https://quantmedia.io/reports/psr-worked-example.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Learn",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "Worked examples",
+      "item": "https://quantmedia.io/reports/"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "What is signal confluence?",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "Probabilistic Sharpe Ratio: A Worked Calculation",
+      "item": "https://quantmedia.io/reports/psr-worked-example.html"
     }
   ]
 }</script>
@@ -258,90 +258,74 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/what-is-signal-confluence.html">Learn</a> &rsaquo; What is signal confluence?</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">What is signal confluence?</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; Probabilistic Sharpe Ratio: A Worked Calculation</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Probabilistic Sharpe Ratio: A Worked Calculation</h1>
 
-  <div class="qm-answer">
-    <span class="qm-answer-label">Short answer</span>
-    <p>Signal confluence means requiring several independent technical
-    conditions to agree before acting, instead of trusting any one indicator.
-    QuantMedia's engine scores each stock against 30 binary checks &mdash;
-    trend, momentum, volume, volatility and 52-week position &mdash; and flags
-    a BUY only when at least 22 are simultaneously bullish, roughly
-    73% agreement. The purpose is to filter noise, and the
-    cost is that confluence systems are structurally late at turning points.</p>
-  </div>
+<p class="qm-lede">With an observed Sharpe of 1.50, 24 observations, skewness
+of &minus;1.20 and kurtosis of 7.00, the Probabilistic Sharpe Ratio against
+a zero benchmark is <strong>99.81%</strong>. Here is the arithmetic behind
+that result, including the denominator that is easy to miscalculate.</p>
+<div class="qm-answer"><span class="qm-answer-label">Use consistent units</span>
+<p>Sharpe and the benchmark must be expressed at the observation frequency.
+For monthly observations, use monthly Sharpe values; do not enter an annualized
+Sharpe alongside a count of monthly returns. Kurtosis here is ordinary kurtosis,
+where a normal distribution has value 3, not excess kurtosis.</p></div>
+<h2>Inputs</h2>
+<table class="qm-kv"><tbody>
+<tr><th>Observed Sharpe SR</th><td>1.50 per observation period</td></tr>
+<tr><th>Benchmark SR*</th><td>0.00 per observation period</td></tr>
+<tr><th>Observations n</th><td>24</td></tr>
+<tr><th>Skewness g1</th><td>&minus;1.20</td></tr>
+<tr><th>Kurtosis g2</th><td>7.00</td></tr>
+</tbody></table>
+<h2>Calculate without intermediate rounding</h2>
+<div class="qm-formula">denominator = sqrt(1 - g1*SR + ((g2 - 1)/4)*SR^2)
+            = sqrt(1 + 1.80 + 1.5*2.25)
+            = sqrt(6.175)
+            = 2.484954727958
 
-  <h2>The reasoning</h2>
-  <p>Any single technical indicator produces frequent false positives. RSI drops
-  below 30 often in a downtrend that continues; moving-average crossovers whipsaw
-  in ranges. Requiring agreement across indicator <em>families</em> that respond
-  to different market properties raises the bar for a signal to fire.</p>
-  <p>The important caveat is that confluence is not statistical independence.
-  Technical indicators computed from the same price series are heavily
-  correlated: if price is above its 5-, 10-, 20- and 50-day averages, those four
-  checks pass together almost by construction. So a score of 22 out of 30
-  does <strong>not</strong> represent 22 independent confirmations. It
-  represents broad agreement among overlapping measurements &mdash; useful, but
-  a weaker claim than the raw count suggests.</p>
+z = (SR - SR*) * sqrt(n - 1) / denominator
+  = 1.5 * sqrt(23) / sqrt(6.175)
+  = 2.8949208628
 
-  <h2>How the score is built</h2>
-  <table class="qm-kv">
-    <thead><tr><th>Family</th><th>Checks</th><th>What it tests</th></tr></thead>
-    <tbody>
-      <tr><td>Trend / moving averages</td><td class="qm-num">10</td><td>Price vs SMA(5/10/20/50), MA ordering, EMA(12) vs EMA(26), MACD level and signal cross</td></tr>
-      <tr><td>Momentum oscillators</td><td class="qm-num">4</td><td>RSI(14) in the neutral band, RSI(7) vs RSI(14), RSI(21) level, RSI recovery cross</td></tr>
-      <tr><td>Rate of change</td><td class="qm-num">4</td><td>5/10/20-day returns, plus a check that short-term momentum is not overextended</td></tr>
-      <tr><td>Bollinger Bands</td><td class="qm-num">3</td><td>Position inside the bands and a bounce off the lower band</td></tr>
-      <tr><td>Volume</td><td class="qm-num">3</td><td>Current vs 20-day average, 5-day vs 20-day, up-volume vs down-volume</td></tr>
-      <tr><td>Stochastic</td><td class="qm-num">2</td><td>%K level and %K vs %D</td></tr>
-      <tr><td>52-week position</td><td class="qm-num">2</td><td>Position within the 52-week range</td></tr>
-      <tr><td>Volatility regime</td><td class="qm-num">2</td><td>ATR as a share of price, inside a workable band</td></tr>
-      <tr><th>Total</th><th class="qm-num">30</th><th>BUY at &ge; 22</th></tr>
-    </tbody>
-  </table>
-  <p>Each check returns 1 or 0. There is no weighting, no optimisation of the
-  threshold against past returns, and no discretionary override. That keeps the
-  system un-fitted to any particular period &mdash; and equally means the
-  threshold carries no claim of being optimal.</p>
+PSR = standard_normal_cdf(z)
+    = 0.9981037293
+    = 99.81% (rounded)</div>
+<p>The normal-return case still has a kurtosis term. Setting skewness to zero
+and kurtosis to 3 gives sqrt(1 + 0.5 &times; 1.50&sup2;) = <strong>1.4577</strong>,
+not 1. Zero excess kurtosis does not remove (g2 &minus; 1)/4 from this formula.</p>
+<h2>Change the question</h2>
+<p>Raise the benchmark from 0 to 1 while keeping the other inputs fixed. The
+z-statistic becomes 0.9650 and PSR falls to <strong>83.27%</strong>, below a
+95% threshold. The observed record is the same; the claim being tested is stronger.</p>
+<p><a href="/tools/probabilistic-sharpe-ratio-calculator.html">Open the free calculator with these default inputs</a>.
+It calculates locally in your browser and displays both the denominator and z.</p>
+<h2>Reproduce with Python</h2>
+<div class="qm-formula">from math import erf, sqrt
 
-  <h2>Why 22, and what that choice costs</h2>
-  <p>22 of 30 is about 73% agreement. Requiring roughly
-  three-quarters of checks to align means a stock generally has to be in a
-  broad, confirmed uptrend to qualify. The direct consequences are worth stating
-  plainly:</p>
-  <ul>
-    <li>Signals cluster in rising markets and thin out in falling ones. That is
-    the design working, not a malfunction.</li>
-    <li>The engine is structurally late at inflections. It cannot flag a bottom,
-    because at a bottom almost no trend check passes.</li>
-    <li>When the median score sits near 22, the BUY flag stops discriminating
-    &mdash; half the universe qualifies. On those days the score itself carries
-    more information than the flag. <a href="/indices/signal-breadth.html">Signal
-    Breadth</a> exists to make that visible.</li>
-  </ul>
-
-  <h2>Limitations</h2>
-  <ul>
-    <li><strong>Correlated inputs.</strong> As above, 22 checks are not 22
-    independent pieces of evidence.</li>
-    <li><strong>Purely technical.</strong> No earnings, guidance, litigation or
-    index-change awareness. A stock can score 30/30 the day before a
-    profit warning.</li>
-    <li><strong>No published track record.</strong> QuantMedia does not publish
-    live or audited performance for this engine, because no verified
-    out-of-sample record exists to report.</li>
-    <li><strong>End-of-day only.</strong> Signals reflect the prior close and can
-    be invalidated by overnight news or a gap.</li>
-  </ul>
-
-  <h2>Related</h2>
-  <ul class="qm-related">
-    <li><a href="/quantum-signals.html">Daily US stock signals</a><span>The live dashboard this describes</span></li>
-    <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>How much of the universe currently qualifies</span></li>
-    <li><a href="/indices/sector-confluence.html">QuantMedia Sector Confluence</a><span>Where the agreement is concentrated</span></li>
-    <li><a href="/methodology.html#signal-engine">Signal engine methodology</a><span>Full parameter table</span></li>
-  </ul>
+sr, benchmark, n, skew, kurtosis = 1.5, 0.0, 24, -1.2, 7.0
+den = sqrt(1 - skew*sr + ((kurtosis - 1)/4)*sr**2)
+z = (sr - benchmark)*sqrt(n - 1)/den
+psr = (1 + erf(z/sqrt(2)))/2
+print(f"den={den:.10f}, z={z:.10f}, PSR={psr:.10f}")</div>
+<p>This check uses Python's standard library. The browser calculator uses an
+error-function approximation, so compare at the displayed precision rather
+than requiring identical last digits.</p>
+<h2>What the percentage does not mean</h2>
+<p>PSR is not the probability of a profitable next trade. Its interpretation
+depends on the statistical assumptions, including independent returns and
+reliable moment estimates. It does not account for costs or the number of
+strategy variants tried. Selection across many backtests needs a separate
+correction such as the Deflated Sharpe Ratio.</p>
+<p class="qm-note">Arithmetic checked 4 September 2026. The earlier worked
+example printed z = 2.8955; the correct value rounded to four decimals is
+2.8949. This correction leaves the displayed PSR of 99.81% unchanged.</p>
+<ul class="qm-related">
+<li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">PSR explained</a></li>
+<li><a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a><span>Accounting for multiple strategy trials</span></li>
+<li><a href="/paper-probabilistic-sharpe-ratio.html">PSR research note and references</a></li>
+<li><a href="/reports/">All worked examples</a></li>
+</ul>
 
 </div>
 </main>

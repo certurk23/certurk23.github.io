@@ -71,6 +71,8 @@
 }</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 <style>
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
@@ -205,6 +207,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .qm-related li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
 .qm-related a{color:var(--accent);font-weight:600}
 .qm-related span{color:var(--dim);display:block;font-size:12.5px;margin-top:3px}
+.mobile-nav{max-height:calc(100dvh - var(--nav-h));overflow-y:auto}
 .calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
 .calc-field label{display:block;font-size:11px;font-family:'Barlow Condensed',sans-serif;
   letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
@@ -215,24 +218,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .calc-out .big{font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--accent);font-weight:600}
 </style>
 
-<style>
-/* --- mobile hardening ---------------------------------------------------
-   `1fr` means `minmax(auto,1fr)`, and an auto minimum cannot shrink below the
-   content's min-content width, so a single wide table pushed the whole grid
-   track past the viewport. minmax(0,1fr) lets it shrink; wide children then
-   scroll inside their own box rather than scrolling the page. */
-@media(max-width:900px){
-  .page-grid{grid-template-columns:minmax(0,1fr)}
-  .article-content,.article-wrap,.page-wrap,main{min-width:0}
-  .profile-hero-inner,.profile-info{min-width:0;max-width:100%;flex-wrap:wrap}
-  table{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  pre,code{max-width:100%;overflow-x:auto}
-  img,svg,iframe{max-width:100%;height:auto}
-}
-</style>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 </head>
+<body>
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="site-logo">
@@ -247,16 +234,28 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="/papers.html">Papers</a>
       <a href="/research.html">Microstructure</a>
       <a href="/about.html">About</a>
-      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-      <button class="btn-subscribe">Subscribe</button>
+      <button class="btn-icon" title="Search" onclick="location.href='/?search=1'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-subscribe" onclick="location.href='/#newsletter'">Research Updates</button>
     </div>
   </div>
 </header>
+<div class="mobile-nav" id="mobileNav">
+  <a href="/reproducibility.html">Free Tools &amp; Code</a>
+  <a href="/reports/">Worked Examples</a>
+  <a href="/">Home</a>
+  <a href="/markets.html">Markets</a>
+  <a href="/news.html">News</a>
+  <a href="/stocks.html">Equities</a>
+  <a href="/quantum-signals.html">Quantum</a>
+  <a href="/papers.html">Papers</a>
+  <a href="/research.html">Microstructure</a>
+  <a href="/about.html">About</a>
+</div>
 <main>
 <div class="page-wrap">
   <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/how-to-model-slippage-in-backtests.html">Learn</a> &rsaquo; How to model slippage in backtests</div>
@@ -385,6 +384,7 @@ round trip = 33.4 bp</div>
     </div>
     <div class="ft-col">
       <h4>Research</h4>
+      <a href="/reports/">Worked Examples</a>
       <a href="/research.html#vpin">VPIN Methodology</a>
       <a href="/research.html#darkpool">Dark Pool Mechanics</a>
       <a href="/research.html#adverse">Adverse Selection</a>
@@ -416,6 +416,18 @@ round trip = 33.4 bp</div>
   </div>
 </footer>
 <script>
+function toggleMenu(){
+  var h=document.getElementById('hamburger'), m=document.getElementById('mobileNav');
+  var open=m.classList.toggle('open');
+  h.classList.toggle('open',open);h.setAttribute('aria-expanded',String(open));
+}
+document.getElementById('hamburger').setAttribute('aria-controls','mobileNav');
+document.getElementById('hamburger').setAttribute('aria-expanded','false');
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && document.getElementById('mobileNav').classList.contains('open')){
+    toggleMenu();document.getElementById('hamburger').focus();
+  }
+});
 function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('qm-theme',n);}catch(e){}}
 </script>
 </body>

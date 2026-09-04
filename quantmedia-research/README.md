@@ -6,7 +6,25 @@ Runnable code behind the research published at
 
 Each package implements the methodology described in its corresponding paper,
 ships example data and expected output, and is covered by tests. Nothing here
-requires an API key, a paid data feed or network access.
+requires an API key or a paid data feed. After downloading the code and
+installing dependencies, the examples run offline.
+
+## Worked examples and reproducibility checks
+
+Read the [free worked examples](https://quantmedia.io/reports/) for the inputs,
+output and limitations. The examples were checked using Python 3.11.9 and the
+versions in [`requirements-verified.txt`](requirements-verified.txt).
+
+From the repository root, run:
+
+```text
+python -m pip install -r quantmedia-research/requirements-verified.txt
+python quantmedia-research/verify_examples.py
+```
+
+This reruns both examples in temporary directories and compares all five
+generated CSV files with the committed versions. The Research and Site Checks
+workflow runs it alongside the implementation tests and calculator checks.
 
 ## Packages
 

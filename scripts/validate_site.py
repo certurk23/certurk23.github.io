@@ -468,6 +468,8 @@ def check_sitemap():
             err(f'{rel}: <url> without <loc>')
             continue
         target = loc.text.replace('https://quantmedia.io/', '') or 'index.html'
+        if target.endswith('/'):
+            target += 'index.html'
         if target and not target.startswith('http'):
             if not os.path.exists(os.path.join(ROOT, target)):
                 err(f'{rel}: {loc.text} has no corresponding file')
@@ -664,6 +666,8 @@ def check_sitemap_noindex():
         return
     for loc in [e.text for e in root.iter() if e.tag.endswith('loc')]:
         path = loc.replace('https://quantmedia.io/', '') or 'index.html'
+        if path.endswith('/'):
+            path += 'index.html'
         f = os.path.join(ROOT, path)
         if not os.path.exists(f):
             continue

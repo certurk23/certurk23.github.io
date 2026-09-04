@@ -172,19 +172,21 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="papers.html">Papers</a>
       <a href="research.html">Microstructure</a>
       <a href="about.html">About</a>
-      <a href="/author/cemil-erturk.html">Author</a>
+      <a href="/reproducibility.html">Tools &amp; Code</a>
     </nav>
     <div class="header-right">
       <button class="hamburger" id="hamburger" onclick="toggleMenu()" title="Menu" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
       <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-      <button class="btn-icon" title="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-      <button class="btn-subscribe">Subscribe</button>
+      <button class="btn-icon" title="Search" onclick="location.href='/?search=1'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-subscribe" onclick="location.href='/#newsletter'">Research Updates</button>
     </div>
   </div>
 </header>
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
+  <a href="/reproducibility.html">Free Tools &amp; Code</a>
+  <a href="/reports/">Worked Examples</a>
   <a href="./">Home</a>
   <a href="markets.html">Markets</a>
   <a href="news.html">News</a>
@@ -310,8 +312,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   </div>
   <div class="article-card">
     <div class="insight-box" style="margin-top:0">
-      <div class="insight-label">Non-Commercial Research Platform</div>
-      <p>QuantMedia is a <strong>non-commercial, independent research platform</strong> operated by QuantMedia. The platform does not execute trades, manage assets, or provide personalized financial advice. All content -- including market data, research papers, and analytical tools -- is provided for <strong>informational and educational purposes only</strong>.</p>
+      <div class="insight-label">Free Educational Research</div>
+      <p>QuantMedia is a <strong>independent research platform with free access</strong> operated by QuantMedia. The platform does not execute trades, manage assets, or provide personalized financial advice. All content -- including market data, research papers, and analytical tools -- is provided for <strong>informational and educational purposes only</strong>.</p>
     </div>
 
     <p style="margin-top:14px"><strong>Not financial advice.</strong> Nothing on this platform constitutes investment advice, a recommendation to buy or sell any security, or a solicitation for any financial product. All market data is sourced from third-party providers and may be delayed, indicative, or subject to error. Users should consult qualified financial professionals before making investment decisions.</p>
@@ -332,6 +334,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     </div>
     <div class="ft-col">
       <h4>Research</h4>
+      <a href="/reports/">Worked Examples</a>
       <a href="research.html#vpin">VPIN Methodology</a>
       <a href="research.html#darkpool">Dark Pool Mechanics</a>
       <a href="research.html#adverse">Adverse Selection</a>

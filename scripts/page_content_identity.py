@@ -155,10 +155,9 @@ research before publication.</p>
 before publication, not afterwards.</p>
 
 <h2>How this site is funded</h2>
-<p>Advertising, served by Google AdSense. Advertisers have no input into
-research topics, conclusions or the timing of publication, and no advertiser is
-shown the content in advance. Ad revenue does not depend on any particular
-conclusion.</p>
+<p><strong>QuantMedia currently generates no revenue.</strong> There are no sponsorships, no paid placements, no affiliate links and no paid subscriptions, and nothing on this site has ever been written for payment.</p>
+<p>An application to Google AdSense has been submitted and is pending. If it is approved, advertising may appear on this site in future, and this page will be updated to say so plainly. No other form of monetisation is planned at present.</p>
+<p>Whatever funding arrives later, the rule is fixed in advance: advertisers get no input into research topics, conclusions or publication timing, they are never shown content ahead of readers, and no revenue arrangement will depend on reaching any particular conclusion. Any change to this will be disclosed here before it takes effect, not after.</p>
 
 <h2>No investment advice, and no positions disclosed as recommendations</h2>
 <p>Everything here is published for informational and educational purposes.
@@ -269,10 +268,7 @@ caught by executing the calculation, and the correction was published.</p>
 AI system is presented as an author.</p>
 
 <h2>Privacy and analytics</h2>
-<p>QuantMedia uses Google Analytics 4 for aggregate traffic measurement and
-Google AdSense for advertising. No accounts, logins or personal profiles are
-collected by this site. Details are in the
-<a href="/privacy.html">privacy policy</a>.</p>
+<p>QuantMedia uses Google Analytics 4 for aggregate traffic measurement. Google AdSense code is present because an application is pending; should it be approved, advertising cookies would apply as described in the <a href="/privacy.html">privacy policy</a>. No accounts, logins or personal profiles are collected by this site.</p>
 
 <div class="qm-related">
   <a href="/author/cemil-erturk.html">About the author</a>

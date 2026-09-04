@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Is Signal Confluence in Stock Screening? | QuantMedia</title>
-<meta name="description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<link rel="canonical" href="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<title>Free Quantitative Finance Worked Examples | QuantMedia</title>
+<meta name="description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
+<link rel="canonical" href="https://quantmedia.io/reports/">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="What Is Signal Confluence in Stock Screening?">
-<meta property="og:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
-<meta property="og:url" content="https://quantmedia.io/learn/what-is-signal-confluence.html">
+<meta property="og:title" content="Free Quantitative Finance Worked Examples">
+<meta property="og:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
+<meta property="og:url" content="https://quantmedia.io/reports/">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="What Is Signal Confluence in Stock Screening?">
-<meta name="twitter:description" content="Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.">
+<meta name="twitter:title" content="Free Quantitative Finance Worked Examples">
+<meta name="twitter:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "What Is Signal Confluence in Stock Screening?",
-  "description": "Signal confluence requires several technical conditions to agree before acting. How QuantMedia scores 30 checks per stock, why the threshold is 22, and what that choice costs.",
+  "headline": "Free Quantitative Finance Worked Examples",
+  "description": "Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-08-08",
-  "dateModified": "2026-08-08",
-  "mainEntityOfPage": "https://quantmedia.io/learn/what-is-signal-confluence.html",
+  "datePublished": "2026-09-04",
+  "dateModified": "2026-09-04",
+  "mainEntityOfPage": "https://quantmedia.io/reports/",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Learn",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "Research",
+      "item": "https://quantmedia.io/reproducibility.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "What is signal confluence?",
-      "item": "https://quantmedia.io/learn/what-is-signal-confluence.html"
+      "name": "Free Quantitative Finance Worked Examples",
+      "item": "https://quantmedia.io/reports/"
     }
   ]
 }</script>
@@ -258,90 +258,37 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/what-is-signal-confluence.html">Learn</a> &rsaquo; What is signal confluence?</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">What is signal confluence?</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Research</a> &rsaquo; Free Quantitative Finance Worked Examples</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Free Quantitative Finance Worked Examples</h1>
 
-  <div class="qm-answer">
-    <span class="qm-answer-label">Short answer</span>
-    <p>Signal confluence means requiring several independent technical
-    conditions to agree before acting, instead of trusting any one indicator.
-    QuantMedia's engine scores each stock against 30 binary checks &mdash;
-    trend, momentum, volume, volatility and 52-week position &mdash; and flags
-    a BUY only when at least 22 are simultaneously bullish, roughly
-    73% agreement. The purpose is to filter noise, and the
-    cost is that confluence systems are structurally late at turning points.</p>
-  </div>
-
-  <h2>The reasoning</h2>
-  <p>Any single technical indicator produces frequent false positives. RSI drops
-  below 30 often in a downtrend that continues; moving-average crossovers whipsaw
-  in ranges. Requiring agreement across indicator <em>families</em> that respond
-  to different market properties raises the bar for a signal to fire.</p>
-  <p>The important caveat is that confluence is not statistical independence.
-  Technical indicators computed from the same price series are heavily
-  correlated: if price is above its 5-, 10-, 20- and 50-day averages, those four
-  checks pass together almost by construction. So a score of 22 out of 30
-  does <strong>not</strong> represent 22 independent confirmations. It
-  represents broad agreement among overlapping measurements &mdash; useful, but
-  a weaker claim than the raw count suggests.</p>
-
-  <h2>How the score is built</h2>
-  <table class="qm-kv">
-    <thead><tr><th>Family</th><th>Checks</th><th>What it tests</th></tr></thead>
-    <tbody>
-      <tr><td>Trend / moving averages</td><td class="qm-num">10</td><td>Price vs SMA(5/10/20/50), MA ordering, EMA(12) vs EMA(26), MACD level and signal cross</td></tr>
-      <tr><td>Momentum oscillators</td><td class="qm-num">4</td><td>RSI(14) in the neutral band, RSI(7) vs RSI(14), RSI(21) level, RSI recovery cross</td></tr>
-      <tr><td>Rate of change</td><td class="qm-num">4</td><td>5/10/20-day returns, plus a check that short-term momentum is not overextended</td></tr>
-      <tr><td>Bollinger Bands</td><td class="qm-num">3</td><td>Position inside the bands and a bounce off the lower band</td></tr>
-      <tr><td>Volume</td><td class="qm-num">3</td><td>Current vs 20-day average, 5-day vs 20-day, up-volume vs down-volume</td></tr>
-      <tr><td>Stochastic</td><td class="qm-num">2</td><td>%K level and %K vs %D</td></tr>
-      <tr><td>52-week position</td><td class="qm-num">2</td><td>Position within the 52-week range</td></tr>
-      <tr><td>Volatility regime</td><td class="qm-num">2</td><td>ATR as a share of price, inside a workable band</td></tr>
-      <tr><th>Total</th><th class="qm-num">30</th><th>BUY at &ge; 22</th></tr>
-    </tbody>
-  </table>
-  <p>Each check returns 1 or 0. There is no weighting, no optimisation of the
-  threshold against past returns, and no discretionary override. That keeps the
-  system un-fitted to any particular period &mdash; and equally means the
-  threshold carries no claim of being optimal.</p>
-
-  <h2>Why 22, and what that choice costs</h2>
-  <p>22 of 30 is about 73% agreement. Requiring roughly
-  three-quarters of checks to align means a stock generally has to be in a
-  broad, confirmed uptrend to qualify. The direct consequences are worth stating
-  plainly:</p>
-  <ul>
-    <li>Signals cluster in rising markets and thin out in falling ones. That is
-    the design working, not a malfunction.</li>
-    <li>The engine is structurally late at inflections. It cannot flag a bottom,
-    because at a bottom almost no trend check passes.</li>
-    <li>When the median score sits near 22, the BUY flag stops discriminating
-    &mdash; half the universe qualifies. On those days the score itself carries
-    more information than the flag. <a href="/indices/signal-breadth.html">Signal
-    Breadth</a> exists to make that visible.</li>
-  </ul>
-
-  <h2>Limitations</h2>
-  <ul>
-    <li><strong>Correlated inputs.</strong> As above, 22 checks are not 22
-    independent pieces of evidence.</li>
-    <li><strong>Purely technical.</strong> No earnings, guidance, litigation or
-    index-change awareness. A stock can score 30/30 the day before a
-    profit warning.</li>
-    <li><strong>No published track record.</strong> QuantMedia does not publish
-    live or audited performance for this engine, because no verified
-    out-of-sample record exists to report.</li>
-    <li><strong>End-of-day only.</strong> Signals reflect the prior close and can
-    be invalidated by overnight news or a gap.</li>
-  </ul>
-
-  <h2>Related</h2>
-  <ul class="qm-related">
-    <li><a href="/quantum-signals.html">Daily US stock signals</a><span>The live dashboard this describes</span></li>
-    <li><a href="/indices/signal-breadth.html">QuantMedia Signal Breadth</a><span>How much of the universe currently qualifies</span></li>
-    <li><a href="/indices/sector-confluence.html">QuantMedia Sector Confluence</a><span>Where the agreement is concentrated</span></li>
-    <li><a href="/methodology.html#signal-engine">Signal engine methodology</a><span>Full parameter table</span></li>
-  </ul>
+<p class="qm-lede">Follow a quantitative result from its inputs to its output.
+These free examples pair the explanation with runnable code, expected results
+and the limitations that matter when interpreting them.</p>
+<div class="qm-answer"><span class="qm-answer-label">Choose a question</span>
+<p>Use PSR to examine a Sharpe estimate, VPIN to explore trade classification,
+or HRP to compare portfolio allocations. The examples require no account or
+paid data feed.</p></div>
+<ul class="qm-related">
+<li><a href="/reports/psr-worked-example.html">PSR: check every step of the calculation</a>
+<span>Why skewness, kurtosis and the benchmark change the answer. Try the same inputs in the free calculator.</span></li>
+<li><a href="/reports/vpin-example.html">VPIN: one tape, two different readings</a>
+<span>Bulk volume classification and the tick rule on the same 20,000 synthetic trades. Includes 15 tests.</span></li>
+<li><a href="/reports/hrp-example.html">HRP: compare six allocation methods</a>
+<span>In-sample and out-of-sample volatility on a 20-asset synthetic panel. Includes 13 tests.</span></li>
+</ul>
+<h2>Run the examples</h2>
+<p>The <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">GitHub research directory</a>
+contains the code, sample data and expected CSV output. Start with the
+<a href="/reproducibility.html">installation instructions and implementation index</a>.
+After installing the dependencies, the Python examples run offline.</p>
+<h2>What these checks establish</h2>
+<p>Known inputs help expose implementation errors: lost volume in a bucket,
+weights that fail to sum to one, or a missing term in a formula. A passing test
+supports the behavior it checks. It does not establish that a method predicts
+future prices, survives transaction costs or generalizes beyond the example.</p>
+<p>All examples and tools are freely accessible. For background, browse the
+<a href="/papers.html">research library</a>; for data coverage and corrections,
+read the <a href="/editorial-policy.html">editorial policy</a>.</p>
 
 </div>
 </main>

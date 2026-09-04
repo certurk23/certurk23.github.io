@@ -941,6 +941,9 @@ PSR_TOOL_BODY = """
   </div>
 
   <h2>Calculator</h2>
+  <p class="qm-note">Use Sharpe and benchmark values at the observation frequency,
+  not annualized values with a count of daily or monthly observations.
+  <a href="/reports/psr-worked-example.html">Follow the worked calculation</a>.</p>
   <div class="calc-grid">
     <div class="calc-field">
       <label for="psr-sr">Observed Sharpe (SR&#770;)</label>
@@ -1007,9 +1010,9 @@ PSR(SR*) = Z [ ---------------------------------------------------- ]
 
 z   = (1.50 - 0.00) * sqrt(24 - 1) / 2.4850
     = 1.50 * 4.7958 / 2.4850
-    = 2.8955
+    = 2.8949
 
-PSR = Z(2.8955) = 0.9981  ->  99.81%</div>
+PSR = Z(2.8949) = 0.9981  ->  99.81%</div>
   <p>Change the benchmark to 1.00 and the same track record gives z = 0.965 and
   PSR = 0.8327, which fails the 0.95 bar. Same strategy, different question.</p>
 
@@ -1057,16 +1060,16 @@ PSR = Z(2.8955) = 0.9981  ->  99.81%</div>
     var verdict=document.getElementById('psr-verdict');
     var detail=document.getElementById('psr-detail');
 
-    if([sr,bm,n,g1,g2].some(function(v){return isNaN(v);})||n<2){
+    if([sr,bm,n,g1,g2].some(function(v){return !Number.isFinite(v);})||n<2||!Number.isInteger(n)){
       out.textContent='—';
-      verdict.textContent='Enter all five inputs. Observations must be at least 2.';
+      verdict.textContent='Enter all five inputs. Use finite numbers and a whole-number observation count of at least 2.';
       detail.textContent='';
       return;
     }
     var denomSq=1-g1*sr+((g2-1)/4)*sr*sr;
-    if(denomSq<=0){
+    if(!Number.isFinite(denomSq)||denomSq<=0){
       out.textContent='—';
-      verdict.textContent='These moments give a non-positive variance term, so PSR is undefined. Check the skewness and kurtosis inputs.';
+      verdict.textContent='These inputs do not give a finite, positive variance term. Check the Sharpe, skewness and kurtosis inputs.';
       detail.textContent='1 - g1*SR + ((g2-1)/4)*SR^2 = '+denomSq.toFixed(4);
       return;
     }
@@ -1077,7 +1080,7 @@ PSR = Z(2.8955) = 0.9981  ->  99.81%</div>
     if(psr>=0.95){
       verdict.innerHTML='<strong style="color:var(--accent)">Clears the 95% bar.</strong> The record supports a true Sharpe above '+bm+' at conventional confidence.';
     }else if(psr>=0.90){
-      verdict.innerHTML='<strong style="color:var(--gold)">Short of 95%.</strong> Suggestive but not conclusive at the usual threshold — more observations would settle it.';
+      verdict.innerHTML='<strong style="color:var(--gold)">Short of 95%.</strong> Suggestive but not conclusive at the usual threshold — the result remains below the chosen confidence threshold.';
     }else{
       verdict.innerHTML='<strong style="color:var(--red)">Does not support the claim.</strong> Given this track length and return shape, the evidence for a true Sharpe above '+bm+' is weak.';
     }
@@ -1112,6 +1115,11 @@ REPRO_BODY = """
     is labelled reproducible on the strength of an intention.</p>
   </div>
 
+  <div class="qm-answer"><span class="qm-answer-label">Start here</span>
+    <p><a href="/tools/probabilistic-sharpe-ratio-calculator.html">Use the free PSR calculator</a>,
+    <a href="/reports/">read the worked examples</a>, or
+    <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">get the Python code on GitHub</a>.
+    All tools and examples are freely accessible.</p></div>
   <h2>Available implementations</h2>
 
   <h3>VPIN &mdash; order flow toxicity</h3>
@@ -1119,7 +1127,7 @@ REPRO_BODY = """
     <tr><th>Research question</th><td>Can order-flow toxicity be estimated from a trade tape without quote data, and how sensitive is the answer to the classification method?</td></tr>
     <tr><th>Paper</th><td><a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; Order Flow Toxicity</a></td></tr>
     <tr><th>Explainer</th><td><a href="/learn/what-is-vpin.html">What is VPIN?</a></td></tr>
-    <tr><th>Code</th><td><code>quantmedia-research/vpin-order-flow-toxicity/</code> &mdash; <code>vpin.py</code>, <code>example.py</code></td></tr>
+    <tr><th>Code</th><td><a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/vpin-order-flow-toxicity">GitHub: vpin-order-flow-toxicity</a> &mdash; <code>vpin.py</code>, <code>example.py</code></td></tr>
     <tr><th>Implements</th><td>Equal-volume bucketing with boundary splitting; Bulk Volume Classification (Student-t) and the tick rule; rolling VPIN</td></tr>
     <tr><th>Example data</th><td>Synthetic tape, fixed seed <code>20260808</code>, with a planted one-sided episode</td></tr>
     <tr><th>Expected output</th><td>VPIN rises ~1.94x through the planted episode; BVC and tick-rule means differ (0.44 vs 0.18) on identical data</td></tr>
@@ -1132,7 +1140,7 @@ REPRO_BODY = """
     <tr><th>Research question</th><td>Does avoiding covariance-matrix inversion produce more stable out-of-sample allocations than mean-variance on correlated universes?</td></tr>
     <tr><th>Paper</th><td><a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a></td></tr>
     <tr><th>Explainer</th><td><a href="/learn/hrp-vs-mean-variance.html">HRP vs mean-variance</a></td></tr>
-    <tr><th>Code</th><td><code>quantmedia-research/hierarchical-risk-parity/</code> &mdash; <code>hrp.py</code>, <code>compare_mvo.py</code></td></tr>
+    <tr><th>Code</th><td><a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/hierarchical-risk-parity">GitHub: hierarchical-risk-parity</a> &mdash; <code>hrp.py</code>, <code>compare_mvo.py</code></td></tr>
     <tr><th>Implements</th><td>Correlation distance, hierarchical linkage, quasi-diagonalisation, recursive bisection; min-variance and shrinkage baselines</td></tr>
     <tr><th>Example data</th><td>Synthetic 20-asset block-correlated panel, fixed seed <code>20260808</code></td></tr>
     <tr><th>Expected output</th><td>Out-of-sample volatility drift: HRP +1.3% vs MinVar +13.6%; shrinkage narrows it to +7.7%</td></tr>
@@ -1162,7 +1170,13 @@ REPRO_BODY = """
   </ul>
 
   <h2>Running the code</h2>
-  <div class="qm-formula">cd quantmedia-research/vpin-order-flow-toxicity
+  <div class="qm-formula">git clone https://github.com/certurk23/certurk23.github.io.git
+cd certurk23.github.io
+python -m venv .venv
+# Activate: source .venv/bin/activate (macOS/Linux)
+# PowerShell: .venv\\Scripts\\Activate.ps1
+
+cd quantmedia-research/vpin-order-flow-toxicity
 pip install -r requirements.txt
 python example.py
 
@@ -1174,7 +1188,7 @@ cd ..
 python tests/test_vpin.py     # 15 tests
 python tests/test_hrp.py      # 13 tests</div>
   <p>Python 3.9 or later. Dependencies are numpy, pandas and scipy. No API key,
-  no network access and no paid data subscription is required to run any of it.</p>
+  no paid data subscription is required. Downloading the code and installing dependencies needs internet access; the examples then run offline.</p>
 
   <div class="qm-answer">
     <span class="qm-answer-label">On the sample data</span>
@@ -1185,7 +1199,7 @@ python tests/test_hrp.py      # 13 tests</div>
     this in its README, its module docstring and its console output.</p>
   </div>
 
-  <h2>Proprietary data</h2>
+  <h2>Daily market metrics and data</h2>
   <p>Separately from the research code, QuantMedia publishes two metrics
   computed from its own daily scan, with machine-readable history:</p>
   <ul class="qm-related">

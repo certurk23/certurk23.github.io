@@ -46,12 +46,13 @@ def shell_parts():
     header = re.search(r'<header class="site-header">.*?</header>',
                        src, re.DOTALL).group(0)
     footer = re.search(r'<footer>.*?</footer>', src, re.DOTALL).group(0)
+    mobile = re.search(r'<div class="mobile-nav".*?</div>', src, re.DOTALL).group(0)
     # Pages live one directory down, so relative links need a root prefix.
     def rootify(html):
         html = re.sub(r'href="(?!https?://|/|#|mailto:)', 'href="/', html)
         html = re.sub(r'src="(?!https?://|/|data:)', 'src="/', html)
         return html.replace('href="/./"', 'href="/"')
-    return style, rootify(header), rootify(footer)
+    return style, rootify(header), rootify(footer), rootify(mobile)
 
 
 EXTRA_CSS = """
@@ -93,6 +94,7 @@ EXTRA_CSS = """
 .qm-related li{padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
 .qm-related a{color:var(--accent);font-weight:600}
 .qm-related span{color:var(--dim);display:block;font-size:12.5px;margin-top:3px}
+.mobile-nav{max-height:calc(100dvh - var(--nav-h));overflow-y:auto}
 .calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
 .calc-field label{display:block;font-size:11px;font-family:'Barlow Condensed',sans-serif;
   letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
@@ -108,8 +110,10 @@ EXTRA_CSS = """
 def page(slug, title, description, h1, crumb, body,
          schema_type='Article', published='2026-08-08', modified='2026-08-08',
          extra_schema=''):
-    style, header, footer = shell_parts()
+    style, header, footer, mobile = shell_parts()
     url = f'{SITE}/{slug}'
+    if slug.endswith('/index.html'):
+        url = url[:-len('index.html')]
     headline = title.split(' | ')[0]
 
     # Google's ProfilePage spec is NOT the Article spec. It recognises
@@ -220,7 +224,9 @@ def page(slug, title, description, h1, crumb, body,
 {style}
 {EXTRA_CSS}
 </head>
+<body>
 {header}
+{mobile}
 <main>
 <div class="page-wrap">
   <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/{crumb[1]}">{crumb[0]}</a> &rsaquo; {h1}</div>
@@ -230,6 +236,18 @@ def page(slug, title, description, h1, crumb, body,
 </main>
 {footer}
 <script>
+function toggleMenu(){{
+  var h=document.getElementById('hamburger'), m=document.getElementById('mobileNav');
+  var open=m.classList.toggle('open');
+  h.classList.toggle('open',open);h.setAttribute('aria-expanded',String(open));
+}}
+document.getElementById('hamburger').setAttribute('aria-controls','mobileNav');
+document.getElementById('hamburger').setAttribute('aria-expanded','false');
+document.addEventListener('keydown',function(e){{
+  if(e.key==='Escape' && document.getElementById('mobileNav').classList.contains('open')){{
+    toggleMenu();document.getElementById('hamburger').focus();
+  }}
+}});
 function toggleTheme(){{var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{{localStorage.setItem('qm-theme',n);}}catch(e){{}}}}
 </script>
 </body>
@@ -280,6 +298,7 @@ def write(slug, html):
     print(f'  wrote {slug}  ({len(html):,} bytes){note}')
 
 
+import page_content_examples as PCE
 import page_content as PC
 import page_content_identity as PCI   # noqa: E402
 
@@ -440,6 +459,22 @@ PAGES = [
          body=PCI.EDITORIAL_BODY,
          published='2026-08-16', modified='2026-08-16'),
 ]
+
+
+for existing in PAGES:
+    if existing['slug'] in ('reproducibility.html', 'tools/probabilistic-sharpe-ratio-calculator.html'):
+        existing['modified'] = '2026-09-04'
+
+for slug, title, description, body in [
+    ('index.html', 'Free Quantitative Finance Worked Examples', 'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.', PCE.INDEX_BODY),
+    ('vpin-example.html', 'VPIN Example: One Tape, Two Classifiers', 'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.', PCE.VPIN_BODY),
+    ('hrp-example.html', 'HRP Example: Compare Six Portfolio Allocators', 'Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.', PCE.HRP_BODY),
+    ('psr-worked-example.html', 'Probabilistic Sharpe Ratio: A Worked Calculation', 'Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.', PCE.PSR_BODY),
+]:
+    PAGES.append(dict(slug='reports/' + slug, title=title + ' | QuantMedia',
+                      description=description, h1=title,
+                      crumb=('Research', 'reproducibility.html') if slug == 'index.html' else ('Worked examples', 'reports/'),
+                      body=body, published='2026-09-04', modified='2026-09-04'))
 
 
 def main():

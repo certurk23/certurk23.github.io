@@ -420,9 +420,9 @@
    "target_url": "/learn/hrp-vs-mean-variance.html",
    "priority": "low",
    "primary_source": false,
-   "answer_coverage_score": 8.0,
+   "answer_coverage_score": 10.0,
    "status": "covered",
-   "content_gap": "answered in body but no matching heading - harder to extract",
+   "content_gap": null,
    "notes": null
   },
   {

@@ -337,102 +337,101 @@ PUBLISHER = {'@type': 'Organization', 'name': 'QuantMedia',
 PAGES = [
     dict(slug='indices/signal-breadth.html',
          title='QuantMedia Signal Breadth Index | QuantMedia',
-         description=('QuantMedia Signal Breadth: the share of scored US equities '
-                      'meeting the ' + str(E['confluence_min']) + '-of-' + str(E['n_signals'])
-                      + ' technical threshold, updated after every US close. Formula, '
-                        'current reading, history and limitations.'),
+         description=('QuantMedia Signal Breadth: share of scored US equities meeting the '
+                      + str(E['confluence_min']) + '-of-' + str(E['n_signals'])
+                      + ' technical threshold, updated after every US close. '
+                        'Formula, history, limits.'),
          h1='QuantMedia Signal Breadth Index',
          crumb=('Indices', 'indices/signal-breadth.html'),
          body=PC.BREADTH_BODY, schema_type='Article'),
 
     dict(slug='indices/sector-confluence.html',
          title='QuantMedia Sector Confluence Index | QuantMedia',
-         description=('QuantMedia Sector Confluence: mean technical confluence score '
-                      'and BUY breadth per US sector, ranked and updated after every '
-                      'US close. Method, current reading and limitations.'),
+         description=('QuantMedia Sector Confluence: mean confluence score and BUY breadth '
+                      'per US sector, ranked after every US close. Method, current '
+                      'reading, limitations.'),
          h1='QuantMedia Sector Confluence Index',
          crumb=('Indices', 'indices/sector-confluence.html'),
          body=PC.SECTOR_BODY, schema_type='Article'),
 
     dict(slug='learn/what-is-vpin.html',
          title='What Is VPIN? Order Flow Toxicity Explained | QuantMedia',
-         description=('VPIN measures order-flow toxicity using equal-volume buckets. '
-                      'Definition, formula, a worked numeric example, what a high '
-                      'reading means, and the documented criticism of it.'),
+         description=('VPIN measures order-flow toxicity with equal-volume buckets. '
+                      'Definition, formula, worked numeric example, what a high '
+                      'reading means, and the criticism.'),
          h1='What is VPIN?',
          crumb=('Learn', 'learn/what-is-vpin.html'),
          body=PC.VPIN_BODY),
 
     dict(slug='learn/what-is-probabilistic-sharpe-ratio.html',
          title='What Is the Probabilistic Sharpe Ratio? | QuantMedia',
-         description=('The Probabilistic Sharpe Ratio gives the probability a true '
-                      'Sharpe exceeds a benchmark, adjusting for track-record length, '
-                      'skewness and kurtosis. Formula, worked example, limitations.'),
+         description=('The Probabilistic Sharpe Ratio: probability a true Sharpe beats a '
+                      'benchmark, adjusted for track length, skew and kurtosis. '
+                      'Formula, example, limits.'),
          h1='What is the Probabilistic Sharpe Ratio?',
          crumb=('Learn', 'learn/what-is-probabilistic-sharpe-ratio.html'),
          body=PC.PSR_BODY),
 
     dict(slug='learn/hrp-vs-mean-variance.html',
          title='HRP vs Mean-Variance Optimisation Compared | QuantMedia',
-         description=('Hierarchical Risk Parity avoids inverting the covariance matrix; '
-                      'mean-variance does not. Side-by-side comparison of stability, '
-                      'concentration, turnover and out-of-sample behaviour.'),
+         description=('Hierarchical Risk Parity never inverts the covariance matrix; '
+                      'mean-variance does. Stability, concentration, turnover and '
+                      'out-of-sample behaviour compared.'),
          h1='HRP vs mean-variance optimisation',
          crumb=('Learn', 'learn/hrp-vs-mean-variance.html'),
          body=PC.HRP_BODY),
 
     dict(slug='learn/how-to-model-slippage-in-backtests.html',
          title='How to Model Slippage in Backtests | QuantMedia',
-         description=('Model slippage as spread, square-root market impact and delay '
-                      'cost rather than one flat number. Formula, worked example, and '
-                      'what turnover does to a strategy net of costs.'),
+         description=('Model slippage as spread, square-root impact and delay cost, not one '
+                      'flat number. Formula, worked example, and what turnover does '
+                      'to returns net of costs.'),
          h1='How to model slippage in backtests',
          crumb=('Learn', 'learn/how-to-model-slippage-in-backtests.html'),
          body=PC.SLIPPAGE_BODY),
 
     dict(slug='learn/deflated-sharpe-ratio.html',
-         title='Deflated Sharpe Ratio: Correcting for Backtest Overfitting | QuantMedia',
-         description=('The Deflated Sharpe Ratio raises the benchmark to the Sharpe '
-                      'you would expect from luck alone after N trials. Formula, '
-                      'worked example, and how it differs from PSR.'),
+         title='Deflated Sharpe Ratio and Backtest Overfitting | QuantMedia',
+         description=('The Deflated Sharpe Ratio raises the benchmark to the Sharpe expected '
+                      'from luck alone after N trials. Formula, worked example, how '
+                      'it differs from PSR.'),
          h1='What is the Deflated Sharpe Ratio?',
          crumb=('Learn', 'learn/deflated-sharpe-ratio.html'),
          body=PC.DSR_BODY),
 
     dict(slug='learn/what-is-signal-confluence.html',
          title='What Is Signal Confluence in Stock Screening? | QuantMedia',
-         description=('Signal confluence requires several technical conditions to agree '
+         description=('Signal confluence means several technical conditions must agree '
                       'before acting. How QuantMedia scores ' + str(E['n_signals'])
-                      + ' checks per stock, why the threshold is '
-                      + str(E['confluence_min']) + ', and what that choice costs.'),
+                      + ' checks per stock and why the threshold is '
+                      + str(E['confluence_min']) + '.'),
          h1='What is signal confluence?',
          crumb=('Learn', 'learn/what-is-signal-confluence.html'),
          body=PC.CONFLUENCE_BODY),
 
     dict(slug='learn/what-is-market-breadth.html',
          title='What Is Market Breadth? Measures Compared | QuantMedia',
-         description=('Market breadth measures how many stocks participate in a move. '
-                      'Advance/decline, percent above the 200-day, new highs minus lows, '
-                      'and QuantMedia Signal Breadth compared.'),
+         description=('Market breadth measures how many stocks join a move. Advance/decline, '
+                      'percent above the 200-day, new highs minus lows and Signal '
+                      'Breadth compared.'),
          h1='What is market breadth?',
          crumb=('Learn', 'learn/what-is-market-breadth.html'),
          body=PC.BREADTH_LEARN_BODY),
 
     dict(slug='reproducibility.html',
          title='Research Reproducibility: Code, Data and Tools | QuantMedia',
-         description=('Runnable implementations behind QuantMedia research: VPIN '
-                      'order-flow toxicity and Hierarchical Risk Parity, with '
-                      'example data, expected output and tests. Plus which papers '
-                      'are research-only.'),
+         description=('Runnable code behind QuantMedia research: VPIN and Hierarchical Risk '
+                      'Parity with example data, expected output and tests. Which '
+                      'papers are research-only.'),
          h1='Research reproducibility',
          crumb=('Research', 'papers.html'),
          body=PC.REPRO_BODY),
 
     dict(slug='tools/probabilistic-sharpe-ratio-calculator.html',
          title='Probabilistic Sharpe Ratio Calculator | QuantMedia',
-         description=('Free PSR calculator. Enter observed Sharpe, benchmark, '
-                      'observations, skewness and kurtosis to get the probability the '
-                      'true Sharpe exceeds your benchmark. Runs in your browser.'),
+         description=('Free PSR calculator: enter observed Sharpe, benchmark, observations, '
+                      'skewness and kurtosis to get the probability the true Sharpe '
+                      'beats the benchmark.'),
          h1='Probabilistic Sharpe Ratio calculator',
          crumb=('Tools', 'tools/probabilistic-sharpe-ratio-calculator.html'),
          body=PC.PSR_TOOL_BODY, schema_type='WebApplication'),
@@ -442,9 +441,9 @@ PAGES = [
     # class of error as the ScholarlyArticle claim that was removed earlier.
     dict(slug='author/cemil-erturk.html',
          title='Cemil Ertürk - Quantitative Researcher | QuantMedia',
-         description=('Cemil Ertürk is the researcher behind QuantMedia, covering market '
+         description=('Cemil Ertürk is the researcher behind QuantMedia: market '
                       'microstructure, portfolio construction, execution costs and '
-                      'systematic signals. Independent research, published with code.'),
+                      'systematic signals, with code.'),
          h1='Cemil Ertürk',
          crumb=('About', 'about.html'),
          body=PCI.AUTHOR_BODY, schema_type='ProfilePage',
@@ -452,9 +451,9 @@ PAGES = [
 
     dict(slug='editorial-policy.html',
          title='Editorial Policy, Corrections and Disclosures | QuantMedia',
-         description=('How QuantMedia research is produced, funded, versioned and '
-                      'corrected. Data sources, independence, AI-tool disclosure, '
-                      'corrections policy and what has not been validated.'),
+         description=('How QuantMedia research is produced, funded, versioned and corrected: '
+                      'data sources, independence, AI-tool disclosure, corrections, '
+                      'what is not validated.'),
          h1='Editorial policy',
          crumb=('About', 'about.html'),
          body=PCI.EDITORIAL_BODY,
@@ -473,14 +472,30 @@ PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION
 PCE.PSR_BODY = PCR.PSR_VERDICT + PCE.PSR_BODY + PCR.PSR_VERIFICATION
 
-for slug, title, description, body in [
-    ('index.html', 'Verification Reports: Quant Finance Code Checked Against Ground Truth', 'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.', PCE.INDEX_BODY),
-    ('vpin-example.html', 'VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed', 'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.', PCE.VPIN_BODY),
-    ('hrp-example.html', 'HRP Verification Report: Six Allocators, Two Defects Fixed', 'Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.', PCE.HRP_BODY),
-    ('psr-worked-example.html', 'PSR Verification Report: A Published Example, Corrected', 'Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.', PCE.PSR_BODY),
+for slug, doc_title, h1, description, body in [
+    ('index.html',
+     'Verification Reports: VPIN, HRP and PSR Checked',
+     'Verification Reports: Quant Finance Code Checked Against Ground Truth',
+     'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.',
+     PCE.INDEX_BODY),
+    ('vpin-example.html',
+     'VPIN Verification Report, One Defect Fixed',
+     'VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed',
+     'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.',
+     PCE.VPIN_BODY),
+    ('hrp-example.html',
+     'HRP Verification Report, Two Defects Fixed',
+     'HRP Verification Report: Six Allocators, Two Defects Fixed',
+     'Compare HRP, minimum variance, shrinkage and equal weight on a synthetic 20-asset panel with reproducible Python output.',
+     PCE.HRP_BODY),
+    ('psr-worked-example.html',
+     'PSR Verification Report, Example Corrected',
+     'PSR Verification Report: A Published Example, Corrected',
+     'Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.',
+     PCE.PSR_BODY),
 ]:
-    PAGES.append(dict(slug='reports/' + slug, title=title + ' | QuantMedia',
-                      description=description, h1=title,
+    PAGES.append(dict(slug='reports/' + slug, title=doc_title + ' | QuantMedia',
+                      description=description, h1=h1,
                       crumb=('Research', 'reproducibility.html') if slug == 'index.html' else ('Worked examples', 'reports/'),
                       body=body, published='2026-09-04', modified='2026-09-04'))
 

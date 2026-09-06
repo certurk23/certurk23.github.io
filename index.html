@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QuantMedia — Verified Quantitative Finance Code, Free</title>
-<meta name="description" content="Verified implementations of VPIN, Hierarchical Risk Parity and the Probabilistic Sharpe Ratio: runnable code, synthetic ground truth, dated reports of defects found and fixed, and a free PSR calculator.">
+<meta name="description" content="Verified VPIN, Hierarchical Risk Parity and Probabilistic Sharpe Ratio code: runnable Python, synthetic ground truth, dated defect reports. Free.">
 <link rel="canonical" href="https://quantmedia.io/">
 <!-- Loaded synchronously on purpose: inline scripts later in these pages call QM.* at parse time, and a deferred script would not have run yet. -->
 <script src="qm-data.js"></script>
@@ -17,14 +17,14 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="QuantMedia — Free Quant Finance Tools &amp; Research">
-<meta property="og:description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
+<meta property="og:description" content="Verified VPIN, Hierarchical Risk Parity and Probabilistic Sharpe Ratio code: runnable Python, synthetic ground truth, dated defect reports. Free.">
 <meta property="og:url" content="https://quantmedia.io/">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="QuantMedia — Free Quant Finance Tools &amp; Research">
-<meta name="twitter:description" content="Free PSR calculator, reproducible VPIN and HRP Python examples, quantitative finance research, and post-close US market data.">
+<meta name="twitter:description" content="Verified VPIN, Hierarchical Risk Parity and Probabilistic Sharpe Ratio code: runnable Python, synthetic ground truth, dated defect reports. Free.">
 <meta name="twitter:site" content="@quantmedia_io">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <!-- Favicon -->
@@ -57,11 +57,11 @@
   --text:   #e8e8e8;
   --text2:  #c4c4c4;
   --text3:  #a0a0a0;
-  --muted:  #606060;
-  --ink:    #404040;
+  --muted:#8a8a8a;
+  --ink:#8a8a8a;
   --green:  #00a651;
   --green2: rgba(0,166,81,.14);
-  --red:    #e5322d;
+  --red:#f04a45;
   --red2:   rgba(229,50,45,.14);
   --blue:   #2196f3;
   --blue2:  rgba(33,150,243,.14);
@@ -94,7 +94,7 @@
   --text:   #111111;
   --text2:  #333333;
   --text3:  #666666;
-  --muted:  #999999;
+  --muted:#666666;
   --ink:    #cccccc;
   --green:  #007a3d;
   --green2: rgba(0,122,61,.10);
@@ -130,7 +130,7 @@ button{cursor:pointer;font-family:inherit}
    BREAKING BANNER
    ============================================================ */
 .breaking-bar{
-  background:var(--red);padding:7px 20px;
+  background:#b3221e;padding:7px 20px;
   display:flex;align-items:center;gap:12px;cursor:pointer;
   transition:opacity var(--t1);
   min-height:36px;contain:layout style;
@@ -139,11 +139,11 @@ button{cursor:pointer;font-family:inherit}
 .breaking-pill{
   font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
   letter-spacing:1.2px;text-transform:uppercase;
-  background:rgba(255,255,255,.22);padding:2px 9px;border-radius:var(--r1);
+  background:rgba(0,0,0,.3);padding:2px 9px;border-radius:var(--r1);
   color:#fff;flex-shrink:0;
 }
 .breaking-text{font-size:13px;color:#fff;font-weight:500;flex:1}
-.breaking-close{color:rgba(255,255,255,.6);font-size:20px;line-height:1;flex-shrink:0}
+.breaking-close{color:rgba(255,255,255,.9);font-size:20px;line-height:1;flex-shrink:0}
 
 /* ============================================================
    TICKER
@@ -221,7 +221,7 @@ button{cursor:pointer;font-family:inherit}
 .btn-icon:hover{color:var(--text);border-color:var(--bd3);background:var(--bg3)}
 .btn-subscribe{
   padding:0 14px;height:30px;border-radius:var(--r2);
-  background:var(--green);color:#fff;
+  background:#007a3d;color:#fff;
   font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;
   letter-spacing:.8px;text-transform:uppercase;border:none;
   transition:opacity var(--t1);
@@ -586,7 +586,7 @@ button{cursor:pointer;font-family:inherit}
 .nl-input::placeholder{color:var(--muted)}
 .nl-btn{
   width:100%;padding:9px;border-radius:var(--r2);
-  background:var(--green);color:#fff;border:none;
+  background:#007a3d;color:#fff;border:none;
   font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;
   letter-spacing:.8px;text-transform:uppercase;cursor:pointer;
   transition:opacity var(--t1);
@@ -604,11 +604,11 @@ button{cursor:pointer;font-family:inherit}
 .footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
 .footer-logo .slash{color:var(--green)}
 .footer-desc{font-size:12px;color:var(--muted);line-height:1.8;max-width:280px}
-.footer-col h4{
+.footer-col .ft-h{
   font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;
   letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;
 }
-.footer-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color var(--t1)}
+.footer-col a{display:block;font-size:12px;color:var(--dim);margin-bottom:8px;transition:color var(--t1)}
 .footer-col a:hover{color:var(--text)}
 .footer-bottom{
   border-top:1px solid var(--bd);padding:14px 20px;
@@ -738,6 +738,7 @@ button{cursor:pointer;font-family:inherit}
 .start-card a{margin-top:auto;color:var(--green);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:4px}
 .start-card a:focus-visible{outline:2px solid var(--green);outline-offset:5px}
 .start-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--green)}
+/* qm-a11y-links */main p a:not([class]),main li a:not([class]),main dd a:not([class]),main td a:not([class]),.page-wrap p a:not([class]),.page-wrap li a:not([class]),.page-wrap dd a:not([class]),.page-wrap td a:not([class]),.qm-crumb a,.widget a:not([class]),.nl-pad a:not([class]){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7635577322319251" crossorigin="anonymous"></script>
 <style>
@@ -1224,14 +1225,14 @@ button{cursor:pointer;font-family:inherit}
       <div class="footer-desc">Independent quantitative research platform covering market microstructure, US equities, and algorithmic systems. For educational purposes only — not financial advice.</div>
     </div>
     <div class="footer-col">
-      <h4>Verified methods</h4>
+      <div class="ft-h">Verified methods</div>
       <a href="/reproducibility.html">Implementations &amp; tests</a>
       <a href="/reports/">Verification reports</a>
       <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
       <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="footer-col">
-      <h4>Research</h4>
+      <div class="ft-h">Research</div>
       <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
       <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
       <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
@@ -1239,14 +1240,14 @@ button{cursor:pointer;font-family:inherit}
       <a href="/papers.html">All papers</a>
     </div>
     <div class="footer-col">
-      <h4>Live pipeline</h4>
+      <div class="ft-h">Live pipeline</div>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
       <a href="/quantum-signals.html">Daily scan (demo)</a>
       <a href="/methodology.html">Methodology</a>
     </div>
     <div class="footer-col">
-      <h4>QuantMedia</h4>
+      <div class="ft-h">QuantMedia</div>
       <a href="/about.html">About</a>
       <a href="/author/cemil-erturk.html">Author</a>
       <a href="/editorial-policy.html">Editorial policy</a>

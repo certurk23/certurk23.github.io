@@ -8,18 +8,18 @@
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cemil Ertürk - Quantitative Researcher | QuantMedia</title>
-<meta name="description" content="Cemil Ertürk is the researcher behind QuantMedia, covering market microstructure, portfolio construction, execution costs and systematic signals. Independent research, published with code.">
+<meta name="description" content="Cemil Ertürk is the researcher behind QuantMedia: market microstructure, portfolio construction, execution costs and systematic signals, with code.">
 <link rel="canonical" href="https://quantmedia.io/author/cemil-erturk.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cemil Ertürk - Quantitative Researcher">
-<meta property="og:description" content="Cemil Ertürk is the researcher behind QuantMedia, covering market microstructure, portfolio construction, execution costs and systematic signals. Independent research, published with code.">
+<meta property="og:description" content="Cemil Ertürk is the researcher behind QuantMedia: market microstructure, portfolio construction, execution costs and systematic signals, with code.">
 <meta property="og:url" content="https://quantmedia.io/author/cemil-erturk.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cemil Ertürk - Quantitative Researcher">
-<meta name="twitter:description" content="Cemil Ertürk is the researcher behind QuantMedia, covering market microstructure, portfolio construction, execution costs and systematic signals. Independent research, published with code.">
+<meta name="twitter:description" content="Cemil Ertürk is the researcher behind QuantMedia: market microstructure, portfolio construction, execution costs and systematic signals, with code.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -92,14 +92,14 @@
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
   --border:#242424;--border2:#2e2e2e;
-  --text:#e8e8e8;--dim:#888;--dimmer:#444;
-  --accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;
+  --text:#e8e8e8;--dim:#888;--dimmer:#858585;
+  --accent:#00a651;--red:#f04a45;--blue:#1e88e5;--gold:#f5a623;
   --nav-h:52px;
 }
 [data-theme="light"]{
   --bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;
   --border:#dcdcda;--border2:#d0d0ce;
-  --text:#111111;--dim:#555555;--dimmer:#888888;
+  --text:#111111;--dim:#555555;--dimmer:#666666;
   --accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -119,7 +119,7 @@ a{text-decoration:none;color:inherit}
 .header-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .btn-icon{width:32px;height:32px;border-radius:4px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--dim);background:transparent;transition:all .14s;cursor:pointer}
 .btn-icon:hover{color:var(--text);background:var(--bg3)}
-.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:var(--accent);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
+.btn-subscribe{padding:0 14px;height:30px;border-radius:4px;background:#007a3d;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border:none;transition:opacity .14s;cursor:pointer}
 .btn-subscribe:hover{opacity:.86}
 [data-theme="light"] .site-header{background:rgba(255,255,255,.94)}
 [data-theme="light"] .site-logo{color:var(--text)}
@@ -163,8 +163,8 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .ft-brand{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
 .ft-brand span{color:var(--accent)}
 .ft-desc{font-size:12px;color:var(--dim);line-height:1.8}
-.ft-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
-.ft-col a{display:block;font-size:12px;color:#555;margin-bottom:8px;transition:color .15s}
+.ft-col .ft-h{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.ft-col a{display:block;font-size:12px;color:var(--dim);margin-bottom:8px;transition:color .15s}
 .ft-col a:hover{color:var(--text)}
 .footer-bottom{border-top:1px solid var(--border);padding:14px 20px;max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
 .footer-badges{display:flex;gap:8px}
@@ -182,6 +182,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .mobile-nav a{display:block;padding:13px 24px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);border-left:3px solid transparent;transition:color .14s,border-color .14s}
 .mobile-nav a:hover,.mobile-nav a.active{color:var(--text);border-left-color:var(--accent);background:var(--bg3)}
 @media(max-width:900px){.site-header .main-nav{display:none}.btn-subscribe{display:none}.hamburger{display:flex}.footer-top{grid-template-columns:1fr}}
+/* qm-a11y-links */main p a:not([class]),main li a:not([class]),main dd a:not([class]),main td a:not([class]),.page-wrap p a:not([class]),.page-wrap li a:not([class]),.page-wrap dd a:not([class]),.page-wrap td a:not([class]),.qm-crumb a,.widget a:not([class]),.nl-pad a:not([class]){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
 </style>
 
 <style>
@@ -398,14 +399,14 @@ find a mistake, <a href="mailto:contact@quantmedia.io">say so</a>.</p>
       <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
     </div>
     <div class="ft-col">
-      <h4>Verified methods</h4>
+      <div class="ft-h">Verified methods</div>
       <a href="/reproducibility.html">Implementations &amp; tests</a>
       <a href="/reports/">Verification reports</a>
       <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
       <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="ft-col">
-      <h4>Research</h4>
+      <div class="ft-h">Research</div>
       <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
       <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
       <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
@@ -413,14 +414,14 @@ find a mistake, <a href="mailto:contact@quantmedia.io">say so</a>.</p>
       <a href="/papers.html">All papers</a>
     </div>
     <div class="ft-col">
-      <h4>Live pipeline</h4>
+      <div class="ft-h">Live pipeline</div>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
       <a href="/quantum-signals.html">Daily scan (demo)</a>
       <a href="/methodology.html">Methodology</a>
     </div>
     <div class="ft-col">
-      <h4>QuantMedia</h4>
+      <div class="ft-h">QuantMedia</div>
       <a href="/about.html">About</a>
       <a href="/author/cemil-erturk.html">Author</a>
       <a href="/editorial-policy.html">Editorial policy</a>

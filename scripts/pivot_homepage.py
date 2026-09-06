@@ -70,7 +70,7 @@ s = s.replace('"author":{"@type":"Person","name":"QuantMedia Research","url":"ht
 s = re.sub(r'<title>[^<]*</title>',
            '<title>QuantMedia — Verified Quantitative Finance Code, Free</title>', s, count=1)
 s = re.sub(r'<meta name="description" content="[^"]*">',
-           '<meta name="description" content="Verified implementations of VPIN, Hierarchical Risk Parity and the Probabilistic Sharpe Ratio: runnable code, synthetic ground truth, dated reports of defects found and fixed, and a free PSR calculator.">',
+           '<meta name="description" content="Verified VPIN, Hierarchical Risk Parity and Probabilistic Sharpe Ratio code: runnable Python, synthetic ground truth, dated defect reports. Free.">',
            s, count=1)
 
 if s != o:

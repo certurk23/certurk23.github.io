@@ -105,8 +105,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <style>
-:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#444;--accent:#00a651;--red:#e5322d;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
-[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#888888;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
+:root{--bg:#0a0a0a;--bg2:#111;--bg3:#181818;--border:#242424;--border2:#2e2e2e;--text:#e8e8e8;--dim:#888;--dimmer:#858585;--accent:#00a651;--red:#f04a45;--blue:#1e88e5;--gold:#f5a623;--nav-h:52px}
+[data-theme="light"]{--bg:#f5f5f3;--bg2:#ffffff;--bg3:#ebebea;--border:#dcdcda;--border2:#d0d0ce;--text:#111111;--dim:#555555;--dimmer:#666666;--accent:#007a3d;--red:#c0392b;--blue:#1565c0;--gold:#b7790f}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;transition:background .24s ease,color .24s ease}
@@ -186,7 +186,7 @@ a{text-decoration:none;color:inherit}
 .footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:10px}
 .footer-logo .slash{color:var(--accent)}
 .footer-desc{font-size:12px;color:var(--dim);line-height:1.7;max-width:340px}
-.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.footer-col .ft-h{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
 .footer-col a{display:block;font-size:12px;color:var(--dimmer);padding:3px 0;transition:color .12s}
 .footer-col a:hover{color:var(--text)}
 .footer-bottom{max-width:1400px;margin:28px auto 0;padding:14px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dimmer)}
@@ -202,6 +202,7 @@ a{text-decoration:none;color:inherit}
 .breadcrumb-inner a{color:var(--dim);transition:color .14s}.breadcrumb-inner a:hover{color:var(--accent)}
 .breadcrumb-inner .bc-sep{color:var(--dimmer);font-size:10px}
 .breadcrumb-inner .bc-current{color:var(--text)}
+/* qm-a11y-links */main p a:not([class]),main li a:not([class]),main dd a:not([class]),main td a:not([class]),.page-wrap p a:not([class]),.page-wrap li a:not([class]),.page-wrap dd a:not([class]),.page-wrap td a:not([class]),.qm-crumb a,.widget a:not([class]),.nl-pad a:not([class]){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
 </style>
 <style>
 .qm-sec{margin:34px 0 0}
@@ -519,14 +520,14 @@ are measuring different things before and after.</p></div><div class="qm-sec" id
       <div class="footer-desc">Independent quantitative research platform. Market analysis, technical signals, and educational content for US financial markets. Independent quantitative research platform. Not financial advice.</div>
     </div>
     <div class="footer-col">
-      <h4>Verified methods</h4>
+      <div class="ft-h">Verified methods</div>
       <a href="/reproducibility.html">Implementations &amp; tests</a>
       <a href="/reports/">Verification reports</a>
       <a href="/tools/probabilistic-sharpe-ratio-calculator.html">PSR calculator</a>
       <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe explainer</a>
     </div>
     <div class="footer-col">
-      <h4>Research</h4>
+      <div class="ft-h">Research</div>
       <a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; flow toxicity</a>
       <a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a>
       <a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe</a>
@@ -534,14 +535,14 @@ are measuring different things before and after.</p></div><div class="qm-sec" id
       <a href="/papers.html">All papers</a>
     </div>
     <div class="footer-col">
-      <h4>Live pipeline</h4>
+      <div class="ft-h">Live pipeline</div>
       <a href="/indices/signal-breadth.html">Signal Breadth Index</a>
       <a href="/indices/sector-confluence.html">Sector Confluence</a>
       <a href="/quantum-signals.html">Daily scan (demo)</a>
       <a href="/methodology.html">Methodology</a>
     </div>
     <div class="footer-col">
-      <h4>QuantMedia</h4>
+      <div class="ft-h">QuantMedia</div>
       <a href="/about.html">About</a>
       <a href="/author/cemil-erturk.html">Author</a>
       <a href="/editorial-policy.html">Editorial policy</a>

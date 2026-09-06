@@ -1543,63 +1543,8 @@ async function loadNews() {
   } catch(e) { /* keep static fallback */ }
 }
 
-/* ============================================================
-   HERO: Market Pulse — dynamic news-driven hero
-   ============================================================ */
-async function loadHero() {
-  // Reuse whatever loadNews() already parsed; both read the same snapshot.
-  if (_newsItems.length === 0) {
-    const feed = await QM.get('news');
-    if (feed && feed.data) {
-      _newsItems = feed.data.filter(n => n.headline && n.url).slice(0, 20);
-    }
-  }
-  // Not enough headlines to drive the hero: leave the static markup in place.
-  if (_newsItems.length < 4) return;
-
-  // Update hero headline
-  const lead = _newsItems[0];
-  document.getElementById('heroH1').textContent = lead.headline;
-  document.getElementById('heroTime').textContent = nAgo(lead.datetime).toUpperCase();
-
-  // Make hero clickable
-  const heroMain = document.querySelector('.hero-main');
-  if (heroMain && lead.url) {
-    heroMain.onclick = function() { window.open(lead.url, '_blank', 'noopener'); };
-  }
-
-  // Update date
-  const d = new Date(lead.datetime * 1000);
-  document.getElementById('heroDate').textContent = d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-
-  // Bullets: next 3 headlines
-  const bullets = _newsItems.slice(1, 4);
-  document.getElementById('heroBullets').innerHTML = '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
-    bullets.map(n => `<li style="font-size:13px;color:rgba(255,255,255,.72);padding-left:14px;border-left:2px solid var(--green)">${n.headline}</li>`).join('') + '</ul>';
-
-  // Cross-asset context from the same nightly snapshot as the market bar.
-  const feed = await barRows();
-  const impact = [
-    {l:'S&P 500', s:'^GSPC'}, {l:'Gold', s:'GC=F'},
-    {l:'Bitcoin', s:'BTC-USD'}, {l:'EUR/USD', s:'EURUSD=X'},
-  ].map(x => ({l: x.l, r: rowFor(feed, x.s)})).filter(x => x.r);
-  const box = document.getElementById('heroImpact');
-  if (!box) return;
-  // Show nothing rather than a row of dashes.
-  if (!impact.length) { box.style.display = 'none'; return; }
-  box.innerHTML = impact.map(x => {
-    const r = x.r;
-    return `<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:8px 14px;min-width:120px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:4px">${x.l}</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:#fff;margin-bottom:2px">${fmt(r.p, Math.abs(r.p)>100?2:4)}</div>
-      <div class="${cls(r.c)}" style="font-family:'JetBrains Mono',monospace;font-size:12px">${pct(r.c)}</div>
-    </div>`;
-  }).join('');
-}
-
 // The snapshots refresh once per weekday, so polling them adds nothing.
 loadNews();
-loadHero();
 
 /* ============================================================
    SITE SEARCH

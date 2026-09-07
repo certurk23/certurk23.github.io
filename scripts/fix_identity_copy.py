@@ -198,17 +198,26 @@ def fix_papers(s):
             d = json.loads(m.group(1))
         except ValueError:
             return m.group(0)
-        items = d.get('itemListElement')
-        if not isinstance(items, list):
+        changed = False
+        nodes = d.get('@graph') if isinstance(d.get('@graph'), list) else [d]
+        for node in nodes:
+            items = node.get('itemListElement')
+            if isinstance(items, list):
+                keep = [i for i in items if not RETIRED_PAPERS.search(str(i.get('url', '')))]
+                if len(keep) != len(items):
+                    for n, i in enumerate(keep, 1):
+                        i['position'] = n
+                    node['itemListElement'] = keep
+                    if 'numberOfItems' in node:
+                        node['numberOfItems'] = len(keep)
+                    changed = True
+            if node.get('@type') == 'CollectionPage' and str(node.get('description', '')).startswith('11 open-access'):
+                node['description'] = ('Five research notes on market microstructure, portfolio construction, '
+                                       'backtest statistics and execution costs, each with primary references '
+                                       'and a stated limitations section.')
+                changed = True
+        if not changed:
             return m.group(0)
-        keep = [i for i in items if not RETIRED_PAPERS.search(str(i.get('url', '')))]
-        if len(keep) == len(items):
-            return m.group(0)
-        for n, i in enumerate(keep, 1):
-            i['position'] = n
-        d['itemListElement'] = keep
-        if 'numberOfItems' in d:
-            d['numberOfItems'] = len(keep)
         return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False) + '</script>'
     return re.sub(r'<script type="application/ld\+json">(.*?)</script>', trim, s, flags=re.S)
 

@@ -891,15 +891,15 @@ button{cursor:pointer;font-family:inherit}
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:24px 56px;align-items:start">
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">About QuantMedia</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia is an independent quantitative research platform covering US market microstructure, algorithmic trading infrastructure, and portfolio optimization. The platform publishes open-access research papers, two runnable Python implementations and a free PSR calculator, a post-close signal dashboard scoring 180 liquid US equities daily, end-of-day market data across equities, forex, and commodities, and a categorised daily digest of market headlines from global newswires.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">QuantMedia verifies quantitative finance code. Each method published here &mdash; VPIN, Hierarchical Risk Parity and the Probabilistic Sharpe Ratio &mdash; ships as runnable Python with a synthetic input whose correct answer is known in advance, tests that guard the fixes, and a dated verification report of what the code got wrong before it was corrected. Everything is free to read and free to run.</p>
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">What We Research</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">Research topics span VPIN order flow toxicity, Hierarchical Risk Parity portfolio construction, the Probabilistic Sharpe Ratio for backtest validation, GPU-accelerated trading infrastructure, bid-ask spread microstructure, slippage and latency modeling, genetic algorithm alpha discovery, and alternative data integration. Research, examples and tools are freely accessible for educational use. Advertising is the intended funding model; see our <a href="/editorial-policy.html" style="color:var(--accent)">editorial policy</a>.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0">Research notes cover VPIN order-flow toxicity, Hierarchical Risk Parity portfolio construction, the Probabilistic Sharpe Ratio for backtest validation, bid-ask spread dynamics, and slippage and latency modelling. Seven short explainers and a free PSR calculator accompany them. Research, examples and tools are freely accessible for educational use. Advertising is the intended funding model; see our <a href="/editorial-policy.html" style="color:var(--accent)">editorial policy</a>.</p>
       </div>
       <div>
         <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin:0 0 10px">Platform Tools</h2>
-        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores 180 liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. The  presents US stocks, sector ETFs, and index rotation using post-close snapshots. The  monitors major indices, forex pairs, commodities, and crypto alongside macro indicators including VIX and yield curve spreads.</p>
+        <p style="font-size:15px;color:var(--dim);line-height:1.85;margin:0 0 12px">The <a href="quantum-signals.html" style="color:var(--accent)">Quantum Signals dashboard</a> scores a fixed 180-name universe of liquid US equities against 30 technical signals after each market close, flagging the stocks where at least 22 of the 30 are simultaneously bullish. A name is skipped on any day its data window is incomplete, so the scored count can sit just below 180. Two indices derived from the same scan, <a href="/indices/signal-breadth.html" style="color:var(--accent)">Signal Breadth</a> and <a href="/indices/sector-confluence.html" style="color:var(--accent)">Sector Confluence</a>, are published with an explicit freshness state.</p>
         <p style="font-size:11px;color:var(--muted);margin:0">All content is for educational and informational purposes only. Not financial advice.</p>
       </div>
     </div>
@@ -1222,7 +1222,7 @@ button{cursor:pointer;font-family:inherit}
   <div class="footer-inner">
     <div>
       <div class="footer-logo">QuantMedia</div>
-      <div class="footer-desc">Independent quantitative research platform covering market microstructure, US equities, and algorithmic systems. For educational purposes only — not financial advice.</div>
+      <div class="footer-desc">Verified implementations of quantitative finance methods: runnable code, synthetic ground truth and dated verification reports. Educational use only; not financial advice.</div>
     </div>
     <div class="footer-col">
       <div class="ft-h">Verified methods</div>
@@ -1253,7 +1253,6 @@ button{cursor:pointer;font-family:inherit}
       <a href="/editorial-policy.html">Editorial policy</a>
       <a href="/contact.html">Contact</a>
       <a href="/privacy.html">Privacy</a>
-      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -1551,36 +1550,34 @@ loadNews();
    SITE SEARCH
    ============================================================ */
 const SEARCH_INDEX = [
-  {t:'page', title:'Free PSR Calculator', sub:'Calculate the Probabilistic Sharpe Ratio', url:'tools/probabilistic-sharpe-ratio-calculator.html', kw:'psr calculator sharpe tool hesaplayıcı'},
-  {t:'page', title:'Tools & Code', sub:'Runnable Python examples and GitHub source', url:'reproducibility.html', kw:'github code python tools vpin hrp'},
-  {t:'page', title:'Worked Examples', sub:'VPIN, HRP and PSR results with reproduction steps', url:'reports/', kw:'examples reports verification vpin hrp psr'},
-  {t:'page', title:'Home', sub:'Homepage — market data, news, analysis', url:'index.html', kw:'home homepage ana sayfa'},
-  {t:'page', title:'Live Data', sub:'US market data: indices, forex and crypto snapshots', url:'markets.html', kw:'markets live data piyasa veri indices forex commodities crypto'},
-  {t:'page', title:'News', sub:'Financial news feed with category filters', url:'news.html', kw:'news haber haberler fed tech energy crypto earnings'},
-  {t:'page', title:'Equities', sub:'US stocks, sectors, gainers & losers', url:'stocks.html', kw:'stocks equities hisse senet sectors gainers losers'},
-  {t:'page', title:'Analysis', sub:'Research papers & quantitative studies', url:'papers.html', kw:'analysis papers makaleler research araştırma'},
-  {t:'page', title:'Research', sub:'Research overview & deep analysis', url:'research.html', kw:'research araştırma quant quantitative'},
-  {t:'page', title:'About', sub:'About QuantMedia & QuantMedia', url:'about.html', kw:'about hakkında quantmedia'},
-  {t:'page', title:'Methodology', sub:'Data sources, editorial standards', url:'methodology.html', kw:'methodology metodoloji data sources kaynaklar'},
-  {t:'page', title:'Infrastructure', sub:'Trading stack & GPU infrastructure', url:'infrastructure.html', kw:'infrastructure altyapı gpu rtx cpu server'},
-  {t:'paper', title:'VPIN & Order Flow Toxicity', sub:'Paper 01 — Microstructure', url:'paper-vpin-order-flow-toxicity.html', kw:'vpin order flow toxicity microstructure dark pool'},
-  {t:'paper', title:'Low-Latency Stack: RTX 5090 & CPU', sub:'Paper 02 — Infrastructure', url:'paper-gpu-cpu-trading-infrastructure.html', kw:'gpu cpu rtx 5090 latency trading stack'},
-  {t:'paper', title:'Hierarchical Risk Parity (HRP)', sub:'Paper 03 — Portfolio', url:'paper-hierarchical-risk-parity.html', kw:'hrp risk parity portfolio clustering'},
-  {t:'paper', title:'Probabilistic Sharpe Ratio', sub:'Paper 04 — Statistics', url:'paper-probabilistic-sharpe-ratio.html', kw:'psr sharpe ratio backtest overfitting'},
-  {t:'paper', title:'Bid-Ask Spread Dynamics', sub:'Paper 05 — Microstructure', url:'paper-bid-ask-spread-dynamics.html', kw:'spread bid ask microstructure execution'},
-  {t:'paper', title:'BIST Sentiment Analysis', sub:'Paper 06 — NLP / Turkish Market', url:'paper-bist-sentiment-analysis.html', kw:'bist sentiment nlp turkish borsa istanbul qwen llama'},
-  {t:'paper', title:'Sovereign AI: Local LLMs', sub:'Paper 07 — AI', url:'paper-sovereign-ai-local-llms.html', kw:'sovereign ai llm local privacy bastion'},
-  {t:'paper', title:'Genetic Algorithm Alpha Discovery', sub:'Paper 08 — Optimization', url:'paper-genetic-algorithm-alpha.html', kw:'genetic algorithm alpha optimization evolution'},
-  {t:'paper', title:'Slippage & Latency Modeling', sub:'Paper 09 — Execution', url:'paper-slippage-latency-modeling.html', kw:'slippage latency backtest execution market impact'},
-  {t:'paper', title:'Alternate Data in Quant Finance', sub:'Paper 10 — Alt Data', url:'paper-alternative-data-quant-finance.html', kw:'alternate data satellite nowcasting'},
-  {t:'paper', title:'HF Analytical Operations', sub:'Paper 11 — Analytics', url:'paper-hf-analytical-operations.html', kw:'vectorization gpu analytics rolling window feature engineering'},
-  {t:'page', title:'Claude AI Trading', sub:'How LLMs are reshaping financial markets', url:'claude-ai-trading.html', kw:'claude ai trading bot llm finance agentic polymarket goldman sachs anthropic'},
-  {t:'topic', title:'S&P 500', sub:'US Large Cap Index', url:'markets.html', kw:'spy spx sp500 s&p'},
-  {t:'topic', title:'NASDAQ', sub:'Tech-Heavy Composite', url:'markets.html', kw:'nasdaq qqq tech'},
-  {t:'topic', title:'Bitcoin & Crypto', sub:'Digital asset prices', url:'markets.html', kw:'bitcoin btc ethereum crypto kripto'},
-  {t:'topic', title:'Gold & Commodities', sub:'Precious metals, oil, gas', url:'markets.html', kw:'gold altın oil petrol commodity emtia wti'},
-  {t:'topic', title:'Forex', sub:'Currency exchange rates', url:'markets.html', kw:'forex döviz eur usd gbp currency'},
-  {t:'topic', title:'VIX & Volatility', sub:'Fear index & volatility', url:'markets.html', kw:'vix volatility volatilite korku'},
+  {t:'page', title:'Home', sub:'Verified quantitative finance code, free', url:'index.html', kw:'home homepage ana sayfa'},
+  {t:'page', title:'Verification Reports', sub:'VPIN, HRP and PSR checked against known answers', url:'reports/', kw:'reports verification examples worked do\u011frulama'},
+  {t:'page', title:'VPIN Verification Report', sub:'One tape, two classifiers, one defect fixed', url:'reports/vpin-example.html', kw:'vpin report bulk volume tick rule'},
+  {t:'page', title:'HRP Verification Report', sub:'Six allocators, two defects fixed', url:'reports/hrp-example.html', kw:'hrp report allocators minimum variance shrinkage'},
+  {t:'page', title:'PSR Verification Report', sub:'A published example, corrected', url:'reports/psr-worked-example.html', kw:'psr report worked example'},
+  {t:'page', title:'Verified Methods', sub:'Runnable Python, tests and GitHub source', url:'reproducibility.html', kw:'github code python tools vpin hrp reproducibility'},
+  {t:'page', title:'Free PSR Calculator', sub:'Probabilistic Sharpe Ratio in your browser', url:'tools/probabilistic-sharpe-ratio-calculator.html', kw:'psr calculator sharpe tool hesaplay\u0131c\u0131'},
+  {t:'page', title:'Daily Signals', sub:'Post-close scan of a 180-name US universe', url:'quantum-signals.html', kw:'signals scan buy confluence stocks hisse'},
+  {t:'page', title:'Signal Breadth Index', sub:'Share of the universe clearing the 22-of-30 threshold', url:'indices/signal-breadth.html', kw:'breadth index market breadth'},
+  {t:'page', title:'Sector Confluence Index', sub:'Confluence score and BUY breadth per sector', url:'indices/sector-confluence.html', kw:'sector confluence rotation'},
+  {t:'page', title:'Research Notes', sub:'Five notes on microstructure, portfolios and execution', url:'papers.html', kw:'papers research notes makaleler ara\u015ft\u0131rma'},
+  {t:'paper', title:'VPIN & Order Flow Toxicity', sub:'Research note \u2014 Microstructure', url:'paper-vpin-order-flow-toxicity.html', kw:'vpin order flow toxicity microstructure'},
+  {t:'paper', title:'Hierarchical Risk Parity (HRP)', sub:'Research note \u2014 Portfolio', url:'paper-hierarchical-risk-parity.html', kw:'hrp risk parity portfolio clustering'},
+  {t:'paper', title:'Probabilistic Sharpe Ratio', sub:'Research note \u2014 Statistics', url:'paper-probabilistic-sharpe-ratio.html', kw:'psr sharpe ratio backtest overfitting'},
+  {t:'paper', title:'Bid-Ask Spread Dynamics', sub:'Research note \u2014 Microstructure', url:'paper-bid-ask-spread-dynamics.html', kw:'spread bid ask microstructure execution'},
+  {t:'paper', title:'Slippage & Latency Modeling', sub:'Research note \u2014 Execution', url:'paper-slippage-latency-modeling.html', kw:'slippage latency backtest execution market impact'},
+  {t:'topic', title:'What is VPIN?', sub:'Explainer', url:'learn/what-is-vpin.html', kw:'vpin explainer definition'},
+  {t:'topic', title:'What is the Probabilistic Sharpe Ratio?', sub:'Explainer', url:'learn/what-is-probabilistic-sharpe-ratio.html', kw:'psr explainer'},
+  {t:'topic', title:'Deflated Sharpe Ratio', sub:'Explainer', url:'learn/deflated-sharpe-ratio.html', kw:'dsr deflated sharpe overfitting trials'},
+  {t:'topic', title:'HRP vs Mean-Variance', sub:'Explainer', url:'learn/hrp-vs-mean-variance.html', kw:'hrp mean variance markowitz'},
+  {t:'topic', title:'Modelling Slippage in Backtests', sub:'Explainer', url:'learn/how-to-model-slippage-in-backtests.html', kw:'slippage backtest impact'},
+  {t:'topic', title:'What is Signal Confluence?', sub:'Explainer', url:'learn/what-is-signal-confluence.html', kw:'confluence signals threshold'},
+  {t:'topic', title:'What is Market Breadth?', sub:'Explainer', url:'learn/what-is-market-breadth.html', kw:'breadth advance decline'},
+  {t:'page', title:'Methodology', sub:'Data sources, editorial standards, disclosures', url:'methodology.html', kw:'methodology metodoloji data sources kaynaklar'},
+  {t:'page', title:'About', sub:'What QuantMedia is and who writes it', url:'about.html', kw:'about hakk\u0131nda quantmedia'},
+  {t:'page', title:'Cemil Ert\u00fcrk', sub:'Author page', url:'author/cemil-erturk.html', kw:'author cemil erturk yazar'},
+  {t:'page', title:'Editorial Policy', sub:'Corrections, funding, AI-tool disclosure', url:'editorial-policy.html', kw:'editorial policy corrections disclosure'},
+  {t:'page', title:'Contact', sub:'Questions, corrections, verification requests', url:'contact.html', kw:'contact ileti\u015fim email'},
 ];
 
 let _searchActive = -1;

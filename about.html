@@ -358,7 +358,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <h1 class="profile-name">QuantMedia</h1>
       <div class="profile-title">Written and operated by <a href="/author/cemil-erturk.html" style="color:var(--accent,#00a651)">Cemil Ertürk</a> &middot; market microstructure, portfolio construction and execution costs</div>
       <div class="profile-tags">
-        <span class="profile-tag">11 research papers</span>
+        <span class="profile-tag">5 research notes</span>
         <span class="profile-tag">2 daily proprietary indices</span>
         <span class="profile-tag">Runnable code · 28 tests</span>
         <span class="profile-tag">VPIN · HRP · PSR</span>
@@ -376,7 +376,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="profile-tab-bar">
       <div class="profile-tab active">Overview</div>
       <div class="profile-tab">Research</div>
-      <div class="profile-tab">Infrastructure</div>
     </div>
   </div>
 </div>
@@ -386,13 +385,13 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <main>
 
     <!-- OVERVIEW -->
-    <div class="section-header" id="overview"><h2>Lab Overview</h2></div>
+    <div class="section-header" id="overview"><h2>Overview</h2></div>
     <div class="article-card">
-      <p><strong>QuantMedia</strong> is an independent quantitative research platform focused on the intersection of <strong>market microstructure theory</strong> and <strong>trading infrastructure engineering</strong>. The project focuses on reproducible, empirically grounded analysis of US equity market dynamics.</p>
+      <p><strong>QuantMedia</strong> is an independent quantitative research site written and operated by <a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a>. Its subject is whether published quantitative finance methods work as described once they are implemented: each method here ships as runnable Python with a synthetic input whose correct answer is known in advance, tests that guard the fixes, and a dated verification report of what the code got wrong before it was corrected.</p>
 
-      <p>Research topics span the full stack &mdash; from low-level systems programming (NIC kernel bypass, NUMA-aware memory allocation) to <strong>statistical microstructure models</strong> such as VPIN, Order Book Imbalance (OBI), and Hurst Exponent estimation. Two published methods, VPIN and Hierarchical Risk Parity, have runnable Python implementations with synthetic examples and tests. The PSR calculator provides a worked statistical calculation; other research notes are not presented as validated backtests.</p>
+      <p>Two methods, <strong>VPIN</strong> and <strong>Hierarchical Risk Parity</strong>, have runnable implementations with example data and 28 tests. The <strong>Probabilistic Sharpe Ratio</strong> is covered by a worked calculation, checked step by step, and a free calculator. The remaining research notes are analytical and are not presented as validated backtests.</p>
 
-      <p>Infrastructure research references co-location architectures (Equinix NY4/NY5) and direct market access topologies as analytical subjects. Latency benchmarks discussed in research papers represent theoretical targets for the architectures studied, not operational claims about this website.</p>
+      <p>A daily pipeline scores a fixed 180-name US equity universe after each close and publishes two indices derived from that scan, Signal Breadth and Sector Confluence, together with their freshness state. Nothing on this site is investment advice.</p>
     </div>
 
     <!-- RESEARCH AREAS -->
@@ -400,33 +399,38 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <div class="article-card">
       <div class="research-grid">
         <div class="research-card">
-          <div class="rc-icon">📊</div>
+          <div class="rc-icon">&#128202;</div>
           <div class="rc-title">Order Flow Toxicity</div>
-          <div class="rc-desc">A <a href="/reproducibility.html">runnable VPIN estimator</a> covering equal-volume bucketing, bulk volume classification and the tick rule, with 15 tests. The example dataset shipped with it is synthetic and generated from a fixed seed; QuantMedia does not license a tick or quote feed, so no result here is computed on real message data. Focus is on the statistical behaviour of the estimator itself.</div>
+          <div class="rc-desc">A <a href="/reproducibility.html">runnable VPIN estimator</a> covering equal-volume bucketing, bulk volume classification and the tick rule, with 15 tests and a <a href="/reports/vpin-example.html">verification report</a>. The example data is synthetic and states its own limits.</div>
           <div class="rc-tags"><span class="rc-tag">VPIN</span><span class="rc-tag">Python</span><span class="rc-tag">15 tests</span></div>
         </div>
         <div class="research-card">
-          <div class="rc-icon">🌑</div>
-          <div class="rc-title">Dark Pool Mechanics</div>
-          <div class="rc-desc">Analysis of ATS/dark pool fragmentation, ping-order IOI strategies, and cross-venue mid-point adverse selection using co-integrated price processes.</div>
-          <div class="rc-tags"><span class="rc-tag">ATS</span><span class="rc-tag">Dark Pools</span><span class="rc-tag">Adverse Selection</span></div>
+          <div class="rc-icon">&#129513;</div>
+          <div class="rc-title">Portfolio Construction</div>
+          <div class="rc-desc">A runnable <a href="/reproducibility.html">Hierarchical Risk Parity allocator</a> compared with minimum variance, shrinkage and equal weight on a synthetic panel, with 13 tests and a <a href="/reports/hrp-example.html">verification report</a>.</div>
+          <div class="rc-tags"><span class="rc-tag">HRP</span><span class="rc-tag">Python</span><span class="rc-tag">13 tests</span></div>
         </div>
         <div class="research-card">
-          <div class="rc-icon">⚡</div>
-          <div class="rc-title">HFT Infrastructure</div>
-          <div class="rc-desc">Kernel bypass networking (Solarflare OpenOnload), hugepage memory allocation, NUMA-aware data structure design, and RDTSC-based hardware timestamping.</div>
-          <div class="rc-tags"><span class="rc-tag">OpenOnload</span><span class="rc-tag">Hugepages</span><span class="rc-tag">NUMA</span></div>
+          <div class="rc-icon">&#128208;</div>
+          <div class="rc-title">Backtest Statistics</div>
+          <div class="rc-desc">The Probabilistic and Deflated Sharpe Ratios: a <a href="/reports/psr-worked-example.html">worked calculation</a> checked step by step, a <a href="/tools/probabilistic-sharpe-ratio-calculator.html">free calculator</a>, and explainers on track-record length, skewness and kurtosis.</div>
+          <div class="rc-tags"><span class="rc-tag">PSR</span><span class="rc-tag">DSR</span><span class="rc-tag">Calculator</span></div>
         </div>
         <div class="research-card">
-          <div class="rc-icon">📐</div>
-          <div class="rc-title">Statistical Microstructure</div>
-          <div class="rc-desc">Hurst Exponent estimation for long-range dependence in order flow, Order Book Imbalance (OBI) as a short-term price impact predictor, and Amihud illiquidity ratios.</div>
-          <div class="rc-tags"><span class="rc-tag">Hurst</span><span class="rc-tag">OBI</span><span class="rc-tag">Amihud</span></div>
+          <div class="rc-icon">&#128177;</div>
+          <div class="rc-title">Execution Costs</div>
+          <div class="rc-desc"><a href="/paper-bid-ask-spread-dynamics.html">Bid-ask spread dynamics</a> and <a href="/learn/how-to-model-slippage-in-backtests.html">slippage</a> modelled as spread, square-root impact and delay cost, with a worked example of what turnover does to a strategy net of costs.</div>
+          <div class="rc-tags"><span class="rc-tag">Spread</span><span class="rc-tag">Slippage</span><span class="rc-tag">Impact</span></div>
+        </div>
+        <div class="research-card">
+          <div class="rc-icon">&#128225;</div>
+          <div class="rc-title">Daily Signal Pipeline</div>
+          <div class="rc-desc">A post-close scan of a fixed 180-name US universe against 30 technical signals, publishing <a href="/indices/signal-breadth.html">Signal Breadth</a> and <a href="/indices/sector-confluence.html">Sector Confluence</a> with an explicit freshness state and a fail-safe that never labels stale data as live.</div>
+          <div class="rc-tags"><span class="rc-tag">Breadth</span><span class="rc-tag">Confluence</span><span class="rc-tag">Pipeline</span></div>
         </div>
       </div>
     </div>
 
-    <!-- TIMELINE -->
     <div class="section-header" id="timeline"><h2>Research Timeline</h2></div>
     <div class="article-card">
       <div class="timeline">
@@ -455,7 +459,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
           <div class="tl-year">Jan–Mar 2026</div>
           <div class="tl-content">
             <div class="tl-title">Research library published</div>
-            <div class="tl-sub">Eleven <a href="/papers.html">research papers</a> covering order-flow toxicity, spread decomposition, portfolio construction, performance evaluation under multiple testing, and execution costs. Each carries primary references and an explicit limitations section.</div>
+            <div class="tl-sub">Eleven <a href="/papers.html">research papers</a> covering order-flow toxicity, spread decomposition, portfolio construction, performance evaluation under multiple testing, and execution costs. Each carries primary references and an explicit limitations section. Six were retired in September 2026 when the site narrowed to verified methods; five remain.</div>
           </div>
         </div>
       </div>
@@ -467,7 +471,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <div class="pub-item"><div class="pub-title"><a href="/paper-vpin-order-flow-toxicity.html">VPIN &amp; Order Flow Toxicity</a></div><div class="pub-meta">Research note · runnable Python implementation · 15 tests</div></div>
       <div class="pub-item"><div class="pub-title"><a href="/paper-hierarchical-risk-parity.html">Hierarchical Risk Parity</a></div><div class="pub-meta">Research note · runnable Python implementation · 13 tests</div></div>
       <div class="pub-item"><div class="pub-title"><a href="/paper-probabilistic-sharpe-ratio.html">Probabilistic Sharpe Ratio</a></div><div class="pub-meta">Research note · free interactive calculator</div></div>
-      <p><a href="/reports/">Read the worked examples</a> or browse <a href="/papers.html">all 11 research papers</a>. Code availability and limitations are listed in the <a href="/reproducibility.html">implementation index</a>.</p>
+      <p><a href="/reports/">Read the worked examples</a> or browse <a href="/papers.html">all five research notes</a>. Code availability and limitations are listed in the <a href="/reproducibility.html">implementation index</a>.</p>
     </div>
 
     <!-- CONTACT -->
@@ -497,17 +501,17 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
            C++ was rated highest with none. Counts of published work are
            checkable; a percentage is not. -->
       <div class="widget-header"><span class="widget-title">Published on this site</span></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/papers.html">Research papers</a></span><span class="skill-pct">11</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/papers.html">Research notes</a></span><span class="skill-pct">5</span></div></div>
       <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/indices/signal-breadth.html">Daily proprietary indices</a></span><span class="skill-pct">2</span></div></div>
       <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/reproducibility.html">Runnable implementations</a></span><span class="skill-pct">2</span></div></div>
       <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/reproducibility.html">Tests covering them</a></span><span class="skill-pct">28</span></div></div>
       <div class="skill-bar"><div class="skill-top"><span class="skill-name"><a href="/learn/what-is-vpin.html">Explainers</a></span><span class="skill-pct">7</span></div></div>
-      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Signals scored each close</span><span class="skill-pct">180</span></div></div>
+      <div class="skill-bar"><div class="skill-top"><span class="skill-name">Signal universe (names)</span><span class="skill-pct">180</span></div></div>
     </div>
 
     <div class="widget">
       <div class="widget-header"><span class="widget-title">Contents</span></div>
-      <a href="#overview" class="toc-item"><span class="toc-num">01</span>Lab Overview</a>
+      <a href="#overview" class="toc-item"><span class="toc-num">01</span>Overview</a>
       <a href="#research" class="toc-item"><span class="toc-num">02</span>Research Areas</a>
       <a href="#timeline" class="toc-item"><span class="toc-num">03</span>Timeline</a>
       <a href="#publications" class="toc-item"><span class="toc-num">04</span>Publications</a>
@@ -528,7 +532,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <div class="footer-top">
     <div>
       <div class="ft-brand">QuantMedia</div>
-      <div class="ft-desc">Independent quantitative research environment focusing on market microstructure, order flow toxicity, and high-frequency infrastructure. All content is for academic purposes only and does not constitute financial advice.</div>
+      <div class="ft-desc">Verified implementations of quantitative finance methods: runnable code, synthetic ground truth and dated verification reports. Educational use only; not financial advice.</div>
     </div>
     <div class="ft-col">
       <div class="ft-h">Verified methods</div>
@@ -559,7 +563,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       <a href="/editorial-policy.html">Editorial policy</a>
       <a href="/contact.html">Contact</a>
       <a href="/privacy.html">Privacy</a>
-      <a href="/editorial-policy.html">Editorial Policy</a>
     </div>
   </div>
   <div class="footer-bottom">

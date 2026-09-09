@@ -27,7 +27,13 @@ test('Published example agrees with independent normal CDF', () => {
 });
 test('Stronger benchmark lowers the result', () => assert.equal(run({'psr-bm':'1'})['psr-value'].textContent, '83.27%'));
 test('Observed Sharpe equal to benchmark gives 50%', () => assert.equal(run({'psr-bm':'1.5'})['psr-value'].textContent, '50.00%'));
-test('Normal kurtosis still contributes to variance', () => assert.match(run({'psr-skew':'0','psr-kurt':'3'})['psr-detail'].textContent, /denominator = 1.4577/));
+test('Normal case (skew 0, kurtosis 3) keeps the kurtosis term: denominator 1.4577, z 4.935', () => {
+  // (gamma2 - 1)/4 = 0.5 at gamma2 = 3, so the denominator is sqrt(1 + 0.5 * 1.5^2) = 1.4577, not 1.
+  // z = 1.5 * sqrt(23) / 1.4577 = 4.935; PSR = Phi(4.935) = 0.9999996, displayed as 100.00%.
+  const n = run({'psr-skew':'0','psr-kurt':'3'});
+  assert.match(n['psr-detail'].textContent, /denominator = 1.4577\s+z = 4.935/);
+  assert.equal(n['psr-value'].textContent, '100.00%');
+});
 for (const [name, input] of [
   ['Missing input', {'psr-sr':''}],
   ['Infinite input', {'psr-sr':'Infinity'}],

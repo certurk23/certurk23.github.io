@@ -196,7 +196,7 @@ PSR_VERIFICATION = '''
 <tbody>
 <tr><td>Denominator, &gamma;&#8321; = 0, &gamma;&#8322; = 3</td><td class="qm-num">1.000</td><td class="qm-num">1.4577</td></tr>
 <tr><td>Denominator, &gamma;&#8321; = &minus;1.20, &gamma;&#8322; = 7.00</td><td class="qm-num">2.318</td><td class="qm-num">2.4850</td></tr>
-<tr><td>z-statistic (skewed, fat-tailed case)</td><td class="qm-num">&mdash;</td><td class="qm-num">2.8955</td></tr>
+<tr><td>z-statistic (skewed, fat-tailed case)</td><td class="qm-num">2.8955</td><td class="qm-num">2.8949</td></tr>
 <tr><td>PSR (skewed, fat-tailed case)</td><td class="qm-num">&mdash;</td><td class="qm-num">0.9981</td></tr>
 </tbody></table></div>
 <div class="qm-answer"><span class="qm-answer-label">The kurtosis term does not vanish at &gamma;&#8322; = 3</span>
@@ -206,7 +206,13 @@ does not: the formula uses (&gamma;&#8322; &minus; 1)/4, which at
 &gamma;&#8322; = 3 is 0.5, so the denominator is
 &radic;(1 + 0.5&middot;1.5&sup2;) = &radic;2.125 = <strong>1.4577</strong>. The same
 slip propagated to the skewed case: &radic;(1 + 1.80 + 1.5&middot;2.25) =
-&radic;6.175 = <strong>2.4850</strong>, not 2.318.</p>
+&radic;6.175 = <strong>2.4850</strong>, not 2.318. Throughout, &gamma;&#8322; is
+Pearson (non-excess) kurtosis: a normal distribution has &gamma;&#8322; = 3, not 0.</p>
+<p>The z-statistic that followed was published as 2.8955. It does not follow from
+the corrected denominator: 1.5&middot;&radic;23 / 2.484955 = <strong>2.8949</strong>;
+2.8955 would need a denominator of 2.4845. A reader on r/quant pinned this on
+10 September 2026, and the table above now records both values. PSR is 0.9981
+either way.</p>
 <p><strong>Detection:</strong> evaluating the formula in <code>scipy</code>
 instead of trusting the prose. <strong>Fix:</strong> paper, explainer and
 calculator now agree and show every intermediate. <strong>Guard:</strong> the
@@ -225,6 +231,12 @@ makes bad strategies look good.</p>
 serially independent returns; on smoothed or illiquid marks it over-reports.</li>
 <li>It says nothing about how many strategy variants were tried &mdash; that is
 the <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a>&rsquo;s job.</li>
+<li>The moments are treated as known. Under normality the sample excess kurtosis
+has variance of roughly 24/n, so at n = 24 its standard error is about 1.0;
+plugging a point estimate such as &gamma;&#8322; = 7.00 into the denominator treats
+the noisiest input as exact. A stationary bootstrap of SR, skewness and kurtosis
+over the return series is the right next experiment. It has not been run here,
+so no numbers are quoted for it.</li>
 </ul>
 
 <h2>Reproduce</h2>

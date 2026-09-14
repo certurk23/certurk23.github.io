@@ -714,12 +714,14 @@ def test_v15_allows_linked_publisher_byline():
     pipeline's own news snapshot, which carries genuine Reuters/CNBC bylines
     linked to the original articles. Real attribution must pass."""
     def mutate(site):
-        t = _read(site, 'news.html')
+        # news.html was deleted on 14 Sep 2026; plant the linked byline on a
+        # live page instead. The rule is about markup, not about which page.
+        t = _read(site, 'index.html')
         card = ('<a href="https://www.reuters.com/markets/x" target="_blank" '
                 'rel="noopener noreferrer" class="nc">'
                 '<div class="nc-headline">A real headline from the feed</div>'
                 '<div class="nc-foot"><span class="nc-src">Reuters</span></div></a>')
-        _write(site, 'news.html', t.replace('</footer>', '</footer>' + card))
+        _write(site, 'index.html', t.replace('</body>', card + '</body>'))
     errs = _run_validator_on(mutate)
     assert not any('fabricated attribution' in e or 'Reuters' in e
                    for e in errs), \
@@ -730,13 +732,13 @@ def test_v16_allows_pipeline_injected_region():
     """Content inside QM injection markers is machine-generated from a
     validated feed and must be exempt."""
     def mutate(site):
-        t = _read(site, 'news.html')
+        # news.html was deleted on 14 Sep 2026; any QM:...:START/END region on
+        # a live page is exempt, so plant one on the homepage.
+        t = _read(site, 'index.html')
         inject = ('<!-- QM:NEWS_SNAP:START -->'
                   '<div class="nc-foot"><span class="nc-src">CNBC</span></div>'
                   '<!-- QM:NEWS_SNAP:END -->')
-        _write(site, 'news.html',
-               re.sub(r'<!-- QM:NEWS_SNAP:START -->.*?<!-- QM:NEWS_SNAP:END -->',
-                      inject, t, flags=re.DOTALL))
+        _write(site, 'index.html', t.replace('</body>', inject + '</body>'))
     errs = _run_validator_on(mutate)
     assert not any('CNBC' in e for e in errs), \
         f'pipeline-injected region must be exempt: {errs}'

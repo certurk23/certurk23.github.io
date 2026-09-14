@@ -787,15 +787,7 @@ button{cursor:pointer;font-family:inherit}
 </div>
 </noscript>
 
-<!-- BREAKING ALERT -->
-<div class="breaking-bar" id="breakingBar" onclick="this.style.display='none'">
-  <span class="breaking-pill">Research</span>
-  <span class="breaking-text">Research: Explore how VPIN changes under different trade-classification methods in the free worked example</span>
-  <span class="breaking-close">&times;</span>
-</div>
 
-<!-- TICKER (deferred — loads after LCP to avoid blocking hero) -->
-<div id="tickerWrap" style="background:#000;border-bottom:1px solid var(--bd);min-height:34px;contain:layout style"></div>
 
 <!-- HEADER -->
 <header class="site-header">
@@ -906,45 +898,6 @@ button{cursor:pointer;font-family:inherit}
   </div>
 </div>
 
-<!-- MARKET NEWS -->
-<div class="news-wrap">
-  <div class="sec-hdr" style="margin-bottom:14px">
-    <div style="display:flex;align-items:center">
-      <span class="sec-label">Market News</span>
-      <span class="sec-sub" id="newsDate">Latest Coverage</span>
-    </div>
-    
-  </div>
-
-  <div id="newsGrid">
-    <!-- Static fallback ONLY. loadNews() replaces this with real headlines
-         from data/news.json as soon as a snapshot exists.
-
-         What used to sit here were seven invented news cards attributed to
-         CNBC, the Financial Times, the Wall Street Journal, Bloomberg,
-         Reuters and Institutional Investor, complete with fabricated
-         statistics and hardcoded "4h ago" timestamps that never changed.
-         None of it was real reporting and none of it linked anywhere.
-         Never reintroduce placeholder content that imitates a publisher. -->
-    <div class="news-empty" style="padding:28px 24px;background:var(--card,#111);border:1px solid var(--line,#242424);border-radius:6px">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text,#e8e8e8);margin-bottom:10px">
-        Headlines publish after each US close
-      </div>
-      <p style="font-size:13.5px;line-height:1.8;color:var(--muted,#888);margin:0 0 14px;max-width:640px">
-        This panel carries a once-daily digest of US market headlines captured
-        after the 16:00 ET close, de-duplicated and classified into six
-        categories. Every headline links to the originating publisher &mdash;
-        QuantMedia does not report the news and does not reproduce it.
-      </p>
-      <p style="font-size:13.5px;line-height:1.8;color:var(--muted,#888);margin:0">
-        In the meantime:
-        
-        <a href="quantum-signals.html" style="color:var(--green,#00a651)">daily US stock signals</a> &middot;
-        <a href="papers.html" style="color:var(--green,#00a651)">quantitative research library</a>
-      </p>
-    </div>
-  </div><!-- /newsGrid -->
-</div>
 
 <!-- QM:HOME_SESSION:START -->
 <div class="page-wrap" style="padding-bottom:0"><div style="border:1px solid var(--bd);border-radius:6px;background:var(--bg2);padding:20px 24px;margin-bottom:22px"><div style="font-family:Barlow Condensed,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--green);margin-bottom:10px">Latest session snapshot</div><p style="font-size:13.5px;line-height:1.8;color:var(--text3);margin:0">On the <strong>2026-09-11</strong> session, <strong>28</strong> of <strong>179</strong> scored US equities met the 22-of-30 confluence threshold; the median stock scored <strong>14</strong>. <a href="/quantum-signals.html" style="color:var(--green)">See the signals</a> &middot; <a href="/indices/signal-breadth.html" style="color:var(--green)">Signal Breadth Index</a></p><p style="font-size:12px;color:var(--text3);margin:10px 0 0">Market snapshot captured Sep 12 2026, 01:18 UTC.</p></div></div>
@@ -996,43 +949,6 @@ button{cursor:pointer;font-family:inherit}
 
 <!-- MAIN CONTENT -->
 <div class="page-wrap">
-
-  <!-- DATA PANELS -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px" id="dataPanels">
-
-    <!-- Top Movers -->
-    <div class="widget">
-      <div class="widget-hdr">
-        <span class="widget-title">Top Movers</span>
-        <span class="widget-ts">S&amp;P 500</span>
-      </div>
-      <div class="mover-tabs">
-        <button class="mover-tab gain-active" id="tabGain" onclick="showMovers('gain')">&#9650; Gainers</button>
-        <button class="mover-tab inactive" id="tabLose" onclick="showMovers('lose')">&#9660; Losers</button>
-      </div>
-      <div id="moversPanel"></div>
-    </div>
-
-    <!-- Macro Calendar -->
-    <div class="widget">
-      <div class="widget-hdr">
-        <span class="widget-title">US Release Schedule</span>
-        <span class="widget-ts">Recurring</span>
-      </div>
-      <!-- Deliberately a RECURRING CADENCE, not dated events. This widget
-           previously listed specific April 2026 dates under the heading
-           "This Week" and kept showing them months after they had passed.
-           There is no reliable free calendar feed in the pipeline, so rather
-           than fabricate dates this states the release rhythm, which is
-           stable and stays true without maintenance. -->
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Thu 8:30</div><div class="cal-event">Initial Jobless Claims &mdash; weekly</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Fri 8:30</div><div class="cal-event">Non-Farm Payrolls &mdash; first Friday</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">Mid-month 8:30</div><div class="cal-event">CPI, then PPI the following day</div></div>
-      <div class="cal-row"><div class="cal-dot med"></div><div class="cal-time">Mid-month 8:30</div><div class="cal-event">Retail Sales MoM</div></div>
-      <div class="cal-row"><div class="cal-dot high"></div><div class="cal-time">14:00</div><div class="cal-event">FOMC decision &mdash; 8 meetings a year</div></div>
-      <div style="padding:10px 0 0;font-size:11px;line-height:1.65;color:var(--muted,#888)">All times ET. Exact dates come from the <a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener" style="color:var(--green,#00a651)">BLS</a> and <a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener" style="color:var(--green,#00a651)">Federal Reserve</a> calendars.</div>
-    </div>
-  </div>
 
   <!-- CONTENT LAYOUT: Research + Sidebar -->
   <div class="content-layout">
@@ -1184,15 +1100,6 @@ button{cursor:pointer;font-family:inherit}
     <!-- SLIM SIDEBAR -->
     <aside class="market-sidebar">
 
-      <!-- Market Snapshot -->
-      <div class="widget">
-        <div class="widget-hdr">
-          <span class="widget-title">Market Snapshot</span>
-          <span class="widget-ts" id="snapTs">&mdash;</span>
-        </div>
-        <div id="snapRows"></div>
-      </div>
-
       <!-- Newsletter -->
       <div class="widget" id="newsletter">
         <div class="widget-hdr"><span class="widget-title">Research Updates</span></div>
@@ -1293,258 +1200,8 @@ function toggleTheme() {
    moment the page loads. */
 
 const fmt  = (n, d=2) => n == null || isNaN(n) ? '--' : n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d});
-const pct  = v => v == null ? '--' : (v > 0 ? '+' : '') + fmt(v) + '%';
-const cls  = v => v > 0 ? 'up' : v < 0 ? 'dn' : 'nt';
-const sgn  = v => v > 0 ? '+' : '';
-const now  = () => new Date().toLocaleTimeString('en-US', {hour12:false, hour:'2-digit', minute:'2-digit'});
-
-/* --- Market data: one snapshot read, shared by the bar and the sidebar ---
-   data/markets_bar.json is written nightly with real instruments pulled
-   server-side. The previous client version proxied gold with the PAX-Gold
-   token and WTI with a CoinGecko id, which are not those markets. */
-let _barPromise = null;
-function barRows() {
-  if (!_barPromise) _barPromise = QM.get('markets_bar');
-  return _barPromise;
-}
-
-function rowFor(feed, sym) {
-  const rows = feed && feed.data;
-  if (!rows) return null;
-  return rows.find(r => r.s === sym) || null;
-}
-
-/* --- Market Bar --- */
-const MBAR = [
-  {s:'^GSPC',    l:'S&P 500'},
-  {s:'^IXIC',    l:'Nasdaq'},
-  {s:'^VIX',     l:'VIX'},
-  {s:'GC=F',     l:'Gold'},
-  {s:'EURUSD=X', l:'EUR/USD'},
-  {s:'BTC-USD',  l:'BTC'},
-];
-async function loadMarketBar() {
-  const feed = await barRows();
-  const host = document.getElementById('marketBar');
-  if (!host) return;
-  const cells = MBAR.map(m => {
-    const r = rowFor(feed, m.s);
-    if (!r) return '';
-    return `<div class="mbar-item">
-      <span class="mbar-sym">${m.l}</span>
-      <span class="mbar-val">${fmt(r.p, Math.abs(r.p) > 100 ? 2 : 4)}</span>
-      <span class="mbar-chg ${cls(r.c)}">${pct(r.c)}</span>
-    </div>`;
-  }).filter(Boolean);
-  // An empty bar is hidden rather than left as a row of dashes.
-  if (!cells.length) { const w = host.closest('.market-bar') || host; w.style.display = 'none'; return; }
-  host.innerHTML = cells.join('');
-}
-
-/* --- Snapshot Sidebar --- */
-const SNAP = [
-  {s:'^GSPC',    l:'S&P 500', sub:'US large cap'},
-  {s:'^VIX',     l:'VIX',     sub:'Implied volatility'},
-  {s:'GC=F',     l:'Gold',    sub:'Spot $/oz'},
-  {s:'CL=F',     l:'WTI',     sub:'Crude $/bbl'},
-  {s:'EURUSD=X', l:'EUR/USD', sub:'Forex'},
-  {s:'BTC-USD',  l:'Bitcoin', sub:'Crypto'},
-];
-async function loadSnapshot() {
-  const feed = await barRows();
-  const host = document.getElementById('snapRows');
-  if (!host) return;
-  const rows = SNAP.map(s => {
-    const r = rowFor(feed, s.s);
-    if (!r) return '';
-    const dp = Math.abs(r.p) > 100 ? 2 : 4;
-    return `<div class="snap-row">
-      <div><div class="snap-sym">${s.l}</div><div class="snap-name">${s.sub}</div></div>
-      <div style="text-align:right">
-        <div class="snap-price">${fmt(r.p, dp)}</div>
-        <div class="snap-chg ${cls(r.c)}">${pct(r.c)}</div>
-      </div>
-    </div>`;
-  }).filter(Boolean);
-  const ts = document.getElementById('snapTs');
-  if (!rows.length) {
-    host.innerHTML = '<div class="snap-row" style="color:var(--muted);font-size:12px">' +
-                     'Next snapshot publishes after the US close.</div>';
-    if (ts) { ts.textContent = 'pending'; }
-    return;
-  }
-  host.innerHTML = rows.join('');
-  // Timestamp reflects the snapshot, not the visitor's clock.
-  if (ts && feed) QM.stamp(ts, feed.fetched_utc, 'Close');
-}
-
-/* --- Movers: top and bottom performers from the 180-name scan universe --- */
-/* Display names for the tickers most likely to surface in the movers list.
-   Anything not listed falls back to its symbol. */
-const NAMES = {
-  NVDA:'NVIDIA',AAPL:'Apple',MSFT:'Microsoft',TSLA:'Tesla',AMD:'Advanced Micro',
-  META:'Meta Platforms',AMZN:'Amazon',GOOGL:'Alphabet',AVGO:'Broadcom',
-  JPM:'JPMorgan Chase',NFLX:'Netflix',BA:'Boeing',INTC:'Intel',PFE:'Pfizer',
-  COIN:'Coinbase',HOOD:'Robinhood',PLTR:'Palantir',MU:'Micron',MRVL:'Marvell',
-  SMCI:'Super Micro',CRWD:'CrowdStrike',SNOW:'Snowflake',DDOG:'Datadog',
-  NET:'Cloudflare',ZS:'Zscaler',PANW:'Palo Alto',ENPH:'Enphase',FSLR:'First Solar',
-  OXY:'Occidental',SLB:'SLB',HAL:'Halliburton',FCX:'Freeport-McMoRan',
-  NEM:'Newmont',GOLD:'Barrick',AEM:'Agnico Eagle',UNH:'UnitedHealth',
-  LLY:'Eli Lilly',XOM:'Exxon Mobil',CVX:'Chevron',WMT:'Walmart',COST:'Costco',
-  ORCL:'Oracle',CRM:'Salesforce',ADBE:'Adobe',NOW:'ServiceNow',UBER:'Uber',
-  SOFI:'SoFi',NU:'Nu Holdings',AFRM:'Affirm',UPST:'Upstart',AI:'C3.ai',
-};
-let GAINERS_LIVE = [], LOSERS_LIVE = [];
-let moversMode = 'gain';
-
-/* Movers come from the same 180-name scan universe as the signal engine,
-   so the homepage and quantum-signals.html can never disagree. */
-async function loadMovers() {
-  const data = await QM.get('quantum_signals');
-  const rows = data && data.signals;
-  if (!rows || !rows.length) return;
-  const pairs = rows.filter(r => typeof r.chg === 'number' && r.chg !== 0)
-                    .map(r => ({s: r.s, n: NAMES[r.s] || r.s, p: r.chg}));
-  if (!pairs.length) return;
-  pairs.sort((a, b) => b.p - a.p);
-  GAINERS_LIVE = pairs.slice(0, 6);
-  LOSERS_LIVE  = pairs.slice(-6).reverse();
-  const lbl = document.getElementById('moversStamp');
-  if (lbl) QM.stamp(lbl, data.updated, 'Session close');
-  showMovers(moversMode);
-}
-
-function showMovers(mode) {
-  moversMode = mode;
-  document.getElementById('tabGain').className = 'mover-tab ' + (mode==='gain' ? 'gain-active' : 'inactive');
-  document.getElementById('tabLose').className = 'mover-tab ' + (mode==='lose' ? 'lose-active' : 'inactive');
-  const data = mode === 'gain' ? GAINERS_LIVE : LOSERS_LIVE;
-  if (data.length === 0) {
-    document.getElementById('moversPanel').innerHTML = '<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center;line-height:1.7">Movers publish with the next post-close scan.<br><a href="quantum-signals.html" style="color:var(--green)">See the signal dashboard</a></div>';
-    return;
-  }
-  document.getElementById('moversPanel').innerHTML = data.map((m, i) => {
-    const c = cls(m.p);
-    return `<div class="mover-row">
-      <div class="mover-rank">${i+1}</div>
-      <div class="mover-sym">${m.s}</div>
-      <div class="mover-name">${m.n}</div>
-      <div class="mover-chg ${c}">${sgn(m.p)+fmt(m.p)}%</div>
-    </div>`;
-  }).join('');
-}
 
 
-/* --- Init --- */
-async function init() {
-  showMovers(moversMode);
-  await Promise.all([loadMarketBar(), loadSnapshot()]);
-  loadMovers(); /* runs staggered, don't await */
-}
-init();
-
-/* ============================================================
-   NEWS FEED — reads data/news.json (no API key)
-   ============================================================ */
-
-function nAgo(ts) {
-  if (!ts) return '';
-  const m = Math.floor((Date.now()/1000 - ts) / 60);
-  return m < 1 ? 'just now' : m < 60 ? m+'m ago' : m < 1440 ? Math.floor(m/60)+'h ago' : Math.floor(m/1440)+'d ago';
-}
-/* The pipeline already assigns a category with word-boundary matching; trust
-   it. The old client-side regex used bare substrings and filed anything
-   containing the letters "ai" (gain, against, remain) under Tech. */
-function nCat(n) {
-  if (n.category) return n.category;
-  const h = (n.headline||'').toLowerCase();
-  if (/fed|fomc|rate|yield|treasury|powell/.test(h)) return 'Fed · Rates';
-  if (/nvidia|nvda|\bai\b|artificial|chip|semi/.test(h)) return 'Tech · AI';
-  if (/vix|volatil|option|hedge/.test(h)) return 'Volatility';
-  if (/oil|energy|crude|opec/.test(h)) return 'Energy';
-  if (/bitcoin|crypto|btc|eth/.test(h)) return 'Crypto';
-  if (/earning|profit|revenue|eps/.test(h)) return 'Earnings';
-  if (/dark.pool|ats|microstruc|vpin/.test(h)) return 'Microstructure';
-  return 'Markets';
-}
-function nImg(n, fallback) {
-  return n.image ? `style="background-image:url('${n.image}');background-size:cover;background-position:center"` : fallback;
-}
-const GRADIENTS = [
-  'style="background:linear-gradient(160deg,#0d1a2e,#1a2e4a)"',
-  'style="background:linear-gradient(160deg,#051a14,#0d3326)"',
-  'style="background:linear-gradient(160deg,#200d0d,#3d1515)"',
-  'style="background:linear-gradient(160deg,#1a1a0d,#332d0d)"',
-  'style="background:linear-gradient(160deg,#0d0d2e,#1a1a4a)"',
-  'style="background:linear-gradient(160deg,#1a0d2e,#2d1545)"',
-];
-
-let _newsItems = [];
-
-async function loadNews() {
-  try {
-    const feed = await QM.get('news');
-    const raw = feed && feed.data;
-    if (!raw || !raw.length) return;   // keep the static fallback markup
-    _newsItems = raw.filter(n => n.headline && n.url).slice(0, 20);
-    const items = _newsItems.slice(0, 7);
-    if (items.length < 3) return;
-
-    const [f, a, b, c, d, e, g] = items;
-    const svgChart = `<svg class="nc-chart-svg" viewBox="0 0 600 190" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38" fill="none" stroke="#00a651" stroke-width="2.5"/><polyline points="0,140 60,130 120,145 180,110 240,95 300,105 360,80 420,62 480,55 540,48 600,38 600,190 0,190" fill="#00a651" fill-opacity="0.06"/></svg>`;
-
-    document.getElementById('newsGrid').innerHTML = `
-    <div class="news-grid">
-      <a href="${f.url}" target="_blank" rel="noopener" class="nc-featured">
-        <div class="nc-featured-img nc-fi-macro" ${nImg(f,'')}>
-          ${!f.image ? svgChart : ''}
-        </div>
-        <div class="nc-featured-body">
-          <div>
-            <div class="nc-cat">${nCat(f)}</div>
-            <div class="nc-featured-title">${f.headline}</div>
-            <div class="nc-featured-exrp">${(f.summary||'').slice(0,240)}</div>
-          </div>
-          <div class="nc-meta"><span class="nc-src">${f.source}</span><span class="nc-time">${nAgo(f.datetime)}</span></div>
-        </div>
-      </a>
-      <div class="nc-col">
-        ${[a,b,c].map((n,i) => !n ? '' : `
-        <a href="${n.url}" target="_blank" rel="noopener" class="nc-item">
-          <div class="nc-item-img" ${nImg(n, GRADIENTS[i])}></div>
-          <div class="nc-item-body">
-            <div>
-              <div class="nc-cat">${nCat(n)}</div>
-              <div class="nc-item-title">${n.headline}</div>
-            </div>
-            <div class="nc-meta"><span class="nc-src">${n.source}</span><span class="nc-time">${nAgo(n.datetime)}</span></div>
-          </div>
-        </a>`).join('')}
-      </div>
-    </div>
-    <div class="news-row2">
-      ${[d,e,g].map((n,i) => !n ? '' : `
-      <a href="${n.url}" target="_blank" rel="noopener" class="nc-card">
-        <div class="nc-cat">${nCat(n)}</div>
-        <div class="nc-card-title">${n.headline}</div>
-        <div class="nc-card-exrp">${(n.summary||'').slice(0,170)}</div>
-        <div class="nc-meta"><span class="nc-src">${n.source}</span><span class="nc-time">${nAgo(n.datetime)}</span></div>
-      </a>`).join('')}
-    </div>`;
-
-    // Update date label
-    const ts = items[0]?.datetime;
-    if (ts) {
-      const d2 = new Date(ts*1000);
-      const label = d2.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-      const sub = document.querySelector('.news-wrap .sec-sub');
-      if (sub) sub.textContent = label;
-    }
-  } catch(e) { /* keep static fallback */ }
-}
-
-// The snapshots refresh once per weekday, so polling them adds nothing.
-loadNews();
 
 /* ============================================================
    SITE SEARCH
@@ -1623,20 +1280,6 @@ document.getElementById('searchInput').addEventListener('input', function(){
   ).join('');
 });
 
-/* Deferred TradingView ticker — loads after LCP */
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    var w=document.getElementById('tickerWrap');
-    if(!w)return;
-    var c=document.createElement('div');c.className='tradingview-widget-container';
-    var d=document.createElement('div');d.className='tradingview-widget-container__widget';
-    c.appendChild(d);
-    var s=document.createElement('script');s.type='text/javascript';s.async=true;
-    s.src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
-    s.textContent=JSON.stringify({"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"MSFT","proName":"NASDAQ:MSFT"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"AMZN","proName":"NASDAQ:AMZN"},{"description":"META","proName":"NASDAQ:META"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"GOOGL","proName":"NASDAQ:GOOGL"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"V","proName":"NYSE:V"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"WTI","proName":"NYMEX:CL1!"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"});
-    c.appendChild(s);w.appendChild(c);
-  }, 2000);
-});
 </script>
 </body>
 </html>

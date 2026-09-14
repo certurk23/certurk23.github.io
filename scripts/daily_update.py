@@ -482,6 +482,9 @@ def render_crypto_html(crypto, fetched_iso):
 # ---- 3. markets.html --------------------------------------------------------
 def update_markets_html(fx_feed, cx_feed):
     """Inject whichever feeds we have. A stale feed keeps its own timestamp."""
+    if not os.path.exists(os.path.join(ROOT, 'markets.html')):
+        print('  markets.html retired and removed - no render')
+        return
     try:
         html = read_file('markets.html')
         if not has_anchor(html, 'FOREX'):
@@ -899,6 +902,9 @@ def update_signals_html():
 def update_news_html(feed):
     if not feed or not feed.get('data'):
         print("  news.html PRESERVED (no fresh headlines)")
+        return
+    if not os.path.exists(os.path.join(ROOT, 'news.html')):
+        print('  news.html retired and removed - no render')
         return
     try:
         html = read_file('news.html')

@@ -508,6 +508,16 @@ PAGES.append(dict(
     crumb=('Learn', 'learn/deflated-sharpe-ratio.html'),
     body=PCX.DSR_TRIALS_BODY, published='2026-09-15', modified='2026-09-15'))
 
+PAGES.append(dict(
+    slug='learn/how-to-verify-a-quant-implementation.html',
+    title='How to Verify a Quant Implementation | QuantMedia',
+    description=("Eight steps for checking quantitative finance code against inputs with a "
+                 "known answer, each illustrated by a defect found and fixed here: VPIN, "
+                 "HRP and PSR."),
+    h1='How to verify a quantitative finance implementation against a known answer',
+    crumb=('Verified methods', 'reproducibility.html'),
+    body=PCX.VERIFY_METHOD_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION

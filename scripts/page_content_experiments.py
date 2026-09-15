@@ -637,3 +637,116 @@ others run the Monte Carlo at reduced size with matching tolerances.
 <li>White, H. (2000). A Reality Check for Data Snooping. <em>Econometrica</em>, 68(5), 1097&ndash;1126.</li>
 </ul>
 """
+
+# Method note. Every example cited is a defect or check that exists in this
+# repository's reports, tests or experiment notes; nothing is hypothetical.
+VERIFY_METHOD_BODY = """
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Run the implementation on an input whose correct answer you already know,
+and on the ugliest inputs you can construct, before you run it on data whose
+answer you do not know. Every defect this site has found and fixed was found
+that way, none by reading the code and none by running it on real returns:
+a VPIN estimator that returned 0 on a perfectly one-sided tape, a distance
+matrix that scipy rejected as asymmetric, a worked example whose
+&ldquo;normal&rdquo; case dropped the kurtosis term, a table cell that carried
+2.8955 where the arithmetic gives 2.8949. The method is eight steps; the
+rest of this note is what each one caught.</p>
+</div>
+
+<h2>Why reading the code is not enough</h2>
+<p>Quantitative finance methods are usually implemented from a paper, and a
+paper is prose plus formulas. Prose is where conventions hide: whether
+kurtosis means Pearson's 3-at-normal or the excess 0-at-normal, whether a
+division by zero in a degenerate case should give 0.5 or should follow the
+sign, whether the last incomplete bucket belongs in the average. Code that
+reads correctly against the prose can still be wrong against the maths, and
+real data cannot tell you, because on real data the right answer is unknown.
+So the test has to be an input where it is known.</p>
+
+<h2>The eight steps</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Step</th><th>What it means</th><th>What it caught here</th></tr></thead>
+<tbody>
+<tr><td>1. Build a synthetic input with a planted answer</td><td>Generate data from a fixed seed with the property the method is supposed to detect placed where you know it is.</td><td>A 20,000-trade tape with informed buying in trades 8,000&ndash;11,999; VPIN rose from 0.3292 to 0.6376 across it, a 1.94&times; ratio the estimator had to show before anything else was believed.</td></tr>
+<tr><td>2. Feed it the degenerate cases</td><td>Zero variance, constant inputs, a single asset, the smallest n the formula admits, a monotone series. Decide the correct output <em>before</em> running.</td><td>A monotone tape: every trade higher than the last, dispersion of price changes zero. The original branch split volume 50/50 and returned VPIN 0 on the most toxic input possible. Fixed by classifying on the sign of the change; now one of 15 tests.</td></tr>
+<tr><td>3. Reproduce a published number</td><td>If the paper, a textbook or your own site gives a worked example, recompute it independently (scipy, a spreadsheet, by hand) and compare every intermediate, not just the final figure.</td><td>The PSR worked example: denominators of 1.000 and 2.318 as published, 1.4577 and 2.4850 when computed. Months later a reader recomputed the z-statistic on the corrected page and found 2.8949 where the table still said 2.8955.</td></tr>
+<tr><td>4. Run it in a clean environment with current libraries</td><td>Dependencies move. Install the pinned versions in a fresh directory, then the newest, and run both.</td><td>HRP under pandas 3: <code>np.fill_diagonal</code> on <code>DataFrame.values</code> raised because the view is read-only. Under pandas 2 the same code had run for a year.</td></tr>
+<tr><td>5. Check what the library rejects</td><td>Floating-point noise breaks exact properties (symmetry, positive definiteness, sums to one). Test the properties, not just the values.</td><td>The correlation-distance matrix was asymmetric at the 10<sup>&minus;16</sup> level and <code>scipy.spatial.distance.squareform</code> refused it. Fixed by symmetrising explicitly, 0.5(D + D&prime;).</td></tr>
+<tr><td>6. Fix the test when the test is wrong, and say so</td><td>An over-specified assertion is a defect in the test, not in the code. The distinction has to be written down, because silently loosening tests is how real gaps get hidden.</td><td>An HRP test asserted that single and Ward linkage must produce different weights; on one seed they coincided. The methods were confirmed to differ on other seeds and the test was corrected, with the reason recorded in the report.</td></tr>
+<tr><td>7. Pin every intermediate the reader could check</td><td>Publish the denominator, the z, the bucket size, the seed, the version numbers. A final figure alone cannot be audited; a chain of intermediates can, and will be.</td><td>The 2.8955 catch above happened only because the intermediate was on the page. It would have been invisible behind &ldquo;PSR = 99.81%&rdquo;.</td></tr>
+<tr><td>8. Write down what the check does not establish</td><td>A synthetic test proves the implementation matches the method. It says nothing about whether the method works on markets.</td><td>Every report on this site ends with that section: VPIN's forecasting power is contested in the literature and untested here; HRP's lower drift does not mean lower realised volatility, and on 50 synthetic panels it usually does not.</td></tr>
+</tbody></table></div>
+
+<h2>What makes a good planted answer</h2>
+<p>The input should be simple enough that the right output is obvious and
+strong enough that a wrong implementation cannot get it by accident. The
+monotone tape is the model: any correct classifier must call it entirely
+one-sided, so the expected VPIN is 1 to within the window's edge effects,
+and a test asserting VPIN &gt; 0.9 has no false positives worth worrying
+about. The informed-episode tape is the weaker kind: it tests direction,
+not level, because the level depends on the classifier, the bucket size and
+the window, as the <a href="/learn/vpin-classifier-noise-floor.html">noise-floor
+note</a> measures. A good suite has both: one input with an exact answer, one
+with a qualitative one, and the qualitative one is not allowed to be the only
+evidence.</p>
+<p>For a formula rather than an algorithm, the planted answer is a second,
+independent computation. The PSR calculator now computes the normal CDF
+rather than quoting a value, and its tests pin the normal case (denominator
+1.4577, z 4.935) and the skewed case (2.4850, 2.895) against scipy. Two
+implementations that agree can both be wrong in the same way if they share a
+convention; the convention itself (here, that &gamma;&#8322; is non-excess
+kurtosis) has to be stated in the text so a reader can disagree with it.</p>
+
+<h2>What makes a good degenerate case</h2>
+<p>Ask what each denominator can do. Zero dispersion of price changes, zero
+variance of returns, a covariance matrix of rank one, n = 2 in a formula
+with &radic;(n &minus; 1), a kurtosis that makes 1 &minus; &gamma;&#8321;SR +
+(&gamma;&#8322; &minus; 1)SR&sup2;/4 negative. Then ask what each branch that
+handles those cases assumes. The VPIN defect lived in the branch that
+handled zero dispersion; the branch existed, so the author had thought about
+the case, and still got its sign wrong, because &ldquo;split 50/50&rdquo; was the
+right answer for a flat tape and the wrong one for a steadily rising tape,
+and the branch did not distinguish them. The test that caught it constructs
+the rising tape explicitly. The calculator's tests likewise refuse to display
+a result when the variance term is non-positive rather than printing a
+number that means nothing.</p>
+
+<h2>What a verification report has to contain</h2>
+<ul>
+<li>The implementation under test, at a named revision.</li>
+<li>The environment: language and library versions actually used.</li>
+<li>The input: how it was generated, its seed, what was planted.</li>
+<li>The expected answer and where it comes from.</li>
+<li>What the code returned, before and after any fix.</li>
+<li>Each defect: how it was detected, what the fix was, which test now guards it.</li>
+<li>A reproduce block: the commands that regenerate every number on the page.</li>
+<li>The limits: what this establishes and what it does not.</li>
+</ul>
+<p>The three reports on this site (<a href="/reports/vpin-example.html">VPIN</a>,
+<a href="/reports/hrp-example.html">HRP</a>, <a href="/reports/psr-worked-example.html">PSR</a>)
+follow this outline, and <code>quantmedia-research/verify_examples.py</code>
+re-runs the first two in a clean directory and asserts that the committed
+CSVs match to nine decimals. The experiment notes that followed them use
+tolerance tests instead, because Monte Carlo output is not bit-stable across
+NumPy versions; the note says which kind of test it is.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>Passing every step proves the implementation matches the method as
+stated. It does not prove the method is useful, and a verification report
+should never be read as an endorsement of the method.</li>
+<li>The steps were distilled from three methods and about thirty tests.
+Other kinds of code (optimisers with numerical tolerances, anything
+stochastic by design) need additional steps this note does not cover.</li>
+<li>Independent recomputation catches convention and arithmetic errors; it
+does not catch a misreading shared by both computations. Publishing the
+convention is the only defence, and it depends on a reader.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<div class="qm-formula">python quantmedia-research/tests/test_vpin.py&nbsp;&nbsp;&nbsp;# 15<br>python quantmedia-research/tests/test_hrp.py&nbsp;&nbsp;&nbsp;&nbsp;# 13<br>node scripts/test_psr.js&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 12<br>python quantmedia-research/verify_examples.py</div>
+<p>Every defect cited above is in the repository's history and the test
+that guards it is in the suites listed.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">Code on GitHub</a>.</p>
+"""

@@ -27,6 +27,9 @@ code against inputs whose correct answer is known in advance, and recording
 what it got right, what it got wrong, and what was fixed.</p>
 
 <div class="qm-answer"><span class="qm-answer-label">Why this exists</span>
+<p>The method behind every report, eight steps with the defect each one caught, is written up in
+<a href="/learn/how-to-verify-a-quant-implementation.html">How to verify a quantitative finance
+implementation</a>.</p>
 <p>Language models now produce a plausible implementation of almost any finance
 paper in seconds. What they cannot do is tell you whether it is correct. The
 first report below documents a VPIN implementation that returned <em>zero</em>

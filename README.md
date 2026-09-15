@@ -24,6 +24,7 @@ registration.
 | VPIN classifier noise floors and setting sensitivity (experiment note) | `quantmedia-research/vpin-classifier-sensitivity/` | 6 | [Experiment note](https://quantmedia.io/learn/vpin-classifier-noise-floor.html) |
 | HRP vs minimum variance: drift anatomy (experiment note) | `quantmedia-research/hrp-drift-anatomy/` | 6 | [Experiment note](https://quantmedia.io/learn/hrp-drift-anatomy.html) |
 | Deflated Sharpe Ratio: false positives, power, correlated trials (experiment note) | `quantmedia-research/dsr-trials/` | 5 | [Experiment note](https://quantmedia.io/learn/dsr-trials-experiment.html) |
+| How to verify a quant implementation (method note) | the three reports' shared method | — | [Method note](https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html) |
 
 Three defects were found by running this code against known ground truth, and
 all three are documented on the report pages rather than quietly patched:

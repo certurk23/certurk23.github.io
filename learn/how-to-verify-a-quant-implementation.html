@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verification Reports: VPIN, HRP and PSR Checked | QuantMedia</title>
-<meta name="description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
-<link rel="canonical" href="https://quantmedia.io/reports/">
+<title>How to Verify a Quant Implementation | QuantMedia</title>
+<meta name="description" content="Eight steps for checking quantitative finance code against inputs with a known answer, each illustrated by a defect found and fixed here: VPIN, HRP and PSR.">
+<link rel="canonical" href="https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Verification Reports: VPIN, HRP and PSR Checked">
-<meta property="og:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
-<meta property="og:url" content="https://quantmedia.io/reports/">
+<meta property="og:title" content="How to Verify a Quant Implementation">
+<meta property="og:description" content="Eight steps for checking quantitative finance code against inputs with a known answer, each illustrated by a defect found and fixed here: VPIN, HRP and PSR.">
+<meta property="og:url" content="https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Verification Reports: VPIN, HRP and PSR Checked">
-<meta name="twitter:description" content="Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.">
+<meta name="twitter:title" content="How to Verify a Quant Implementation">
+<meta name="twitter:description" content="Eight steps for checking quantitative finance code against inputs with a known answer, each illustrated by a defect found and fixed here: VPIN, HRP and PSR.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Verification Reports: VPIN, HRP and PSR Checked",
-  "description": "Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.",
+  "headline": "How to Verify a Quant Implementation",
+  "description": "Eight steps for checking quantitative finance code against inputs with a known answer, each illustrated by a defect found and fixed here: VPIN, HRP and PSR.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-09-04",
-  "dateModified": "2026-09-04",
-  "mainEntityOfPage": "https://quantmedia.io/reports/",
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "mainEntityOfPage": "https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Research",
+      "name": "Verified methods",
       "item": "https://quantmedia.io/reproducibility.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Verification Reports: Quant Finance Code Checked Against Ground Truth",
-      "item": "https://quantmedia.io/reports/"
+      "name": "How to verify a quantitative finance implementation against a known answer",
+      "item": "https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html"
     }
   ]
 }</script>
@@ -252,71 +252,117 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Research</a> &rsaquo; Verification Reports: Quant Finance Code Checked Against Ground Truth</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Verification Reports: Quant Finance Code Checked Against Ground Truth</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Verified methods</a> &rsaquo; How to verify a quantitative finance implementation against a known answer</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">How to verify a quantitative finance implementation against a known answer</h1>
 
-<p class="qm-lede">A verification report is evidence that an implementation of
-a quantitative method does what the paper says &mdash; produced by running the
-code against inputs whose correct answer is known in advance, and recording
-what it got right, what it got wrong, and what was fixed.</p>
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Run the implementation on an input whose correct answer you already know,
+and on the ugliest inputs you can construct, before you run it on data whose
+answer you do not know. Every defect this site has found and fixed was found
+that way, none by reading the code and none by running it on real returns:
+a VPIN estimator that returned 0 on a perfectly one-sided tape, a distance
+matrix that scipy rejected as asymmetric, a worked example whose
+&ldquo;normal&rdquo; case dropped the kurtosis term, a table cell that carried
+2.8955 where the arithmetic gives 2.8949. The method is eight steps; the
+rest of this note is what each one caught.</p>
+</div>
 
-<div class="qm-answer"><span class="qm-answer-label">Why this exists</span>
-<p>The method behind every report, eight steps with the defect each one caught, is written up in
-<a href="/learn/how-to-verify-a-quant-implementation.html">How to verify a quantitative finance
-implementation</a>.</p>
-<p>Language models now produce a plausible implementation of almost any finance
-paper in seconds. What they cannot do is tell you whether it is correct. The
-first report below documents a VPIN implementation that returned <em>zero</em>
-toxicity for a perfectly one-sided tape &mdash; the opposite of the right
-answer &mdash; and looked fine until it was tested. As generating code becomes
-free, proving it correct is the part that keeps its value.</p></div>
+<h2>Why reading the code is not enough</h2>
+<p>Quantitative finance methods are usually implemented from a paper, and a
+paper is prose plus formulas. Prose is where conventions hide: whether
+kurtosis means Pearson's 3-at-normal or the excess 0-at-normal, whether a
+division by zero in a degenerate case should give 0.5 or should follow the
+sign, whether the last incomplete bucket belongs in the average. Code that
+reads correctly against the prose can still be wrong against the maths, and
+real data cannot tell you, because on real data the right answer is unknown.
+So the test has to be an input where it is known.</p>
 
-<h2>Reports</h2>
-<div class="qm-tablewrap"><table class="qm-kv">
-<thead><tr><th>Method</th><th>Record</th><th>Verdict</th><th>Defects found</th></tr></thead>
+<h2>The eight steps</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Step</th><th>What it means</th><th>What it caught here</th></tr></thead>
 <tbody>
-<tr><td><a href="/reports/vpin-example.html">VPIN &mdash; order-flow toxicity</a></td>
-    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Passes after one fix</td><td class="qm-num">1 &mdash; degenerate tape</td></tr>
-<tr><td><a href="/reports/hrp-example.html">Hierarchical Risk Parity</a></td>
-    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Passes after two fixes</td><td class="qm-num">2 &mdash; pandas 3 view; symmetry</td></tr>
-<tr><td><a href="/reports/psr-worked-example.html">Probabilistic Sharpe Ratio</a></td>
-    <td class="qm-num">v1.0 &middot; 2026-08</td><td>Published example was wrong; corrected</td><td class="qm-num">1 &mdash; kurtosis term</td></tr>
+<tr><td>1. Build a synthetic input with a planted answer</td><td>Generate data from a fixed seed with the property the method is supposed to detect placed where you know it is.</td><td>A 20,000-trade tape with informed buying in trades 8,000&ndash;11,999; VPIN rose from 0.3292 to 0.6376 across it, a 1.94&times; ratio the estimator had to show before anything else was believed.</td></tr>
+<tr><td>2. Feed it the degenerate cases</td><td>Zero variance, constant inputs, a single asset, the smallest n the formula admits, a monotone series. Decide the correct output <em>before</em> running.</td><td>A monotone tape: every trade higher than the last, dispersion of price changes zero. The original branch split volume 50/50 and returned VPIN 0 on the most toxic input possible. Fixed by classifying on the sign of the change; now one of 15 tests.</td></tr>
+<tr><td>3. Reproduce a published number</td><td>If the paper, a textbook or your own site gives a worked example, recompute it independently (scipy, a spreadsheet, by hand) and compare every intermediate, not just the final figure.</td><td>The PSR worked example: denominators of 1.000 and 2.318 as published, 1.4577 and 2.4850 when computed. Months later a reader recomputed the z-statistic on the corrected page and found 2.8949 where the table still said 2.8955.</td></tr>
+<tr><td>4. Run it in a clean environment with current libraries</td><td>Dependencies move. Install the pinned versions in a fresh directory, then the newest, and run both.</td><td>HRP under pandas 3: <code>np.fill_diagonal</code> on <code>DataFrame.values</code> raised because the view is read-only. Under pandas 2 the same code had run for a year.</td></tr>
+<tr><td>5. Check what the library rejects</td><td>Floating-point noise breaks exact properties (symmetry, positive definiteness, sums to one). Test the properties, not just the values.</td><td>The correlation-distance matrix was asymmetric at the 10<sup>&minus;16</sup> level and <code>scipy.spatial.distance.squareform</code> refused it. Fixed by symmetrising explicitly, 0.5(D + D&prime;).</td></tr>
+<tr><td>6. Fix the test when the test is wrong, and say so</td><td>An over-specified assertion is a defect in the test, not in the code. The distinction has to be written down, because silently loosening tests is how real gaps get hidden.</td><td>An HRP test asserted that single and Ward linkage must produce different weights; on one seed they coincided. The methods were confirmed to differ on other seeds and the test was corrected, with the reason recorded in the report.</td></tr>
+<tr><td>7. Pin every intermediate the reader could check</td><td>Publish the denominator, the z, the bucket size, the seed, the version numbers. A final figure alone cannot be audited; a chain of intermediates can, and will be.</td><td>The 2.8955 catch above happened only because the intermediate was on the page. It would have been invisible behind &ldquo;PSR = 99.81%&rdquo;.</td></tr>
+<tr><td>8. Write down what the check does not establish</td><td>A synthetic test proves the implementation matches the method. It says nothing about whether the method works on markets.</td><td>Every report on this site ends with that section: VPIN's forecasting power is contested in the literature and untested here; HRP's lower drift does not mean lower realised volatility, and on 50 synthetic panels it usually does not.</td></tr>
 </tbody></table></div>
 
-<h2>What a report contains</h2>
+<h2>What makes a good planted answer</h2>
+<p>The input should be simple enough that the right output is obvious and
+strong enough that a wrong implementation cannot get it by accident. The
+monotone tape is the model: any correct classifier must call it entirely
+one-sided, so the expected VPIN is 1 to within the window's edge effects,
+and a test asserting VPIN &gt; 0.9 has no false positives worth worrying
+about. The informed-episode tape is the weaker kind: it tests direction,
+not level, because the level depends on the classifier, the bucket size and
+the window, as the <a href="/learn/vpin-classifier-noise-floor.html">noise-floor
+note</a> measures. A good suite has both: one input with an exact answer, one
+with a qualitative one, and the qualitative one is not allowed to be the only
+evidence.</p>
+<p>For a formula rather than an algorithm, the planted answer is a second,
+independent computation. The PSR calculator now computes the normal CDF
+rather than quoting a value, and its tests pin the normal case (denominator
+1.4577, z 4.935) and the skewed case (2.4850, 2.895) against scipy. Two
+implementations that agree can both be wrong in the same way if they share a
+convention; the convention itself (here, that &gamma;&#8322; is non-excess
+kurtosis) has to be stated in the text so a reader can disagree with it.</p>
+
+<h2>What makes a good degenerate case</h2>
+<p>Ask what each denominator can do. Zero dispersion of price changes, zero
+variance of returns, a covariance matrix of rank one, n = 2 in a formula
+with &radic;(n &minus; 1), a kurtosis that makes 1 &minus; &gamma;&#8321;SR +
+(&gamma;&#8322; &minus; 1)SR&sup2;/4 negative. Then ask what each branch that
+handles those cases assumes. The VPIN defect lived in the branch that
+handled zero dispersion; the branch existed, so the author had thought about
+the case, and still got its sign wrong, because &ldquo;split 50/50&rdquo; was the
+right answer for a flat tape and the wrong one for a steadily rising tape,
+and the branch did not distinguish them. The test that caught it constructs
+the rising tape explicitly. The calculator's tests likewise refuse to display
+a result when the variance term is non-positive rather than printing a
+number that means nothing.</p>
+
+<h2>What a verification report has to contain</h2>
 <ul>
-<li><strong>Ground truth.</strong> How an input with a known correct answer was
-constructed &mdash; usually synthetic, from a fixed seed, because real market
-data never tells you what the right answer was.</li>
-<li><strong>What was run.</strong> The exact commands, versions and seed.</li>
-<li><strong>Results.</strong> The numbers the code produced, unedited.</li>
-<li><strong>Defects.</strong> What was wrong, how it was detected, how it was
-fixed, and the regression test that now guards it.</li>
-<li><strong>Limitations.</strong> What the verification does <em>not</em>
-establish. Passing on synthetic data proves the mechanism, not the market.</li>
-<li><strong>Reproduce.</strong> Enough to get the same output on your machine.</li>
+<li>The implementation under test, at a named revision.</li>
+<li>The environment: language and library versions actually used.</li>
+<li>The input: how it was generated, its seed, what was planted.</li>
+<li>The expected answer and where it comes from.</li>
+<li>What the code returned, before and after any fix.</li>
+<li>Each defect: how it was detected, what the fix was, which test now guards it.</li>
+<li>A reproduce block: the commands that regenerate every number on the page.</li>
+<li>The limits: what this establishes and what it does not.</li>
+</ul>
+<p>The three reports on this site (<a href="/reports/vpin-example.html">VPIN</a>,
+<a href="/reports/hrp-example.html">HRP</a>, <a href="/reports/psr-worked-example.html">PSR</a>)
+follow this outline, and <code>quantmedia-research/verify_examples.py</code>
+re-runs the first two in a clean directory and asserts that the committed
+CSVs match to nine decimals. The experiment notes that followed them use
+tolerance tests instead, because Monte Carlo output is not bit-stable across
+NumPy versions; the note says which kind of test it is.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>Passing every step proves the implementation matches the method as
+stated. It does not prove the method is useful, and a verification report
+should never be read as an endorsement of the method.</li>
+<li>The steps were distilled from three methods and about thirty tests.
+Other kinds of code (optimisers with numerical tolerances, anything
+stochastic by design) need additional steps this note does not cover.</li>
+<li>Independent recomputation catches convention and arithmetic errors; it
+does not catch a misreading shared by both computations. Publishing the
+convention is the only defence, and it depends on a reader.</li>
 </ul>
 
-<h2>Check it yourself, in one command</h2>
-<p><code>python quantmedia-research/verify_examples.py</code> re-runs both
-packages in a clean temporary directory and asserts that every shipped output
-file matches to nine decimal places. If it passes on your machine, you hold the
-same evidence this page describes. The runner and both packages are in the
-<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research" rel="noopener" target="_blank">public repository</a>.</p>
-
-<h2>Verify your own implementation</h2>
-<p>If you have written or generated your own VPIN, HRP or PSR code, point it at
-the synthetic inputs described in each report and compare. If you would like a
-report written against <em>your</em> implementation &mdash; the same ground
-truth, the same discipline, a dated document you can cite &mdash;
-<a href="/contact.html">get in touch</a>. That is the service this site is being
-built around.</p>
-
-<div class="qm-related">
-  <a href="/reproducibility.html">Implementations &amp; tests</a>
-  <a href="/editorial-policy.html">Corrections policy</a>
-  <a href="/author/cemil-erturk.html">Who verifies</a>
-</div>
+<h2>Reproduce</h2>
+<div class="qm-formula">python quantmedia-research/tests/test_vpin.py&nbsp;&nbsp;&nbsp;# 15<br>python quantmedia-research/tests/test_hrp.py&nbsp;&nbsp;&nbsp;&nbsp;# 13<br>node scripts/test_psr.js&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 12<br>python quantmedia-research/verify_examples.py</div>
+<p>Every defect cited above is in the repository's history and the test
+that guards it is in the suites listed.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">Code on GitHub</a>.</p>
 
 </div>
 </main>

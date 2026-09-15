@@ -488,6 +488,16 @@ PAGES.append(dict(
     crumb=('Learn', 'learn/what-is-vpin.html'),
     body=PCX.VPIN_NOISE_FLOOR_BODY, published='2026-09-15', modified='2026-09-15'))
 
+PAGES.append(dict(
+    slug='learn/hrp-drift-anatomy.html',
+    title='HRP vs Minimum Variance: Where Drift Comes From | QuantMedia',
+    description=("Minimum variance's +13.6% drift is +13.5% in-sample optimism and +0.1% "
+                 "luck, measured against the panel's true covariance. Training length, "
+                 "shrinkage, 50 seeds."),
+    h1='HRP vs minimum variance: where the out-of-sample drift comes from',
+    crumb=('Learn', 'learn/hrp-vs-mean-variance.html'),
+    body=PCX.HRP_DRIFT_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION

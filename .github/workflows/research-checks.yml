@@ -44,4 +44,5 @@ jobs:
           python quantmedia-research/tests/test_hrp.py
           python quantmedia-research/tests/test_psr_uncertainty.py
           python quantmedia-research/tests/test_vpin_sensitivity.py
+          python quantmedia-research/tests/test_hrp_drift.py
           python quantmedia-research/verify_examples.py

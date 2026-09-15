@@ -149,8 +149,9 @@ python quantmedia-research/tests/test_hrp.py
 <h2>Limits and a useful next experiment</h2>
 <p>This is one fixed-seed panel with no transaction costs and no weight refitting.
 It does not establish which allocator wins across assets or market regimes.
-Vary the training length while retaining a separate evaluation sample to explore
-how much each method depends on its covariance estimate.</p>
+That experiment has now been run, with the panel's true covariance as the
+yardstick: see <a href="/learn/hrp-drift-anatomy.html">HRP vs minimum variance:
+where the drift comes from</a>. Its numbers are not folded into this report.</p>
 <ul class="qm-related">
 <li><a href="/learn/hrp-vs-mean-variance.html">HRP vs mean-variance</a><span>How the allocation methods differ</span></li>
 <li><a href="/paper-hierarchical-risk-parity.html">HRP research note</a><span>Algorithm, references and assumptions</span></li>

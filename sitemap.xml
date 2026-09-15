@@ -104,6 +104,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://quantmedia.io/learn/hrp-drift-anatomy.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://quantmedia.io/learn/what-is-vpin.html</loc>
     <lastmod>2026-08-08</lastmod>
     <changefreq>yearly</changefreq>

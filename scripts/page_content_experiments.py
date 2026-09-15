@@ -323,3 +323,161 @@ first test checks that. <a href="https://github.com/certurk23/certurk23.github.i
 <li>Lee, C. M. C. and Ready, M. J. (1991). Inferring Trade Direction from Intraday Data. <em>Journal of Finance</em>, 46(2), 733&ndash;746 (the tick rule).</li>
 </ul>
 """
+
+# Numbers from quantmedia-research/hrp-drift-anatomy/outputs/, run 15
+# September 2026 (numpy 2.5.2, pandas 3.0.5). The published-split rows
+# reproduce the HRP verification report exactly.
+HRP_DRIFT_BODY = """
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Because the panel is generated from a known factor model, its true
+covariance is available, and every allocator's out-of-sample volatility drift
+can be split into <em>optimism</em> (the in-sample estimate sits below the true
+volatility of the chosen weights) and <em>luck</em> (the test window's own
+noise). Minimum variance's +13.6% is +13.5% optimism and +0.1% luck: the
+optimiser fitted the estimation error in a 120-period sample covariance and
+reported a volatility it could never have. HRP's +1.3% is +2.8% optimism and
+&minus;1.5% luck. Across 50 seeds HRP drifts less than minimum variance every
+time, but its realised volatility is <em>lower</em> than minimum variance's in
+only 40% of them, and a 0.3-shrunk minimum variance ends lowest in 64%. Drift
+measures honesty, not performance.</p>
+</div>
+
+<h2>The question the verification report left open</h2>
+<p>The <a href="/reports/hrp-example.html">HRP verification report</a> fits
+six allocators on 120 periods of a 20-asset panel, holds the weights fixed for
+400 more, and finds HRP's volatility drifting +1.3% against minimum variance's
++13.6%. It suggested varying the training length as the next experiment. This
+note does that, and first explains the drift, with one instrument the report
+did not use: the panel's true covariance. Everything is synthetic.</p>
+
+<h2>Setup</h2>
+<p>The report's generator draws a market factor (&sigma; 0.008), four block
+factors (&sigma; 0.010) and, per asset, a market beta in [0.6, 1.3], a block
+beta in [0.7, 1.2] and an idiosyncratic &sigma; in [0.006, 0.018]. Mirroring it
+call for call gives the identical 520&times;20 panel (the tests assert this)
+and the true covariance &Sigma; = &sigma;<sub>m</sub>&sup2;&beta;<sub>m</sub>&beta;<sub>m</sub>&prime;
++ &sigma;<sub>b</sub>&sup2;(block mask)&beta;<sub>b</sub>&beta;<sub>b</sub>&prime;
++ diag(&sigma;<sub>i</sub>&sup2;). For a weight vector w, vol<sub>true</sub> =
+&radic;(w&prime;&Sigma;w)&middot;&radic;252 is what those weights would deliver
+on average. Then</p>
+<div class="qm-formula">optimism = vol<sub>true</sub> / vol<sub>in</sub> &minus; 1<br>luck = vol<sub>out</sub> / vol<sub>true</sub> &minus; 1<br>(1 + optimism)(1 + luck) = 1 + drift</div>
+<p>The oracle is minimum variance computed from &Sigma; itself: the best any
+covariance-based allocator could do with perfect information.</p>
+
+<h2>Part A: the published split, decomposed</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Train 120, test 400</th><th>vol in</th><th>vol true</th><th>vol out</th><th>Optimism</th><th>Luck</th><th>Drift</th><th>Max weight</th><th>Short</th><th>N effective</th></tr></thead>
+<tbody>
+<tr><td>HRP (single)</td><td class="qm-num">0.1401</td><td class="qm-num">0.1440</td><td class="qm-num">0.1419</td><td class="qm-num">+2.8%</td><td class="qm-num">&minus;1.5%</td><td class="qm-num">+1.3%</td><td class="qm-num">0.106</td><td class="qm-num">0</td><td class="qm-num">16.3</td></tr>
+<tr><td>HRP (Ward)</td><td class="qm-num">0.1419</td><td class="qm-num">0.1439</td><td class="qm-num">0.1425</td><td class="qm-num">+1.5%</td><td class="qm-num">&minus;1.0%</td><td class="qm-num">+0.4%</td><td class="qm-num">0.110</td><td class="qm-num">0</td><td class="qm-num">16.7</td></tr>
+<tr><td>Minimum variance</td><td class="qm-num">0.1311</td><td class="qm-num">0.1489</td><td class="qm-num">0.1489</td><td class="qm-num">+13.5%</td><td class="qm-num">+0.1%</td><td class="qm-num">+13.6%</td><td class="qm-num">0.229</td><td class="qm-num">&minus;0.112</td><td class="qm-num">7.4</td></tr>
+<tr><td>Minimum variance, long-only</td><td class="qm-num">0.1325</td><td class="qm-num">0.1450</td><td class="qm-num">0.1460</td><td class="qm-num">+9.4%</td><td class="qm-num">+0.7%</td><td class="qm-num">+10.2%</td><td class="qm-num">0.206</td><td class="qm-num">0</td><td class="qm-num">9.5</td></tr>
+<tr><td>Minimum variance, shrinkage 0.3</td><td class="qm-num">0.1330</td><td class="qm-num">0.1444</td><td class="qm-num">0.1432</td><td class="qm-num">+8.6%</td><td class="qm-num">&minus;0.8%</td><td class="qm-num">+7.7%</td><td class="qm-num">0.169</td><td class="qm-num">&minus;0.019</td><td class="qm-num">11.8</td></tr>
+<tr><td>Equal weight</td><td class="qm-num">0.1474</td><td class="qm-num">0.1464</td><td class="qm-num">0.1443</td><td class="qm-num">&minus;0.7%</td><td class="qm-num">&minus;1.4%</td><td class="qm-num">&minus;2.1%</td><td class="qm-num">0.050</td><td class="qm-num">0</td><td class="qm-num">20.0</td></tr>
+<tr><td>Oracle: minimum variance from &Sigma;</td><td class="qm-num">0.1412</td><td class="qm-num">0.1388</td><td class="qm-num">0.1377</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td class="qm-num">0.129</td><td class="qm-num">&minus;0.056</td><td class="qm-num">10.2</td></tr>
+</tbody></table></div>
+<p>Three readings. First, minimum variance's drift is not bad luck in the
+test window: luck is +0.1%. Its in-sample 0.1311 was an artefact of fitting
+20 assets to 120 observations (sample covariance condition number 43 against
+35 for the truth), and the weights it chose have a true volatility of 0.1489,
+higher than HRP's 0.1440 and higher than the oracle's 0.1388. Second, HRP is
+not free of optimism (+2.8%) but nearly so, because it never inverts the
+covariance: its weights are ratios of cluster variances, which the sample
+estimates reasonably even at n = 120. Third, the oracle shows what the sample
+optimiser was aiming for and missed: a 0.1388 portfolio with a 5.6% short
+position and 10 effective names. The sample version doubled the short
+position and halved the effective names.</p>
+
+<h2>Part B: training length</h2>
+<p>A longer panel (seed + 1, 2,400 periods) with a fixed 400-period test
+window; training uses the T periods immediately before it.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>T</th><th>HRP drift (optimism / luck)</th><th>MinVar drift (optimism / luck)</th><th>MinVar |w &minus; w<sub>oracle</sub>|</th><th>Shrunk 0.3 drift</th><th>HRP vol out</th><th>MinVar vol out</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">60</td><td class="qm-num">+10.0% (+6.3 / +3.5)</td><td class="qm-num">+49.7% (+39.7 / +7.2)</td><td class="qm-num">1.66</td><td class="qm-num">+26.4%</td><td class="qm-num">0.1655</td><td class="qm-num">0.1924</td></tr>
+<tr><td class="qm-num">120</td><td class="qm-num">+18.7% (+14.7 / +3.5)</td><td class="qm-num">+29.3% (+22.0 / +5.9)</td><td class="qm-num">0.98</td><td class="qm-num">+25.1%</td><td class="qm-num">0.1641</td><td class="qm-num">0.1658</td></tr>
+<tr><td class="qm-num">250</td><td class="qm-num">+8.4% (+5.3 / +3.0)</td><td class="qm-num">+17.8% (+11.7 / +5.5)</td><td class="qm-num">0.71</td><td class="qm-num">+15.0%</td><td class="qm-num">0.1630</td><td class="qm-num">0.1616</td></tr>
+<tr><td class="qm-num">500</td><td class="qm-num">+3.7% (+0.4 / +3.3)</td><td class="qm-num">+8.4% (+2.4 / +5.9)</td><td class="qm-num">0.59</td><td class="qm-num">+6.4%</td><td class="qm-num">0.1665</td><td class="qm-num">0.1602</td></tr>
+<tr><td class="qm-num">1,000</td><td class="qm-num">+3.8% (+0.4 / +3.4)</td><td class="qm-num">+6.6% (+1.0 / +5.5)</td><td class="qm-num">0.40</td><td class="qm-num">+5.5%</td><td class="qm-num">0.1660</td><td class="qm-num">0.1579</td></tr>
+<tr><td class="qm-num">2,000</td><td class="qm-num">+5.9% (+2.5 / +3.3)</td><td class="qm-num">+7.2% (+2.5 / +4.6)</td><td class="qm-num">0.21</td><td class="qm-num">+6.8%</td><td class="qm-num">0.1642</td><td class="qm-num">0.1552</td></tr>
+</tbody></table></div>
+<p>On this seed the test window is a high-volatility stretch, so every
+allocator carries a positive luck term of 2&ndash;7%; that is the part no
+training length can remove. Minimum variance's optimism falls from +39.7% at
+T = 60 to about +1&ndash;2.5% from T = 500 on, and its distance from the
+oracle weights shrinks eightfold. HRP's optimism is small from T = 250 on but
+is +14.7% at T = 120 on this seed: the clustering step is also estimated
+from the sample and can also be wrong. And once T is 250 or more, minimum
+variance's realised volatility is <em>below</em> HRP's on this panel,
+because with enough data the optimiser finds the diversification that HRP's
+tree structure cannot express.</p>
+
+<h2>Part C: 50 seeds at the published split</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Train 120, test 400, 50 panels</th><th>Drift median [p25, p75]</th><th>Optimism median</th><th>Vol out median</th><th>Lowest vol out in</th></tr></thead>
+<tbody>
+<tr><td>HRP (single)</td><td class="qm-num">+2.3% [&minus;1.6, +7.6]</td><td class="qm-num">+1.4%</td><td class="qm-num">0.1456</td><td class="qm-num">2% of seeds</td></tr>
+<tr><td>HRP (Ward)</td><td class="qm-num">+2.1% [&minus;1.8, +6.9]</td><td class="qm-num">+1.6%</td><td class="qm-num">0.1458</td><td class="qm-num">4%</td></tr>
+<tr><td>Minimum variance</td><td class="qm-num">+20.4% [+12.9, +24.4]</td><td class="qm-num">+19.6%</td><td class="qm-num">0.1427</td><td class="qm-num">4%</td></tr>
+<tr><td>Minimum variance, long-only</td><td class="qm-num">+8.8% [+2.8, +13.6]</td><td class="qm-num">+7.5%</td><td class="qm-num">0.1406</td><td class="qm-num">26%</td></tr>
+<tr><td>Minimum variance, shrinkage 0.3</td><td class="qm-num">+11.5% [+6.3, +14.7]</td><td class="qm-num">+10.7%</td><td class="qm-num">0.1389</td><td class="qm-num">64%</td></tr>
+<tr><td>Equal weight</td><td class="qm-num">+0.9% [&minus;4.2, +4.6]</td><td class="qm-num">+0.1%</td><td class="qm-num">0.1494</td><td class="qm-num">0%</td></tr>
+</tbody></table></div>
+<p>HRP drifts less than minimum variance in 50 of 50 seeds. It also ends with
+lower realised volatility than minimum variance in only 20 of 50, has lower
+<em>true</em> volatility in 17 of 50, and is the lowest-volatility allocator in
+one seed. Shrunk minimum variance takes that title in 32. The verification
+report's claim, that HRP &ldquo;drifts far less&rdquo;, holds without
+exception; the stronger claim people tend to make, that HRP therefore builds
+lower-risk portfolios, does not hold on this panel.</p>
+
+<h2>Part D: shrinkage</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Shrinkage toward diagonal</th><th>vol in</th><th>vol out</th><th>Drift</th><th>Optimism</th><th>Short</th><th>N effective</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">0.0</td><td class="qm-num">0.1311</td><td class="qm-num">0.1489</td><td class="qm-num">+13.6%</td><td class="qm-num">+13.5%</td><td class="qm-num">&minus;0.112</td><td class="qm-num">7.4</td></tr>
+<tr><td class="qm-num">0.1</td><td class="qm-num">0.1315</td><td class="qm-num">0.1462</td><td class="qm-num">+11.2%</td><td class="qm-num">+11.5%</td><td class="qm-num">&minus;0.054</td><td class="qm-num">9.0</td></tr>
+<tr><td class="qm-num">0.3</td><td class="qm-num">0.1330</td><td class="qm-num">0.1432</td><td class="qm-num">+7.7%</td><td class="qm-num">+8.6%</td><td class="qm-num">&minus;0.019</td><td class="qm-num">11.8</td></tr>
+<tr><td class="qm-num">0.5</td><td class="qm-num">0.1352</td><td class="qm-num">0.1419</td><td class="qm-num">+4.9%</td><td class="qm-num">+6.0%</td><td class="qm-num">0</td><td class="qm-num">14.3</td></tr>
+<tr><td class="qm-num">0.7</td><td class="qm-num">0.1382</td><td class="qm-num">0.1416</td><td class="qm-num">+2.5%</td><td class="qm-num">+3.6%</td><td class="qm-num">0</td><td class="qm-num">16.5</td></tr>
+<tr><td class="qm-num">1.0 (inverse variance)</td><td class="qm-num">0.1457</td><td class="qm-num">0.1437</td><td class="qm-num">&minus;1.3%</td><td class="qm-num">&minus;0.5%</td><td class="qm-num">0</td><td class="qm-num">18.6</td></tr>
+</tbody></table></div>
+<p>Drift falls monotonically with shrinkage and crosses zero at full
+shrinkage, where the allocator is plain inverse variance. Realised volatility
+bottoms out around 0.5&ndash;0.7 (0.1416&ndash;0.1419), level with HRP's
+0.1419 on the same split. The crude diagonal target used here is a stand-in
+for Ledoit&ndash;Wolf; a proper shrinkage estimator would pick its own
+intensity from the data.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>A factor-model panel with four clean blocks is the structure HRP was
+designed for and the structure that makes a sample covariance
+ill-conditioned; real markets are neither this clean nor stationary.</li>
+<li>No transaction costs and no rebalancing anywhere; fixed weights flatter
+every allocator and the least stable one most.</li>
+<li>&ldquo;Optimism&rdquo; and &ldquo;luck&rdquo; are defined for volatility
+only. Returns are not modelled (the panel has zero drift by construction),
+so nothing here speaks to Sharpe ratios.</li>
+<li>50 seeds of one generator. The ordering of allocators by realised
+volatility could change with different block sizes, betas or idiosyncratic
+noise.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<div class="qm-formula">cd quantmedia-research/hrp-drift-anatomy<br>python experiment.py<br>python ../tests/test_hrp_drift.py&nbsp;&nbsp;# expected: 6 passed</div>
+<p>Runtime about four seconds. The first test asserts that the mirrored panel
+is identical to the report's; the second that the published split
+reproduces 0.1401 / 0.1419 / 0.1311 / 0.1489 and that optimism and luck
+multiply to the drift exactly.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/hrp-drift-anatomy">Code and output on GitHub</a>.</p>
+
+<h2>References</h2>
+<ul>
+<li>L&oacute;pez de Prado, M. (2016). Building Diversified Portfolios that Outperform Out of Sample. <em>Journal of Portfolio Management</em>, 42(4), 59&ndash;69.</li>
+<li>Michaud, R. O. (1989). The Markowitz Optimization Enigma: Is &lsquo;Optimized&rsquo; Optimal? <em>Financial Analysts Journal</em>, 45(1), 31&ndash;42.</li>
+<li>Ledoit, O. and Wolf, M. (2004). A well-conditioned estimator for large-dimensional covariance matrices. <em>Journal of Multivariate Analysis</em>, 88(2), 365&ndash;411.</li>
+<li>DeMiguel, V., Garlappi, L. and Uppal, R. (2009). Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy? <em>Review of Financial Studies</em>, 22(5), 1915&ndash;1953.</li>
+</ul>
+"""

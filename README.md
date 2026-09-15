@@ -23,6 +23,7 @@ registration.
 | PSR under moment uncertainty at n = 24 (experiment note) | `quantmedia-research/psr-moment-uncertainty/` | 6 | [Experiment note](https://quantmedia.io/learn/psr-uncertainty-at-n-24.html) |
 | VPIN classifier noise floors and setting sensitivity (experiment note) | `quantmedia-research/vpin-classifier-sensitivity/` | 6 | [Experiment note](https://quantmedia.io/learn/vpin-classifier-noise-floor.html) |
 | HRP vs minimum variance: drift anatomy (experiment note) | `quantmedia-research/hrp-drift-anatomy/` | 6 | [Experiment note](https://quantmedia.io/learn/hrp-drift-anatomy.html) |
+| Deflated Sharpe Ratio: false positives, power, correlated trials (experiment note) | `quantmedia-research/dsr-trials/` | 5 | [Experiment note](https://quantmedia.io/learn/dsr-trials-experiment.html) |
 
 Three defects were found by running this code against known ground truth, and
 all three are documented on the report pages rather than quietly patched:

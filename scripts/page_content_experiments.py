@@ -481,3 +481,159 @@ multiply to the drift exactly.
 <li>DeMiguel, V., Garlappi, L. and Uppal, R. (2009). Optimal Versus Naive Diversification: How Inefficient is the 1/N Portfolio Strategy? <em>Review of Financial Studies</em>, 22(5), 1915&ndash;1953.</li>
 </ul>
 """
+
+# Numbers from quantmedia-research/dsr-trials/outputs/, run 15 September
+# 2026 (numpy 2.5.2 / scipy 1.18.1), seed 20260915, 5,000 Monte Carlo
+# repetitions per cell. Part A reproduces the DSR explainer's table exactly.
+DSR_TRIALS_BODY = """
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Pick the best of N no-skill strategies by Sharpe ratio and test the
+winner with an ordinary Probabilistic Sharpe Ratio at 0.95: it passes 40% of
+the time at N = 10, 99% at N = 100, always at N = 1,000. Test it with the
+Deflated Sharpe Ratio instead and it passes 0.1% of the time. The closed form
+for the luck benchmark, the expected best Sharpe among N trials, matches Monte
+Carlo to within 0.005 when the dispersion term is measured across the actual
+trials, and keeps matching when the trials are correlated, because that
+dispersion shrinks with the correlation. The price: with one genuine edge
+among ten no-skill trials, DSR at 0.95 detects it 19% of the time where the
+naive PSR detects it 92%. DSR is a conservative test, and this note
+measures how conservative.</p>
+</div>
+
+<h2>What is being checked</h2>
+<p>The <a href="/learn/deflated-sharpe-ratio.html">DSR explainer</a> gives
+the formula and a worked table: a strategy with Sharpe 1.50 over 120 monthly
+observations, skewness &minus;0.8, kurtosis 6.0, and a dispersion of Sharpe
+ratios across trials of 0.50, falls from DSR 0.9997 at N = 10 to 0.2671 at
+N = 1,000. Four questions follow. Is the table right? Does the closed form
+for the expected maximum hold? What does the correction do to false
+positives and to power? And what happens when the N trials are not
+independent, as parameter sweeps never are? Everything below is synthetic.</p>
+
+<h2>The benchmark</h2>
+<div class="qm-formula">SR*<sub>0</sub> = sd(SR) &middot; [ (1 &minus; &gamma;) &Phi;<sup>&minus;1</sup>(1 &minus; 1/N) + &gamma; &Phi;<sup>&minus;1</sup>(1 &minus; 1/(N&middot;e)) ]<br>DSR = PSR evaluated against SR*<sub>0</sub> instead of 0, with the winner's own n, skewness and kurtosis</div>
+<p>&gamma; is the Euler&ndash;Mascheroni constant 0.5772. sd(SR) is the
+standard deviation of the Sharpe ratios <em>across the N trials</em>, which
+means the trials have to have been kept.</p>
+
+<h2>Part A: the explainer's table, recomputed</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>N</th><th>Expected max Sharpe SR*<sub>0</sub></th><th>DSR</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">1</td><td class="qm-num">&mdash;</td><td class="qm-num">1.0000 (= PSR)</td></tr>
+<tr><td class="qm-num">10</td><td class="qm-num">0.7873</td><td class="qm-num">0.9997</td></tr>
+<tr><td class="qm-num">100</td><td class="qm-num">1.2653</td><td class="qm-num">0.8736</td></tr>
+<tr><td class="qm-num">1,000</td><td class="qm-num">1.6276</td><td class="qm-num">0.2671</td></tr>
+</tbody></table></div>
+<p>Denominator 2.2389, every cell to four decimals. The published table
+holds. One thing the table does not say: sd(SR) = 0.50 is a large dispersion.
+Under a pure null with 120 observations, Sharpe ratios of independent
+no-skill strategies scatter with a standard deviation of only
+&radic;(1/n) = 0.091. A dispersion of 0.50 describes a family of genuinely
+different strategies, some with edge, not a parameter sweep of one; the
+example is illustrative of the arithmetic, not of what a sweep produces.</p>
+
+<h2>Part B: does the closed form hold?</h2>
+<p>N independent strategies with iid standard-normal returns over 120
+periods, 5,000 repetitions. sd(SR) is taken from the trials in each
+repetition, as the method prescribes.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>N</th><th>sd(SR) across trials</th><th>Max SR, Monte Carlo</th><th>Max SR, closed form</th><th>Closed form with sd 0.50</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">10</td><td class="qm-num">0.0900</td><td class="qm-num">0.1424</td><td class="qm-num">0.1417</td><td class="qm-num">0.7873</td></tr>
+<tr><td class="qm-num">100</td><td class="qm-num">0.0918</td><td class="qm-num">0.2322</td><td class="qm-num">0.2324</td><td class="qm-num">1.2653</td></tr>
+<tr><td class="qm-num">1,000</td><td class="qm-num">0.0920</td><td class="qm-num">0.3039</td><td class="qm-num">0.2995</td><td class="qm-num">1.6276</td></tr>
+</tbody></table></div>
+<p>The formula is accurate to within 0.005 at N = 10 and 100 and within
+0.005 at N = 1,000, where the extreme-value approximation is at its
+weakest. The last column is what the explainer's sd of 0.50 implies; it is
+5.5 times the null dispersion, and the benchmark scales with it linearly.
+Feeding DSR a dispersion that was not measured on the trials is where the
+number stops meaning anything.</p>
+
+<h2>Part C: false positives and power</h2>
+<p>Under the null (no strategy has edge), the best of N by in-sample Sharpe
+is tested at 0.95 both ways. With one true edge planted (mean 0.30 per
+period, PSR against zero about 0.94 on its own), the same is done and
+&ldquo;power&rdquo; counts the repetitions where the edge was both selected and
+passed.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>N</th><th>Naive PSR &gt; 0.95, null</th><th>DSR &gt; 0.95, null</th><th>True edge selected</th><th>Naive PSR power</th><th>DSR power</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">1</td><td class="qm-num">4.7%</td><td class="qm-num">4.7%</td><td class="qm-num">100%</td><td class="qm-num">94.4%</td><td class="qm-num">94.4%</td></tr>
+<tr><td class="qm-num">10</td><td class="qm-num">40.1%</td><td class="qm-num">0.0%</td><td class="qm-num">93.4%</td><td class="qm-num">91.5%</td><td class="qm-num">18.9%</td></tr>
+<tr><td class="qm-num">100</td><td class="qm-num">99.2%</td><td class="qm-num">0.1%</td><td class="qm-num">75.1%</td><td class="qm-num">75.1%</td><td class="qm-num">13.1%</td></tr>
+<tr><td class="qm-num">1,000</td><td class="qm-num">100%</td><td class="qm-num">0.1%</td><td class="qm-num">49.4%</td><td class="qm-num">49.4%</td><td class="qm-num">5.4%</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>The naive PSR is useless on a mined winner.</strong> Its
+false-positive rate is 40% after ten tries and 99% after a hundred. The 4.7%
+at N = 1 is the nominal 5%, which is the only case where PSR is the right
+test.</li>
+<li><strong>DSR over-corrects.</strong> Its false-positive rate is not 5% but
+0.0&ndash;0.1%. The benchmark is the <em>expected</em> maximum, and the winner
+has to clear it with 95% confidence; under the null the winner sits at the
+expected maximum on average, so it almost never clears with margin.</li>
+<li><strong>Power is the cost.</strong> A strategy with a real per-period
+Sharpe of 0.30 is found by the naive test 91% of the time among ten
+no-skill rivals and by DSR 19%; among a thousand rivals it is not even
+selected half the time, and DSR confirms it in 5%. Conditional on being
+selected, DSR's detection rate is 20%, 17% and 11%.</li>
+</ul>
+<p>Read together: DSR at 0.95 is a filter that rarely lets luck through and
+often keeps skill out. That is a defensible trade for a research process
+where the cost of a false strategy is high; it is not a neutral
+measurement.</p>
+
+<h2>Part D: correlated trials</h2>
+<p>A parameter sweep produces trials that share most of their returns. Here
+N = 100 strategies are built as &radic;&rho;&middot;common + &radic;(1&minus;&rho;)&middot;own
+noise, so pairwise correlation is &rho;.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>&rho;</th><th>sd(SR) across trials</th><th>Max SR, Monte Carlo</th><th>Closed form with nominal N = 100</th><th>Effective N implied</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">0.0</td><td class="qm-num">0.0920</td><td class="qm-num">0.2330</td><td class="qm-num">0.2328</td><td class="qm-num">101</td></tr>
+<tr><td class="qm-num">0.5</td><td class="qm-num">0.0651</td><td class="qm-num">0.1656</td><td class="qm-num">0.1646</td><td class="qm-num">104</td></tr>
+<tr><td class="qm-num">0.9</td><td class="qm-num">0.0291</td><td class="qm-num">0.0741</td><td class="qm-num">0.0735</td><td class="qm-num">106</td></tr>
+</tbody></table></div>
+<p>Correlation does not break the formula; it shrinks sd(SR). Ninety
+percent common variance leaves the hundred trials with a Sharpe dispersion of
+0.029 instead of 0.092, the expected maximum falls from 0.23 to 0.07, and the
+closed form with the nominal N = 100 still lands within 0.001 of the Monte
+Carlo. The trials are not independent, but the dispersion measured across
+them already carries that information, so the &ldquo;effective number of
+independent trials&rdquo; implied by the maximum stays near 100. The
+practical rule is the one the explainer already gives: measure sd(SR) on the
+trials you actually ran. Substituting a dispersion from elsewhere, or a
+nominal &ldquo;independent&rdquo; N smaller than the count, double-corrects.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>Normal returns throughout. Fat tails widen the null dispersion of
+Sharpe ratios and would raise every benchmark; the explainer's skew and
+kurtosis inputs enter DSR's denominator, not its benchmark.</li>
+<li>The equicorrelated design is one structure. A sweep that produces a few
+clusters of near-identical strategies plus some outliers is different, and
+Bailey and L&oacute;pez de Prado's own recommendation, to cluster trials
+first, is not tested here.</li>
+<li>&ldquo;Power&rdquo; is defined for one edge size and one n. A larger
+edge or a longer record changes the numbers, not the direction.</li>
+<li>N is self-reported everywhere in this method; no experiment can make an
+understated trial count honest.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<div class="qm-formula">cd quantmedia-research/dsr-trials<br>python experiment.py&nbsp;&nbsp;# about 45 s<br>python ../tests/test_dsr_trials.py&nbsp;&nbsp;# expected: 5 passed</div>
+<p>The first test recomputes the explainer table to four decimals; the
+others run the Monte Carlo at reduced size with matching tolerances.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/dsr-trials">Code and output on GitHub</a>.</p>
+
+<h2>References</h2>
+<ul>
+<li>Bailey, D. H. and L&oacute;pez de Prado, M. (2014). The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality. <em>Journal of Portfolio Management</em>, 40(5), 94&ndash;107.</li>
+<li>Bailey, D. H. and L&oacute;pez de Prado, M. (2012). The Sharpe Ratio Efficient Frontier. <em>Journal of Risk</em>, 15(2).</li>
+<li>Harvey, C. R. and Liu, Y. (2015). Backtesting. <em>Journal of Portfolio Management</em>, 42(1), 13&ndash;28.</li>
+<li>White, H. (2000). A Reality Check for Data Snooping. <em>Econometrica</em>, 68(5), 1097&ndash;1126.</li>
+</ul>
+"""

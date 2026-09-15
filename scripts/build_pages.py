@@ -498,6 +498,16 @@ PAGES.append(dict(
     crumb=('Learn', 'learn/hrp-vs-mean-variance.html'),
     body=PCX.HRP_DRIFT_BODY, published='2026-09-15', modified='2026-09-15'))
 
+PAGES.append(dict(
+    slug='learn/dsr-trials-experiment.html',
+    title='Deflated Sharpe Ratio: False Positives and Power | QuantMedia',
+    description=("Best-of-N winners pass a naive PSR 99% of the time at N = 100; DSR lets "
+                 "0.1% through and finds a real edge 19% of the time at N = 10. Closed "
+                 "form checked."),
+    h1='The Deflated Sharpe Ratio in practice: false positives, power and correlated trials',
+    crumb=('Learn', 'learn/deflated-sharpe-ratio.html'),
+    body=PCX.DSR_TRIALS_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION

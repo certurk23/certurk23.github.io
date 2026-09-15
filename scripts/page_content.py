@@ -1326,7 +1326,10 @@ SR*_0 = sd(SR) * [ (1 - g) * Z^-1( 1 - 1/N )  +  g * Z^-1( 1 - --- ) ]
 
   <h2>Limitations</h2>
   <ul>
-    <li><strong>N is self-reported and unverifiable.</strong> The correction is
+    <li><strong>N is self-reported and unverifiable. How the correction behaves when N is honest, on
+simulated no-skill trials, is measured in <a href="/learn/dsr-trials-experiment.html">a
+separate experiment note</a>: the closed form holds, false positives fall to 0.1%, and
+power falls with it.</strong> The correction is
     only as honest as the trial count you feed it. There is no way for a reader
     to audit it, which is why the number should be disclosed alongside the
     result rather than folded silently into a score.</li>

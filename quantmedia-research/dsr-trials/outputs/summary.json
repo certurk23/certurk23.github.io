@@ -1,0 +1,115 @@
+{
+ "A": {
+  "denominator": 2.2388613177238113,
+  "psr_zero": 0.9999999999998651,
+  "rows": [
+   {
+    "N": 1,
+    "expected_max_sr": 0.0,
+    "dsr": 0.9999999999998651
+   },
+   {
+    "N": 10,
+    "expected_max_sr": 0.787299150672875,
+    "dsr": 0.9997422693387422
+   },
+   {
+    "N": 100,
+    "expected_max_sr": 1.2653014466008423,
+    "dsr": 0.8735956887897156
+   },
+   {
+    "N": 1000,
+    "expected_max_sr": 1.6275607568263615,
+    "dsr": 0.267124878968316
+   }
+  ]
+ },
+ "B": [
+  {
+   "N": 10,
+   "sd_sr_across_trials": 0.08996884726015873,
+   "sd_sr_theory": 0.09128709291752768,
+   "max_sr_mc": 0.14238597776215126,
+   "max_sr_formula": 0.14166479406988117,
+   "max_sr_formula_sd050": 0.787299150672875
+  },
+  {
+   "N": 100,
+   "sd_sr_across_trials": 0.09182964407809267,
+   "sd_sr_theory": 0.09128709291752768,
+   "max_sr_mc": 0.2321665108836643,
+   "max_sr_formula": 0.23238436298570225,
+   "max_sr_formula_sd050": 1.2653014466008423
+  },
+  {
+   "N": 1000,
+   "sd_sr_across_trials": 0.09200467871571473,
+   "sd_sr_theory": 0.09128709291752768,
+   "max_sr_mc": 0.3038921487184335,
+   "max_sr_formula": 0.2994864090442298,
+   "max_sr_formula_sd050": 1.6275607568263615
+  }
+ ],
+ "C": [
+  {
+   "N": 1,
+   "naive_psr_fp": 0.047,
+   "dsr_fp": 0.047,
+   "edge_picked": 1.0,
+   "naive_psr_power": 0.9442,
+   "dsr_power": 0.9442
+  },
+  {
+   "N": 10,
+   "naive_psr_fp": 0.4006,
+   "dsr_fp": 0.0002,
+   "edge_picked": 0.934,
+   "naive_psr_power": 0.9152,
+   "dsr_power": 0.189
+  },
+  {
+   "N": 100,
+   "naive_psr_fp": 0.992,
+   "dsr_fp": 0.0008,
+   "edge_picked": 0.7508,
+   "naive_psr_power": 0.7508,
+   "dsr_power": 0.1312
+  },
+  {
+   "N": 1000,
+   "naive_psr_fp": 1.0,
+   "dsr_fp": 0.0006,
+   "edge_picked": 0.494,
+   "naive_psr_power": 0.494,
+   "dsr_power": 0.0536
+  }
+ ],
+ "D": [
+  {
+   "rho": 0.0,
+   "sd_sr_across_trials": 0.09200924769585289,
+   "max_sr_mc": 0.23302999662778726,
+   "max_sr_formula_nominalN": 0.23283886842043577,
+   "n_effective": 101
+  },
+  {
+   "rho": 0.5,
+   "sd_sr_across_trials": 0.06506181290587475,
+   "max_sr_mc": 0.16556219690871565,
+   "max_sr_formula_nominalN": 0.16464561197655334,
+   "n_effective": 104
+  },
+  {
+   "rho": 0.9,
+   "sd_sr_across_trials": 0.029056252591446115,
+   "max_sr_mc": 0.07411463384770162,
+   "max_sr_formula_nominalN": 0.07352983687351249,
+   "n_effective": 106
+  }
+ ],
+ "seed": 20260915,
+ "n_periods": 120,
+ "reps": 5000,
+ "numpy": "2.5.2"
+}

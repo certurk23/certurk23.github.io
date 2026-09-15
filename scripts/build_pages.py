@@ -532,8 +532,8 @@ PAGES.append(dict(
     slug='learn/signal-breadth-twenty-days.html',
     title='Signal Breadth: What Twenty Days Can Say | QuantMedia',
     description=("Twenty observations of the Signal Breadth Index: 31.8% to 15.6%, lag-1 "
-                 "autocorrelation 0.70, no predictive claim possible yet. The sample sizes "
-                 "needed, and a pre-registered test."),
+                 "autocorrelation 0.70, no predictive claim possible yet. Sample sizes and a "
+                 "pre-registered test."),
     h1='Signal Breadth: what twenty observations can and cannot say',
     crumb=('Live pipeline', 'indices/signal-breadth.html'),
     body=PCX.BREADTH_NOTE_BODY, published='2026-09-15', modified='2026-09-15'))

@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSR Verification Report, Example Corrected | QuantMedia</title>
-<meta name="description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
-<link rel="canonical" href="https://quantmedia.io/reports/psr-worked-example.html">
+<title>PSR Uncertainty at n = 24: A Monte Carlo Check | QuantMedia</title>
+<meta name="description" content="At n = 24 sample kurtosis reads 4 when the truth is 7, and a marginal edge's plug-in PSR spans 0.70 to 1.00. Monte Carlo and bootstrap, code included.">
+<link rel="canonical" href="https://quantmedia.io/learn/psr-uncertainty-at-n-24.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PSR Verification Report, Example Corrected">
-<meta property="og:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
-<meta property="og:url" content="https://quantmedia.io/reports/psr-worked-example.html">
+<meta property="og:title" content="PSR Uncertainty at n = 24: A Monte Carlo Check">
+<meta property="og:description" content="At n = 24 sample kurtosis reads 4 when the truth is 7, and a marginal edge's plug-in PSR spans 0.70 to 1.00. Monte Carlo and bootstrap, code included.">
+<meta property="og:url" content="https://quantmedia.io/learn/psr-uncertainty-at-n-24.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PSR Verification Report, Example Corrected">
-<meta name="twitter:description" content="Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.">
+<meta name="twitter:title" content="PSR Uncertainty at n = 24: A Monte Carlo Check">
+<meta name="twitter:description" content="At n = 24 sample kurtosis reads 4 when the truth is 7, and a marginal edge's plug-in PSR spans 0.70 to 1.00. Monte Carlo and bootstrap, code included.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "PSR Verification Report, Example Corrected",
-  "description": "Check the PSR formula step by step, reproduce it in Python and try the same inputs in the free calculator.",
+  "headline": "PSR Uncertainty at n = 24: A Monte Carlo Check",
+  "description": "At n = 24 sample kurtosis reads 4 when the truth is 7, and a marginal edge's plug-in PSR spans 0.70 to 1.00. Monte Carlo and bootstrap, code included.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-09-04",
-  "dateModified": "2026-09-04",
-  "mainEntityOfPage": "https://quantmedia.io/reports/psr-worked-example.html",
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "mainEntityOfPage": "https://quantmedia.io/learn/psr-uncertainty-at-n-24.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Worked examples",
-      "item": "https://quantmedia.io/reports/"
+      "name": "Learn",
+      "item": "https://quantmedia.io/learn/what-is-probabilistic-sharpe-ratio.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "PSR Verification Report: A Published Example, Corrected",
-      "item": "https://quantmedia.io/reports/psr-worked-example.html"
+      "name": "How uncertain is a Probabilistic Sharpe Ratio at n = 24?",
+      "item": "https://quantmedia.io/learn/psr-uncertainty-at-n-24.html"
     }
   ]
 }</script>
@@ -252,145 +252,161 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; PSR Verification Report: A Published Example, Corrected</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">PSR Verification Report: A Published Example, Corrected</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/what-is-probabilistic-sharpe-ratio.html">Learn</a> &rsaquo; How uncertain is a Probabilistic Sharpe Ratio at n = 24?</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">How uncertain is a Probabilistic Sharpe Ratio at n = 24?</h1>
 
-<div class="qm-answer"><span class="qm-answer-label">Verdict</span>
-<p>The worked example previously published on this site was arithmetically
-wrong, for months. It was found by computing it rather than reading it,
-corrected against <code>scipy</code>, and every intermediate value is now
-shown so it can be checked by hand.</p></div>
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>A lot. At n = 24 the sample kurtosis that the Probabilistic Sharpe Ratio
+plugs into its denominator has a standard deviation of about 0.74 even when
+returns are normal, and on a fat-tailed distribution it typically reads 4 when
+the truth is 7. For a strong edge (per-period SR 1.5) none of this matters:
+the PSR is saturated near 1 whatever the inputs do. For a marginal edge (SR
+0.5, true PSR 0.956) the plug-in PSR ranges from 0.70 to 1.00 across samples
+of the same process, and a stationary bootstrap of one typical sample spans
+0.86 to 0.9996. The closed form is exact arithmetic on inputs that are not
+exact.</p>
+</div>
 
-<div class="qm-def"><dl>
-<dt>Verification record</dt><dd>v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026</dd>
-<dt>Implementation under test</dt><dd><code>tools/probabilistic-sharpe-ratio-calculator.html and the worked example on the paper</code>, in the public repository</dd>
-<dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
-<dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
-<dt>Status</dt><dd>Independent. Not peer reviewed. Synthetic data only; no claim about any real security.</dd>
-</dl></div>
+<h2>Why this experiment exists</h2>
+<p>The <a href="/reports/psr-worked-example.html">PSR verification report</a>
+checks the closed-form arithmetic: denominator, z-statistic, probability. A
+reader on r/quant pointed out the second-order problem hiding in the same
+example: at n = 24 the kurtosis estimate itself is very noisy, so treating
+&gamma;&#8322; = 7.00 as known treats the noisiest input as exact. The report
+now says so in its limits. This note measures it, with a distribution whose
+true moments are set to the worked example, so every estimate can be compared
+with a known answer. Everything below is synthetic; nothing is a market
+return.</p>
 
-<p class="qm-lede">With an observed Sharpe of 1.50, 24 observations, skewness
-of &minus;1.20 and kurtosis of 7.00, the Probabilistic Sharpe Ratio against
-a zero benchmark is <strong>99.81%</strong>. Here is the arithmetic behind
-that result, including the denominator that is easy to miscalculate.</p>
-<div class="qm-answer"><span class="qm-answer-label">Use consistent units</span>
-<p>Sharpe and the benchmark must be expressed at the observation frequency.
-For monthly observations, use monthly Sharpe values; do not enter an annualized
-Sharpe alongside a count of monthly returns. Kurtosis here is ordinary kurtosis,
-where a normal distribution has value 3, not excess kurtosis.</p></div>
-<h2>Inputs</h2>
-<table class="qm-kv"><tbody>
-<tr><th>Observed Sharpe SR</th><td>1.50 per observation period</td></tr>
-<tr><th>Benchmark SR*</th><td>0.00 per observation period</td></tr>
-<tr><th>Observations n</th><td>24</td></tr>
-<tr><th>Skewness g1</th><td>&minus;1.20</td></tr>
-<tr><th>Kurtosis g2</th><td>7.00</td></tr>
-</tbody></table>
-<h2>Calculate without intermediate rounding</h2>
-<div class="qm-formula">denominator = sqrt(1 - g1*SR + ((g2 - 1)/4)*SR^2)
-            = sqrt(1 + 1.80 + 1.5*2.25)
-            = sqrt(6.175)
-            = 2.484954727958
+<h2>What the closed form assumes</h2>
+<div class="qm-formula">z = (SR &minus; SR*) &middot; &radic;(n &minus; 1) / &radic;(1 &minus; &gamma;&#8321;&middot;SR + (&gamma;&#8322; &minus; 1)/4 &middot; SR&sup2;)<br>PSR = &Phi;(z)</div>
+<p>SR, &gamma;&#8321; (skewness) and &gamma;&#8322; (Pearson kurtosis; a normal
+distribution has 3, not 0) enter as point estimates. The formula is an
+asymptotic approximation from Bailey and L&oacute;pez de Prado (2012); it says
+nothing about how far those estimates sit from the population values at a
+given n. Two different questions follow.</p>
 
-z = (SR - SR*) * sqrt(n - 1) / denominator
-  = 1.5 * sqrt(23) / sqrt(6.175)
-  = 2.8949208628
+<h2>Part A: how much the inputs move under normality</h2>
+<p>20,000 samples of 24 standard-normal draws. The estimators are the biased
+(population) skewness and kurtosis that <code>scipy.stats.skew</code> and
+<code>kurtosis(fisher=False)</code> return by default; the choice matters at
+this n and is stated for that reason.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Quantity at n = 24, normal returns</th><th>Monte Carlo</th><th>Finite-sample formula</th><th>Asymptotic</th></tr></thead>
+<tbody>
+<tr><td>SD of sample skewness &gamma;&#8321;</td><td class="qm-num">0.443</td><td class="qm-num">0.442</td><td class="qm-num">&radic;(6/n) = 0.500</td></tr>
+<tr><td>SD of sample kurtosis &gamma;&#8322;</td><td class="qm-num">0.746</td><td class="qm-num">0.737</td><td class="qm-num">&radic;(24/n) = 1.000</td></tr>
+<tr><td>5th&ndash;95th percentile of &gamma;&#8322; (true value 3)</td><td class="qm-num">1.90 &ndash; 4.16</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>SD of sample SR when the true SR is 0</td><td class="qm-num">0.215</td><td>&mdash;</td><td class="qm-num">1/&radic;n = 0.204</td></tr>
+</tbody></table></div>
+<p>The finite-sample formulas are the exact variances of the biased estimators
+under normality, 6(n&minus;2)/((n+1)(n+3)) and 24n(n&minus;2)(n&minus;3)/((n+1)&sup2;(n+3)(n+5)).
+The often-quoted &radic;(24/n) overstates the n = 24 spread by about a third,
+and the direction of the reader's remark holds either way: a kurtosis reading
+anywhere between roughly 2 and 4 is consistent with a normal distribution at
+this sample size.</p>
 
-PSR = standard_normal_cdf(z)
-    = 0.9981037293
-    = 99.81% (rounded)</div>
-<p>The normal-return case still has a kurtosis term. Setting skewness to zero
-and kurtosis to 3 gives sqrt(1 + 0.5 &times; 1.50&sup2;) = <strong>1.4577</strong>,
-not 1. Zero excess kurtosis does not remove (g2 &minus; 1)/4 from this formula.</p>
-<h2>Change the question</h2>
-<p>Raise the benchmark from 0 to 1 while keeping the other inputs fixed. The
-z-statistic becomes 0.9650 and PSR falls to <strong>83.27%</strong>, below a
-95% threshold. The observed record is the same; the claim being tested is stronger.</p>
-<p><a href="/tools/probabilistic-sharpe-ratio-calculator.html">Open the free calculator with these default inputs</a>.
-It calculates locally in your browser and displays both the denominator and z.</p>
-<h2>Reproduce with Python</h2>
-<div class="qm-formula">from math import erf, sqrt
+<h2>Part B: a process with the worked example's moments</h2>
+<p>To compare estimates with a known PSR the population must have SR 1.50,
+skewness &minus;1.20 and kurtosis 7.00. A two-component normal mixture does
+it: with probability 0.10 a &ldquo;bad regime&rdquo; N(0.145, 1.706&sup2;),
+otherwise N(1.651, 0.749&sup2;), in units where the standard deviation is 1.
+The four parameters are solved from the four moment equations; the solver's
+residuals are below 10<sup>&minus;8</sup>. A second scenario shifts both
+component means by &minus;1.0, which leaves variance, skewness and kurtosis
+untouched and sets the true SR to 0.50: a marginal edge. Each scenario draws
+20,000 samples of n = 24 and computes the plug-in PSR against SR* = 0.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>n = 24, 20,000 samples</th><th>True SR 1.50 (worked example)</th><th>True SR 0.50 (marginal edge)</th></tr></thead>
+<tbody>
+<tr><td>True PSR (population moments)</td><td class="qm-num">0.9981</td><td class="qm-num">0.9560</td></tr>
+<tr><td>Sample SR: mean, SD</td><td class="qm-num">1.660, 0.528</td><td class="qm-num">0.570, 0.300</td></tr>
+<tr><td>Lo (2002) normal-theory SE of SR</td><td class="qm-num">0.298</td><td class="qm-num">0.217</td></tr>
+<tr><td>Sample skewness: mean (true &minus;1.20)</td><td class="qm-num">&minus;0.67</td><td class="qm-num">&minus;0.68</td></tr>
+<tr><td>Sample kurtosis: mean, SD (true 7.00)</td><td class="qm-num">4.22, 2.16</td><td class="qm-num">4.23, 2.15</td></tr>
+<tr><td>Sample kurtosis: 5th&ndash;95th percentile</td><td class="qm-num">2.08 &ndash; 8.71</td><td class="qm-num">2.08 &ndash; 8.70</td></tr>
+<tr><td>Plug-in PSR: median</td><td class="qm-num">1.0000</td><td class="qm-num">0.9806</td></tr>
+<tr><td>Plug-in PSR: 5th&ndash;95th percentile</td><td class="qm-num">0.9850 &ndash; 1.0000</td><td class="qm-num">0.7038 &ndash; 1.0000</td></tr>
+<tr><td>Samples with plug-in PSR below 0.90</td><td class="qm-num">0.0%</td><td class="qm-num">22.4%</td></tr>
+<tr><td>Samples with plug-in PSR above the true PSR</td><td class="qm-num">76.9%</td><td class="qm-num">62.5%</td></tr>
+<tr><td>Normal-only PSR (skew 0, kurtosis 3 assumed): median</td><td class="qm-num">1.0000</td><td class="qm-num">0.9927</td></tr>
+</tbody></table></div>
 
-sr, benchmark, n, skew, kurtosis = 1.5, 0.0, 24, -1.2, 7.0
-den = sqrt(1 - skew*sr + ((kurtosis - 1)/4)*sr**2)
-z = (sr - benchmark)*sqrt(n - 1)/den
-psr = (1 + erf(z/sqrt(2)))/2
-print(f"den={den:.10f}, z={z:.10f}, PSR={psr:.10f}")</div>
-<p>This check uses Python's standard library. The browser calculator uses an
-error-function approximation, so compare at the displayed precision rather
-than requiring identical last digits.</p>
-<h2>What the percentage does not mean</h2>
-<p>PSR is not the probability of a profitable next trade. Its interpretation
-depends on the statistical assumptions, including independent returns and
-reliable moment estimates. It does not account for costs or the number of
-strategy variants tried. Selection across many backtests needs a separate
-correction such as the Deflated Sharpe Ratio.</p>
-<p class="qm-note">Arithmetic checked 4 September 2026. The earlier worked
-example printed z = 2.8955; the correct value rounded to four decimals is
-2.8949. This correction leaves the displayed PSR of 99.81% unchanged.</p>
-<ul class="qm-related">
-<li><a href="/learn/what-is-probabilistic-sharpe-ratio.html">PSR explained</a></li>
-<li><a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a><span>Accounting for multiple strategy trials</span></li>
-<li><a href="/paper-probabilistic-sharpe-ratio.html">PSR research note and references</a></li>
-<li><a href="/reports/">All worked examples</a></li>
+<h2>What the table says</h2>
+<ul>
+<li><strong>The kurtosis estimate cannot see the tails.</strong> With 24
+observations from a process whose kurtosis is 7, the sample kurtosis averages
+4.2 and lands below 3 in a fifth of samples. The 10% bad regime simply does
+not show up often enough in 24 draws. The closed form's correction for fat
+tails is therefore systematically too small, which is one reason more than
+half the plug-in values sit above the true PSR.</li>
+<li><strong>The SR estimate is wider than normal theory says.</strong> Lo's
+SE, &radic;((1 + SR&sup2;/2)/n), gives 0.298 at SR 1.5; the observed SD is
+0.528. Fat tails widen the sampling distribution of SR itself, before any
+PSR arithmetic. The naive 1/&radic;n = 0.204, which drops the SR&sup2;/2
+term, is wrong by a factor of 2.6 here.</li>
+<li><strong>At SR 1.5 the input noise is irrelevant.</strong> Every one of
+the 20,000 samples gives a plug-in PSR above 0.985. The verification report's
+example is a strong edge; its PSR of 0.9981 would survive any plausible error
+in the moments.</li>
+<li><strong>At SR 0.5 the point estimate is mostly noise.</strong> The same
+process, 24 observations, gives PSR anywhere from 0.70 to 1.00. In 22% of
+samples the analyst reports &ldquo;below 0.90&rdquo;; in most of the rest,
+&ldquo;above 0.95&rdquo;. The same edge is called insignificant or near-certain
+depending on which 24 months happened to be drawn.</li>
+<li><strong>Ignoring skew and kurtosis makes it worse, but not by much at
+this n.</strong> The normal-only median is 0.9927 against 0.9806 with the
+estimated moments. The estimated moments are so noisy that they only partially
+do their job.</li>
 </ul>
 
-<h2>Defect found during verification</h2>
-<div class="qm-tablewrap"><table class="qm-kv">
-<thead><tr><th>Quantity (SR 1.50, SR* 0, n 24)</th><th>As originally published</th><th>Correct</th></tr></thead>
-<tbody>
-<tr><td>Denominator, &gamma;&#8321; = 0, &gamma;&#8322; = 3</td><td class="qm-num">1.000</td><td class="qm-num">1.4577</td></tr>
-<tr><td>Denominator, &gamma;&#8321; = &minus;1.20, &gamma;&#8322; = 7.00</td><td class="qm-num">2.318</td><td class="qm-num">2.4850</td></tr>
-<tr><td>z-statistic (skewed, fat-tailed case)</td><td class="qm-num">2.8955</td><td class="qm-num">2.8949</td></tr>
-<tr><td>PSR (skewed, fat-tailed case)</td><td class="qm-num">&mdash;</td><td class="qm-num">0.9981</td></tr>
-</tbody></table></div>
-<div class="qm-answer"><span class="qm-answer-label">The kurtosis term does not vanish at &gamma;&#8322; = 3</span>
-<p>The original example treated the &ldquo;normal&rdquo; case as having a
-denominator of exactly 1, as though zero excess kurtosis removed the term. It
-does not: the formula uses (&gamma;&#8322; &minus; 1)/4, which at
-&gamma;&#8322; = 3 is 0.5, so the denominator is
-&radic;(1 + 0.5&middot;1.5&sup2;) = &radic;2.125 = <strong>1.4577</strong>. The same
-slip propagated to the skewed case: &radic;(1 + 1.80 + 1.5&middot;2.25) =
-&radic;6.175 = <strong>2.4850</strong>, not 2.318. Throughout, &gamma;&#8322; is
-Pearson (non-excess) kurtosis: a normal distribution has &gamma;&#8322; = 3, not 0.</p>
-<p>The z-statistic that followed was published as 2.8955. It does not follow from
-the corrected denominator: 1.5&middot;&radic;23 / 2.484955 = <strong>2.8949</strong>;
-2.8955 would need a denominator of 2.4845. A reader on r/quant pinned this on
-10 September 2026, and the table above now records both values. PSR is 0.9981
-either way.</p>
-<p><strong>Detection:</strong> evaluating the formula in <code>scipy</code>
-instead of trusting the prose. <strong>Fix:</strong> paper, explainer and
-calculator now agree and show every intermediate. <strong>Guard:</strong> the
-calculator computes rather than quotes, and <code>scripts/test_psr.js</code>
-exercises it.</p></div>
+<h2>One sample, bootstrapped</h2>
+<p>Take the marginal-edge sample whose plug-in PSR sits at the median: SR
+0.538, skewness &minus;0.64, kurtosis 3.97, PSR 0.9806. A stationary bootstrap
+(Politis and Romano, 1994; 5,000 resamples, mean block length 3) recomputes
+SR, skewness, kurtosis and PSR on each resample. The 5th, 50th and 95th
+percentiles are <strong>0.859, 0.981 and 0.9996</strong>. The interval runs
+from &ldquo;not significant at 10%&rdquo; to &ldquo;essentially certain&rdquo;.
+That is the honest statement of what 24 observations of a marginal, fat-tailed
+strategy support, and it is not what the single number 0.9806 suggests.</p>
+<p>The block length does not matter here because the process is independent
+across periods; it is included because a real return series is not, and the
+same code applies to one.</p>
 
-<h2>Why it matters</h2>
-<p>PSR is a test people use to decide whether a backtest is trustworthy. An
-implementation that understates the denominator overstates the z-statistic and
-reports more confidence than the data supports &mdash; in the direction that
-makes bad strategies look good.</p>
-
-<h2>What this verification does not establish</h2>
+<h2>What this does not establish</h2>
 <ul>
-<li>This verifies arithmetic, not statistical assumptions. PSR assumes
-serially independent returns; on smoothed or illiquid marks it over-reports.</li>
-<li>It says nothing about how many strategy variants were tried &mdash; that is
-the <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a>&rsquo;s job.</li>
-<li>The moments are treated as known. Under normality the sample excess kurtosis
-has variance of roughly 24/n, so at n = 24 its standard error is about 1.0;
-plugging a point estimate such as &gamma;&#8322; = 7.00 into the denominator treats
-the noisiest input as exact. A stationary bootstrap of SR, skewness and kurtosis
-over the return series is the right next experiment; it has now been run on a
-synthetic process with these moments, see <a href="/learn/psr-uncertainty-at-n-24.html">How
-uncertain is a PSR at n = 24?</a>. No numbers from it are folded into this
-report, which checks arithmetic only.</li>
+<li>One synthetic process, one seed, one n. Real return series are
+autocorrelated, heteroskedastic and not stationary; all of that adds
+uncertainty this experiment does not model.</li>
+<li>The mixture is a device for hitting three target moments, not a model of
+returns. Other distributions with the same moments would give different
+sampling behaviour for the estimators.</li>
+<li>The per-period SR of 1.5 in the worked example is far above anything
+plausible at monthly frequency; it was kept because it is the published
+example's input, and the second scenario exists to show a realistic
+regime.</li>
+<li>Bias-corrected estimators of skewness and kurtosis would change the
+numbers in Part A and the kurtosis rows in Part B; the biased ones were used
+because they are what the common libraries return by default.</li>
 </ul>
 
 <h2>Reproduce</h2>
-<p><code>from scipy.stats import norm; norm.cdf(1.5*23**0.5/2.4850)</code>
-&rarr; 0.9981. Or open the
-<a href="/tools/probabilistic-sharpe-ratio-calculator.html">calculator</a> with
-SR 1.50, SR* 0, n 24, skew &minus;1.20, kurtosis 7.00.</p>
+<div class="qm-formula">cd quantmedia-research/psr-moment-uncertainty<br>python experiment.py<br>python ../tests/test_psr_uncertainty.py&nbsp;&nbsp;# expected: 6 passed</div>
+<p>The script writes <code>outputs/summary.csv</code>, <code>summary.json</code>
+and the 20,000 plug-in PSR draws per scenario. Runtime about six seconds.
+Because NumPy does not promise bit-identical random streams across minor
+versions, the tests pin the claims above with tolerances rather than every
+decimal; the committed output was produced with numpy 2.5.2 and scipy 1.18.1.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/psr-moment-uncertainty">Code and output on GitHub</a>.</p>
+
+<h2>References</h2>
+<ul>
+<li>Bailey, D. H. and L&oacute;pez de Prado, M. (2012). The Sharpe Ratio Efficient Frontier. <em>Journal of Risk</em>, 15(2).</li>
+<li>Lo, A. W. (2002). The Statistics of Sharpe Ratios. <em>Financial Analysts Journal</em>, 58(4), 36&ndash;52.</li>
+<li>Politis, D. N. and Romano, J. P. (1994). The Stationary Bootstrap. <em>Journal of the American Statistical Association</em>, 89(428), 1303&ndash;1313.</li>
+<li>Joanes, D. N. and Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. <em>The Statistician</em>, 47(1), 183&ndash;189 (finite-sample variances of the estimators).</li>
+</ul>
 
 </div>
 </main>

@@ -20,6 +20,7 @@ registration.
 | VPIN — order-flow toxicity (Easley, López de Prado, O'Hara) | `quantmedia-research/vpin-order-flow-toxicity/` | 15 | [Verification report](https://quantmedia.io/reports/vpin-example.html) |
 | Hierarchical Risk Parity (López de Prado) | `quantmedia-research/hierarchical-risk-parity/` | 13 | [Verification report](https://quantmedia.io/reports/hrp-example.html) |
 | Probabilistic Sharpe Ratio (Bailey, López de Prado) | client-side calculator + `scripts/test_psr.js` | — | [Verification report](https://quantmedia.io/reports/psr-worked-example.html) |
+| PSR under moment uncertainty at n = 24 (experiment note) | `quantmedia-research/psr-moment-uncertainty/` | 6 | [Experiment note](https://quantmedia.io/learn/psr-uncertainty-at-n-24.html) |
 
 Three defects were found by running this code against known ground truth, and
 all three are documented on the report pages rather than quietly patched:

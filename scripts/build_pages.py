@@ -299,7 +299,8 @@ def write(slug, html):
 
 
 import page_content_examples as PCE
-import page_content_reports as PCR   # verification layer, composed below
+import page_content_reports as PCR
+import page_content_experiments as PCX   # verification layer, composed below
 import page_content as PC
 import page_content_identity as PCI   # noqa: E402
 
@@ -467,6 +468,16 @@ for existing in PAGES:
 
 # Compose: verdict + dated record on top, worked example in the middle,
 # defects / limitations / reproduce at the end. Same URLs as before.
+PAGES.append(dict(
+    slug='learn/psr-uncertainty-at-n-24.html',
+    title='PSR Uncertainty at n = 24: A Monte Carlo Check | QuantMedia',
+    description=('At n = 24 sample kurtosis reads 4 when the truth is 7, and a marginal '
+                 "edge's plug-in PSR spans 0.70 to 1.00. Monte Carlo and bootstrap, code "
+                 'included.'),
+    h1='How uncertain is a Probabilistic Sharpe Ratio at n = 24?',
+    crumb=('Learn', 'learn/what-is-probabilistic-sharpe-ratio.html'),
+    body=PCX.PSR_UNCERTAINTY_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION

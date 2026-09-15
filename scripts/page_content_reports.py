@@ -235,8 +235,10 @@ the <a href="/learn/deflated-sharpe-ratio.html">Deflated Sharpe Ratio</a>&rsquo;
 has variance of roughly 24/n, so at n = 24 its standard error is about 1.0;
 plugging a point estimate such as &gamma;&#8322; = 7.00 into the denominator treats
 the noisiest input as exact. A stationary bootstrap of SR, skewness and kurtosis
-over the return series is the right next experiment. It has not been run here,
-so no numbers are quoted for it.</li>
+over the return series is the right next experiment; it has now been run on a
+synthetic process with these moments, see <a href="/learn/psr-uncertainty-at-n-24.html">How
+uncertain is a PSR at n = 24?</a>. No numbers from it are folded into this
+report, which checks arithmetic only.</li>
 </ul>
 
 <h2>Reproduce</h2>

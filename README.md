@@ -26,6 +26,7 @@ registration.
 | Deflated Sharpe Ratio: false positives, power, correlated trials (experiment note) | `quantmedia-research/dsr-trials/` | 5 | [Experiment note](https://quantmedia.io/learn/dsr-trials-experiment.html) |
 | How to verify a quant implementation (method note) | the three reports' shared method | — | [Method note](https://quantmedia.io/learn/how-to-verify-a-quant-implementation.html) |
 | Degenerate inputs across VPIN, HRP and PSR (experiment note) | `quantmedia-research/degenerate-inputs/` | 5 | [Experiment note](https://quantmedia.io/learn/degenerate-inputs.html) |
+| Signal Breadth after twenty observations (note + pre-registered test) | `quantmedia-research/breadth-history-note/` | 4 | [Note](https://quantmedia.io/learn/signal-breadth-twenty-days.html) |
 
 Four defects were found by running this code against known ground truth, and
 all four are documented on the report pages rather than quietly patched:

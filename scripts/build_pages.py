@@ -521,12 +521,22 @@ PAGES.append(dict(
 PAGES.append(dict(
     slug='learn/degenerate-inputs.html',
     title='Degenerate Inputs: Two More Defects Found | QuantMedia',
-    description=("Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR "
-                 "code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke "
-                 "HRP inside scipy. Both fixed."),
+    description=("Twenty-six obvious-answer inputs run through the VPIN, HRP and PSR code. A "
+                 "flat tape read VPIN = 1 under the tick rule; a constant asset broke HRP. "
+                 "Both fixed."),
     h1='Degenerate inputs: what the implementations return when the answer is obvious',
     crumb=('Verified methods', 'reproducibility.html'),
     body=PCX.DEGENERATE_BODY, published='2026-09-15', modified='2026-09-15'))
+
+PAGES.append(dict(
+    slug='learn/signal-breadth-twenty-days.html',
+    title='Signal Breadth: What Twenty Days Can Say | QuantMedia',
+    description=("Twenty observations of the Signal Breadth Index: 31.8% to 15.6%, lag-1 "
+                 "autocorrelation 0.70, no predictive claim possible yet. The sample sizes "
+                 "needed, and a pre-registered test."),
+    h1='Signal Breadth: what twenty observations can and cannot say',
+    crumb=('Live pipeline', 'indices/signal-breadth.html'),
+    body=PCX.BREADTH_NOTE_BODY, published='2026-09-15', modified='2026-09-15'))
 
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION

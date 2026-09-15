@@ -59,6 +59,7 @@ SEARCH_INDEX = """const SEARCH_INDEX = [
   {t:'topic', title:'HRP vs Mean-Variance', sub:'Explainer', url:'learn/hrp-vs-mean-variance.html', kw:'hrp mean variance markowitz'},
   {t:'topic', title:'Modelling Slippage in Backtests', sub:'Explainer', url:'learn/how-to-model-slippage-in-backtests.html', kw:'slippage backtest impact'},
   {t:'topic', title:'What is Signal Confluence?', sub:'Explainer', url:'learn/what-is-signal-confluence.html', kw:'confluence signals threshold'},
+  {t:'topic', title:'Signal Breadth: twenty days', sub:'What a 20-observation series can and cannot say; pre-registered test', url:'learn/signal-breadth-twenty-days.html', kw:'breadth history autocorrelation sample size pre-registered'},
   {t:'topic', title:'What is Market Breadth?', sub:'Explainer', url:'learn/what-is-market-breadth.html', kw:'breadth advance decline'},
   {t:'page', title:'Methodology', sub:'Data sources, editorial standards, disclosures', url:'methodology.html', kw:'methodology metodoloji data sources kaynaklar'},
   {t:'page', title:'About', sub:'What QuantMedia is and who writes it', url:'about.html', kw:'about hakk\\u0131nda quantmedia'},

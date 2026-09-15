@@ -875,3 +875,124 @@ behaviour on a tape that had a first move. The note states its choice.</li>
 (<code>hrp_weights</code>), each with the date and reason in its docstring.
 <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/degenerate-inputs">Code and output on GitHub</a>.</p>
 """
+
+# Numbers from quantmedia-research/breadth-history-note/outputs/summary.json
+# computed on the series as of the 2026-09-14 session (20 observations).
+# The series grows nightly; the text dates every figure.
+BREADTH_NOTE_BODY = """
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>As of the 14 September 2026 session the <a href="/indices/signal-breadth.html">Signal
+Breadth Index</a> has twenty observations: it started at 31.8% on 17 August,
+peaked at 42.5% two days later and fell to 15.6% on 11 September. Twenty
+points support a description and nothing more. The one-day autocorrelation is
+0.70, which is three standard errors from white noise, so the series is
+persistent rather than a coin flip; breadth and the median signal score move
+together (r = 0.84) because they come from the same scan. Whether breadth
+says anything about what the market does next cannot be tested yet: to detect
+even a correlation of 0.3 with next-day returns at 80% power takes 85
+observations, 65 more trading days. This note is what an honest read of a
+young series looks like, and a marker to come back to when the series is old
+enough to test.</p>
+</div>
+
+<h2>What the index is</h2>
+<p>Every US close the pipeline scores a fixed universe of 180 liquid US
+equities against 30 technical signals; a name clears the threshold when at
+least 22 of the 30 are bullish. Signal Breadth is the share of scored names
+that clear it. The scan started under the current methodology on 17 August
+2026 and the history is <strong>not backfilled</strong>: the scan was not run
+historically, so earlier values do not exist and none have been
+manufactured. Names missing a full data window on a given day are skipped;
+on every day so far 179 of 180 were scored.</p>
+
+<h2>Twenty observations</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>17 Aug &ndash; 14 Sep 2026</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Observations</td><td class="qm-num">20 (no Labor Day, no weekends)</td></tr>
+<tr><td>First / last</td><td class="qm-num">31.8% / 17.3%</td></tr>
+<tr><td>Minimum / median / maximum</td><td class="qm-num">15.6% (11 Sep) / 29.1% / 42.5% (19 Aug)</td></tr>
+<tr><td>Mean, standard deviation</td><td class="qm-num">28.5%, 7.4 points</td></tr>
+<tr><td>BUY names behind those readings</td><td class="qm-num">28 to 76 of 179</td></tr>
+<tr><td>Median signal score (of 30)</td><td class="qm-num">14 to 20</td></tr>
+<tr><td>Day-to-day change: mean absolute / largest</td><td class="qm-num">3.8 / 11.8 points</td></tr>
+<tr><td>Days up / down / unchanged</td><td class="qm-num">5 / 11 / 3</td></tr>
+<tr><td>Lag-1 autocorrelation</td><td class="qm-num">0.70 (white-noise SE 0.22, t = 3.1)</td></tr>
+<tr><td>Correlation with the median score, same day</td><td class="qm-num">0.84</td></tr>
+</tbody></table></div>
+<p>The full series, 17 August to 14 September:</p>
+<div class="qm-formula">31.8 &middot; 30.7 &middot; 42.5 &middot; 30.7 &middot; 37.4 &middot; 37.4 &middot; 34.1 &middot; 29.1 &middot; 35.2 &middot; 35.2 &middot; 29.1 &middot; 26.3 &middot; 24.6 &middot; 26.8 &middot; 24.6 &middot; 24.6 &middot; 20.1 &middot; 17.3 &middot; 15.6 &middot; 17.3</div>
+
+<h2>What twenty points can say</h2>
+<ul>
+<li><strong>The series is persistent.</strong> A lag-1 autocorrelation of
+0.70 on 20 points has a standard error of about 0.22 under the white-noise
+null, so persistence is roughly three standard errors from nothing. That is
+expected, not interesting: the 30 signals include moving-average and
+momentum conditions that change slowly, so the share of names clearing 22 of
+them changes slowly too. It means consecutive readings are not independent
+evidence, which matters for everything below.</li>
+<li><strong>Breadth and the median score are the same information.</strong>
+r = 0.84 with the median, 0.88 with the mean score. Breadth counts names
+above a threshold on the same scores the median summarises; the two will
+only diverge when the score distribution changes shape. Reporting both is
+convenience, not corroboration.</li>
+<li><strong>The move from 42.5% to 15.6% is a description of four weeks,
+not a regime.</strong> Eleven down days against five up days, with a 0.70
+autocorrelation, is roughly what one drawn-out decline looks like. There is
+no basis in twenty points for calling it a trend, a cycle or a signal.</li>
+</ul>
+
+<h2>What twenty points cannot say</h2>
+<p>The question everyone wants answered is whether breadth predicts anything:
+next-day index returns, forward volatility, the persistence of the BUY
+names. None of it can be tested yet, and the arithmetic is worth writing
+down because it is the same for every young indicator.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>True correlation to detect</th><th>Observations for 80% power at 5% (two-sided)</th><th>Trading days still to wait</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">0.30</td><td class="qm-num">85</td><td class="qm-num">65</td></tr>
+<tr><td class="qm-num">0.20</td><td class="qm-num">194</td><td class="qm-num">174</td></tr>
+<tr><td class="qm-num">0.10</td><td class="qm-num">783</td><td class="qm-num">763</td></tr>
+</tbody></table></div>
+<p>These are Fisher-z sample sizes for independent observations. With a
+lag-1 autocorrelation of 0.70 the effective sample is smaller still, so the
+waits are lower bounds. A correlation of 0.3 between a daily breadth
+reading and the next day's return would be extraordinary for any published
+indicator; 0.1 would be respectable, and that takes three years. Anyone
+reporting a predictive result from a breadth series younger than that is
+reporting noise, and the site's own index will be held to the same
+standard: no predictive claim until the sample supports one, and the test
+pre-registered here so it cannot be chosen after the fact.</p>
+
+<h2>The pre-registered test</h2>
+<p>When the series reaches 85 observations (expected mid-December 2026,
+holidays permitting), the following will be computed and published whatever
+it shows: the Spearman correlation between breadth on day t and the S&amp;P
+500 close-to-close return on day t + 1, with a block bootstrap confidence
+interval (block length 5) to respect the autocorrelation; the same for the
+5-day forward return; and the fraction of day-t BUY names still clearing the
+threshold on day t + 5. No thresholds, no regime labels, no other outcome
+variables. If the interval includes zero, the index is a description of the
+scan, which is all it claims to be today.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>Nothing about the market. Every number above describes the scan's own
+output over four weeks.</li>
+<li>The methodology is version 2.0 and the series starts with it. A
+methodology change would start a new series; the old one would be kept,
+labelled, and not spliced.</li>
+<li>The 179 of 180 scored is a data-window rule, not a universe change; the
+skipped name is documented in the daily JSON.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<div class="qm-formula">cd quantmedia-research/breadth-history-note<br>python summarize.py&nbsp;&nbsp;# reads data/breadth_history.json as published<br>python ../tests/test_breadth_note.py&nbsp;&nbsp;# expected: 4 passed</div>
+<p>The script reads the live JSON, so its output moves nightly; the numbers
+in this note are the 14 September 2026 run and the committed
+<code>outputs/summary.json</code> is that snapshot. The tests pin the series'
+internal consistency and the sample-size formulas, not any day's values.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/breadth-history-note">Code and output on GitHub</a>.</p>
+"""

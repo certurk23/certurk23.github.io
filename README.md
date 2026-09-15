@@ -21,6 +21,7 @@ registration.
 | Hierarchical Risk Parity (López de Prado) | `quantmedia-research/hierarchical-risk-parity/` | 13 | [Verification report](https://quantmedia.io/reports/hrp-example.html) |
 | Probabilistic Sharpe Ratio (Bailey, López de Prado) | client-side calculator + `scripts/test_psr.js` | — | [Verification report](https://quantmedia.io/reports/psr-worked-example.html) |
 | PSR under moment uncertainty at n = 24 (experiment note) | `quantmedia-research/psr-moment-uncertainty/` | 6 | [Experiment note](https://quantmedia.io/learn/psr-uncertainty-at-n-24.html) |
+| VPIN classifier noise floors and setting sensitivity (experiment note) | `quantmedia-research/vpin-classifier-sensitivity/` | 6 | [Experiment note](https://quantmedia.io/learn/vpin-classifier-noise-floor.html) |
 
 Three defects were found by running this code against known ground truth, and
 all three are documented on the report pages rather than quietly patched:

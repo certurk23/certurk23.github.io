@@ -1,0 +1,82 @@
+{
+ "A": {
+  "bucket_size": 21376,
+  "n_trades_per_bucket": 80.0,
+  "sigma_dp_informed": 0.14915143760036706,
+  "sigma_dp_control": 0.08719942052718617,
+  "tick_floor_predicted": 0.1312299080088859,
+  "bvc_floor_predicted_dof3": 0.4489011058313205,
+  "bvc_floor_predicted_normal": 0.5,
+  "informed_bvc": {
+   "buckets": 250,
+   "vpin_mean": 0.44099715488458896,
+   "vpin_quiet": 0.3291531434245231,
+   "vpin_active": 0.6376195405299285,
+   "ratio": 1.9371516063802645,
+   "imb_ratio_mean": 0.40565525184411727,
+   "imb_ratio_median": 0.3716874743285808,
+   "imb_ratio_p90": 0.8643076367903747
+  },
+  "informed_tick": {
+   "buckets": 250,
+   "vpin_mean": 0.17794406522775344,
+   "vpin_quiet": 0.13862467499212103,
+   "vpin_active": 0.22590239520958078,
+   "ratio": 1.6295972937171563,
+   "imb_ratio_mean": 0.1676201347305389,
+   "imb_ratio_median": 0.13594685628742514,
+   "imb_ratio_p90": 0.3295845808383233
+  },
+  "control_bvc": {
+   "buckets": 250,
+   "vpin_mean": 0.45789607175662617,
+   "vpin_quiet": 0.4768716570510718,
+   "vpin_active": 0.452364077694125,
+   "ratio": 0.9486075991420851,
+   "imb_ratio_mean": 0.4446876734137119,
+   "imb_ratio_median": 0.43029164976996737,
+   "imb_ratio_p90": 0.7945838631683905
+  },
+  "control_tick": {
+   "buckets": 250,
+   "vpin_mean": 0.13583984084070663,
+   "vpin_quiet": 0.13862467499212103,
+   "vpin_active": 0.11744322604790418,
+   "ratio": 0.84720289554929,
+   "imb_ratio_mean": 0.13376833832335328,
+   "imb_ratio_median": 0.11213510479041916,
+   "imb_ratio_p90": 0.26619573353293413
+  }
+ },
+ "C": [
+  {
+   "dof": 1,
+   "vpin_mean_informed": 0.3664,
+   "vpin_quiet": 0.275,
+   "vpin_active": 0.5276,
+   "ratio": 1.92,
+   "vpin_mean_control": 0.3785,
+   "floor_predicted": 0.3718
+  },
+  {
+   "dof": 3,
+   "vpin_mean_informed": 0.441,
+   "vpin_quiet": 0.3292,
+   "vpin_active": 0.6376,
+   "ratio": 1.94,
+   "vpin_mean_control": 0.4579,
+   "floor_predicted": 0.4489
+  },
+  {
+   "dof": 30,
+   "vpin_mean_informed": 0.4822,
+   "vpin_quiet": 0.3609,
+   "vpin_active": 0.6952,
+   "ratio": 1.93,
+   "vpin_mean_control": 0.5042,
+   "floor_predicted": 0.4937
+  }
+ ],
+ "numpy": "2.5.2",
+ "pandas": "3.0.5"
+}

@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPIN Verification Report, One Defect Fixed | QuantMedia</title>
-<meta name="description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
-<link rel="canonical" href="https://quantmedia.io/reports/vpin-example.html">
+<title>VPIN: Why BVC and the Tick Rule Disagree | QuantMedia</title>
+<meta name="description" content="Same tape, VPIN 0.44 with BVC and 0.18 with the tick rule. The gap is each classifier's noise floor, predicted in closed form; bucket, window and dof grids.">
+<link rel="canonical" href="https://quantmedia.io/learn/vpin-classifier-noise-floor.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VPIN Verification Report, One Defect Fixed">
-<meta property="og:description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
-<meta property="og:url" content="https://quantmedia.io/reports/vpin-example.html">
+<meta property="og:title" content="VPIN: Why BVC and the Tick Rule Disagree">
+<meta property="og:description" content="Same tape, VPIN 0.44 with BVC and 0.18 with the tick rule. The gap is each classifier's noise floor, predicted in closed form; bucket, window and dof grids.">
+<meta property="og:url" content="https://quantmedia.io/learn/vpin-classifier-noise-floor.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="VPIN Verification Report, One Defect Fixed">
-<meta name="twitter:description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
+<meta name="twitter:title" content="VPIN: Why BVC and the Tick Rule Disagree">
+<meta name="twitter:description" content="Same tape, VPIN 0.44 with BVC and 0.18 with the tick rule. The gap is each classifier's noise floor, predicted in closed form; bucket, window and dof grids.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "VPIN Verification Report, One Defect Fixed",
-  "description": "Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.",
+  "headline": "VPIN: Why BVC and the Tick Rule Disagree",
+  "description": "Same tape, VPIN 0.44 with BVC and 0.18 with the tick rule. The gap is each classifier's noise floor, predicted in closed form; bucket, window and dof grids.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-09-04",
-  "dateModified": "2026-09-04",
-  "mainEntityOfPage": "https://quantmedia.io/reports/vpin-example.html",
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "mainEntityOfPage": "https://quantmedia.io/learn/vpin-classifier-noise-floor.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Worked examples",
-      "item": "https://quantmedia.io/reports/"
+      "name": "Learn",
+      "item": "https://quantmedia.io/learn/what-is-vpin.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed",
-      "item": "https://quantmedia.io/reports/vpin-example.html"
+      "name": "VPIN: why BVC and the tick rule disagree on the same tape",
+      "item": "https://quantmedia.io/learn/vpin-classifier-noise-floor.html"
     }
   ]
 }</script>
@@ -252,114 +252,165 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/learn/what-is-vpin.html">Learn</a> &rsaquo; VPIN: why BVC and the tick rule disagree on the same tape</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">VPIN: why BVC and the tick rule disagree on the same tape</h1>
 
-<div class="qm-answer"><span class="qm-answer-label">Verdict</span>
-<p>The implementation reproduces the defining property of VPIN &mdash; a
-rising reading under informed flow &mdash; on a tape where the informed
-episode is known in advance: 0.3292 in the balanced segment against 0.6376 in
-the informed segment, a ratio of 1.94&times;. It did so only after a defect in
-its degenerate-case handling was found and fixed.</p></div>
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>On the same 20,000-trade synthetic tape, VPIN averages 0.4410 with bulk
+volume classification (BVC) and 0.1779 with the tick rule. Neither number
+measures toxicity on its own: each classifier has a noise floor, the VPIN it
+reports when there is nothing to detect, and the floors differ by
+construction. BVC maps every bucket's net price change through a CDF, so on
+pure noise it reads about 0.45 (exactly 0.50 with a normal CDF). The tick
+rule sums roughly 80 trade signs per bucket that mostly cancel, so its floor
+is &radic;(2/&pi;)/&radic;k &asymp; 0.13. Both predictions land within 0.01 of the
+control tape. Bucket size moves the tick rule's level and barely touches
+BVC's; BVC's t-distribution setting moves its level and barely touches its
+detection ratio. A VPIN threshold quoted without classifier, bucket size and
+window is not a number.</p>
+</div>
 
-<div class="qm-def"><dl>
-<dt>Verification record</dt><dd>v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026</dd>
-<dt>Implementation under test</dt><dd><code>quantmedia-research/vpin-order-flow-toxicity/vpin.py</code>, in the public repository</dd>
-<dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
-<dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
-<dt>Status</dt><dd>Independent. Not peer reviewed. Synthetic data only; no claim about any real security.</dd>
-</dl></div>
+<h2>The question the verification report left open</h2>
+<p>The <a href="/reports/vpin-example.html">VPIN verification report</a>
+showed the estimator responding to a planted informed episode and noted, as a
+limit, that the two classifiers give 0.4410 and 0.1779 on identical data. It
+suggested varying bucket size and window as the next experiment. This note
+does that, and first explains the gap, with the same tape, the same
+implementation and a control tape that has the planted drift removed.
+Everything is synthetic.</p>
 
-<p class="qm-lede">On the same synthetic tape, mean VPIN is 0.4410 with bulk
-volume classification and 0.1779 with the tick rule. The classifier changes
-the reading substantially, so a VPIN threshold needs more context than a number.</p>
+<h2>Setup</h2>
+<p>The tape is the report's: 20,000 trades, Gaussian price steps with
+&sigma; = 0.01, lognormal sizes, a persistent upward drift of 0.004 per
+trade on trades 8,000&ndash;11,999. The control tape subtracts the cumulative
+drift from the price path and keeps every step and every volume, so the two
+tapes differ only in the informed episode. The published setting is 250
+equal-volume buckets of 21,376 shares (80 trades per bucket on average) and
+a 50-bucket window. &ldquo;Quiet&rdquo; is the mean VPIN over buckets
+15&ndash;35% of the way through the tape, &ldquo;active&rdquo; over
+42&ndash;62%, as in the report.</p>
 
-<div class="qm-def"><dl>
-<dt>Reproduction record</dt><dd>Checked 4 September 2026. Seed: <code>20260808</code>.</dd>
-<dt>Source</dt><dd><a href="https://github.com/certurk23/certurk23.github.io/tree/70ae45c/quantmedia-research/vpin-order-flow-toxicity">vpin-order-flow-toxicity</a> at revision <code>70ae45c</code>.</dd>
-<dt>Environment used</dt><dd>Python 3.11.9, NumPy 2.4.6, pandas 3.0.5, SciPy 1.17.1.</dd>
-<dt>Data</dt><dd>Synthetic. These examples test the implementation and illustrate the method; they do not measure trading performance on real securities.</dd>
-</dl></div>
-<h2>Set up the experiment</h2>
-<p>The generator creates 20,000 trades with total volume 5,344,047. A segment
-with one-sided flow is inserted into an otherwise balanced tape. Both classifiers
-receive the same trades, bucket size of 21,376 and rolling window of 50 buckets.</p>
-<div class="qm-formula">cd quantmedia-research/vpin-order-flow-toxicity
-python example.py</div>
-<h2>Compare the output</h2>
-<div class="qm-tablewrap"><table class="qm-kv">
-<thead><tr><th>Measure</th><th>Bulk volume classification</th><th>Tick rule</th></tr></thead>
+<h2>Part A: where the gap comes from</h2>
+<p>VPIN over a window of equal-volume buckets is the average per-bucket
+imbalance ratio |V<sub>buy</sub> &minus; V<sub>sell</sub>| / V. The two
+classifiers produce that ratio in different ways.</p>
+<ul>
+<li><strong>BVC</strong> assigns each bucket a buy fraction T(&Delta;P /
+&sigma;<sub>&Delta;P</sub>) using a Student-t CDF, so the imbalance ratio is
+|2T(z) &minus; 1| for one standardised price change z per bucket. If z were
+standard normal and T the normal CDF, T(z) would be uniform on [0, 1] and the
+expected ratio would be exactly 0.5, regardless of bucket size, tape or
+anything else. With the t-distribution at 3 degrees of freedom the Monte
+Carlo expectation is 0.449.</li>
+<li><strong>The tick rule</strong> signs each trade by its price change and
+sums signed volume within the bucket. With k independent fair signs the
+expected absolute sum is &radic;(2/&pi;)&middot;&radic;(&sum;v<sub>i</sub>&sup2;),
+which divided by bucket volume gives the floor. Computed on the actual bucketed
+volumes of this tape, that is 0.131.</li>
+</ul>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>250 buckets, window 50</th><th>BVC (dof 3)</th><th>Tick rule</th></tr></thead>
 <tbody>
-<tr><td>Complete buckets</td><td>250</td><td>250</td></tr>
-<tr><td>Mean VPIN</td><td>0.4410</td><td>0.1779</td></tr>
-<tr><td>Minimum</td><td>0.2805</td><td>0.1247</td></tr>
-<tr><td>Maximum</td><td>0.8257</td><td>0.2918</td></tr>
+<tr><td>Control tape (no informed episode): mean VPIN</td><td class="qm-num">0.4579</td><td class="qm-num">0.1358</td></tr>
+<tr><td>Predicted noise floor</td><td class="qm-num">0.449</td><td class="qm-num">0.131</td></tr>
+<tr><td>Informed tape: mean VPIN</td><td class="qm-num">0.4410</td><td class="qm-num">0.1779</td></tr>
+<tr><td>Informed tape: quiet / active</td><td class="qm-num">0.3292 / 0.6376</td><td class="qm-num">0.1386 / 0.2259</td></tr>
+<tr><td>Detection ratio (active / quiet)</td><td class="qm-num">1.94&times;</td><td class="qm-num">1.63&times;</td></tr>
+<tr><td>Per-bucket imbalance ratio, informed tape: median / 90th pct</td><td class="qm-num">0.37 / 0.86</td><td class="qm-num">0.14 / 0.33</td></tr>
 </tbody></table></div>
-<p>For bulk volume classification, the mean in the balanced segment is
-<strong>0.3292</strong>, compared with <strong>0.6376</strong> in the planted
-one-sided segment: a ratio of <strong>1.94</strong>. This describes the two
-segments in this tape, not a forecast accuracy or trading return.</p>
-<p>The buckets account for 5,344,000 volume units. The remaining <strong>47</strong>
-units are in an incomplete final bucket and are excluded by design. The console
-rounds this coverage to 100.0%; it is not exactly 100%.</p>
-<h2>What to inspect in the code</h2>
-<p>Bulk volume classification estimates buy and sell volume from standardized
-bucket price changes. The tick rule uses trade-to-trade price direction. Neither
-method observes the true identity or intent of a trader. Their difference here
-shows why changing the classification rule can change an apparent toxicity signal.</p>
-<p>The tests also cover a special case: constant positive price changes have
-zero dispersion. The implementation handles that case by price-change sign,
-so a uniformly rising tape does not incorrectly receive a balanced 50/50 split.
-Flat changes receive an even split.</p>
-<div class="qm-formula"># From the repository root:
-python quantmedia-research/tests/test_vpin.py
-# Expected: 15 passed</div>
-<h2>Limits and a useful next experiment</h2>
-<p>This is one seed and one constructed tape. It does not verify that VPIN
-predicts volatility in a real market. Try a different bucket size or window,
-keeping the trade tape fixed, to separate estimator sensitivity from changes
-in the underlying inputs. That experiment has now been run on this tape: see
-<a href="/learn/vpin-classifier-noise-floor.html">VPIN: why BVC and the tick rule
-disagree</a>. Its numbers are not folded into this report.</p>
-<p>Download the <a href="https://github.com/certurk23/certurk23.github.io/blob/main/quantmedia-research/vpin-order-flow-toxicity/outputs/example_output.csv">expected bucket output</a>
-or inspect the <a href="https://github.com/certurk23/certurk23.github.io/tree/70ae45c/quantmedia-research/tests/test_vpin.py">tests at the checked revision</a>.</p>
-<ul class="qm-related">
-<li><a href="/learn/what-is-vpin.html">What is VPIN?</a><span>Definitions and a small numerical example</span></li>
-<li><a href="/paper-vpin-order-flow-toxicity.html">VPIN research note</a><span>Method, literature and limitations</span></li>
-<li><a href="/reports/">All worked examples</a></li>
+<p>Two things follow. First, the difference between 0.44 and 0.18 is almost
+entirely the difference between the two floors, 0.45 and 0.13; the informed
+episode adds a comparable amount to each. Second, BVC's quiet reading on the
+informed tape (0.3292) is <em>below</em> its own floor (0.4579). That is not a
+paradox: BVC standardises by the dispersion of price changes across the whole
+tape, and the informed episode inflates that dispersion from 0.0872 to 0.1492.
+Quiet buckets are then divided by a larger &sigma;, their z shrinks, and their
+imbalance reads lower. The level of BVC in one part of a tape depends on what
+happened elsewhere on it.</p>
+
+<h2>Part B: bucket size and window</h2>
+<p>Bucket counts 50, 100, 250, 500 and 1,000 (400 down to 20 trades per
+bucket) crossed with windows 10, 25, 50 and 100 buckets, on the informed
+tape. Cells where the window is longer than the quiet segment have no quiet
+mean and are omitted.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Buckets (trades each)</th><th>Window</th><th>BVC mean</th><th>BVC quiet / active</th><th>BVC ratio</th><th>Tick mean</th><th>Tick quiet / active</th><th>Tick ratio</th></tr></thead>
+<tbody>
+<tr><td>50 (400)</td><td class="qm-num">10</td><td class="qm-num">0.3507</td><td class="qm-num">0.178 / 0.603</td><td class="qm-num">3.39</td><td class="qm-num">0.1161</td><td class="qm-num">0.075 / 0.202</td><td class="qm-num">2.69</td></tr>
+<tr><td>100 (200)</td><td class="qm-num">10</td><td class="qm-num">0.3760</td><td class="qm-num">0.240 / 0.797</td><td class="qm-num">3.33</td><td class="qm-num">0.1301</td><td class="qm-num">0.095 / 0.254</td><td class="qm-num">2.69</td></tr>
+<tr><td>100 (200)</td><td class="qm-num">25</td><td class="qm-num">0.4079</td><td class="qm-num">0.242 / 0.578</td><td class="qm-num">2.39</td><td class="qm-num">0.1372</td><td class="qm-num">0.096 / 0.181</td><td class="qm-num">1.89</td></tr>
+<tr><td>250 (80)</td><td class="qm-num">10</td><td class="qm-num">0.4125</td><td class="qm-num">0.325 / 0.793</td><td class="qm-num">2.44</td><td class="qm-num">0.1696</td><td class="qm-num">0.146 / 0.283</td><td class="qm-num">1.94</td></tr>
+<tr><td>250 (80)</td><td class="qm-num">50</td><td class="qm-num">0.4410</td><td class="qm-num">0.329 / 0.638</td><td class="qm-num">1.94</td><td class="qm-num">0.1779</td><td class="qm-num">0.139 / 0.226</td><td class="qm-num">1.63</td></tr>
+<tr><td>500 (40)</td><td class="qm-num">50</td><td class="qm-num">0.4512</td><td class="qm-num">0.366 / 0.704</td><td class="qm-num">1.92</td><td class="qm-num">0.2128</td><td class="qm-num">0.176 / 0.291</td><td class="qm-num">1.65</td></tr>
+<tr><td>1,000 (20)</td><td class="qm-num">50</td><td class="qm-num">0.4487</td><td class="qm-num">0.386 / 0.641</td><td class="qm-num">1.66</td><td class="qm-num">0.2773</td><td class="qm-num">0.246 / 0.349</td><td class="qm-num">1.42</td></tr>
+<tr><td>1,000 (20)</td><td class="qm-num">100</td><td class="qm-num">0.4536</td><td class="qm-num">0.392 / 0.623</td><td class="qm-num">1.59</td><td class="qm-num">0.2781</td><td class="qm-num">0.246 / 0.335</td><td class="qm-num">1.36</td></tr>
+</tbody></table></div>
+<p>The full 34-cell grid is in <code>outputs/grid.csv</code>. Reading it:</p>
+<ul>
+<li><strong>The tick rule's level is a function of trades per bucket.</strong>
+From 200 trades per bucket to 20 its mean rises from 0.13 to 0.28, because
+fewer signs cancel. Its floor scales like 1/&radic;k. Any tick-rule VPIN
+threshold therefore only means something for one bucket size.</li>
+<li><strong>BVC's level barely moves</strong> (0.35 to 0.45 across the same
+range, 0.41 to 0.45 for windows of 25 or more). One z per bucket is one draw
+from roughly the same distribution whatever the bucket size; the floor does
+not depend on k.</li>
+<li><strong>Detection favours few, large buckets and short windows.</strong>
+The best active/quiet ratio in the grid is 3.39&times; (BVC, 50 buckets,
+window 10); the published 250/50 setting gives 1.94&times;; 1,000 buckets
+with a 100-bucket window gives 1.59&times;. Small buckets dilute the episode
+across more readings and long windows average it away. The price of the
+sharpest setting is 10 readings per window on a 50-bucket tape, which is not
+a series anyone would trade on.</li>
+<li><strong>BVC beats the tick rule on detection in every cell</strong> of this
+tape, by 0.2&ndash;0.7 in ratio terms. On this tape; the informed episode is
+a smooth drift, which is the case BVC is designed for.</li>
 </ul>
 
-<h2>Defect found during verification</h2>
-<div class="qm-answer"><span class="qm-answer-label">Degenerate tape returned the wrong sign</span>
-<p>Bulk volume classification standardises each bucket&rsquo;s price change by
-the dispersion of price changes. On a <em>monotone</em> tape &mdash; every trade
-at a higher price than the last &mdash; that dispersion is zero, and the
-original branch handled the division by splitting volume 50/50. So a perfectly
-one-sided tape, the most toxic input imaginable, returned VPIN = 0. Exactly
-backwards.</p>
-<p><strong>Detection:</strong> a test constructing a monotone tape and asserting
-VPIN &gt; 0.9. <strong>Fix:</strong> in the degenerate branch, classify by the
-sign of the price change (up &rarr; buy, down &rarr; sell, flat &rarr; 50/50).
-<strong>Guard:</strong> the test is one of 15 in <code>tests/test_vpin.py</code>.</p></div>
+<h2>Part C: BVC's degrees of freedom</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Student-t dof</th><th>Informed tape: mean</th><th>Quiet / active</th><th>Ratio</th><th>Control tape: mean</th><th>Predicted floor</th></tr></thead>
+<tbody>
+<tr><td class="qm-num">1</td><td class="qm-num">0.3664</td><td class="qm-num">0.275 / 0.528</td><td class="qm-num">1.92</td><td class="qm-num">0.3785</td><td class="qm-num">0.372</td></tr>
+<tr><td class="qm-num">3 (published)</td><td class="qm-num">0.4410</td><td class="qm-num">0.329 / 0.638</td><td class="qm-num">1.94</td><td class="qm-num">0.4579</td><td class="qm-num">0.449</td></tr>
+<tr><td class="qm-num">30 (&asymp; normal)</td><td class="qm-num">0.4822</td><td class="qm-num">0.361 / 0.695</td><td class="qm-num">1.93</td><td class="qm-num">0.5042</td><td class="qm-num">0.494</td></tr>
+</tbody></table></div>
+<p>The degrees-of-freedom setting shifts the level by 0.12 end to end and
+leaves the detection ratio at 1.92&ndash;1.94. Heavier tails in the CDF
+compress |2T(z) &minus; 1| for moderate z, lowering the floor, without changing
+how much the informed episode stands out relative to it. Papers that quote a
+VPIN &ldquo;alert level&rdquo; rarely state the dof; it is worth 0.12 here.</p>
 
-<h2>What this verification does not establish</h2>
+<h2>What this does not establish</h2>
 <ul>
-<li>It proves the estimator <em>responds</em> to imbalance as designed. It
-proves nothing about whether VPIN forecasts volatility in real markets; that
-is contested (Andersen &amp; Bondarenko, 2014) and outside what synthetic data
-can settle.</li>
-<li>The absolute level is method-dependent: BVC and the tick rule give 0.4410
-and 0.1779 on identical data. No threshold such as &ldquo;toxic above 0.4&rdquo;
-means anything without stating classifier, bucket size and window.</li>
-<li>One seed, one tape. The direction of the result is robust to the seed; the
-magnitudes are not claimed to be.</li>
+<li>One synthetic tape with one shape of informed episode (a steady drift).
+Informed flow that arrives as bursts, or as volume without a price trend,
+would change which classifier detects it and by how much.</li>
+<li>Nothing here says whether VPIN forecasts volatility in real markets, the
+question Andersen and Bondarenko (2014) raised; a synthetic tape cannot
+address it.</li>
+<li>The tick-rule floor prediction assumes independent signs. Real tick-rule
+signs are autocorrelated (unchanged prices inherit the previous sign); on
+this tape the observed floor is 0.136 against 0.131 predicted, so the effect
+is small here and could be larger elsewhere.</li>
+<li>Level is not detectability. Every table reports both, and the practical
+use of VPIN depends on the second.</li>
 </ul>
 
 <h2>Reproduce</h2>
-<p><code>python quantmedia-research/verify_examples.py</code> re-runs this
-example in a clean directory and asserts the shipped CSV matches to nine
-decimal places. Then <code>python tests/test_vpin.py</code> from
-<code>quantmedia-research/</code>: expected 15 passed.</p>
+<div class="qm-formula">cd quantmedia-research/vpin-classifier-sensitivity<br>python experiment.py<br>python ../tests/test_vpin_sensitivity.py&nbsp;&nbsp;# expected: 6 passed</div>
+<p>Runtime about two seconds. The 250-bucket, window-50 cells must reproduce
+the verification report's 0.4410 / 0.1779 / 0.3292 / 0.6376 exactly; the
+first test checks that. <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/vpin-classifier-sensitivity">Code and output on GitHub</a>.</p>
+
+<h2>References</h2>
+<ul>
+<li>Easley, D., L&oacute;pez de Prado, M. and O&rsquo;Hara, M. (2012). Flow Toxicity and Liquidity in a High-Frequency World. <em>Review of Financial Studies</em>, 25(5), 1457&ndash;1493.</li>
+<li>Easley, D., L&oacute;pez de Prado, M. and O&rsquo;Hara, M. (2016). Discerning Information from Trade Data. <em>Journal of Financial Economics</em>, 120(2), 269&ndash;285 (bulk volume classification).</li>
+<li>Andersen, T. G. and Bondarenko, O. (2014). VPIN and the Flash Crash. <em>Journal of Financial Markets</em>, 17, 1&ndash;46.</li>
+<li>Lee, C. M. C. and Ready, M. J. (1991). Inferring Trade Direction from Intraday Data. <em>Journal of Finance</em>, 46(2), 733&ndash;746 (the tick rule).</li>
+</ul>
 
 </div>
 </main>

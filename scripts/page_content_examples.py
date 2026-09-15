@@ -88,7 +88,9 @@ python quantmedia-research/tests/test_vpin.py
 <p>This is one seed and one constructed tape. It does not verify that VPIN
 predicts volatility in a real market. Try a different bucket size or window,
 keeping the trade tape fixed, to separate estimator sensitivity from changes
-in the underlying inputs. Such variants are experiments, not results reported here.</p>
+in the underlying inputs. That experiment has now been run on this tape: see
+<a href="/learn/vpin-classifier-noise-floor.html">VPIN: why BVC and the tick rule
+disagree</a>. Its numbers are not folded into this report.</p>
 <p>Download the <a href="{REPO}/blob/main/quantmedia-research/vpin-order-flow-toxicity/outputs/example_output.csv">expected bucket output</a>
 or inspect the <a href="{CODE}/tests/test_vpin.py">tests at the checked revision</a>.</p>
 <ul class="qm-related">

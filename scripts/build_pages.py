@@ -478,6 +478,16 @@ PAGES.append(dict(
     crumb=('Learn', 'learn/what-is-probabilistic-sharpe-ratio.html'),
     body=PCX.PSR_UNCERTAINTY_BODY, published='2026-09-15', modified='2026-09-15'))
 
+PAGES.append(dict(
+    slug='learn/vpin-classifier-noise-floor.html',
+    title='VPIN: Why BVC and the Tick Rule Disagree | QuantMedia',
+    description=("Same tape, VPIN 0.44 with BVC and 0.18 with the tick rule. The gap is "
+                 "each classifier's noise floor, predicted in closed form; bucket, window "
+                 "and dof grids."),
+    h1='VPIN: why BVC and the tick rule disagree on the same tape',
+    crumb=('Learn', 'learn/what-is-vpin.html'),
+    body=PCX.VPIN_NOISE_FLOOR_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION

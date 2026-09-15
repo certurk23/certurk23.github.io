@@ -1,0 +1,4 @@
+dof,vpin_mean_informed,vpin_quiet,vpin_active,ratio,vpin_mean_control,floor_predicted
+1,0.3664,0.275,0.5276,1.92,0.3785,0.3718
+3,0.441,0.3292,0.6376,1.94,0.4579,0.4489
+30,0.4822,0.3609,0.6952,1.93,0.5042,0.4937

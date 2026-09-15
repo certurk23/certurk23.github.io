@@ -33,6 +33,7 @@ workflow runs it alongside the implementation tests and calculator checks.
 | [`vpin-order-flow-toxicity/`](vpin-order-flow-toxicity/) | [VPIN & Order Flow Toxicity](https://quantmedia.io/paper-vpin-order-flow-toxicity.html) | Reproducible | 15 |
 | [`hierarchical-risk-parity/`](hierarchical-risk-parity/) | [Hierarchical Risk Parity](https://quantmedia.io/paper-hierarchical-risk-parity.html) | Reproducible | 13 |
 | [`psr-moment-uncertainty/`](psr-moment-uncertainty/) | [PSR uncertainty at n = 24](https://quantmedia.io/learn/psr-uncertainty-at-n-24.html) | Reproducible (tolerance tests) | 6 |
+| [`vpin-classifier-sensitivity/`](vpin-classifier-sensitivity/) | [VPIN: BVC vs tick rule](https://quantmedia.io/learn/vpin-classifier-noise-floor.html) | Reproducible | 6 |
 
 The Probabilistic Sharpe Ratio is published as an
 [interactive calculator](https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html)
@@ -56,6 +57,7 @@ cd ..
 python tests/test_vpin.py     # 15 tests
 python tests/test_hrp.py      # 13 tests
 python tests/test_psr_uncertainty.py  # 6 tests
+python tests/test_vpin_sensitivity.py  # 6 tests
 ```
 
 Python 3.9+. Dependencies: numpy, pandas, scipy.

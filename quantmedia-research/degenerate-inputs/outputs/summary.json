@@ -1,0 +1,203 @@
+{
+ "cases": [
+  {
+   "method": "VPIN",
+   "case": "monotone up (every trade higher)",
+   "variant": "bvc",
+   "expected": "VPIN ~ 1: every bucket entirely buy",
+   "observed": "0.9989 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "monotone up (every trade higher)",
+   "variant": "tick",
+   "expected": "VPIN ~ 1: every bucket entirely buy",
+   "observed": "0.9999 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "monotone down",
+   "variant": "bvc",
+   "expected": "VPIN ~ 1: every bucket entirely sell",
+   "observed": "0.9989 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "monotone down",
+   "variant": "tick",
+   "expected": "VPIN ~ 1: every bucket entirely sell",
+   "observed": "0.9999 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "flat (price never moves)",
+   "variant": "bvc",
+   "expected": "VPIN 0: no information; 50/50 split is the defensible answer",
+   "observed": "0.0000 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "flat (price never moves)",
+   "variant": "tick",
+   "expected": "VPIN 0: no information; 50/50 split is the defensible answer",
+   "observed": "0.0000 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "alternating +/- one tick",
+   "variant": "bvc",
+   "expected": "BVC: bucket close-to-close change 0 or one tick, small; tick rule: signs cancel",
+   "observed": "0.0000 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "alternating +/- one tick",
+   "variant": "tick",
+   "expected": "BVC: bucket close-to-close change 0 or one tick, small; tick rule: signs cancel",
+   "observed": "0.0001 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "random walk, no drift",
+   "variant": "bvc",
+   "expected": "noise floor: BVC ~ 0.45, tick ~ sqrt(2/pi)/sqrt(k)",
+   "observed": "0.4485 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "random walk, no drift",
+   "variant": "tick",
+   "expected": "noise floor: BVC ~ 0.45, tick ~ sqrt(2/pi)/sqrt(k)",
+   "observed": "0.2054 over 100 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "one trade larger than five buckets",
+   "variant": "tick",
+   "expected": "the trade is split across buckets; volume conserved; ~5 complete buckets",
+   "observed": "0.9800 over 5 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "fewer buckets than the window",
+   "variant": "bvc",
+   "expected": "no VPIN value (NaN), not a partial-window number",
+   "observed": "nan over 5 buckets"
+  },
+  {
+   "method": "VPIN",
+   "case": "total volume below one bucket",
+   "variant": "bvc",
+   "expected": "refuses (ValueError), rather than returning a number from zero buckets",
+   "observed": "raises ValueError: no complete buckets: total volume is below bucket_size=2000."
+  },
+  {
+   "method": "HRP",
+   "case": "single asset",
+   "variant": "hrp_weights",
+   "expected": "raises ValueError (needs >= 2 assets)",
+   "observed": "raises ValueError: need at least 2 assets"
+  },
+  {
+   "method": "HRP",
+   "case": "two identical assets",
+   "variant": "hrp_weights",
+   "expected": "correlation 1, distance 0: equal split 0.5 / 0.5",
+   "observed": "A=0.500, A2=0.500 (sum 1.000)"
+  },
+  {
+   "method": "HRP",
+   "case": "one zero-variance asset",
+   "variant": "hrp_weights",
+   "expected": "refuses with a message that names the column (before 15 Sep 2026: an opaque scipy error about finite values)",
+   "observed": "raises ValueError: zero-variance column(s) ['Z']: drop them before calling"
+  },
+  {
+   "method": "HRP",
+   "case": "perfectly anti-correlated pair plus two",
+   "variant": "hrp_weights",
+   "expected": "weights sum to 1, no shorts; A and B are NOT clustered: distance sqrt((1-rho)/2) puts rho=-1 at the maximum, HRP as specified does not see a hedge",
+   "observed": "A=0.412, B=0.428, C=0.024, D=0.136 (sum 1.000)"
+  },
+  {
+   "method": "HRP",
+   "case": "rank-one panel (all assets = beta x one factor)",
+   "variant": "hrp_weights",
+   "expected": "sample covariance singular; HRP should still return weights (no inversion)",
+   "observed": "X0=0.542, X1=0.241, X2=0.132, X3=0.084 (sum 1.000)"
+  },
+  {
+   "method": "HRP",
+   "case": "NaN in returns",
+   "variant": "hrp_weights",
+   "expected": "raises ValueError (refuses NaN)",
+   "observed": "raises ValueError: returns contain NaN; clean or fill before calling"
+  },
+  {
+   "method": "HRP",
+   "case": "constant-shift panel (all returns + 1)",
+   "variant": "hrp_weights",
+   "expected": "identical weights to base: covariance is shift-invariant",
+   "observed": "A=0.412, B=0.428, C=0.024, D=0.136 (sum 1.000)"
+  },
+  {
+   "method": "HRP",
+   "case": "rank-one panel, min-variance",
+   "variant": "hrp_weights",
+   "expected": "pinv survives singularity; the solution is one of many; weights may be extreme",
+   "observed": "X0=0.143, X1=0.214, X2=0.286, X3=0.357 (sum 1.000)"
+  },
+  {
+   "method": "PSR",
+   "case": "SR equals benchmark",
+   "variant": "closed form",
+   "expected": "exactly 0.5",
+   "observed": "0.5000"
+  },
+  {
+   "method": "PSR",
+   "case": "n = 2 (smallest admissible)",
+   "variant": "closed form",
+   "expected": "sqrt(n-1) = 1: z = 1.5/1.4577 = 1.029, PSR 0.848",
+   "observed": "0.8483"
+  },
+  {
+   "method": "PSR",
+   "case": "n = 1",
+   "variant": "closed form",
+   "expected": "sqrt(0) = 0: z = 0, PSR 0.5 regardless of SR (should be refused upstream)",
+   "observed": "0.5000"
+  },
+  {
+   "method": "PSR",
+   "case": "variance term non-positive (skew 3, kurtosis 3, SR 1.5)",
+   "variant": "closed form",
+   "expected": "NaN: the formula has no answer",
+   "observed": "nan"
+  },
+  {
+   "method": "PSR",
+   "case": "kurtosis below 1 (impossible for a real distribution)",
+   "variant": "closed form",
+   "expected": "denominator sqrt(1 - 0.28) = 0.85: PSR computes but the input is invalid",
+   "observed": "1.0000"
+  },
+  {
+   "method": "PSR",
+   "case": "huge n",
+   "variant": "closed form",
+   "expected": "saturates at 1: any positive SR is \"certain\" with enough data",
+   "observed": "1.0000"
+  },
+  {
+   "method": "PSR",
+   "case": "negative SR",
+   "variant": "closed form",
+   "expected": "below 0.5: 1 - PSR(+0.5)",
+   "observed": "0.0119"
+  }
+ ],
+ "seed": 20260915,
+ "numpy": "2.5.2",
+ "pandas": "3.0.5"
+}

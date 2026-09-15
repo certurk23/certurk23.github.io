@@ -7,19 +7,19 @@
 <meta name="theme-color" content="#00a651">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPIN Verification Report, Two Defects Fixed | QuantMedia</title>
-<meta name="description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
-<link rel="canonical" href="https://quantmedia.io/reports/vpin-example.html">
+<title>Degenerate Inputs: Two More Defects Found | QuantMedia</title>
+<meta name="description" content="Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke HRP inside scipy. Both fixed.">
+<link rel="canonical" href="https://quantmedia.io/learn/degenerate-inputs.html">
 <meta name="author" content="Cemil Ertürk">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VPIN Verification Report, Two Defects Fixed">
-<meta property="og:description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
-<meta property="og:url" content="https://quantmedia.io/reports/vpin-example.html">
+<meta property="og:title" content="Degenerate Inputs: Two More Defects Found">
+<meta property="og:description" content="Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke HRP inside scipy. Both fixed.">
+<meta property="og:url" content="https://quantmedia.io/learn/degenerate-inputs.html">
 <meta property="og:site_name" content="QuantMedia">
 <meta property="og:image" content="https://quantmedia.io/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="VPIN Verification Report, Two Defects Fixed">
-<meta name="twitter:description" content="Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.">
+<meta name="twitter:title" content="Degenerate Inputs: Two More Defects Found">
+<meta name="twitter:description" content="Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke HRP inside scipy. Both fixed.">
 <meta name="twitter:image" content="https://quantmedia.io/og-card.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -28,8 +28,8 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "VPIN Verification Report, Two Defects Fixed",
-  "description": "Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.",
+  "headline": "Degenerate Inputs: Two More Defects Found",
+  "description": "Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke HRP inside scipy. Both fixed.",
   "author": {
     "@type": "Person",
     "name": "Cemil Ertürk",
@@ -40,9 +40,9 @@
     "name": "QuantMedia",
     "url": "https://quantmedia.io"
   },
-  "datePublished": "2026-09-04",
-  "dateModified": "2026-09-04",
-  "mainEntityOfPage": "https://quantmedia.io/reports/vpin-example.html",
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "mainEntityOfPage": "https://quantmedia.io/learn/degenerate-inputs.html",
   "isAccessibleForFree": true
 }</script>
 <script type="application/ld+json">{
@@ -58,14 +58,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Worked examples",
-      "item": "https://quantmedia.io/reports/"
+      "name": "Verified methods",
+      "item": "https://quantmedia.io/reproducibility.html"
     },
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "VPIN Verification Report: One Tape, Two Classifiers, Two Defects Fixed",
-      "item": "https://quantmedia.io/reports/vpin-example.html"
+      "name": "Degenerate inputs: what the implementations return when the answer is obvious",
+      "item": "https://quantmedia.io/learn/degenerate-inputs.html"
     }
   ]
 }</script>
@@ -252,132 +252,128 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </div>
 <main>
 <div class="page-wrap">
-  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reports/">Worked examples</a> &rsaquo; VPIN Verification Report: One Tape, Two Classifiers, Two Defects Fixed</div>
-  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">VPIN Verification Report: One Tape, Two Classifiers, Two Defects Fixed</h1>
+  <div class="qm-crumb"><a href="/">Home</a> &rsaquo; <a href="/reproducibility.html">Verified methods</a> &rsaquo; Degenerate inputs: what the implementations return when the answer is obvious</div>
+  <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:.3px;color:var(--text);margin:0 0 16px;line-height:1.2">Degenerate inputs: what the implementations return when the answer is obvious</h1>
 
-<div class="qm-answer"><span class="qm-answer-label">Verdict</span>
-<p>The implementation reproduces the defining property of VPIN &mdash; a
-rising reading under informed flow &mdash; on a tape where the informed
-episode is known in advance: 0.3292 in the balanced segment against 0.6376 in
-the informed segment, a ratio of 1.94&times;. It did so only after two defects in
-its degenerate-case handling were found and fixed: one on 16 August 2026, one
-on 15 September 2026.</p></div>
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Twenty-six inputs chosen because their right answer is obvious: monotone,
+flat and alternating tapes; single, identical, constant and rank-one asset
+panels; Sharpe ratios at the benchmark, at n = 2, with impossible moments.
+Running the site's three implementations on them found two more defects the
+verification reports had missed. A tape whose price never moves read
+VPIN = 1 under the tick rule, the maximally toxic reading for an input with
+no information, because the first trade was guessed &ldquo;buy&rdquo; and the
+guess inherited its way through the whole tape. And a panel with one
+constant asset made HRP fail inside scipy with a message about
+&ldquo;finite values&rdquo; that did not name the cause. Both are fixed and
+tested; the published report numbers did not move.</p>
+</div>
 
-<div class="qm-def"><dl>
-<dt>Verification record</dt><dd>v1.1 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026 &middot; second defect added 15 September 2026</dd>
-<dt>Implementation under test</dt><dd><code>quantmedia-research/vpin-order-flow-toxicity/vpin.py</code>, in the public repository</dd>
-<dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
-<dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
-<dt>Status</dt><dd>Independent. Not peer reviewed. Synthetic data only; no claim about any real security.</dd>
-</dl></div>
+<h2>Why degenerate inputs</h2>
+<p>The <a href="/learn/how-to-verify-a-quant-implementation.html">method
+note</a> lists degenerate cases as step two. This note is that step carried
+out systematically. The point of a degenerate input is that the correct
+output is known <em>before</em> the run, so an implementation cannot pass by
+accident, and that it exercises the branches ordinary data never reaches:
+divisions by zero, empty windows, inputs a library will refuse. Every case
+below was written with its expected behaviour first and the observed output
+recorded next to it. Where they disagreed, that was the finding.</p>
 
-<p class="qm-lede">On the same synthetic tape, mean VPIN is 0.4410 with bulk
-volume classification and 0.1779 with the tick rule. The classifier changes
-the reading substantially, so a VPIN threshold needs more context than a number.</p>
-
-<div class="qm-def"><dl>
-<dt>Reproduction record</dt><dd>Checked 4 September 2026. Seed: <code>20260808</code>.</dd>
-<dt>Source</dt><dd><a href="https://github.com/certurk23/certurk23.github.io/tree/70ae45c/quantmedia-research/vpin-order-flow-toxicity">vpin-order-flow-toxicity</a> at revision <code>70ae45c</code>.</dd>
-<dt>Environment used</dt><dd>Python 3.11.9, NumPy 2.4.6, pandas 3.0.5, SciPy 1.17.1.</dd>
-<dt>Data</dt><dd>Synthetic. These examples test the implementation and illustrate the method; they do not measure trading performance on real securities.</dd>
-</dl></div>
-<h2>Set up the experiment</h2>
-<p>The generator creates 20,000 trades with total volume 5,344,047. A segment
-with one-sided flow is inserted into an otherwise balanced tape. Both classifiers
-receive the same trades, bucket size of 21,376 and rolling window of 50 buckets.</p>
-<div class="qm-formula">cd quantmedia-research/vpin-order-flow-toxicity
-python example.py</div>
-<h2>Compare the output</h2>
-<div class="qm-tablewrap"><table class="qm-kv">
-<thead><tr><th>Measure</th><th>Bulk volume classification</th><th>Tick rule</th></tr></thead>
+<h2>VPIN</h2>
+<p>2,000 trades of 100 shares, 20 trades per bucket, a 10-bucket window,
+both classifiers.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input</th><th>Expected</th><th>BVC</th><th>Tick rule</th></tr></thead>
 <tbody>
-<tr><td>Complete buckets</td><td>250</td><td>250</td></tr>
-<tr><td>Mean VPIN</td><td>0.4410</td><td>0.1779</td></tr>
-<tr><td>Minimum</td><td>0.2805</td><td>0.1247</td></tr>
-<tr><td>Maximum</td><td>0.8257</td><td>0.2918</td></tr>
+<tr><td>Monotone up (every trade higher than the last)</td><td>VPIN &asymp; 1</td><td class="qm-num">0.9999</td><td class="qm-num">0.9999</td></tr>
+<tr><td>Monotone down</td><td>VPIN &asymp; 1</td><td class="qm-num">0.9999</td><td class="qm-num">0.9999</td></tr>
+<tr><td>Flat (price never moves)</td><td>VPIN 0: no information</td><td class="qm-num">0.0000</td><td class="qm-num"><strong>1.0000 &rarr; 0.0000</strong> after fix</td></tr>
+<tr><td>Alternating &plusmn;1 tick</td><td>near 0: signs cancel, bucket-to-bucket change tiny</td><td class="qm-num">0.0000</td><td class="qm-num">0.0001</td></tr>
+<tr><td>Random walk, no drift</td><td>noise floor (0.45; &radic;(2/&pi;)/&radic;20 = 0.18)</td><td class="qm-num">0.4485</td><td class="qm-num">0.2055</td></tr>
+<tr><td>One trade larger than five buckets</td><td>split across buckets, volume conserved</td><td colspan="2">5 complete buckets, VPIN 1.0 (price rose across all of it)</td></tr>
+<tr><td>Fewer buckets than the window</td><td>no value, not a partial-window number</td><td colspan="2">NaN over 5 buckets</td></tr>
+<tr><td>Total volume below one bucket</td><td>refuse</td><td colspan="2">ValueError: no complete buckets</td></tr>
 </tbody></table></div>
-<p>For bulk volume classification, the mean in the balanced segment is
-<strong>0.3292</strong>, compared with <strong>0.6376</strong> in the planted
-one-sided segment: a ratio of <strong>1.94</strong>. This describes the two
-segments in this tape, not a forecast accuracy or trading return.</p>
-<p>The buckets account for 5,344,000 volume units. The remaining <strong>47</strong>
-units are in an incomplete final bucket and are excluded by design. The console
-rounds this coverage to 100.0%; it is not exactly 100%.</p>
-<h2>What to inspect in the code</h2>
-<p>Bulk volume classification estimates buy and sell volume from standardized
-bucket price changes. The tick rule uses trade-to-trade price direction. Neither
-method observes the true identity or intent of a trader. Their difference here
-shows why changing the classification rule can change an apparent toxicity signal.</p>
-<p>The tests also cover a special case: constant positive price changes have
-zero dispersion. The implementation handles that case by price-change sign,
-so a uniformly rising tape does not incorrectly receive a balanced 50/50 split.
-Flat changes receive an even split.</p>
-<div class="qm-formula"># From the repository root:
-python quantmedia-research/tests/test_vpin.py
-# Expected: 15 passed</div>
-<h2>Limits and a useful next experiment</h2>
-<p>This is one seed and one constructed tape. It does not verify that VPIN
-predicts volatility in a real market. Try a different bucket size or window,
-keeping the trade tape fixed, to separate estimator sensitivity from changes
-in the underlying inputs. That experiment has now been run on this tape: see
-<a href="/learn/vpin-classifier-noise-floor.html">VPIN: why BVC and the tick rule
-disagree</a>. Its numbers are not folded into this report.</p>
-<p>Download the <a href="https://github.com/certurk23/certurk23.github.io/blob/main/quantmedia-research/vpin-order-flow-toxicity/outputs/example_output.csv">expected bucket output</a>
-or inspect the <a href="https://github.com/certurk23/certurk23.github.io/tree/70ae45c/quantmedia-research/tests/test_vpin.py">tests at the checked revision</a>.</p>
-<ul class="qm-related">
-<li><a href="/learn/what-is-vpin.html">What is VPIN?</a><span>Definitions and a small numerical example</span></li>
-<li><a href="/paper-vpin-order-flow-toxicity.html">VPIN research note</a><span>Method, literature and limitations</span></li>
-<li><a href="/reports/">All worked examples</a></li>
-</ul>
+<p>The flat tape is the finding. The tick rule signs each trade by comparing
+its price with the previous one and lets an unchanged price inherit the
+previous sign; that convention is standard and harmless when prices
+occasionally repeat. The implementation also gave the first trade, which has
+no previous price, a sign of +1. On a flat tape that single guess is the only
+sign there is, every trade inherits it, every bucket is 100% buy, and VPIN
+reads 1. The fix leaves trades before the first price change unsigned, so
+they split evenly; a flat tape now reads 0 under both classifiers. The
+verification report's numbers are unaffected to four decimals because only
+the synthetic tape's first trade changes sign, and the committed CSV still
+matches to nine. The random-walk tick reading of 0.2055 against a predicted
+0.18 is the autocorrelation of tick-rule signs that the
+<a href="/learn/vpin-classifier-noise-floor.html">noise-floor note</a>
+discusses; with 20 trades per bucket it is larger than with 80.</p>
 
-<h2>Defects found during verification</h2>
-<div class="qm-answer"><span class="qm-answer-label">Degenerate tape returned the wrong sign</span>
-<p>Bulk volume classification standardises each bucket&rsquo;s price change by
-the dispersion of price changes. On a <em>monotone</em> tape &mdash; every trade
-at a higher price than the last &mdash; that dispersion is zero, and the
-original branch handled the division by splitting volume 50/50. So a perfectly
-one-sided tape, the most toxic input imaginable, returned VPIN = 0. Exactly
-backwards.</p>
-<p><strong>Detection:</strong> a test constructing a monotone tape and asserting
-VPIN &gt; 0.9. <strong>Fix:</strong> in the degenerate branch, classify by the
-sign of the price change (up &rarr; buy, down &rarr; sell, flat &rarr; 50/50).
-<strong>Guard:</strong> the test is one of 15 in <code>tests/test_vpin.py</code>.</p></div>
+<h2>Hierarchical Risk Parity</h2>
+<p>250 periods; base panel of four assets where A and B load on one factor
+with opposite signs.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input</th><th>Expected</th><th>Observed</th></tr></thead>
+<tbody>
+<tr><td>Single asset</td><td>refuse</td><td>ValueError: need at least 2 assets</td></tr>
+<tr><td>Two identical assets</td><td>0.5 / 0.5</td><td class="qm-num">0.500 / 0.500</td></tr>
+<tr><td>One zero-variance asset</td><td>refuse, naming the column</td><td><strong>scipy: &ldquo;condensed distance matrix must contain only finite values&rdquo; &rarr; ValueError: zero-variance column(s) ['Z']</strong> after fix</td></tr>
+<tr><td>NaN in returns</td><td>refuse</td><td>ValueError: returns contain NaN</td></tr>
+<tr><td>Perfectly anti-correlated pair plus two</td><td>sums to 1, no shorts</td><td class="qm-num">A 0.412, B 0.428, C 0.024, D 0.136</td></tr>
+<tr><td>Rank-one panel (four assets = &beta; &times; one factor)</td><td>weights without inversion</td><td class="qm-num">0.542 / 0.241 / 0.132 / 0.084</td></tr>
+<tr><td>Same panel, minimum variance via pseudo-inverse</td><td>one of infinitely many solutions</td><td class="qm-num">0.143 / 0.214 / 0.286 / 0.357</td></tr>
+<tr><td>All returns shifted by +1</td><td>identical weights (covariance is shift-invariant)</td><td>identical</td></tr>
+</tbody></table></div>
+<p>Two of these deserve a sentence. The zero-variance case did not silently
+look sane, which is the property that matters, but the error came from
+three layers down and blamed the distance matrix; the implementation now
+checks for constant columns first and names them. The anti-correlated pair
+is not a defect but a property of the method worth knowing: HRP's distance
+is &radic;((1 &minus; &rho;)/2), so two assets with &rho; = &minus;1 sit at the
+maximum distance and are never clustered together. HRP as specified does not
+recognise a hedge; it allocates A and B 41% and 43% because each looks like
+a low-variance asset on its own, and the pair's combined variance never
+enters the tree.</p>
 
-<div class="qm-answer"><span class="qm-answer-label">2. A flat tape read as maximally toxic under the tick rule (15 September 2026)</span>
-<p>The tick rule signs each trade by its price change and lets an unchanged
-price inherit the previous sign, which is standard. The implementation also
-treated the <em>first</em> trade as buyer-initiated. On a tape whose price
-never moves there is no change to inherit from, so that opening guess
-propagated through every trade: 100% buy volume in every bucket, VPIN = 1,
-on an input that carries no information at all.</p>
-<p><strong>Detection:</strong> the <a href="/learn/degenerate-inputs.html">degenerate-input
-suite</a>, which runs each method on inputs whose answer is obvious; a flat tape
-was expected to read 0 under both classifiers and read 0 under BVC, 1 under the
-tick rule. <strong>Fix:</strong> trades before the first price change carry no
-sign and split evenly. <strong>Guard:</strong> <code>tests/test_vpin.py</code>
-now asserts the flat tape reads 0; the published numbers on this page are
-unchanged to four decimals (the first trade of the synthetic tape is the only
-one affected) and <code>verify_examples.py</code> still matches the committed
-CSV to nine decimals.</p></div>
+<h2>Probabilistic Sharpe Ratio (closed form)</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input (SR, SR*, n, &gamma;&#8321;, &gamma;&#8322;)</th><th>Expected</th><th>Observed</th></tr></thead>
+<tbody>
+<tr><td>SR equals the benchmark (1.0, 1.0, 24, 0, 3)</td><td>exactly 0.5</td><td class="qm-num">0.5000</td></tr>
+<tr><td>n = 2, the smallest admissible (1.5, 0, 2, 0, 3)</td><td>z = 1.5/1.4577 = 1.029, PSR 0.848</td><td class="qm-num">0.8483</td></tr>
+<tr><td>n = 1 (1.5, 0, 1, 0, 3)</td><td>&radic;0 = 0, z = 0: 0.5 regardless of SR</td><td class="qm-num">0.5000; must be refused upstream (the calculator does)</td></tr>
+<tr><td>Non-positive variance term (1.5, 0, 24, 3, 3)</td><td>no answer</td><td class="qm-num">NaN</td></tr>
+<tr><td>Kurtosis below 1 (1.5, 0, 24, 0, 0.5), impossible for any distribution</td><td>computes; input invalid</td><td class="qm-num">1.0000</td></tr>
+<tr><td>n = 1,000,000 with SR 0.05</td><td>saturates</td><td class="qm-num">1.0000</td></tr>
+<tr><td>Negative SR (&minus;0.5, 0, 24, 0, 3)</td><td>1 &minus; PSR(+0.5)</td><td class="qm-num">0.0119</td></tr>
+</tbody></table></div>
+<p>The closed form has no opinion about whether its inputs are possible: a
+kurtosis of 0.5 cannot occur (Pearson kurtosis is at least 1) and the formula
+returns a confident 1.0000 anyway. The calculator on this site refuses n &lt; 2,
+non-numeric input and a non-positive variance term; it does not yet refuse a
+kurtosis below 1, which is now on its list. n = 1 returning 0.5 for every SR is
+mathematically correct and practically a trap.</p>
 
-<h2>What this verification does not establish</h2>
+<h2>What this does not establish</h2>
 <ul>
-<li>It proves the estimator <em>responds</em> to imbalance as designed. It
-proves nothing about whether VPIN forecasts volatility in real markets; that
-is contested (Andersen &amp; Bondarenko, 2014) and outside what synthetic data
-can settle.</li>
-<li>The absolute level is method-dependent: BVC and the tick rule give 0.4410
-and 0.1779 on identical data. No threshold such as &ldquo;toxic above 0.4&rdquo;
-means anything without stating classifier, bucket size and window.</li>
-<li>One seed, one tape. The direction of the result is robust to the seed; the
-magnitudes are not claimed to be.</li>
+<li>A degenerate suite catches sign, convention and division errors. It does
+not catch an implementation that is subtly wrong on ordinary inputs and
+right on the edges; the synthetic-ground-truth tests in the reports are for
+that.</li>
+<li>&ldquo;Expected&rdquo; is a judgement. The flat-tape expectation (VPIN 0)
+follows from &ldquo;no information&rdquo;; someone who defines an unchanged
+price as a continuation of the last trade's side would defend the old
+behaviour on a tape that had a first move. The note states its choice.</li>
+<li>Twenty-six cases across three methods is a start, not coverage.</li>
 </ul>
 
 <h2>Reproduce</h2>
-<p><code>python quantmedia-research/verify_examples.py</code> re-runs this
-example in a clean directory and asserts the shipped CSV matches to nine
-decimal places. Then <code>python tests/test_vpin.py</code> from
-<code>quantmedia-research/</code>: expected 15 passed.</p>
+<div class="qm-formula">cd quantmedia-research/degenerate-inputs<br>python experiment.py<br>python ../tests/test_degenerate_inputs.py&nbsp;&nbsp;# expected: 5 passed<br>python ../tests/test_vpin.py&nbsp;&nbsp;# 15, including the flat tape</div>
+<p>Runtime under a second. The two fixes are in <code>vpin.py</code>
+(<code>sign_trades_tick_rule</code>) and <code>hrp.py</code>
+(<code>hrp_weights</code>), each with the date and reason in its docstring.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/degenerate-inputs">Code and output on GitHub</a>.</p>
 
 </div>
 </main>

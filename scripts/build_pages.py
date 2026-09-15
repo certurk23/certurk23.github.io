@@ -518,6 +518,16 @@ PAGES.append(dict(
     crumb=('Verified methods', 'reproducibility.html'),
     body=PCX.VERIFY_METHOD_BODY, published='2026-09-15', modified='2026-09-15'))
 
+PAGES.append(dict(
+    slug='learn/degenerate-inputs.html',
+    title='Degenerate Inputs: Two More Defects Found | QuantMedia',
+    description=("Twenty-six inputs with obvious answers run through the VPIN, HRP and PSR "
+                 "code. A flat tape read VPIN = 1 under the tick rule; a constant asset broke "
+                 "HRP inside scipy. Both fixed."),
+    h1='Degenerate inputs: what the implementations return when the answer is obvious',
+    crumb=('Verified methods', 'reproducibility.html'),
+    body=PCX.DEGENERATE_BODY, published='2026-09-15', modified='2026-09-15'))
+
 PCE.INDEX_BODY = PCR.INDEX_BODY
 PCE.VPIN_BODY = PCR.VPIN_VERDICT + PCE.VPIN_BODY + PCR.VPIN_VERIFICATION
 PCE.HRP_BODY = PCR.HRP_VERDICT + PCE.HRP_BODY + PCR.HRP_VERIFICATION
@@ -530,8 +540,8 @@ for slug, doc_title, h1, description, body in [
      'Free VPIN, HRP and PSR examples with runnable code, expected results and clearly stated limitations.',
      PCE.INDEX_BODY),
     ('vpin-example.html',
-     'VPIN Verification Report, One Defect Fixed',
-     'VPIN Verification Report: One Tape, Two Classifiers, One Defect Fixed',
+     'VPIN Verification Report, Two Defects Fixed',
+     'VPIN Verification Report: One Tape, Two Classifiers, Two Defects Fixed',
      'Reproduce VPIN on 20,000 synthetic trades. Compare bulk volume classification with the tick rule and inspect the test results.',
      PCE.VPIN_BODY),
     ('hrp-example.html',

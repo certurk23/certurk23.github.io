@@ -1,0 +1,29 @@
+method,case,variant,expected,observed
+VPIN,monotone up (every trade higher),bvc,VPIN ~ 1: every bucket entirely buy,0.9989 over 100 buckets
+VPIN,monotone up (every trade higher),tick,VPIN ~ 1: every bucket entirely buy,0.9999 over 100 buckets
+VPIN,monotone down,bvc,VPIN ~ 1: every bucket entirely sell,0.9989 over 100 buckets
+VPIN,monotone down,tick,VPIN ~ 1: every bucket entirely sell,0.9999 over 100 buckets
+VPIN,flat (price never moves),bvc,VPIN 0: no information; 50/50 split is the defensible answer,0.0000 over 100 buckets
+VPIN,flat (price never moves),tick,VPIN 0: no information; 50/50 split is the defensible answer,0.0000 over 100 buckets
+VPIN,alternating +/- one tick,bvc,"BVC: bucket close-to-close change 0 or one tick, small; tick rule: signs cancel",0.0000 over 100 buckets
+VPIN,alternating +/- one tick,tick,"BVC: bucket close-to-close change 0 or one tick, small; tick rule: signs cancel",0.0001 over 100 buckets
+VPIN,"random walk, no drift",bvc,"noise floor: BVC ~ 0.45, tick ~ sqrt(2/pi)/sqrt(k)",0.4485 over 100 buckets
+VPIN,"random walk, no drift",tick,"noise floor: BVC ~ 0.45, tick ~ sqrt(2/pi)/sqrt(k)",0.2054 over 100 buckets
+VPIN,one trade larger than five buckets,tick,the trade is split across buckets; volume conserved; ~5 complete buckets,0.9800 over 5 buckets
+VPIN,fewer buckets than the window,bvc,"no VPIN value (NaN), not a partial-window number",nan over 5 buckets
+VPIN,total volume below one bucket,bvc,"refuses (ValueError), rather than returning a number from zero buckets",raises ValueError: no complete buckets: total volume is below bucket_size=2000.
+HRP,single asset,hrp_weights,raises ValueError (needs >= 2 assets),raises ValueError: need at least 2 assets
+HRP,two identical assets,hrp_weights,"correlation 1, distance 0: equal split 0.5 / 0.5","A=0.500, A2=0.500 (sum 1.000)"
+HRP,one zero-variance asset,hrp_weights,refuses with a message that names the column (before 15 Sep 2026: an opaque scipy error about finite values),raises ValueError: zero-variance column(s) ['Z']: drop them before calling
+HRP,perfectly anti-correlated pair plus two,hrp_weights,"weights sum to 1, no shorts; A and B are NOT clustered: distance sqrt((1-rho)/2) puts rho=-1 at the maximum, HRP as specified does not see a hedge","A=0.412, B=0.428, C=0.024, D=0.136 (sum 1.000)"
+HRP,rank-one panel (all assets = beta x one factor),hrp_weights,sample covariance singular; HRP should still return weights (no inversion),"X0=0.542, X1=0.241, X2=0.132, X3=0.084 (sum 1.000)"
+HRP,NaN in returns,hrp_weights,raises ValueError (refuses NaN),raises ValueError: returns contain NaN; clean or fill before calling
+HRP,constant-shift panel (all returns + 1),hrp_weights,identical weights to base: covariance is shift-invariant,"A=0.412, B=0.428, C=0.024, D=0.136 (sum 1.000)"
+HRP,"rank-one panel, min-variance",hrp_weights,pinv survives singularity; the solution is one of many; weights may be extreme,"X0=0.143, X1=0.214, X2=0.286, X3=0.357 (sum 1.000)"
+PSR,SR equals benchmark,closed form,exactly 0.5,0.5000
+PSR,n = 2 (smallest admissible),closed form,"sqrt(n-1) = 1: z = 1.5/1.4577 = 1.029, PSR 0.848",0.8483
+PSR,n = 1,closed form,"sqrt(0) = 0: z = 0, PSR 0.5 regardless of SR (should be refused upstream)",0.5000
+PSR,"variance term non-positive (skew 3, kurtosis 3, SR 1.5)",closed form,NaN: the formula has no answer,nan
+PSR,kurtosis below 1 (impossible for a real distribution),closed form,denominator sqrt(1 - 0.28) = 0.85: PSR computes but the input is invalid,1.0000
+PSR,huge n,closed form,"saturates at 1: any positive SR is ""certain"" with enough data",1.0000
+PSR,negative SR,closed form,below 0.5: 1 - PSR(+0.5),0.0119

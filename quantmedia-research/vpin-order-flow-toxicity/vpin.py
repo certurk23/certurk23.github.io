@@ -192,11 +192,18 @@ def sign_trades_tick_rule(trades: pd.DataFrame) -> pd.DataFrame:
     """Label each trade +1/-1 by the tick rule (price vs previous price).
 
     Unchanged prices inherit the previous sign, which is the standard
-    convention. The first trade is treated as buyer-initiated.
+    convention. Trades before the first price change carry no sign (0): there
+    is nothing to infer a direction from, so their volume is split evenly.
+
+    Until 15 September 2026 the first trade was treated as buyer-initiated
+    and every unchanged price inherited that guess, so a tape whose price
+    never moved was classified 100% buy and read VPIN = 1: the maximally
+    toxic reading for an input with no information at all. Found by the
+    degenerate-input tests (quantmedia-research/degenerate-inputs).
     """
     out = trades.copy()
     diff = out['price'].diff()
-    sign = np.sign(diff).replace(0, np.nan).ffill().fillna(1.0)
+    sign = np.sign(diff).replace(0, np.nan).ffill().fillna(0.0)
     out['sign'] = sign.astype(float)
     return out
 

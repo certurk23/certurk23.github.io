@@ -133,8 +133,17 @@ def test_buy_and_sell_volume_sum_to_bucket():
 
 def test_tick_rule_signs():
     signed = sign_trades_tick_rule(tape([100, 101, 102, 101, 101, 100]))
-    assert list(signed['sign']) == [1.0, 1.0, 1.0, -1.0, -1.0, -1.0], \
+    # The first trade has no previous price to compare with, so it carries no
+    # sign; unchanged prices inherit the last sign.
+    assert list(signed['sign']) == [0.0, 1.0, 1.0, -1.0, -1.0, -1.0], \
         list(signed['sign'])
+    # A tape whose price never moves carries no information: every trade is
+    # unclassified, every bucket splits 50/50, VPIN is 0. Until 15 Sep 2026
+    # the first trade was guessed 'buy' and the guess propagated through the
+    # whole flat tape, which then read VPIN = 1.
+    flat = tape([100.0] * 400)
+    out = vpin_from_trades(flat, bucket_size=2000.0, window=5, method='tick')
+    assert out['vpin'].dropna().abs().max() < 1e-12, out['vpin'].dropna().max()
 
 
 def test_window_longer_than_data_returns_nan():

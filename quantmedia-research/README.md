@@ -36,6 +36,7 @@ workflow runs it alongside the implementation tests and calculator checks.
 | [`vpin-classifier-sensitivity/`](vpin-classifier-sensitivity/) | [VPIN: BVC vs tick rule](https://quantmedia.io/learn/vpin-classifier-noise-floor.html) | Reproducible | 6 |
 | [`hrp-drift-anatomy/`](hrp-drift-anatomy/) | [HRP drift anatomy](https://quantmedia.io/learn/hrp-drift-anatomy.html) | Reproducible | 6 |
 | [`dsr-trials/`](dsr-trials/) | [DSR: false positives and power](https://quantmedia.io/learn/dsr-trials-experiment.html) | Reproducible (tolerance tests) | 5 |
+| [`degenerate-inputs/`](degenerate-inputs/) | [Degenerate inputs](https://quantmedia.io/learn/degenerate-inputs.html) | Reproducible | 5 |
 
 The Probabilistic Sharpe Ratio is published as an
 [interactive calculator](https://quantmedia.io/tools/probabilistic-sharpe-ratio-calculator.html)
@@ -62,6 +63,7 @@ python tests/test_psr_uncertainty.py  # 6 tests
 python tests/test_vpin_sensitivity.py  # 6 tests
 python tests/test_hrp_drift.py  # 6 tests
 python tests/test_dsr_trials.py  # 5 tests
+python tests/test_degenerate_inputs.py  # 5 tests
 ```
 
 Python 3.9+. Dependencies: numpy, pandas, scipy.

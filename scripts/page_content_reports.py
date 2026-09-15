@@ -12,7 +12,7 @@ Each method gets two fragments:
   *_VERIFICATION   appended: defects found, limitations of the check, reproduce
 
 EVERY NUMBER IS CONSOLE OUTPUT FROM THE SHIPPED CODE, OR ARITHMETIC THE READER
-CAN REPEAT. The three defects documented were all found by executing the code
+CAN REPEAT. The four defects documented were all found by executing the code
 against known ground truth - which is the whole practice in one sentence.
 """
 
@@ -86,10 +86,10 @@ built around.</p>
 '''
 
 # ---------------------------------------------------------------------------
-def _record(path):
+def _record(path, version='v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026'):
     return f'''
 <div class="qm-def"><dl>
-<dt>Verification record</dt><dd>v1.0 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026</dd>
+<dt>Verification record</dt><dd>{version}</dd>
 <dt>Implementation under test</dt><dd><code>{path}</code>, in the public repository</dd>
 <dt>Environment</dt><dd>Python 3.11.9; numpy 2.4.6; pandas 3.0.5; scipy 1.17.1 &mdash; all newer than the package pins, so this doubles as a forward-compatibility check</dd>
 <dt>Verifier</dt><dd><a href="/author/cemil-erturk.html">Cemil Ert&uuml;rk</a></dd>
@@ -102,12 +102,14 @@ VPIN_VERDICT = '''
 <p>The implementation reproduces the defining property of VPIN &mdash; a
 rising reading under informed flow &mdash; on a tape where the informed
 episode is known in advance: 0.3292 in the balanced segment against 0.6376 in
-the informed segment, a ratio of 1.94&times;. It did so only after a defect in
-its degenerate-case handling was found and fixed.</p></div>
-''' + _record('quantmedia-research/vpin-order-flow-toxicity/vpin.py')
+the informed segment, a ratio of 1.94&times;. It did so only after two defects in
+its degenerate-case handling were found and fixed: one on 16 August 2026, one
+on 15 September 2026.</p></div>
+''' + _record('quantmedia-research/vpin-order-flow-toxicity/vpin.py',
+              'v1.1 &middot; first run 16 August 2026 &middot; published as a report 4 September 2026 &middot; second defect added 15 September 2026')
 
 VPIN_VERIFICATION = '''
-<h2>Defect found during verification</h2>
+<h2>Defects found during verification</h2>
 <div class="qm-answer"><span class="qm-answer-label">Degenerate tape returned the wrong sign</span>
 <p>Bulk volume classification standardises each bucket&rsquo;s price change by
 the dispersion of price changes. On a <em>monotone</em> tape &mdash; every trade
@@ -119,6 +121,23 @@ backwards.</p>
 VPIN &gt; 0.9. <strong>Fix:</strong> in the degenerate branch, classify by the
 sign of the price change (up &rarr; buy, down &rarr; sell, flat &rarr; 50/50).
 <strong>Guard:</strong> the test is one of 15 in <code>tests/test_vpin.py</code>.</p></div>
+
+<div class="qm-answer"><span class="qm-answer-label">2. A flat tape read as maximally toxic under the tick rule (15 September 2026)</span>
+<p>The tick rule signs each trade by its price change and lets an unchanged
+price inherit the previous sign, which is standard. The implementation also
+treated the <em>first</em> trade as buyer-initiated. On a tape whose price
+never moves there is no change to inherit from, so that opening guess
+propagated through every trade: 100% buy volume in every bucket, VPIN = 1,
+on an input that carries no information at all.</p>
+<p><strong>Detection:</strong> the <a href="/learn/degenerate-inputs.html">degenerate-input
+suite</a>, which runs each method on inputs whose answer is obvious; a flat tape
+was expected to read 0 under both classifiers and read 0 under BVC, 1 under the
+tick rule. <strong>Fix:</strong> trades before the first price change carry no
+sign and split evenly. <strong>Guard:</strong> <code>tests/test_vpin.py</code>
+now asserts the flat tape reads 0; the published numbers on this page are
+unchanged to four decimals (the first trade of the synthetic tape is the only
+one affected) and <code>verify_examples.py</code> still matches the committed
+CSV to nine decimals.</p></div>
 
 <h2>What this verification does not establish</h2>
 <ul>

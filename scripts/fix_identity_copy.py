@@ -33,7 +33,7 @@ FOOTER_DESC = ('Verified implementations of quantitative finance methods: runnab
 SEARCH_INDEX = """const SEARCH_INDEX = [
   {t:'page', title:'Home', sub:'Verified quantitative finance code, free', url:'index.html', kw:'home homepage ana sayfa'},
   {t:'page', title:'Verification Reports', sub:'VPIN, HRP and PSR checked against known answers', url:'reports/', kw:'reports verification examples worked do\\u011frulama'},
-  {t:'page', title:'VPIN Verification Report', sub:'One tape, two classifiers, one defect fixed', url:'reports/vpin-example.html', kw:'vpin report bulk volume tick rule'},
+  {t:'page', title:'VPIN Verification Report', sub:'One tape, two classifiers, two defects fixed', url:'reports/vpin-example.html', kw:'vpin report bulk volume tick rule'},
   {t:'page', title:'HRP Verification Report', sub:'Six allocators, two defects fixed', url:'reports/hrp-example.html', kw:'hrp report allocators minimum variance shrinkage'},
   {t:'page', title:'PSR Verification Report', sub:'A published example, corrected', url:'reports/psr-worked-example.html', kw:'psr report worked example'},
   {t:'page', title:'Verified Methods', sub:'Runnable Python, tests and GitHub source', url:'reproducibility.html', kw:'github code python tools vpin hrp reproducibility'},
@@ -48,6 +48,7 @@ SEARCH_INDEX = """const SEARCH_INDEX = [
   {t:'paper', title:'Bid-Ask Spread Dynamics', sub:'Research note \\u2014 Microstructure', url:'paper-bid-ask-spread-dynamics.html', kw:'spread bid ask microstructure execution'},
   {t:'paper', title:'Slippage & Latency Modeling', sub:'Research note \\u2014 Execution', url:'paper-slippage-latency-modeling.html', kw:'slippage latency backtest execution market impact'},
   {t:'page', title:'How to verify a quant implementation', sub:'Eight steps, each illustrated by a defect found here', url:'learn/how-to-verify-a-quant-implementation.html', kw:'verify verification method checklist synthetic ground truth tests'},
+  {t:'page', title:'Degenerate inputs', sub:'26 obvious-answer inputs; two more defects found and fixed', url:'learn/degenerate-inputs.html', kw:'degenerate edge case flat tape zero variance monotone tests'},
   {t:'topic', title:'What is VPIN?', sub:'Explainer', url:'learn/what-is-vpin.html', kw:'vpin explainer definition'},
   {t:'topic', title:'What is the Probabilistic Sharpe Ratio?', sub:'Explainer', url:'learn/what-is-probabilistic-sharpe-ratio.html', kw:'psr explainer'},
   {t:'topic', title:'PSR uncertainty at n = 24', sub:'Experiment note: how much the inputs and the PSR move', url:'learn/psr-uncertainty-at-n-24.html', kw:'psr uncertainty bootstrap kurtosis small sample'},

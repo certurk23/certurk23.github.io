@@ -750,3 +750,128 @@ convention is the only defence, and it depends on a reader.</li>
 that guards it is in the suites listed.
 <a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research">Code on GitHub</a>.</p>
 """
+
+# Outputs from quantmedia-research/degenerate-inputs/outputs/cases.csv, run
+# 15 September 2026 after the two fixes it prompted (vpin.py tick-rule
+# signs, hrp.py zero-variance guard).
+DEGENERATE_BODY = """
+<div class="qm-answer">
+<span class="qm-answer-label">Short answer</span>
+<p>Twenty-six inputs chosen because their right answer is obvious: monotone,
+flat and alternating tapes; single, identical, constant and rank-one asset
+panels; Sharpe ratios at the benchmark, at n = 2, with impossible moments.
+Running the site's three implementations on them found two more defects the
+verification reports had missed. A tape whose price never moves read
+VPIN = 1 under the tick rule, the maximally toxic reading for an input with
+no information, because the first trade was guessed &ldquo;buy&rdquo; and the
+guess inherited its way through the whole tape. And a panel with one
+constant asset made HRP fail inside scipy with a message about
+&ldquo;finite values&rdquo; that did not name the cause. Both are fixed and
+tested; the published report numbers did not move.</p>
+</div>
+
+<h2>Why degenerate inputs</h2>
+<p>The <a href="/learn/how-to-verify-a-quant-implementation.html">method
+note</a> lists degenerate cases as step two. This note is that step carried
+out systematically. The point of a degenerate input is that the correct
+output is known <em>before</em> the run, so an implementation cannot pass by
+accident, and that it exercises the branches ordinary data never reaches:
+divisions by zero, empty windows, inputs a library will refuse. Every case
+below was written with its expected behaviour first and the observed output
+recorded next to it. Where they disagreed, that was the finding.</p>
+
+<h2>VPIN</h2>
+<p>2,000 trades of 100 shares, 20 trades per bucket, a 10-bucket window,
+both classifiers.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input</th><th>Expected</th><th>BVC</th><th>Tick rule</th></tr></thead>
+<tbody>
+<tr><td>Monotone up (every trade higher than the last)</td><td>VPIN &asymp; 1</td><td class="qm-num">0.9999</td><td class="qm-num">0.9999</td></tr>
+<tr><td>Monotone down</td><td>VPIN &asymp; 1</td><td class="qm-num">0.9999</td><td class="qm-num">0.9999</td></tr>
+<tr><td>Flat (price never moves)</td><td>VPIN 0: no information</td><td class="qm-num">0.0000</td><td class="qm-num"><strong>1.0000 &rarr; 0.0000</strong> after fix</td></tr>
+<tr><td>Alternating &plusmn;1 tick</td><td>near 0: signs cancel, bucket-to-bucket change tiny</td><td class="qm-num">0.0000</td><td class="qm-num">0.0001</td></tr>
+<tr><td>Random walk, no drift</td><td>noise floor (0.45; &radic;(2/&pi;)/&radic;20 = 0.18)</td><td class="qm-num">0.4485</td><td class="qm-num">0.2055</td></tr>
+<tr><td>One trade larger than five buckets</td><td>split across buckets, volume conserved</td><td colspan="2">5 complete buckets, VPIN 1.0 (price rose across all of it)</td></tr>
+<tr><td>Fewer buckets than the window</td><td>no value, not a partial-window number</td><td colspan="2">NaN over 5 buckets</td></tr>
+<tr><td>Total volume below one bucket</td><td>refuse</td><td colspan="2">ValueError: no complete buckets</td></tr>
+</tbody></table></div>
+<p>The flat tape is the finding. The tick rule signs each trade by comparing
+its price with the previous one and lets an unchanged price inherit the
+previous sign; that convention is standard and harmless when prices
+occasionally repeat. The implementation also gave the first trade, which has
+no previous price, a sign of +1. On a flat tape that single guess is the only
+sign there is, every trade inherits it, every bucket is 100% buy, and VPIN
+reads 1. The fix leaves trades before the first price change unsigned, so
+they split evenly; a flat tape now reads 0 under both classifiers. The
+verification report's numbers are unaffected to four decimals because only
+the synthetic tape's first trade changes sign, and the committed CSV still
+matches to nine. The random-walk tick reading of 0.2055 against a predicted
+0.18 is the autocorrelation of tick-rule signs that the
+<a href="/learn/vpin-classifier-noise-floor.html">noise-floor note</a>
+discusses; with 20 trades per bucket it is larger than with 80.</p>
+
+<h2>Hierarchical Risk Parity</h2>
+<p>250 periods; base panel of four assets where A and B load on one factor
+with opposite signs.</p>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input</th><th>Expected</th><th>Observed</th></tr></thead>
+<tbody>
+<tr><td>Single asset</td><td>refuse</td><td>ValueError: need at least 2 assets</td></tr>
+<tr><td>Two identical assets</td><td>0.5 / 0.5</td><td class="qm-num">0.500 / 0.500</td></tr>
+<tr><td>One zero-variance asset</td><td>refuse, naming the column</td><td><strong>scipy: &ldquo;condensed distance matrix must contain only finite values&rdquo; &rarr; ValueError: zero-variance column(s) ['Z']</strong> after fix</td></tr>
+<tr><td>NaN in returns</td><td>refuse</td><td>ValueError: returns contain NaN</td></tr>
+<tr><td>Perfectly anti-correlated pair plus two</td><td>sums to 1, no shorts</td><td class="qm-num">A 0.412, B 0.428, C 0.024, D 0.136</td></tr>
+<tr><td>Rank-one panel (four assets = &beta; &times; one factor)</td><td>weights without inversion</td><td class="qm-num">0.542 / 0.241 / 0.132 / 0.084</td></tr>
+<tr><td>Same panel, minimum variance via pseudo-inverse</td><td>one of infinitely many solutions</td><td class="qm-num">0.143 / 0.214 / 0.286 / 0.357</td></tr>
+<tr><td>All returns shifted by +1</td><td>identical weights (covariance is shift-invariant)</td><td>identical</td></tr>
+</tbody></table></div>
+<p>Two of these deserve a sentence. The zero-variance case did not silently
+look sane, which is the property that matters, but the error came from
+three layers down and blamed the distance matrix; the implementation now
+checks for constant columns first and names them. The anti-correlated pair
+is not a defect but a property of the method worth knowing: HRP's distance
+is &radic;((1 &minus; &rho;)/2), so two assets with &rho; = &minus;1 sit at the
+maximum distance and are never clustered together. HRP as specified does not
+recognise a hedge; it allocates A and B 41% and 43% because each looks like
+a low-variance asset on its own, and the pair's combined variance never
+enters the tree.</p>
+
+<h2>Probabilistic Sharpe Ratio (closed form)</h2>
+<div class="qm-table-wrap"><table class="qm-table">
+<thead><tr><th>Input (SR, SR*, n, &gamma;&#8321;, &gamma;&#8322;)</th><th>Expected</th><th>Observed</th></tr></thead>
+<tbody>
+<tr><td>SR equals the benchmark (1.0, 1.0, 24, 0, 3)</td><td>exactly 0.5</td><td class="qm-num">0.5000</td></tr>
+<tr><td>n = 2, the smallest admissible (1.5, 0, 2, 0, 3)</td><td>z = 1.5/1.4577 = 1.029, PSR 0.848</td><td class="qm-num">0.8483</td></tr>
+<tr><td>n = 1 (1.5, 0, 1, 0, 3)</td><td>&radic;0 = 0, z = 0: 0.5 regardless of SR</td><td class="qm-num">0.5000; must be refused upstream (the calculator does)</td></tr>
+<tr><td>Non-positive variance term (1.5, 0, 24, 3, 3)</td><td>no answer</td><td class="qm-num">NaN</td></tr>
+<tr><td>Kurtosis below 1 (1.5, 0, 24, 0, 0.5), impossible for any distribution</td><td>computes; input invalid</td><td class="qm-num">1.0000</td></tr>
+<tr><td>n = 1,000,000 with SR 0.05</td><td>saturates</td><td class="qm-num">1.0000</td></tr>
+<tr><td>Negative SR (&minus;0.5, 0, 24, 0, 3)</td><td>1 &minus; PSR(+0.5)</td><td class="qm-num">0.0119</td></tr>
+</tbody></table></div>
+<p>The closed form has no opinion about whether its inputs are possible: a
+kurtosis of 0.5 cannot occur (Pearson kurtosis is at least 1) and the formula
+returns a confident 1.0000 anyway. The calculator on this site refuses n &lt; 2,
+non-numeric input and a non-positive variance term; it does not yet refuse a
+kurtosis below 1, which is now on its list. n = 1 returning 0.5 for every SR is
+mathematically correct and practically a trap.</p>
+
+<h2>What this does not establish</h2>
+<ul>
+<li>A degenerate suite catches sign, convention and division errors. It does
+not catch an implementation that is subtly wrong on ordinary inputs and
+right on the edges; the synthetic-ground-truth tests in the reports are for
+that.</li>
+<li>&ldquo;Expected&rdquo; is a judgement. The flat-tape expectation (VPIN 0)
+follows from &ldquo;no information&rdquo;; someone who defines an unchanged
+price as a continuation of the last trade's side would defend the old
+behaviour on a tape that had a first move. The note states its choice.</li>
+<li>Twenty-six cases across three methods is a start, not coverage.</li>
+</ul>
+
+<h2>Reproduce</h2>
+<div class="qm-formula">cd quantmedia-research/degenerate-inputs<br>python experiment.py<br>python ../tests/test_degenerate_inputs.py&nbsp;&nbsp;# expected: 5 passed<br>python ../tests/test_vpin.py&nbsp;&nbsp;# 15, including the flat tape</div>
+<p>Runtime under a second. The two fixes are in <code>vpin.py</code>
+(<code>sign_trades_tick_rule</code>) and <code>hrp.py</code>
+(<code>hrp_weights</code>), each with the date and reason in its docstring.
+<a href="https://github.com/certurk23/certurk23.github.io/tree/main/quantmedia-research/degenerate-inputs">Code and output on GitHub</a>.</p>
+"""

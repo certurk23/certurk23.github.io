@@ -149,6 +149,12 @@ def hrp_weights(returns: pd.DataFrame,
         raise ValueError('need at least 2 assets')
     if returns.isna().any().any():
         raise ValueError('returns contain NaN; clean or fill before calling')
+    flat = [c for c, v in returns.var().items() if not v > 0]
+    if flat:
+        # A constant column has no correlation with anything; the distance
+        # matrix then holds NaN and scipy's linkage fails with a message about
+        # finite values that does not name the cause. Name it.
+        raise ValueError(f'zero-variance column(s) {flat}: drop them before calling')
 
     cov = returns.cov()
     corr = returns.corr()

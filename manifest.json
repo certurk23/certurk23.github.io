@@ -1,7 +1,7 @@
 {
   "name": "QuantMedia",
   "short_name": "QuantMedia",
-  "description": "Independent quantitative research: market microstructure, live market data, and financial analysis.",
+  "description": "Verified implementations of quantitative finance methods: runnable code, synthetic ground truth and dated verification reports.",
   "start_url": "/",
   "display": "browser",
   "background_color": "#0a0a0a",

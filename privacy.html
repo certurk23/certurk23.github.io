@@ -217,14 +217,14 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
   <div class="section">
     <h2>6. Third-Party Market Data</h2>
-    <p>This Site retrieves live market data from the following third-party APIs. These services may log your IP address as part of standard server operations:</p>
+    <p>Market data on this Site is end-of-day, not live. It is collected once per weekday by an automated pipeline running on QuantMedia's own infrastructure (GitHub Actions) and published as static JSON files on quantmedia.io. Your browser loads those files from quantmedia.io only; it does not contact the upstream providers, and they do not see your visit. The upstream sources are:</p>
     <ul>
-      <li><strong>Finnhub</strong> — stock and index quotes (<a href="https://finnhub.io/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>)</li>
-      <li><strong>CoinGecko</strong> — cryptocurrency prices (<a href="https://www.coingecko.com/en/privacy" target="_blank" rel="noopener">Privacy Policy</a>)</li>
-      <li><strong>Open Exchange Rates API (open.er-api.com)</strong> — foreign exchange rates</li>
-      <li><strong>TradingView</strong> — embedded ticker widgets (<a href="https://www.tradingview.com/policies/" target="_blank" rel="noopener">Privacy Policy</a>)</li>
+      <li><strong>Yahoo Finance</strong> (via the <code>yfinance</code> library) &mdash; end-of-day equity, index and futures prices</li>
+      <li><strong>CoinGecko</strong> &mdash; cryptocurrency reference prices (<a href="https://www.coingecko.com/en/privacy" target="_blank" rel="noopener">Privacy Policy</a>)</li>
+      <li><strong>Open Exchange Rates API (open.er-api.com)</strong> &mdash; foreign exchange reference rates</li>
+      <li><strong>Finnhub</strong> &mdash; market headlines, captured for pipeline monitoring and not displayed (<a href="https://finnhub.io/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>)</li>
     </ul>
-    <p>We do not control the data practices of these third-party services.</p>
+    <p>We do not control the data practices of these providers; the links above lead to their own policies.</p>
   </div>
 
   <div class="section">

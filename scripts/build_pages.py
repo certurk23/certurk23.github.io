@@ -83,6 +83,7 @@ EXTRA_CSS = """
 .qm-rank{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;width:36px}
 .qm-sector{font-weight:600}
 .qm-tablewrap{overflow-x:auto}
+.qm-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
 .qm-reading{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--text)}
 .qm-note{font-size:12.5px;line-height:1.75;color:var(--dim);margin:10px 0 0}
 .qm-refs{font-size:13px;line-height:1.85;color:var(--dim);margin:0;padding-left:18px}

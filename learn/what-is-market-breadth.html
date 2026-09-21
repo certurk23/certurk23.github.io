@@ -197,6 +197,7 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 .qm-rank{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;width:36px}
 .qm-sector{font-weight:600}
 .qm-tablewrap{overflow-x:auto}
+.qm-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
 .qm-reading{font-size:15px;line-height:1.8;margin:0 0 14px;color:var(--text)}
 .qm-note{font-size:12.5px;line-height:1.75;color:var(--dim);margin:10px 0 0}
 .qm-refs{font-size:13px;line-height:1.85;color:var(--dim);margin:0;padding-left:18px}
@@ -302,6 +303,33 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
     <li><strong>It lags turns.</strong> Trend-weighted inputs mean breadth
     confirms moves rather than anticipating them.</li>
   </ul>
+
+  <h2>What the first twenty observations showed</h2>
+  <p>Signal Breadth started publishing on 17 August 2026 and is not backfilled.
+  Over its first twenty sessions (to 14 September 2026) it ranged from 42.5%
+  to 15.6%, with a median of 29.1%; behind those readings were 28 to 76 BUY
+  names out of 179 scored. Two properties matter for reading it. The series is
+  persistent: its one-day autocorrelation is 0.70, about three standard errors
+  from white noise, because the underlying signals include slow-moving trend
+  conditions. And it is almost the same information as the median score
+  (correlation 0.84 across days), since both summarise one scan. A run of
+  eleven down days against five up days over four weeks is therefore what one
+  drawn-out decline looks like, not evidence of a regime. The full analysis,
+  including how many observations a predictive test would need, is in
+  <a href="/learn/signal-breadth-twenty-days.html">Signal Breadth: what twenty
+  observations can and cannot say</a>.</p>
+
+  <h2>Compute it yourself</h2>
+  <p>The published JSON carries everything needed to recompute the figure, so
+  it can be checked rather than trusted:</p>
+  <div class="qm-formula">import json, urllib.request<br>
+d = json.load(urllib.request.urlopen('https://quantmedia.io/data/signal_breadth.json'))<br>
+print(d['market_date'], d['buy_signals'], '/', d['scored_stocks'], '=',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;round(100 * d['buy_signals'] / d['scored_stocks'], 1), '%  (published:', d['breadth_pct'], ')')</div>
+  <p>The two numbers must agree to one decimal; the pipeline's validator
+  refuses to publish a day where they do not. Comparing the result with the
+  quoted <code>threshold</code> and <code>signal_count</code> fields also shows
+  whether the methodology version has changed since the figure was cited.</p>
 
   <h2>Current reading and data</h2>
   <p>The live figure, its distribution and the historical series are published

@@ -210,38 +210,20 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
       </thead>
       <tbody>
         <tr><td><strong>Yahoo Finance</strong> (via <code>yfinance</code>)</td><td>End-of-day OHLCV bars; index and futures closes</td><td>180-name signal universe; S&amp;P 500, Nasdaq, Dow, VIX, gold, WTI, DXY</td><td>End-of-day only. Captured once per weekday after the US close.</td></tr>
-        <tr><td><strong>Finnhub</strong></td><td>News headlines</td><td>General market newswire</td><td>Server-side only, once per weekday. The API key is held as a repository secret and is never sent to the browser.</td></tr>
+        <tr><td><strong>Finnhub</strong></td><td>News headlines</td><td>General market newswire</td><td>Captured server-side once per weekday as a pipeline health signal; headlines are not currently displayed on any page. The API key is held as a repository secret and is never sent to the browser.</td></tr>
         <tr><td><strong>CoinGecko</strong></td><td>Cryptocurrency prices</td><td>BTC, ETH, SOL, and major altcoins</td><td>Captured once per weekday by the pipeline; not streamed to the browser</td></tr>
         <tr><td><strong>Open Exchange Rates</strong></td><td>Foreign exchange rates</td><td>USD crosses (EUR, GBP, JPY, etc.)</td><td>Indicative mid-market rates; updated periodically</td></tr>
-        <tr><td><strong>TradingView</strong></td><td>Embedded ticker tape widget</td><td>Major indices, equities, FX, commodities</td><td>Real-time via TradingView embed</td></tr>
       </tbody>
     </table>
 
     <div class="insight-box">
       <div class="insight-label">Important note on data freshness</div>
-      <p>With one exception, <strong>nothing on this site is real-time</strong>. Equity, forex, crypto and commodity figures are <strong>end-of-day snapshots</strong> captured once per weekday by an automated pipeline that runs at 23:30 UTC, after the 16:00 ET US close. They are stored as static JSON files and served from this domain; the browser makes no live market-data calls. The single exception is the embedded TradingView widget, which streams its own data independently.</p>
+      <p><strong>Nothing on this site is real-time</strong>. Equity, forex, crypto and commodity figures are <strong>end-of-day snapshots</strong> captured once per weekday by an automated pipeline that runs at 23:30 UTC, after the 16:00 ET US close. They are stored as static JSON files and served from this domain; the browser makes no live market-data calls.</p>
       <p>Every page derives its freshness label from the timestamp of the snapshot it is displaying, so a stalled pipeline shows &ldquo;delayed&rdquo; or &ldquo;data feed paused&rdquo; with the real capture date rather than continuing to claim it is current. If a data source fails, the previous snapshot is retained with its original timestamp instead of being replaced by blank cells. <strong>None of this data is suitable for live trading decisions.</strong></p>
     </div>
   </div>
 
-  <!-- NEWS METHODOLOGY -->
-  <div class="section-header" id="news-methodology">
-    <h2>News Classification</h2>
-  </div>
-  <div class="article-card">
-    <p>Headlines on the News page are retrieved server-side once per weekday from the Finnhub general news endpoint, de-duplicated, and classified into categories using <strong>word-boundary regular expressions</strong> (an earlier version matched bare substrings, which mis-filed any headline containing the letters &ldquo;ai&rdquo; &mdash; <em>gain</em>, <em>against</em>, <em>remain</em> &mdash; as technology news). Categories are:</p>
-    <ul>
-      <li><strong>Fed / Monetary Policy</strong> -- headlines containing references to the Federal Reserve, FOMC, interest rates, or monetary policy</li>
-      <li><strong>Tech / AI</strong> -- references to major technology companies, semiconductors, AI, or software</li>
-      <li><strong>Energy / Commodities</strong> -- oil, gas, gold, mining, and commodity-related keywords</li>
-      <li><strong>Crypto / Digital Assets</strong> -- Bitcoin, Ethereum, blockchain, and digital asset references</li>
-      <li><strong>Earnings / Corporate</strong> -- earnings reports, revenue, guidance, and corporate actions</li>
-      <li><strong>Macro / Economy</strong> -- GDP, employment, inflation, and broad economic indicators</li>
-    </ul>
-    <p>Classification is purely algorithmic. No editorial judgment or human curation is applied to news categorization. Headlines are displayed as received from source feeds with attribution to the originating publisher.</p>
-  </div>
 
-  <!-- SIGNAL ENGINE -->
   <div class="section-header" id="signal-engine">
     <h2>Signal Engine Methodology</h2>
   </div>

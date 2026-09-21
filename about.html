@@ -330,13 +330,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
   <a href="/about.html" class="active">About</a>
 </div>
 
-<!-- MARKET BAR -->
-<div class="market-bar">
-  <div class="mbar-label"><span class="mbar-dot"></span><span id="mbarLabel">Last close</span></div>
-  <div class="mbar-items" id="mbarItems">
-    <div class="mbar-item"><span class="mbar-sym" style="color:var(--muted);font-size:11px">Market data updates when available</span></div>
-  </div>
-</div>
 
 <!-- SUB NAV -->
 <div class="sub-nav">
@@ -592,11 +585,6 @@ const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFract
 const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
 const pct=v=>v==null?'--':sgn(v)+fmt(v)+'%';
-/* Market bar reads data/markets_bar.json via qm-data.js. The previous block
-   embedded a live Finnhub key in client source and also contained a stray
-   closing brace, which was a syntax error that silently killed every script
-   below it on this page (theme toggle, mobile nav, market bar). */
-QM.marketBar('mbarItems','mbarLabel');
 function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobileNav');h.classList.toggle('open');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}

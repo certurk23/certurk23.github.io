@@ -44,6 +44,13 @@ def rw(rel, fn):
 def about(s):
     s = re.sub(r'\n<!-- MARKET BAR -->\n<div class="market-bar">.*?</div>\n</div>\n', '\n', s, count=1, flags=re.S)
     s = re.sub(r"/\* Market bar reads data/markets_bar\.json via qm-data\.js\..*?\*/\nQM\.marketBar\('mbarItems','mbarLabel'\);\n", '', s, count=1, flags=re.S)
+    # A dead fabricated ticker ('VPIN AAPL 0.312', 'LATENCY P99 740 ns', ...)
+    # targeting an element that no longer exists. The statement threw, which
+    # also killed the hamburger menu and theme toggle defined below it.
+    s = re.sub(r"const ticks=\[\n.*?\];\nconst t=document\.getElementById\('ticker'\);\nconst d=\[\.\.\.ticks,\.\.\.ticks\];\nt\.innerHTML=d\.map\([^\n]*\n", '', s, count=1, flags=re.S)
+    # TradingView ticker host and its deferred loader: third-party content on the About page.
+    s = re.sub(r'\n[^\n]*<div id="tickerWrap"[^\n]*\n', '\n', s, count=1)
+    s = re.sub(r"<script>window\.addEventListener\('load',function\(\)\{setTimeout\(function\(\)\{var w=document\.getElementById\('tickerWrap'\);.*?</script>\n?", '', s, count=1, flags=re.S)
     return s
 
 

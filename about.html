@@ -294,7 +294,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 
 <!-- TICKER -->
 <div style="background:#000;border-bottom:1px solid var(--border)">
-  <div id="tickerWrap" style="min-height:34px;contain:layout style"></div>
 </div>
 
 <!-- HEADER -->
@@ -569,18 +568,6 @@ footer{border-top:2px solid var(--border);background:#000;margin-top:40px}
 </footer>
 
 <script>
-const ticks=[
-  {name:'VPIN AAPL',val:'0.312',chg:'+0.024',up:true},
-  {name:'OBI SPY',val:'−0.041',chg:'−0.007',up:false},
-  {name:'HURST SPY',val:'0.587',chg:'+0.012',up:true},
-  {name:'LATENCY P99',val:'740 ns',chg:'−18 ns',up:true},
-  {name:'NVDA VPIN',val:'0.389',chg:'−0.011',up:false},
-  {name:'QQQ VPIN',val:'0.224',chg:'+0.008',up:true},
-  {name:'TOXICITY',val:'MODERATE',chg:'●',up:true},
-];
-const t=document.getElementById('ticker');
-const d=[...ticks,...ticks];
-t.innerHTML=d.map(x=>`<span class="tick-item"><span class="tick-name">${x.name}</span><span class="tick-val">${x.val}</span><span class="tick-chg ${x.up?'up':'dn'}">${x.up?'▲':'▼'} ${x.chg}</span></span>`).join('');
 const fmt=(n,d=2)=>n==null||isNaN(n)?'--':n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
 const cls=v=>v>0?'up':v<0?'dn':'nt';
 const sgn=v=>v>0?'+':'';
@@ -589,6 +576,5 @@ function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getE
 document.querySelectorAll('.mobile-nav a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow='';});});
 function toggleTheme(){const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('qm-theme',n);}
 </script>
-<script>window.addEventListener('load',function(){setTimeout(function(){var w=document.getElementById('tickerWrap');if(!w)return;var c=document.createElement('div');c.className='tradingview-widget-container';var d=document.createElement('div');d.className='tradingview-widget-container__widget';c.appendChild(d);var s=document.createElement('script');s.type='text/javascript';s.async=true;s.src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';s.textContent=JSON.stringify({"symbols":[{"proName":"FOREXCOM:SPXUSD","title":"S&P 500"},{"proName":"FOREXCOM:NSXUSD","title":"Nasdaq 100"},{"description":"VIX","proName":"CBOE:VIX"},{"description":"AAPL","proName":"NASDAQ:AAPL"},{"description":"NVDA","proName":"NASDAQ:NVDA"},{"description":"TSLA","proName":"NASDAQ:TSLA"},{"description":"JPM","proName":"NYSE:JPM"},{"description":"Gold","proName":"OANDA:XAUUSD"},{"description":"BTC","proName":"BITSTAMP:BTCUSD"}],"showSymbolLogo":false,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"en"});c.appendChild(s);w.appendChild(c);},2000)});</script>
 </body>
 </html>
